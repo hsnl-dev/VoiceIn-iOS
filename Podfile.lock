@@ -1,0 +1,30 @@
+PODS:
+  - IQKeyboardManagerSwift (3.3.4)
+  - Material (1.33.2)
+  - RAMAnimatedTabBarController (1.1.1)
+  - SwiftyJSON (2.3.2)
+
+DEPENDENCIES:
+  - IQKeyboardManagerSwift (= 3.3.4)
+  - Material
+  - RAMAnimatedTabBarController (~> 1.1.1)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  SwiftyJSON:
+    :commit: 42bdb102d2624b143c07850ebdc1537d5b6579b6
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+SPEC CHECKSUMS:
+  IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
+  Material: 8b6a82a8aaca9255a18ef1fa6a83ce44f800b87c
+  RAMAnimatedTabBarController: 41ccdc3592ec154b869262d876eff60b03574943
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+
+PODFILE CHECKSUM: 4c334067527213bedce810b92146a55c92a40433
+
+COCOAPODS: 1.0.0.beta.2

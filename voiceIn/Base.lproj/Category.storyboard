@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="c0I-VY-SWQ">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--您的分類-->
+        <scene sceneID="j6x-I8-qr0">
+            <objects>
+                <viewController id="BpC-Fs-Z5d" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jLb-oM-oqD"/>
+                        <viewControllerLayoutGuide type="bottom" id="eQt-gR-OjF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LRh-cj-lMm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="您的分類" id="cJt-EM-A9y">
+                        <barButtonItem key="rightBarButtonItem" title="新增分類" id="f7v-ue-DfI"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sJv-lX-kgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1028" y="1421"/>
+        </scene>
+        <!--您的分類-->
+        <scene sceneID="e9K-cP-oPv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="c0I-VY-SWQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="您的分類" image="ic_people_white" id="KOP-0u-T20"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxk-4V-GQr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BpC-Fs-Z5d" kind="relationship" relationship="rootViewController" id="gju-O0-2eH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XNu-5v-hWR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="286" y="1421"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_people_white" width="24" height="24"/>
+    </resources>
+</document>
