@@ -19,6 +19,7 @@
 		3EC23CFF1C775C7000CA92A2 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */; };
 		3EC23D021C775D8B00CA92A2 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23D011C775D8B00CA92A2 /* People.swift */; };
 		3EC23D051C7782C600CA92A2 /* Card.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23D031C7782C600CA92A2 /* Card.storyboard */; };
+		3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */; };
 		3EF050661C77196600F7774E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050641C77196600F7774E /* Login.storyboard */; };
 		3EF050691C77197900F7774E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050671C77197900F7774E /* Main.storyboard */; };
 		3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632991C75A9F300BBAB39 /* AppDelegate.swift */; };
@@ -41,6 +42,7 @@
 		3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
 		3EC23D011C775D8B00CA92A2 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
 		3EC23D041C7782C600CA92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Card.storyboard; sourceTree = "<group>"; };
+		3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3EF050651C77196600F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		3EF050681C77197900F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3EF632961C75A9F300BBAB39 /* voiceIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voiceIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +72,7 @@
 				3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */,
 				3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */,
 				3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */,
+				3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			files = (
 				3EA12BAB1C75CF4B00AFB4EE /* ContactTableViewController.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
+				3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */,
 				3EA12BA91C75CD5A00AFB4EE /* LoginViewController.swift in Sources */,
 				3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */,
 				3EAC95E91C763C3900421079 /* ValidationCodeViewController.swift in Sources */,

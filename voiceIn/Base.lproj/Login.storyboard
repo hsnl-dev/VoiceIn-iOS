@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bR2-Lt-Ria">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E49a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bR2-Lt-Ria">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -50,7 +50,7 @@
                                 </constraints>
                                 <state key="normal" title="發送驗證碼"/>
                                 <connections>
-                                    <segue destination="OS5-yp-r2B" kind="presentation" id="uOI-rP-1GJ"/>
+                                    <segue destination="OS5-yp-r2B" kind="presentation" identifier="sendValidationCodeSegue" id="uOI-rP-1GJ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請使用您的手機登入" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSo-uT-25p">
@@ -141,7 +141,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="checkValidationButtonClicked:" destination="OS5-yp-r2B" eventType="touchUpInside" id="GAD-NM-gs8"/>
+                                    <segue destination="yQf-aT-yB6" kind="show" id="csQ-hw-kK3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請輸入您收到的認證碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpa-Da-crj">
@@ -181,7 +181,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="KJA-DC-vUN" id="oJ7-o4-gnR"/>
+                        <outlet property="backButton" destination="KJA-DC-vUN" id="e5L-ta-cJa"/>
                         <outlet property="backgroundImageView" destination="7Lh-lZ-NKH" id="Blp-db-7Uw"/>
                         <outlet property="checkValidationButton" destination="EyD-JE-p0b" id="gte-TG-qow"/>
                         <outlet property="validationCodeField" destination="6fi-2Z-yA9" id="Oo2-2Q-Ida"/>
@@ -191,6 +191,24 @@
                 <exit id="GI3-hr-kNv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="908" y="798"/>
+        </scene>
+        <!--User Information View Controller-->
+        <scene sceneID="rx5-4p-3Rl">
+            <objects>
+                <viewController id="yQf-aT-yB6" customClass="UserInformationViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CQn-aR-6Qb"/>
+                        <viewControllerLayoutGuide type="bottom" id="bVu-tN-YZ6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4p8-i0-n66">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BPK-tA-84N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1675" y="798"/>
         </scene>
     </scenes>
     <resources>

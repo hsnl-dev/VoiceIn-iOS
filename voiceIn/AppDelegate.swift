@@ -14,7 +14,6 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -30,9 +29,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                [NSForegroundColorAttributeName:UIColor.whiteColor(),NSFontAttributeName:barFont]
 //        }
         
-        let storyboard = UIStoryboard(name: "Login", bundle: nil)
-        let rootController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        let userPrefs: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        let phoneNumber = userPrefs.stringForKey("phoneNumber")
+        let token = userPrefs.stringForKey("token")
+        var rootController: UIViewController
         
+        if token != nil && phoneNumber != nil {
+            rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
+        } else {
+            // User does not sign in, sign them in.
+            rootController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        }
+    
         if let window = self.window {
             window.rootViewController = rootController
             window.makeKeyAndVisible()
