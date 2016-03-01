@@ -18,15 +18,18 @@ class ValidationCodeViewController: UIViewController {
         
         prepareButton()
         prepareField()
+        blurBackgroundImage()
         
+        //MARK: Set the status bar to light.
+        navigationBarView.statusBarStyle = .LightContent
+    }
+    
+    private func blurBackgroundImage() {
         //MARK: Set up blur image background.
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         backgroundImageView.addSubview(blurEffectView)
-        
-        //MARK: Set the status bar to light.
-        navigationBarView.statusBarStyle = .LightContent
     }
     
     private func prepareButton() {
@@ -57,14 +60,12 @@ class ValidationCodeViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    @IBAction func validationButtonClicked(sender: UIButton!) {
+        print("Check if the validation code is correct or not.")
+        
+        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
+        self.presentViewController(userInformationController, animated: true, completion: nil)
+
     }
     
-    @IBAction func checkValidationButtonClicked(sender: UIButton!) {
-        let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
-        self.presentViewController(contactTableView, animated: true, completion: nil)
-    }
-
-
 }

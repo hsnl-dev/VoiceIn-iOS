@@ -21,16 +21,19 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         super.viewDidLoad()
         prepareView()
         prepareField()
+        blurBackgroundImage()
         
+        //MARK: Set up send validation button.
+        sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
+        sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
+    }
+    
+    private func blurBackgroundImage() {
         //MARK: Set up blur image background.
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         backgroundImageView.addSubview(blurEffectView)
-        
-        //MARK: Set up send validation button.
-        sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
-        sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
     }
     
     private func prepareView() {

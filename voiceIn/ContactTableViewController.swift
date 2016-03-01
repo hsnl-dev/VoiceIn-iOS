@@ -8,9 +8,18 @@
 
 import UIKit
 import Material
+import Alamofire
 
 class ContactTableViewController: UITableViewController {
     private var navigationBarView: NavigationBarView = NavigationBarView()
+    
+    // MARK: The API Information.
+    let API_END_POINT = "https://voicein-web-service.us-west-2.elasticbeanstalk.com/api/v1"
+    let headers = [
+        "apiKey": "f4c34db9-c4f8-4356-9442-51ece7adca67",
+    ]
+    
+    let contactArray:[People] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()

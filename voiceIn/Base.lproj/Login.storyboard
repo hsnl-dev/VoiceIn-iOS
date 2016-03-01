@@ -141,7 +141,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="yQf-aT-yB6" kind="show" id="csQ-hw-kK3"/>
+                                    <action selector="validationButtonClicked:" destination="OS5-yp-r2B" eventType="touchUpInside" id="Mb5-bC-OwI"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請輸入您收到的認證碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpa-Da-crj">
@@ -195,7 +195,7 @@
         <!--User Information View Controller-->
         <scene sceneID="rx5-4p-3Rl">
             <objects>
-                <viewController id="yQf-aT-yB6" customClass="UserInformationViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserInformationStoryboard" id="yQf-aT-yB6" customClass="UserInformationViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CQn-aR-6Qb"/>
                         <viewControllerLayoutGuide type="bottom" id="bVu-tN-YZ6"/>
