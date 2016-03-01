@@ -1,12 +1,16 @@
 PODS:
+  - Alamofire (3.1.5)
+  - Eureka (1.4.1)
   - IQKeyboardManagerSwift (3.3.4)
-  - Material (1.33.2)
+  - Material (1.34.8)
   - RAMAnimatedTabBarController (1.1.1)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.1.2)
+  - Eureka (~> 1.3)
   - IQKeyboardManagerSwift (= 3.3.4)
-  - Material
+  - Material (= 1.34.8)
   - RAMAnimatedTabBarController (~> 1.1.1)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -20,11 +24,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
+  Eureka: 2f1921d3162491921d2fef3b516bc4ef93a05122
   IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
-  Material: 8b6a82a8aaca9255a18ef1fa6a83ce44f800b87c
+  Material: 3865b011d8e4d42f7588bd9719498e025a82360a
   RAMAnimatedTabBarController: 41ccdc3592ec154b869262d876eff60b03574943
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 4c334067527213bedce810b92146a55c92a40433
+PODFILE CHECKSUM: b7c7f19934adeac8d92cbb9492114b37f22ded3e
 
 COCOAPODS: 1.0.0.beta.2

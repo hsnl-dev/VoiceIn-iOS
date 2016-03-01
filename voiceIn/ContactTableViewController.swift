@@ -10,20 +10,17 @@ import UIKit
 import Material
 
 class ContactTableViewController: UITableViewController {
-    
-    
+    private var navigationBarView: NavigationBarView = NavigationBarView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
-    
     /// General preparation statements.
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
+        navigationBarView.statusBarStyle = .Default
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +49,14 @@ class ContactTableViewController: UITableViewController {
         cell.thumbnailImageView.image = UIImage(named: "jony")
         cell.thumbnailImageView.layer.cornerRadius = 25.0
         cell.thumbnailImageView.clipsToBounds = true
+        
+        cell.onCallButtonTapped = {
+            print(cell.type.text)
+        }
+        
+        cell.onFavoriteButtonTapped = {
+            print(cell.type.text)
+        }
         
         return cell
     }

@@ -12,10 +12,12 @@ import Material
 class ContactTableCell: MaterialTableViewCell{
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var nickNameLabel: UILabel!
-    @IBOutlet var type:UILabel!
+    @IBOutlet var type: UILabel!
     @IBOutlet var thumbnailImageView: UIImageView!
     @IBOutlet weak var callButton: FabButton!
     @IBOutlet weak var favoriteButton: FabButton!
+    var onCallButtonTapped: (() -> Void)? = nil
+    var onFavoriteButtonTapped: (() -> Void)? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,6 +41,20 @@ class ContactTableCell: MaterialTableViewCell{
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    @IBAction func callButtonClicked(sender: FabButton) {
+        print(sender.tag)
+        if let onCallButtonTapped = self.onCallButtonTapped {
+            onCallButtonTapped()
+        }
+    }
+    
+    @IBAction func favoriteButtonClicked(sender: FabButton) {
+        print(sender.tag)
+        if let onFavoriteButtonTapped = self.onFavoriteButtonTapped {
+            onFavoriteButtonTapped()
+        }
     }
 
 }
