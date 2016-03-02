@@ -1,8 +1,12 @@
 import UIKit
 import Material
+import Alamofire
+import SwiftyJSON
 
 class ValidationCodeViewController: UIViewController {
+    
     private var navigationBarView: NavigationBarView = NavigationBarView()
+    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet weak var validationCodeField: UITextField!
     @IBOutlet weak var checkValidationButton: RaisedButton!
@@ -10,7 +14,7 @@ class ValidationCodeViewController: UIViewController {
     @IBOutlet var backgroundImageView: UIImageView!
     
     // MARK: UserUuid genrated from server.
-    var userUuid: String!
+    var userUuid: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +23,9 @@ class ValidationCodeViewController: UIViewController {
         prepareButton()
         prepareField()
         blurBackgroundImage()
+        
+        print(self.userUuid)
+        userDefaultData.setValue(self.userUuid, forKey: "userUuid")
         
         //MARK: Set the status bar to light.
         navigationBarView.statusBarStyle = .LightContent
@@ -63,8 +70,44 @@ class ValidationCodeViewController: UIViewController {
     @IBAction func validationButtonClicked(sender: UIButton!) {
         print("Check if the validation code is correct or not.")
         
-        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
-        self.presentViewController(userInformationController, animated: true, completion: nil)
+        let headers = Network.generateHeader(isTokenNeeded: false)
+        let parameters = [
+            "userUuid": userDefaultData.stringForKey("userUuid"),
+            "code": validationCodeField.text as String!
+        ]
+        
+        Alamofire.request(.POST, API_END_POINT + "/accounts/tokens", parameters: parameters, encoding: .JSON, headers: headers)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .Success(let JSON_DATA):
+                    let json = JSON(JSON_DATA)
+                    let token = json["token"]
+                    
+//                    if token != nil {
+//                        // MARK: User input the right code, save the token and show information view.
+//                        self.userDefaultData.setValue(json["token"].stringValue, forKey: "token")
+//                        
+//                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
+//                        self.presentViewController(userInformationController, animated: true, completion: nil)
+//                    } else {
+//                        // MARK: User input the wrong code, pop out the alert window.
+//                        let alert = UIAlertController(title: "抱歉", message: "您的認證碼輸入錯誤，請再確認一次", preferredStyle: UIAlertControllerStyle.Alert)
+//                        alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
+//                        self.presentViewController(alert, animated: true, completion: nil)
+//                    }
+                    
+                    //MARK: For test convience!
+                    let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
+                    self.presentViewController(userInformationController, animated: true, completion: nil)
+                    //MARK: -------------------
+                    
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+        
+        
 
     }
     

@@ -32,12 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                [NSForegroundColorAttributeName:UIColor.whiteColor(),NSFontAttributeName:barFont]
 //        }
         
-        let userPrefs: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        let phoneNumber = userPrefs.stringForKey("phoneNumber")
-        let token = userPrefs.stringForKey("token")
+        let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        let userUuid = userDefaultData.stringForKey("userUuid")
+        let token = userDefaultData.stringForKey("token")
         var rootController: UIViewController
-        
-        if token != nil && phoneNumber != nil {
+  
+        if false && token != nil && userUuid != nil {
+            print("userUuid" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
             // User does not sign in, sign them in.

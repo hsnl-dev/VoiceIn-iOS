@@ -19,10 +19,10 @@
                     </tabBar>
                     <connections>
                         <segue destination="f9y-5R-Ung" kind="relationship" relationship="viewControllers" id="Hue-wU-mm0"/>
-                        <segue destination="nOi-4w-31T" kind="relationship" relationship="viewControllers" id="L5f-5o-VNt"/>
-                        <segue destination="zCg-Sr-FLu" kind="relationship" relationship="viewControllers" id="Vww-o6-hd7"/>
-                        <segue destination="sci-Kg-q2e" kind="relationship" relationship="viewControllers" id="PKO-ev-In5"/>
-                        <segue destination="QPv-5V-zDz" kind="relationship" relationship="viewControllers" id="g4a-85-IBB"/>
+                        <segue destination="sci-Kg-q2e" kind="relationship" relationship="viewControllers" id="vnx-ED-UUV"/>
+                        <segue destination="zCg-Sr-FLu" kind="relationship" relationship="viewControllers" id="rxz-tc-gmg"/>
+                        <segue destination="nOi-4w-31T" kind="relationship" relationship="viewControllers" id="bR1-YC-VxD"/>
+                        <segue destination="QPv-5V-zDz" kind="relationship" relationship="viewControllers" id="Gpt-VT-T3A"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L40-Gu-JAr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -32,13 +32,13 @@
         <!--聯絡簿-->
         <scene sceneID="zss-Po-3Wl">
             <objects>
-                <tableViewController id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="rUB-Wx-vki">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="AjL-3M-iWo" customClass="ContactTableCell" customModule="voiceIn" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="AjL-3M-iWo" customClass="ContactTableCell" customModule="VoiceIn" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AjL-3M-iWo" id="p1q-w1-2FU">
@@ -166,7 +166,7 @@
         <!--設定-->
         <scene sceneID="a46-Cd-x6A">
             <objects>
-                <viewController id="uei-sk-pti" sceneMemberID="viewController">
+                <viewController id="uei-sk-pti" customClass="SettingViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pVw-da-Xtw"/>
                         <viewControllerLayoutGuide type="bottom" id="MJS-Rb-Apm"/>

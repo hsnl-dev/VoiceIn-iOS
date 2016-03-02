@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (3.1.5)
+  - ALCameraViewController (1.1.7)
   - AWSCognito (2.3.5):
     - AWSCore (= 2.3.5)
   - AWSCore (2.3.5)
@@ -9,18 +10,17 @@ PODS:
   - Fabric (1.6.6)
   - IQKeyboardManagerSwift (3.3.4)
   - Material (1.34.8)
-  - RAMAnimatedTabBarController (1.1.1)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
+  - ALCameraViewController
   - AWSCognito
   - Crashlytics
   - Eureka (~> 1.3)
   - Fabric
   - IQKeyboardManagerSwift (= 3.3.4)
   - Material (= 1.34.8)
-  - RAMAnimatedTabBarController (~> 1.1.1)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
@@ -34,6 +34,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
+  ALCameraViewController: 15bd245a247cff0f8a038c349ac2bbe79152b686
   AWSCognito: f12700b4781897b2913544b36d6283f04ae72a44
   AWSCore: 8022eda5778fd7b87c9182709d8a27388e1a31fb
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
@@ -41,9 +42,8 @@ SPEC CHECKSUMS:
   Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
   IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
   Material: 3865b011d8e4d42f7588bd9719498e025a82360a
-  RAMAnimatedTabBarController: 41ccdc3592ec154b869262d876eff60b03574943
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 81ea7aabe5c0f0d83d682587d3dffc2dcce37740
+PODFILE CHECKSUM: 44a9bd7fdd6e7193b756caf27071bfd647d5e476
 
 COCOAPODS: 1.0.0.beta.2

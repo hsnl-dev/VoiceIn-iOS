@@ -3,9 +3,8 @@ import Eureka
 import Material
 import Alamofire
 import SwiftyJSON
-import ALCameraViewController
 
-class UserInformationViewController: FormViewController {
+class SettingViewController: FormViewController {
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     // MARK: The API Information.
     
@@ -18,55 +17,43 @@ class UserInformationViewController: FormViewController {
     }
     
     func prepareInputForm() {
-        SelectImageRow.defaultCellUpdate = { cell, row in
+        ImageRow.defaultCellUpdate = { cell, row in
             cell.accessoryView?.layer.cornerRadius = 32
             cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
         }
         
         form +++
-            Section(header: "", footer: "")
-            +++ Section("")
-            +++ Section(header: "基本資料", footer: "* 記號表示為必填")
-            
-            <<< SelectImageRow(){
-                    $0.title = "您的大頭貼"
-                    $0.cell.height = {
-                        let height: CGFloat = 70.0
-                        return height
-                    }
-                    $0.tag = "avatar"
-                }.onCellSelection({ (cell, row) -> () in
-                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true) { (image) -> Void in
-                        row.value = image
-                        row.updateCell()
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
-                    
-                    self.presentViewController(cameraViewController, animated: true, completion: nil)
-                })
+            Section(header: "基本資料", footer: "* 記號表示為必填")
+            <<< ImageRow(){
+                $0.title = "您的大頭貼"
+                $0.cell.height = {
+                    let height: CGFloat = 70.0
+                    return height
+                }
+            }
             
             <<< NameRow() {
-                    $0.title = "您的姓名*:"
-                    $0.placeholder = ""
-                    $0.tag = "userName"
+                $0.title = "您的姓名*:"
+                $0.placeholder = ""
+                $0.tag = "userName"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
             }
             
             <<< NameRow() {
-                    $0.title = "您的職稱:"
-                    $0.placeholder = ""
-                    $0.tag = "jobTitle"
+                $0.title = "您的職稱:"
+                $0.placeholder = ""
+                $0.tag = "jobTitle"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
             }
             
             <<< NameRow() {
-                    $0.title = "所屬公司:"
-                    $0.placeholder = ""
-                    $0.tag = "company"
+                $0.title = "所屬公司:"
+                $0.placeholder = ""
+                $0.tag = "company"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
@@ -79,9 +66,9 @@ class UserInformationViewController: FormViewController {
             }
             
             <<< NameRow() {
-                    $0.title = "位置:"
-                    $0.placeholder = "台北, 台灣"
-                    $0.tag = "location"
+                $0.title = "位置:"
+                $0.placeholder = "台北, 台灣"
+                $0.tag = "location"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
@@ -106,7 +93,7 @@ class UserInformationViewController: FormViewController {
             <<< TextAreaRow() {
                 $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
                 $0.tag = "profile"
-            }
+        }
     }
     
     func prepareNavigationBar() {
@@ -171,7 +158,7 @@ class UserInformationViewController: FormViewController {
         ]
         
         let apiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
-
+        
         print("PUT: " + apiRoute)
         
         Alamofire
