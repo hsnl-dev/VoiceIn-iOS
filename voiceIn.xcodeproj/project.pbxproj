@@ -18,7 +18,6 @@
 		3EC23CFC1C7727EB00CA92A2 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CFA1C7727EB00CA92A2 /* Setting.storyboard */; };
 		3EC23CFF1C775C7000CA92A2 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */; };
 		3EC23D021C775D8B00CA92A2 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23D011C775D8B00CA92A2 /* People.swift */; };
-		3EC23D051C7782C600CA92A2 /* Card.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23D031C7782C600CA92A2 /* Card.storyboard */; };
 		3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */; };
 		3EF050661C77196600F7774E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050641C77196600F7774E /* Login.storyboard */; };
 		3EF050691C77197900F7774E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050671C77197900F7774E /* Main.storyboard */; };
@@ -41,7 +40,6 @@
 		3EC23CFB1C7727EB00CA92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setting.storyboard; sourceTree = "<group>"; };
 		3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
 		3EC23D011C775D8B00CA92A2 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
-		3EC23D041C7782C600CA92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Card.storyboard; sourceTree = "<group>"; };
 		3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3EF050651C77196600F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		3EF050681C77197900F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -82,10 +80,9 @@
 			children = (
 				3EF050641C77196600F7774E /* Login.storyboard */,
 				3EF050671C77197900F7774E /* Main.storyboard */,
+				3EC23CF51C7727B900CA92A2 /* Contact.storyboard */,
 				3EC23CFA1C7727EB00CA92A2 /* Setting.storyboard */,
 				3EC23CF81C7727D000CA92A2 /* Favorite.storyboard */,
-				3EC23CF51C7727B900CA92A2 /* Contact.storyboard */,
-				3EC23D031C7782C600CA92A2 /* Card.storyboard */,
 				3EC23CF31C77279B00CA92A2 /* History.storyboard */,
 				3EC23CF01C77277E00CA92A2 /* Category.storyboard */,
 			);
@@ -172,6 +169,7 @@
 				3EF632941C75A9F300BBAB39 /* Resources */,
 				900FDFAA77EE9BC848DD2FF7 /* Embed Pods Frameworks */,
 				A8E59EF46553B42CB8BB0E07 /* Copy Pods Resources */,
+				3E4605751C86927F00F94813 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -194,6 +192,7 @@
 				TargetAttributes = {
 					3EF632951C75A9F300BBAB39 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 5DNE5HNV88;
 					};
 				};
 			};
@@ -220,7 +219,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EC23D051C7782C600CA92A2 /* Card.storyboard in Resources */,
 				3EC23CF21C77277E00CA92A2 /* Category.storyboard in Resources */,
 				3EF050661C77196600F7774E /* Login.storyboard in Resources */,
 				3EC23CF91C7727D000CA92A2 /* Favorite.storyboard in Resources */,
@@ -236,6 +234,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3E4605751C86927F00F94813 /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" dbfd20da22aa03dc0a58087776c7f7ddb33a9a82 96999449c59a263ebee86c867b368a74d4c6ec0aa56437d31ff24272c35bc9dc";
+		};
 		900FDFAA77EE9BC848DD2FF7 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -324,14 +336,6 @@
 				3EC23CFB1C7727EB00CA92A2 /* Base */,
 			);
 			name = Setting.storyboard;
-			sourceTree = "<group>";
-		};
-		3EC23D031C7782C600CA92A2 /* Card.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3EC23D041C7782C600CA92A2 /* Base */,
-			);
-			name = Card.storyboard;
 			sourceTree = "<group>";
 		};
 		3EF050641C77196600F7774E /* Login.storyboard */ = {
@@ -447,7 +451,9 @@
 			baseConfigurationReference = 9D13D4708872AE911803EDD8 /* Pods-voiceIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = voiceIn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hsnl.voiceIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -459,7 +465,9 @@
 			baseConfigurationReference = CBBF54FA7E5ECB0B0AD8D6E5 /* Pods-voiceIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = voiceIn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hsnl.voiceIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";

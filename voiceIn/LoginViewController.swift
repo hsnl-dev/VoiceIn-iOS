@@ -5,7 +5,7 @@ import Alamofire
 class LoginViewController: UIViewController, TextFieldDelegate {
     
     // MARK: The API Information.
-    let API_END_POINT = "https://voicein-web-service.us-west-2.elasticbeanstalk.com/api/v1"
+    let API_END_POINT = "https://voicein-web-service.us-west-2.elasticbeanstalk.com/api/v1/sandboxs"
     let headers = [
         "apiKey": "f4c34db9-c4f8-4356-9442-51ece7adca67",
     ]
@@ -66,11 +66,11 @@ class LoginViewController: UIViewController, TextFieldDelegate {
                 "phoneNumber": "+886988779570"
             ]
             
-//            Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
-//                .responseJSON {
-//                    response in
-//                        debugPrint(response)
-//                }
+            Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
+                .responseJSON {
+                    response in
+                        debugPrint(response)
+                }
             
         }
     }

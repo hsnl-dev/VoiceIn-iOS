@@ -8,5 +8,8 @@ target 'voiceIn' do
   pod 'RAMAnimatedTabBarController', '~> 1.1.1'
   pod 'Alamofire', '~> 3.1.2'
   pod 'Eureka', '~> 1.3'
+  pod 'Fabric'
+  pod 'AWSCognito'
+  pod 'Crashlytics'
 end
 
