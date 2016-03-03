@@ -3,42 +3,86 @@ import Eureka
 import Material
 import Alamofire
 import SwiftyJSON
+import ALCameraViewController
 
 class SettingViewController: FormViewController {
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let headers = Network.generateHeader(isTokenNeeded: true)
     // MARK: The API Information.
     
     private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var isUserSelectPhoto: Bool! = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareInputForm()
-        prepareNavigationBar()
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        /**
+        GET: Get the user's information.
+        **/
+        Alamofire
+            .request(.GET, getInformationApiRoute, headers: headers)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .Success(let JSON_RESPONSE):
+                    let jsonResponse = JSON(JSON_RESPONSE)
+                    self.prepareInputForm(jsonResponse)
+                case .Failure(let error):
+                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    debugPrint(error)
+                }
+            }
     }
     
-    func prepareInputForm() {
-        ImageRow.defaultCellUpdate = { cell, row in
-            cell.accessoryView?.layer.cornerRadius = 32
+    func prepareInputForm(userInformation: JSON) {
+        debugPrint(userInformation)
+        SelectImageRow.defaultCellUpdate = { cell, row in
+            cell.accessoryView?.layer.cornerRadius = 0
             cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
         }
         
         form +++
             Section(header: "基本資料", footer: "* 記號表示為必填")
-            <<< ImageRow(){
-                $0.title = "您的大頭貼"
-                $0.cell.height = {
-                    let height: CGFloat = 70.0
-                    return height
+            
+            <<< SelectImageRow(){
+                    $0.title = "您的大頭貼"
+                    $0.cell.height = {
+                        let height: CGFloat = 70.0
+                        return height
+                    }
+                    $0.tag = "avatar"
+                    $0.value = UIImage(named: "add-user")
+                }.onCellSelection({ (cell, row) -> () in
+                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
+                        { (image) -> Void in
+                            SelectImageRow.defaultCellUpdate = { cell, row in
+                                cell.accessoryView?.layer.cornerRadius = 32
+                                cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                            }
+                            
+                            if image != nil {
+                                row.value = image
+                                row.updateCell()
+                            }
+                            
+                            self.isUserSelectPhoto = true
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    
+                    self.presentViewController(cameraViewController, animated: true, completion: nil)
+                }).cellSetup {
+                    cell, row in
+                        print("image cell setup!")
                 }
-            }
             
             <<< NameRow() {
-                $0.title = "您的姓名*:"
-                $0.placeholder = ""
-                $0.tag = "userName"
+                    $0.title = "您的姓名*:"
+                    $0.placeholder = ""
+                    $0.tag = "userName"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["userName"].stringValue
             }
             
             <<< NameRow() {
@@ -48,6 +92,7 @@ class SettingViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["jobTitle"].stringValue
             }
             
             <<< NameRow() {
@@ -57,13 +102,18 @@ class SettingViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["company"].stringValue
             }
             
             <<< EmailRow() {
-                $0.title = "您的信箱"
-                $0.value = ""
-                $0.tag = "email"
-            }
+                    $0.title = "您的信箱"
+                    $0.value = ""
+                    $0.tag = "email"
+                }.cellSetup{
+                    cell, row in
+                    row.value = userInformation["email"].stringValue
+                }
+    
             
             <<< NameRow() {
                 $0.title = "位置:"
@@ -72,6 +122,7 @@ class SettingViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["location"].stringValue
             }
             
             +++ Section(header: "方便通話時段", footer: "您可以隨時設定您方便的通話同段")
@@ -91,61 +142,40 @@ class SettingViewController: FormViewController {
             +++ Section("關於您")
             
             <<< TextAreaRow() {
-                $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
-                $0.tag = "profile"
+                    $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
+                    $0.tag = "profile"
+                }.cellSetup {
+                    cell, row in
+                    row.value = userInformation["profile"].stringValue
+                }
+            let getImageApiRoute = API_END_POINT + "/avatars/" + userInformation["profilePhotoId"].stringValue
+        
+            Alamofire
+                .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
+                .responseData {
+                    response in
+                if response.data != nil {
+                    SelectImageRow.defaultCellUpdate = { cell, row in
+                        cell.accessoryView?.layer.cornerRadius = 32
+                        cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                    }
+                    self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
+                    self.form.rowByTag("avatar")?.updateCell()
+                }
+
         }
     }
     
-    func prepareNavigationBar() {
-        // Title label.
-        let titleLabel: UILabel = UILabel()
-        titleLabel.text = "您的個人資料"
-        titleLabel.textAlignment = .Center
-        titleLabel.textColor = MaterialColor.white
-        titleLabel.font = RobotoFont.regularWithSize(17)
-        
-        // Search button.
-        let image = UIImage(named: "ic_save_white")
-        let saveButton: FlatButton = FlatButton()
-        saveButton.pulseColor = MaterialColor.white
-        saveButton.pulseScale = false
-        saveButton.setImage(image, forState: .Normal)
-        saveButton.setImage(image, forState: .Highlighted)
-        saveButton.addTarget(self, action: "saveButtonClicked:", forControlEvents: .TouchUpInside)
-        
-        navigationBarView.statusBarStyle = .LightContent
-        navigationBarView.backgroundColor = MaterialColor.blue.base
-        navigationBarView.titleLabel = titleLabel
-        navigationBarView.rightControls = [saveButton]
-        
-        view.addSubview(navigationBarView)
-    }
-    
-    func saveButtonClicked(sender: UIButton!) {
-        let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
-        let headers = Network.generateHeader(isTokenNeeded: true)
+    @IBAction func saveButtonClicked(sender: UIButton!) {
         let formValues = form.values()
-        
-        if formValues["userName"] as? String == nil {
-            let alert = UIAlertController(title: "小提醒", message: "請輸入您的大名喔", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        let availableStartTime: NSDate! = formValues["availableStartTime"] as? NSDate
-        let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
-        
-        if (availableStartTime.isGreaterThanDate(availableEndTime)) {
-            let alert = UIAlertController(title: "小提醒", message: "你所選定的時間區間不合理喔", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        
+        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.7)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "H:mm"
+        
+        if !isFormValuesValid(formValues) {
+            // Form is not valid
+            return
+        }
         
         let parameters = [
             "userName": formValues["userName"] as? String != nil ? formValues["userName"] as? String : "",
@@ -157,18 +187,79 @@ class SettingViewController: FormViewController {
             "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
         ]
         
-        let apiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
         
-        print("PUT: " + apiRoute)
+        print("PUT: " + updateInformationApiRoute)
         
+        /**
+        PUT: Update the user's information.
+        **/
         Alamofire
-            .request(.PUT, apiRoute, parameters: parameters, encoding: .JSON, headers: headers)
+            .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
             .validate()
             .response { request, response, data, error in
-                if error == nil {
-                    //MARK: all is well!
-                    self.presentViewController(contactTableView, animated: true, completion: nil)
+                if error == nil && !self.isUserSelectPhoto {
+                    //MARK: error is nil, nothing happened! All is well :)
+                    print("success")
+                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                    
+                    return
+                } else {
+                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    return
                 }
         }
+        /**
+        POST: Upload avatar image.
+        **/
+        Alamofire
+            .upload(.POST, uploadAvatarApiRoute, headers: headers,
+                multipartFormData:
+                { multipartFormData in
+                    multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
+                },
+                encodingCompletion: {
+                    encodingResult in
+                    switch encodingResult {
+                    case .Success(let upload, _, _):
+                        upload.response { response in
+                            print("photo success")
+                            return
+                        }
+                    case .Failure(let encodingError):
+                        print(encodingError)
+                        return
+                    }
+            })
+        
+    }
+    
+    /**
+     MARK: Function to validate if there are any bad values.
+     @param: formValues
+     @return: true if valid, false if unvalid.
+     **/
+    private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
+        if formValues["userName"] as? String == nil {
+            createAlertView("小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
+            return false
+        }
+        
+        let availableStartTime: NSDate! = formValues["availableStartTime"] as? NSDate
+        let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
+        
+        if (availableStartTime.isGreaterThanDate(availableEndTime)) {
+            createAlertView("小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
+            return false
+        }
+        
+        return true
+    }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }

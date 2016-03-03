@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let token = userDefaultData.stringForKey("token")
         var rootController: UIViewController
   
-        if false && token != nil && userUuid != nil {
+        if token != nil && userUuid != nil {
             print("userUuid" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {

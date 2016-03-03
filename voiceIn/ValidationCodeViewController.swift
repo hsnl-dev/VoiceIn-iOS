@@ -147,12 +147,12 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
                         let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
                         self.presentViewController(userInformationController, animated: true, completion: nil)
                     } else {
-                        // MARK: User input the wrong code, pop out the alert window.
-//                        let alert = UIAlertController(title: "抱歉", message: "您的認證碼輸入錯誤，請再確認一次", preferredStyle: UIAlertControllerStyle.Alert)
-//                        alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-//                        self.presentViewController(alert, animated: true, completion: nil)
-                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
-                        self.presentViewController(userInformationController, animated: true, completion: nil)
+                         //MARK: User input the wrong code, pop out the alert window.
+                        let alert = UIAlertController(title: "抱歉", message: "您的認證碼輸入錯誤，請再確認一次", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+//                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
+//                        self.presentViewController(userInformationController, animated: true, completion: nil)
                     }
                     
                 case .Failure(let error):

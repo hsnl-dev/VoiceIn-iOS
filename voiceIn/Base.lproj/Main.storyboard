@@ -176,7 +176,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="設定" id="w7G-uU-sXM"/>
+                    <navigationItem key="navigationItem" title="設定" id="w7G-uU-sXM">
+                        <barButtonItem key="rightBarButtonItem" image="ic_save_white" id="zqd-zh-QIy">
+                            <connections>
+                                <action selector="saveButtonClicked:" destination="uei-sk-pti" id="7GB-xT-gWu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FcT-lD-yT7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -344,5 +350,6 @@
         <image name="ic_history_white" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add_white" width="24" height="24"/>
+        <image name="ic_save_white" width="24" height="24"/>
     </resources>
 </document>

@@ -19,7 +19,7 @@ DEPENDENCIES:
   - Crashlytics
   - Eureka (~> 1.3)
   - Fabric
-  - IQKeyboardManagerSwift (= 3.3.4)
+  - IQKeyboardManagerSwift
   - Material (= 1.34.8)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -44,6 +44,6 @@ SPEC CHECKSUMS:
   Material: 3865b011d8e4d42f7588bd9719498e025a82360a
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 44a9bd7fdd6e7193b756caf27071bfd647d5e476
+PODFILE CHECKSUM: 3396c20469b1dbe3afb32e399229aa0ab0c6a992
 
 COCOAPODS: 1.0.0.beta.2

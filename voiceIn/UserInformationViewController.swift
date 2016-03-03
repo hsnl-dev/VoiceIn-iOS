@@ -41,8 +41,10 @@ class UserInformationViewController: FormViewController {
                                     cell.accessoryView?.layer.cornerRadius = 32
                                     cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
                                 }
-                                row.value = image
-                                row.updateCell()
+                                if image != nil {
+                                    row.value = image
+                                    row.updateCell()
+                                }
                                 self.isUserSelectPhoto = true
                                 self.dismissViewControllerAnimated(true, completion: nil)
                         }
@@ -143,7 +145,7 @@ class UserInformationViewController: FormViewController {
         let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         let headers = Network.generateHeader(isTokenNeeded: true)
         let formValues = form.values()
-        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.7)
+        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.5)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "H:mm"
         
@@ -176,15 +178,19 @@ class UserInformationViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
+                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                     self.presentViewController(contactTableView, animated: true, completion: nil)
                 } else {
+                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     print(error)
                 }
             }
         /**
         POST: Upload avatar image.
         **/
-        Alamofire
+        
+        if isUserSelectPhoto == true {
+            Alamofire
             .upload(.POST, uploadAvatarApiRoute, headers: headers,
                 multipartFormData:
                 { multipartFormData in
@@ -195,12 +201,15 @@ class UserInformationViewController: FormViewController {
                     switch encodingResult {
                     case .Success(let upload, _, _):
                         upload.response { response in
+                            self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                             self.presentViewController(contactTableView, animated: true, completion: nil)
                         }
                     case .Failure(let encodingError):
+                        self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                         print(encodingError)
                     }
                 })
+        }
     
     }
     
@@ -211,9 +220,7 @@ class UserInformationViewController: FormViewController {
     **/
     private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
         if formValues["userName"] as? String == nil {
-            let alert = UIAlertController(title: "小提醒", message: "請輸入您的大名喔", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            createAlertView("小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
             return false
         }
         
@@ -221,12 +228,17 @@ class UserInformationViewController: FormViewController {
         let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
         
         if (availableStartTime.isGreaterThanDate(availableEndTime)) {
-            let alert = UIAlertController(title: "小提醒", message: "你所選定的時間區間不合理喔", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            createAlertView("小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
             return false
         }
         
         return true
     }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
 }
