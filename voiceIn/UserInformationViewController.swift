@@ -10,6 +10,7 @@ class UserInformationViewController: FormViewController {
     // MARK: The API Information.
     
     private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var isUserSelectPhoto: Bool! = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,10 +19,7 @@ class UserInformationViewController: FormViewController {
     }
     
     func prepareInputForm() {
-        SelectImageRow.defaultCellUpdate = { cell, row in
-            cell.accessoryView?.layer.cornerRadius = 32
-            cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-        }
+        
         
         form +++
             Section(header: "", footer: "")
@@ -35,12 +33,19 @@ class UserInformationViewController: FormViewController {
                         return height
                     }
                     $0.tag = "avatar"
+                    $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
-                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true) { (image) -> Void in
-                        row.value = image
-                        row.updateCell()
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
+                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
+                        { (image) -> Void in
+                                SelectImageRow.defaultCellUpdate = { cell, row in
+                                    cell.accessoryView?.layer.cornerRadius = 32
+                                    cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                                }
+                                row.value = image
+                                row.updateCell()
+                                self.isUserSelectPhoto = true
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                        }
                     
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 })
@@ -138,27 +143,14 @@ class UserInformationViewController: FormViewController {
         let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         let headers = Network.generateHeader(isTokenNeeded: true)
         let formValues = form.values()
-        
-        if formValues["userName"] as? String == nil {
-            let alert = UIAlertController(title: "小提醒", message: "請輸入您的大名喔", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        let availableStartTime: NSDate! = formValues["availableStartTime"] as? NSDate
-        let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
-        
-        if (availableStartTime.isGreaterThanDate(availableEndTime)) {
-            let alert = UIAlertController(title: "小提醒", message: "你所選定的時間區間不合理喔", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        
+        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.7)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "H:mm"
+        
+        if !isFormValuesValid(formValues) {
+            // Form is not valid
+            return
+        }
         
         let parameters = [
             "userName": formValues["userName"] as? String != nil ? formValues["userName"] as? String : "",
@@ -170,18 +162,71 @@ class UserInformationViewController: FormViewController {
             "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
         ]
         
-        let apiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
 
-        print("PUT: " + apiRoute)
+        print("PUT: " + updateInformationApiRoute)
         
+        /**
+        PUT: Update the user's information.
+        **/
         Alamofire
-            .request(.PUT, apiRoute, parameters: parameters, encoding: .JSON, headers: headers)
+            .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
             .validate()
             .response { request, response, data, error in
-                if error == nil {
-                    //MARK: all is well!
+                if error == nil && !self.isUserSelectPhoto {
+                    //MARK: error is nil, nothing happened! All is well :)
                     self.presentViewController(contactTableView, animated: true, completion: nil)
+                } else {
+                    print(error)
                 }
+            }
+        /**
+        POST: Upload avatar image.
+        **/
+        Alamofire
+            .upload(.POST, uploadAvatarApiRoute, headers: headers,
+                multipartFormData:
+                { multipartFormData in
+                    multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
+                },
+                encodingCompletion: {
+                    encodingResult in
+                    switch encodingResult {
+                    case .Success(let upload, _, _):
+                        upload.response { response in
+                            self.presentViewController(contactTableView, animated: true, completion: nil)
+                        }
+                    case .Failure(let encodingError):
+                        print(encodingError)
+                    }
+                })
+    
+    }
+    
+    /**
+    MARK: Function to validate if there are any bad values.
+    @param: formValues
+    @return: true if valid, false if unvalid.
+    **/
+    private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
+        if formValues["userName"] as? String == nil {
+            let alert = UIAlertController(title: "小提醒", message: "請輸入您的大名喔", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return false
         }
+        
+        let availableStartTime: NSDate! = formValues["availableStartTime"] as? NSDate
+        let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
+        
+        if (availableStartTime.isGreaterThanDate(availableEndTime)) {
+            let alert = UIAlertController(title: "小提醒", message: "你所選定的時間區間不合理喔", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return false
+        }
+        
+        return true
     }
 }

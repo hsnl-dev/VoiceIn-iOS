@@ -3,7 +3,7 @@ import Material
 import Alamofire
 import SwiftyJSON
 
-class ValidationCodeViewController: UIViewController {
+class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
     
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
@@ -18,7 +18,6 @@ class ValidationCodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = MaterialColor.white
         
         prepareButton()
         prepareField()
@@ -26,7 +25,10 @@ class ValidationCodeViewController: UIViewController {
         
         print(self.userUuid)
         userDefaultData.setValue(self.userUuid, forKey: "userUuid")
-        
+    }
+    
+    private func prepareView() {
+        view.backgroundColor = MaterialColor.white
         //MARK: Set the status bar to light.
         navigationBarView.statusBarStyle = .LightContent
     }
@@ -61,11 +63,61 @@ class ValidationCodeViewController: UIViewController {
         let validationFieldLeftView: UIView = UIView(frame: CGRectMake(0, 0, 10, 10))
         validationCodeField.leftViewMode = .Always
         validationCodeField.leftView = validationFieldLeftView
+        validationCodeField.delegate = self
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        if UIDevice().userInterfaceIdiom == .Phone {
+//            switch UIScreen.mainScreen().nativeBounds.height {
+//            case 480:
+//                return
+//            case 960:
+//                return
+//            case 1136:
+//                animateViewMoving(true, moveValue: 150)
+//            case 1334:
+//                return
+//            case 2208:
+//                return
+//            default:
+//                return
+//            }
+//        }
+//    }
+
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        if UIDevice().userInterfaceIdiom == .Phone {
+//            switch UIScreen.mainScreen().nativeBounds.height {
+//            case 480:
+//                return
+//            case 960:
+//                return
+//            case 1136:
+//                animateViewMoving(false, moveValue: 150)
+//            case 1334:
+//                return
+//            case 2208:
+//                return
+//            default:
+//                return
+//            }
+//        }
+//
+//    }
+    
+//    func animateViewMoving (up:Bool, moveValue :CGFloat){
+//        let movementDuration: NSTimeInterval = 0.3
+//        let movement: CGFloat = (up ? -moveValue : moveValue)
+//        UIView.beginAnimations("animateView", context: nil)
+//        UIView.setAnimationBeginsFromCurrentState(true)
+//        UIView.setAnimationDuration(movementDuration)
+//        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
+//        UIView.commitAnimations()
+//    }
     
     @IBAction func validationButtonClicked(sender: UIButton!) {
         print("Check if the validation code is correct or not.")
@@ -81,26 +133,27 @@ class ValidationCodeViewController: UIViewController {
                 response in
                 switch response.result {
                 case .Success(let JSON_DATA):
+                    /**
+                    API Calling Successfully!
+                    **/
                     let json = JSON(JSON_DATA)
                     let token = json["token"]
                     
-//                    if token != nil {
-//                        // MARK: User input the right code, save the token and show information view.
-//                        self.userDefaultData.setValue(json["token"].stringValue, forKey: "token")
-//                        
-//                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
-//                        self.presentViewController(userInformationController, animated: true, completion: nil)
-//                    } else {
-//                        // MARK: User input the wrong code, pop out the alert window.
+                    
+                    if token != nil {
+                        // MARK: User input the right code, save the token and show information view.
+                        self.userDefaultData.setValue(json["token"].stringValue, forKey: "token")
+                        
+                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
+                        self.presentViewController(userInformationController, animated: true, completion: nil)
+                    } else {
+                        // MARK: User input the wrong code, pop out the alert window.
 //                        let alert = UIAlertController(title: "抱歉", message: "您的認證碼輸入錯誤，請再確認一次", preferredStyle: UIAlertControllerStyle.Alert)
 //                        alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
 //                        self.presentViewController(alert, animated: true, completion: nil)
-//                    }
-                    
-                    //MARK: For test convience!
-                    let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
-                    self.presentViewController(userInformationController, animated: true, completion: nil)
-                    //MARK: -------------------
+                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
+                        self.presentViewController(userInformationController, animated: true, completion: nil)
+                    }
                     
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
