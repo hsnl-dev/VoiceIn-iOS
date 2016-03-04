@@ -16,8 +16,14 @@ class ContactTableViewController: UITableViewController {
     let contactArray:[People] = []
 
     override func viewDidLoad() {
+        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
         prepareView()
+    }
+    
+    func refresh(sender:AnyObject) {
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     /// General preparation statements.

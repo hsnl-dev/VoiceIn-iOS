@@ -8,8 +8,8 @@ target 'voiceIn' do
   pod 'Alamofire', '~> 3.1.2'
   pod 'Eureka', '~> 1.3'
   pod 'Fabric'
-  pod 'AWSCognito'
   pod 'Crashlytics'
   pod 'ALCameraViewController'
+  pod 'Cartography'
 end
 

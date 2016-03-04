@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import IQKeyboardManagerSwift
 import Fabric
-import AWSCognito
 import Crashlytics
 
 @UIApplicationMain
@@ -22,15 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
-        
-//        UINavigationBar.appearance().barTintColor = UIColor(red: 69.0/255.0, green:90.0/255.0, blue: 100.0/255.0, alpha: 1.0)
-//        
-//        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-//        
-//        if let barFont = UIFont(name: "Avenir-Light", size: 24.0) {
-//            UINavigationBar.appearance().titleTextAttributes =
-//                [NSForegroundColorAttributeName:UIColor.whiteColor(),NSFontAttributeName:barFont]
-//        }
         
         let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         let userUuid = userDefaultData.stringForKey("userUuid")
@@ -52,10 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.sharedManager().enable = true
         
-        Fabric.with([AWSCognito.self, Crashlytics.self()])
+        Fabric.with([Crashlytics.self()])
         return true
     }
-
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

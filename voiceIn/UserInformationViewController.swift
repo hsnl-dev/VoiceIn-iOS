@@ -178,10 +178,8 @@ class UserInformationViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
-                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                     self.presentViewController(contactTableView, animated: true, completion: nil)
                 } else {
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     print(error)
                 }
             }
@@ -201,7 +199,6 @@ class UserInformationViewController: FormViewController {
                     switch encodingResult {
                     case .Success(let upload, _, _):
                         upload.response { response in
-                            self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                             self.presentViewController(contactTableView, animated: true, completion: nil)
                         }
                     case .Failure(let encodingError):

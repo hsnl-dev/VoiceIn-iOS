@@ -138,6 +138,17 @@
                             <barButtonItem title="Item" image="ic_credit_card_white" id="TaM-EP-ADq"/>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="L3F-aZ-WrW">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="下拉更新通訊錄">
+                                <attributes>
+                                    <font key="NSFont" size="11" name=".PingFangTC-Regular"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVC-1w-bTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -174,7 +185,30 @@
                     <view key="view" contentMode="scaleToFill" id="C8T-UA-2Cf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcO-i2-7Mg">
+                                <rect key="frame" x="0.0" y="64" width="600" height="56"/>
+                                <color key="backgroundColor" white="0.88297413793103452" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="jNy-6U-nxx"/>
+                                </constraints>
+                                <state key="normal" title="沒有網路連線，請稍候點我重整。">
+                                    <color key="titleColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="refreshTheView:" destination="uei-sk-pti" eventType="touchUpInside" id="fV1-R7-5xe"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dcO-i2-7Mg" firstAttribute="leading" secondItem="C8T-UA-2Cf" secondAttribute="leadingMargin" constant="-20" id="6Yp-HI-GAG"/>
+                            <constraint firstItem="dcO-i2-7Mg" firstAttribute="top" secondItem="pVw-da-Xtw" secondAttribute="bottom" id="dBZ-zE-fBh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dcO-i2-7Mg" secondAttribute="trailing" constant="-20" id="xCK-G9-YgU"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="設定" id="w7G-uU-sXM">
                         <barButtonItem key="rightBarButtonItem" image="ic_save_white" id="zqd-zh-QIy">
@@ -183,10 +217,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="refreshButton" destination="dcO-i2-7Mg" id="NWk-dl-E2N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FcT-lD-yT7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1617" y="1457"/>
+            <point key="canvasLocation" x="1655" y="1457"/>
         </scene>
         <!--個人設定-->
         <scene sceneID="rO0-wK-ovC">
@@ -219,7 +256,19 @@
                     <view key="view" contentMode="scaleToFill" id="IKz-Ph-mqR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一測試版本未開放" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scr-y7-br6">
+                                <rect key="frame" x="197" y="286" width="207" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="scr-y7-br6" firstAttribute="centerY" secondItem="IKz-Ph-mqR" secondAttribute="centerY" id="ha5-Qc-Bxu"/>
+                            <constraint firstItem="scr-y7-br6" firstAttribute="centerX" secondItem="IKz-Ph-mqR" secondAttribute="centerX" id="nb9-aq-6fV"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="常用聯絡人" id="Y0d-Eo-dSP">
@@ -257,6 +306,7 @@
         <!--歷史紀錄-->
         <scene sceneID="N65-mC-YWv">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nde-M3-rat" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="QvZ-NY-o3s" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LiW-wt-UvF"/>
@@ -265,7 +315,19 @@
                     <view key="view" contentMode="scaleToFill" id="vNS-te-OIi">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一測試版本未開放" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1w-bu-hhI">
+                                <rect key="frame" x="197" y="286" width="207" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="n1w-bu-hhI" firstAttribute="centerX" secondItem="vNS-te-OIi" secondAttribute="centerX" id="9bx-3D-Coq"/>
+                            <constraint firstItem="n1w-bu-hhI" firstAttribute="centerY" secondItem="vNS-te-OIi" secondAttribute="centerY" id="oNB-H8-rU0"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="歷史紀錄" id="vLK-ch-aC6">
@@ -276,7 +338,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Nde-M3-rat" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2549" y="735"/>
         </scene>
@@ -311,7 +372,19 @@
                     <view key="view" contentMode="scaleToFill" id="Erp-Kj-Lnb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一測試版本未開放" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7j-qZ-yGi">
+                                <rect key="frame" x="197" y="286" width="207" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="B7j-qZ-yGi" firstAttribute="centerX" secondItem="Erp-Kj-Lnb" secondAttribute="centerX" id="1ns-N4-urx"/>
+                            <constraint firstItem="B7j-qZ-yGi" firstAttribute="centerY" secondItem="Erp-Kj-Lnb" secondAttribute="centerY" id="AYx-NR-Neu"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="您的分類" id="7Sn-O5-DoE">
                         <barButtonItem key="rightBarButtonItem" title="新增分類" id="1qB-8T-kKb"/>

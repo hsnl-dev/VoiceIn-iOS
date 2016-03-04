@@ -8,11 +8,13 @@ import ALCameraViewController
 class SettingViewController: FormViewController {
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     let headers = Network.generateHeader(isTokenNeeded: true)
+    
+    @IBOutlet weak var refreshButton: UIButton!
     // MARK: The API Information.
     
     private var navigationBarView: NavigationBarView = NavigationBarView()
     private var isUserSelectPhoto: Bool! = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
@@ -34,16 +36,35 @@ class SettingViewController: FormViewController {
             }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        var reachability: Reachability
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        
+        self.view.bringSubviewToFront(self.refreshButton)
+        
+        if reachability.isReachable() != true {
+            print("Network is not connected!")
+            self.refreshButton.hidden = false
+            self.refreshButton.alpha = 0.8
+        } else {
+            self.refreshButton.hidden = true
+        }
+    }
+    
     func prepareInputForm(userInformation: JSON) {
         debugPrint(userInformation)
         SelectImageRow.defaultCellUpdate = { cell, row in
             cell.accessoryView?.layer.cornerRadius = 0
             cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
         }
-        
+        form.removeAll()
         form +++
             Section(header: "基本資料", footer: "* 記號表示為必填")
-            
             <<< SelectImageRow(){
                     $0.title = "您的大頭貼"
                     $0.cell.height = {
@@ -164,6 +185,7 @@ class SettingViewController: FormViewController {
                 }
 
         }
+        
     }
     
     @IBAction func saveButtonClicked(sender: UIButton!) {
@@ -203,10 +225,8 @@ class SettingViewController: FormViewController {
                     //MARK: error is nil, nothing happened! All is well :)
                     print("success")
                     self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
-                    
                     return
                 } else {
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     return
                 }
         }
@@ -261,5 +281,11 @@ class SettingViewController: FormViewController {
         let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func refreshTheView(sender: UIButton!) {
+        print("refresh the view")
+        self.viewDidLoad()
+        self.viewDidAppear(true)
     }
 }

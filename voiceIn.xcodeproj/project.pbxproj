@@ -14,6 +14,7 @@
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
 		3EC23CFF1C775C7000CA92A2 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */; };
 		3EC23D021C775D8B00CA92A2 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23D011C775D8B00CA92A2 /* People.swift */; };
+		3ED7B4871C89EA2F009FF4D6 /* Reachibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */; };
 		3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */; };
 		3EF050661C77196600F7774E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050641C77196600F7774E /* Login.storyboard */; };
 		3EF050691C77197900F7774E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050671C77197900F7774E /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
 		3EC23D011C775D8B00CA92A2 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
+		3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachibility.swift; sourceTree = "<group>"; };
 		3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3EF050651C77196600F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		3EF050681C77197900F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -64,11 +66,10 @@
 		3EA12BA61C75C75000AFB4EE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */,
-				3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */,
-				3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */,
-				3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */,
 				3EF134ED1C86E18C001A7894 /* SettingViewController.swift */,
+				3EE66B2B1C89B9C200EEAED6 /* Contact */,
+				3EE66B2A1C89B9B500EEAED6 /* User */,
+				3EE66B291C89B99700EEAED6 /* Validation */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -98,11 +99,37 @@
 			name = DataModel;
 			sourceTree = "<group>";
 		};
+		3EE66B291C89B99700EEAED6 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */,
+				3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */,
+			);
+			name = Validation;
+			sourceTree = "<group>";
+		};
+		3EE66B2A1C89B9B500EEAED6 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		3EE66B2B1C89B9C200EEAED6 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */,
+			);
+			name = Contact;
+			sourceTree = "<group>";
+		};
 		3EF134EF1C86E654001A7894 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				3EF134F01C86E67C001A7894 /* Network.swift */,
 				3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */,
+				3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -301,6 +328,7 @@
 			files = (
 				3EF134F11C86E67C001A7894 /* Network.swift in Sources */,
 				3EA12BAB1C75CF4B00AFB4EE /* ContactTableViewController.swift in Sources */,
+				3ED7B4871C89EA2F009FF4D6 /* Reachibility.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */,
 				3EA12BA91C75CD5A00AFB4EE /* LoginViewController.swift in Sources */,
@@ -429,12 +457,13 @@
 			baseConfigurationReference = 9D13D4708872AE911803EDD8 /* Pods-voiceIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
 				INFOPLIST_FILE = voiceIn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hsnl.voiceIn;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.edu.nthu.hsnl.voiceIn;
 				PRODUCT_NAME = VoiceIn;
+				PROVISIONING_PROFILE = "51289c18-61de-4aa9-9a7e-f650f28b636c";
 				SWIFT_OBJC_BRIDGING_HEADER = bridge.h;
 			};
 			name = Debug;
@@ -444,12 +473,14 @@
 			baseConfigurationReference = CBBF54FA7E5ECB0B0AD8D6E5 /* Pods-voiceIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
 				INFOPLIST_FILE = voiceIn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hsnl.voiceIn;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.edu.nthu.hsnl.voiceIn;
 				PRODUCT_NAME = VoiceIn;
+				PROVISIONING_PROFILE = "51289c18-61de-4aa9-9a7e-f650f28b636c";
 				SWIFT_OBJC_BRIDGING_HEADER = bridge.h;
 			};
 			name = Release;
