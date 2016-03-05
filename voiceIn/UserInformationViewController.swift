@@ -52,7 +52,7 @@ class UserInformationViewController: FormViewController {
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 })
             
-            <<< NameRow() {
+            <<< EmailRow() {
                     $0.title = "您的姓名*:"
                     $0.placeholder = ""
                     $0.tag = "userName"
@@ -61,7 +61,7 @@ class UserInformationViewController: FormViewController {
                     cell.imageView?.image = UIImage(named: "plus_image")
             }
             
-            <<< NameRow() {
+            <<< EmailRow() {
                     $0.title = "您的職稱:"
                     $0.placeholder = ""
                     $0.tag = "jobTitle"
@@ -70,7 +70,7 @@ class UserInformationViewController: FormViewController {
                     cell.imageView?.image = UIImage(named: "plus_image")
             }
             
-            <<< NameRow() {
+            <<< EmailRow() {
                     $0.title = "所屬公司:"
                     $0.placeholder = ""
                     $0.tag = "company"
@@ -85,7 +85,7 @@ class UserInformationViewController: FormViewController {
                 $0.tag = "email"
             }
             
-            <<< NameRow() {
+            <<< EmailRow() {
                     $0.title = "位置:"
                     $0.placeholder = "台北, 台灣"
                     $0.tag = "location"
@@ -163,10 +163,11 @@ class UserInformationViewController: FormViewController {
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
         ]
+        let userUuid = userDefaultData.stringForKey("userUuid")!
+        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
+        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
+        let generateQrcodeApiRoute = API_END_POINT + "/accounts/" + userUuid + "/qrcode"
         
-        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
-        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
-
         print("PUT: " + updateInformationApiRoute)
         
         /**
@@ -183,10 +184,10 @@ class UserInformationViewController: FormViewController {
                     print(error)
                 }
             }
+        
         /**
         POST: Upload avatar image.
         **/
-        
         if isUserSelectPhoto == true {
             Alamofire
             .upload(.POST, uploadAvatarApiRoute, headers: headers,
@@ -207,7 +208,17 @@ class UserInformationViewController: FormViewController {
                     }
                 })
         }
-    
+        
+        /**
+        POST: Generate QRCode
+        **/
+        Alamofire
+            .request(.POST, generateQrcodeApiRoute, headers: headers).response {
+                    request, response, data, error in
+                if error == nil {
+                    print("Generate QR Code Successfully!")
+                }
+        }
     }
     
     /**

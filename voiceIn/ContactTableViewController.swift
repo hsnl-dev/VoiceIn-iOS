@@ -12,7 +12,6 @@ import Alamofire
 
 class ContactTableViewController: UITableViewController {
     private var navigationBarView: NavigationBarView = NavigationBarView()
-    
     let contactArray:[People] = []
 
     override func viewDidLoad() {
@@ -54,13 +53,15 @@ class ContactTableViewController: UITableViewController {
         cell.nameLabel.text = "Jony Ive"
         cell.type.text = "免費"
         cell.nickNameLabel.text = "老強尼"
+        cell.qrCodeUuid = ""
+        cell.callee = "+886975531444"
         
         cell.thumbnailImageView.image = UIImage(named: "jony")
         cell.thumbnailImageView.layer.cornerRadius = 25.0
         cell.thumbnailImageView.clipsToBounds = true
         
         cell.onCallButtonTapped = {
-            print(cell.type.text)
+            print(cell.callee)
         }
         
         cell.onFavoriteButtonTapped = {
@@ -69,5 +70,9 @@ class ContactTableViewController: UITableViewController {
         
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath:NSIndexPath) {
+        if editingStyle == .Delete {
+        }
+    }
 }

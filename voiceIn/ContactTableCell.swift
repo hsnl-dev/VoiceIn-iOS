@@ -18,6 +18,8 @@ class ContactTableCell: MaterialTableViewCell{
     @IBOutlet weak var favoriteButton: FabButton!
     var onCallButtonTapped: (() -> Void)? = nil
     var onFavoriteButtonTapped: (() -> Void)? = nil
+    var callee: String?
+    var qrCodeUuid: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()

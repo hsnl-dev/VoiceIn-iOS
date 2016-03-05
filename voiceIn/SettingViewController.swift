@@ -96,7 +96,7 @@ class SettingViewController: FormViewController {
                         print("image cell setup!")
                 }
             
-            <<< NameRow() {
+            <<< EmailRow() {
                     $0.title = "您的姓名*:"
                     $0.placeholder = ""
                     $0.tag = "userName"
@@ -106,7 +106,7 @@ class SettingViewController: FormViewController {
                     row.value = userInformation["userName"].stringValue
             }
             
-            <<< NameRow() {
+            <<< EmailRow() {
                 $0.title = "您的職稱:"
                 $0.placeholder = ""
                 $0.tag = "jobTitle"
@@ -116,7 +116,7 @@ class SettingViewController: FormViewController {
                     row.value = userInformation["jobTitle"].stringValue
             }
             
-            <<< NameRow() {
+            <<< EmailRow() {
                 $0.title = "所屬公司:"
                 $0.placeholder = ""
                 $0.tag = "company"
@@ -136,7 +136,7 @@ class SettingViewController: FormViewController {
                 }
     
             
-            <<< NameRow() {
+            <<< EmailRow() {
                 $0.title = "位置:"
                 $0.placeholder = "台北, 台灣"
                 $0.tag = "location"
@@ -233,26 +233,28 @@ class SettingViewController: FormViewController {
         /**
         POST: Upload avatar image.
         **/
-        Alamofire
-            .upload(.POST, uploadAvatarApiRoute, headers: headers,
-                multipartFormData:
-                { multipartFormData in
-                    multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
-                },
-                encodingCompletion: {
-                    encodingResult in
-                    switch encodingResult {
-                    case .Success(let upload, _, _):
-                        upload.response { response in
-                            print("photo success")
+        if isUserSelectPhoto == true {
+            Alamofire
+                .upload(.POST, uploadAvatarApiRoute, headers: headers,
+                    multipartFormData:
+                    { multipartFormData in
+                        multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
+                    },
+                    encodingCompletion: {
+                        encodingResult in
+                        switch encodingResult {
+                        case .Success(let upload, _, _):
+                            upload.response { response in
+                                print("photo success")
+                                self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                                return
+                            }
+                        case .Failure(let encodingError):
+                            print(encodingError)
                             return
                         }
-                    case .Failure(let encodingError):
-                        print(encodingError)
-                        return
-                    }
-            })
-        
+                })
+        }
     }
     
     /**

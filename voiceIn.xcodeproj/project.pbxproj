@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3E5466941C87392700F3A9A0 /* NSTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */; };
+		3E8D86FE1C8ACECB00974C78 /* NSDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D86FD1C8ACECB00974C78 /* NSDefault.swift */; };
+		3E8D87001C8AD3DF00974C78 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D86FF1C8AD3DF00974C78 /* QRCodeReaderViewController.swift */; };
+		3E8D87021C8ADB5E00974C78 /* ProviderInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87011C8ADB5E00974C78 /* ProviderInformationViewController.swift */; };
+		3E8D87041C8AF43700974C78 /* vCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87031C8AF43700974C78 /* vCardViewController.swift */; };
+		3E8D87061C8B14B900974C78 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87051C8B14B900974C78 /* ContactDetailTableViewCell.swift */; };
+		3E8D87081C8B15BA00974C78 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87071C8B15BA00974C78 /* ContactDetailViewController.swift */; };
 		3EA12BA91C75CD5A00AFB4EE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */; };
 		3EA12BAB1C75CF4B00AFB4EE /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */; };
 		3EAC95E91C763C3900421079 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */; };
@@ -30,6 +36,12 @@
 		11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimeExtension.swift; sourceTree = "<group>"; };
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
+		3E8D86FD1C8ACECB00974C78 /* NSDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDefault.swift; sourceTree = "<group>"; };
+		3E8D86FF1C8AD3DF00974C78 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
+		3E8D87011C8ADB5E00974C78 /* ProviderInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInformationViewController.swift; sourceTree = "<group>"; };
+		3E8D87031C8AF43700974C78 /* vCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vCardViewController.swift; sourceTree = "<group>"; };
+		3E8D87051C8B14B900974C78 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
+		3E8D87071C8B15BA00974C78 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewController.swift; sourceTree = "<group>"; };
 		3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
@@ -63,9 +75,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E8D87091C8B29E100974C78 /* QRCode */ = {
+			isa = PBXGroup;
+			children = (
+				3E8D87011C8ADB5E00974C78 /* ProviderInformationViewController.swift */,
+				3E8D86FF1C8AD3DF00974C78 /* QRCodeReaderViewController.swift */,
+			);
+			name = QRCode;
+			sourceTree = "<group>";
+		};
 		3EA12BA61C75C75000AFB4EE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3E8D87091C8B29E100974C78 /* QRCode */,
 				3EF134ED1C86E18C001A7894 /* SettingViewController.swift */,
 				3EE66B2B1C89B9C200EEAED6 /* Contact */,
 				3EE66B2A1C89B9B500EEAED6 /* User */,
@@ -87,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */,
+				3E8D87051C8B14B900974C78 /* ContactDetailTableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -112,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */,
+				3E8D87031C8AF43700974C78 /* vCardViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -120,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */,
+				3E8D87071C8B15BA00974C78 /* ContactDetailViewController.swift */,
 			);
 			name = Contact;
 			sourceTree = "<group>";
@@ -130,6 +155,7 @@
 				3EF134F01C86E67C001A7894 /* Network.swift */,
 				3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */,
 				3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */,
+				3E8D86FD1C8ACECB00974C78 /* NSDefault.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -329,15 +355,21 @@
 				3EF134F11C86E67C001A7894 /* Network.swift in Sources */,
 				3EA12BAB1C75CF4B00AFB4EE /* ContactTableViewController.swift in Sources */,
 				3ED7B4871C89EA2F009FF4D6 /* Reachibility.swift in Sources */,
+				3E8D87041C8AF43700974C78 /* vCardViewController.swift in Sources */,
+				3E8D87081C8B15BA00974C78 /* ContactDetailViewController.swift in Sources */,
+				3E8D87021C8ADB5E00974C78 /* ProviderInformationViewController.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */,
 				3EA12BA91C75CD5A00AFB4EE /* LoginViewController.swift in Sources */,
 				3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */,
 				3EF134EE1C86E18C001A7894 /* SettingViewController.swift in Sources */,
 				3EAC95E91C763C3900421079 /* ValidationCodeViewController.swift in Sources */,
+				3E8D86FE1C8ACECB00974C78 /* NSDefault.swift in Sources */,
+				3E8D87001C8AD3DF00974C78 /* QRCodeReaderViewController.swift in Sources */,
 				3EC23CFF1C775C7000CA92A2 /* ContactTableCell.swift in Sources */,
 				3E5466941C87392700F3A9A0 /* NSTimeExtension.swift in Sources */,
 				3EC23D021C775D8B00CA92A2 /* People.swift in Sources */,
+				3E8D87061C8B14B900974C78 /* ContactDetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
