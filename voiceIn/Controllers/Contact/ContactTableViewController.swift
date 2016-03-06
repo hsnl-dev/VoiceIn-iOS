@@ -25,7 +25,7 @@ class ContactTableViewController: UITableViewController {
         self.refreshControl?.endRefreshing()
     }
     
-    /// General preparation statements.
+    // MARK: General preparation statements.
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
         navigationBarView.statusBarStyle = .Default
@@ -33,7 +33,7 @@ class ContactTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        // MARK: Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source

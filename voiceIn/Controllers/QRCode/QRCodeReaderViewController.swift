@@ -11,47 +11,47 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
     
-    // Added to support different barcodes
+    // MARK: Added to support different barcodes
     let supportedBarCodes = [AVMetadataObjectTypeQRCode, AVMetadataObjectTypeCode128Code, AVMetadataObjectTypeCode39Code, AVMetadataObjectTypeCode93Code, AVMetadataObjectTypeUPCECode, AVMetadataObjectTypePDF417Code, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeAztecCode]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
+        // MARK: Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
         // as the media type parameter.
         let captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         
         do {
-            // Get an instance of the AVCaptureDeviceInput class using the previous device object.
+            // MARK: Get an instance of the AVCaptureDeviceInput class using the previous device object.
             let input = try AVCaptureDeviceInput(device: captureDevice)
             
-            // Initialize the captureSession object.
+            // MAKR: Initialize the captureSession object.
             captureSession = AVCaptureSession()
-            // Set the input device on the capture session.
+            // MARK: Set the input device on the capture session.
             captureSession?.addInput(input)
             
-            // Initialize a AVCaptureMetadataOutput object and set it as the output device to the capture session.
+            // MARK: Initialize a AVCaptureMetadataOutput object and set it as the output device to the capture session.
             let captureMetadataOutput = AVCaptureMetadataOutput()
             captureSession?.addOutput(captureMetadataOutput)
             
-            // Set delegate and use the default dispatch queue to execute the call back
+            // MARK: Set delegate and use the default dispatch queue to execute the call back
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
             
-            // Detect all the supported bar code
+            // MARK: Detect all the supported bar code
             captureMetadataOutput.metadataObjectTypes = supportedBarCodes
             
-            // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
+            // MARK: Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
             videoPreviewLayer?.frame = view.layer.bounds
             view.layer.addSublayer(videoPreviewLayer!)
             
-            // Start video capture
+            // MARK: Start video capture
             captureSession?.startRunning()
-            // Move the message label to the top view
+            // MARK: Move the message label to the top view
             view.bringSubviewToFront(messageLabel)
             
-            // Initialize QR Code Frame to highlight the QR code
+            // MARK: Initialize QR Code Frame to highlight the QR code
             qrCodeFrameView = UIView()
             
             if let qrCodeFrameView = qrCodeFrameView {
@@ -62,7 +62,7 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             }
             
         } catch {
-            // If any error occurs, simply print it out and don't continue any more.
+            // MARK: If any error occurs, simply print it out and don't continue any more.
             print(error)
             return
         }
@@ -79,19 +79,19 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        // MARK: Dispose of any resources that can be recreated.
     }
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
         
-        // Check if the metadataObjects array is not nil and it contains at least one object.
+        // MARK: Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRectZero
             messageLabel.text = "還沒有掃描到 QRCode"
             return
         }
         
-        // Get the metadata object.
+        // MARK: Get the metadata object.
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
         // Here we use filter method to check if the type of metadataObj is supported

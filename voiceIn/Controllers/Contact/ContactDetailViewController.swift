@@ -13,7 +13,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // self-sizing cell setting.
+        // MARK: self-sizing cell setting.
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 70;
         prepareView()
@@ -52,7 +52,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
 
-    /// Handle the menuView touch event.
+    // MARK: Handle the menuView touch event.
     internal func handleMenu() {
         if menuView.menu.opened {
             menuView.menu.close()
@@ -65,17 +65,17 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    /// Handle the menuView touch event.
+    // MARK: Handle the menuView touch event.
     internal func handleButton(button: UIButton) {
         print("Hit Button \(button)")
     }
     
-    /// General preparation statements are placed here.
+    // MARK: General preparation statements are placed here.
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
     }
     
-    /// Prepares the MenuView example.
+    // MARK: Prepares the MenuView example.
     private func prepareMenuView() {
         var image: UIImage? = UIImage(named: "ic_menu_white")?.imageWithRenderingMode(.AlwaysTemplate)
         let btn1: FabButton = FabButton()
@@ -129,7 +129,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn4.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
         menuView.addSubview(btn4)
         
-        // Initialize the menu and setup the configuration options.
+        // MARK: Initialize the menu and setup the configuration options.
         menuView.menu.direction = .Up
         menuView.menu.baseViewSize = CGSizeMake(diameter, diameter)
         menuView.menu.views = [btn1, btn2, btn3, btn4]
