@@ -1,14 +1,12 @@
 import UIKit
 import Material
 import Alamofire
+import SwiftyJSON
 
 class LoginViewController: UIViewController, TextFieldDelegate {
     
-    // MARK: The API Information.
-    let API_END_POINT = "https://voicein-web-service.us-west-2.elasticbeanstalk.com/api/v1"
-    let headers = [
-        "apiKey": "f4c34db9-c4f8-4356-9442-51ece7adca67",
-    ]
+    var json: JSON?
+    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     // MARK: TextField.
     @IBOutlet weak var phoneNumberField: TextField!
@@ -21,16 +19,19 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         super.viewDidLoad()
         prepareView()
         prepareField()
+        blurBackgroundImage()
         
+        //MARK: Set up send validation button.
+        sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
+        sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
+    }
+    
+    private func blurBackgroundImage() {
         //MARK: Set up blur image background.
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         backgroundImageView.addSubview(blurEffectView)
-        
-        //MARK: Set up send validation button.
-        sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
-        sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
     }
     
     private func prepareView() {
@@ -55,19 +56,33 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         self.view.endEditing(true)
     }
     
+    @IBAction func sendValidationCodeClicked(sender: UIButton!) {
+        print("Sending Validation Code..." + phoneNumberField.text!)
+        
+        let headers = Network.generateHeader(isTokenNeeded: false)
+        let parameters = [
+            "phoneNumber": "+886988779570"
+        ]
+        
+        Alamofire.request(.POST, API_SANDBOX_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .Success(let JSON_DATA):
+                    self.json = JSON(JSON_DATA)
+                    self.performSegueWithIdentifier("sendValidationCodeSegue", sender: nil)
+                    self.userDefaultData.setValue("+886988779570", forKey: "phoneNumber")
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+        
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "sendValidationCodeSegue" {
-            print("Sending Validation Code..." + phoneNumberField.text!)
-            
-            let parameters = [
-                "phoneNumber": "+886988779570"
-            ]
-            
-//            Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
-//                .responseJSON {
-//                    response in
-//                        debugPrint(response)
-//                }
+            let destinationController = segue.destinationViewController as! ValidationCodeViewController
+            destinationController.userUuid = self.json!["userUuid"].stringValue
             
         }
     }

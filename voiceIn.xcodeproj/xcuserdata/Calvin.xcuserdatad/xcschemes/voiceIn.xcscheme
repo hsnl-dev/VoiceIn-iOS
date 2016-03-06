@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3EF632951C75A9F300BBAB39"
-               BuildableName = "voiceIn.app"
+               BuildableName = "VoiceIn.app"
                BlueprintName = "voiceIn"
-               ReferencedContainer = "container:voiceIn.xcodeproj">
+               ReferencedContainer = "container:VoiceIn.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EF632951C75A9F300BBAB39"
-            BuildableName = "voiceIn.app"
+            BuildableName = "VoiceIn.app"
             BlueprintName = "voiceIn"
-            ReferencedContainer = "container:voiceIn.xcodeproj">
+            ReferencedContainer = "container:VoiceIn.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EF632951C75A9F300BBAB39"
-            BuildableName = "voiceIn.app"
+            BuildableName = "VoiceIn.app"
             BlueprintName = "voiceIn"
-            ReferencedContainer = "container:voiceIn.xcodeproj">
+            ReferencedContainer = "container:VoiceIn.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EF632951C75A9F300BBAB39"
-            BuildableName = "voiceIn.app"
+            BuildableName = "VoiceIn.app"
             BlueprintName = "voiceIn"
-            ReferencedContainer = "container:voiceIn.xcodeproj">
+            ReferencedContainer = "container:VoiceIn.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

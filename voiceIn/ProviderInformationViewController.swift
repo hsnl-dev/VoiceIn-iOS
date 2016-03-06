@@ -1,0 +1,62 @@
+import UIKit
+import Alamofire
+import SwiftyJSON
+
+class ProviderInformationViewController: UIViewController {
+    var qrCodeUuid: String!
+    let headers = Network.generateHeader(isTokenNeeded: true)
+    @IBOutlet weak var location: UILabel!
+    @IBOutlet weak var profile: UILabel!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var company: UILabel!
+    @IBOutlet weak var userAvatar: UIImageView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let getInformationApiRoute = API_END_POINT + "/providers/" + qrCodeUuid
+
+        /**
+        GET: Get the user's information.
+        **/
+        Alamofire
+            .request(.GET, getInformationApiRoute, headers: headers)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .Success(let JSON_RESPONSE):
+                    let jsonResponse = JSON(JSON_RESPONSE)
+                    debugPrint(jsonResponse)
+                    self.userName.text = jsonResponse["name"].stringValue
+                    self.company.text = jsonResponse["company"].stringValue
+                    self.profile.text = jsonResponse["profile"].stringValue
+                    self.location.text = jsonResponse["location"].stringValue
+
+                    let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["avatarId"].stringValue
+                    Alamofire
+                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
+                        .responseData {
+                            response in
+                            if response.data != nil {
+                                self.userAvatar.image = UIImage(data: response.data!)
+                            }
+                    }
+                case .Failure(let error):
+                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    debugPrint(error)
+                }
+        }
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+}

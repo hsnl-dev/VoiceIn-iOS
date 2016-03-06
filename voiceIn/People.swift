@@ -1,15 +1,9 @@
 import Foundation
 
 class People {
-    var name: String
-    var type: String
-    var image: String
-    var phoneNumber: String
+    var data: [String: String?]
     
-    init(name: String, type: String, location: String, phoneNumber: String, image: String) {
-        self.name = name
-        self.type = type
-        self.phoneNumber = phoneNumber
-        self.image = image
-    }
+    init(userInformation data: [String: String?]) {
+        self.data = data
+    }    
 }
