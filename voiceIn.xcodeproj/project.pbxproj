@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E5466941C87392700F3A9A0 /* NSTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */; };
-		3E8D86FE1C8ACECB00974C78 /* NSDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D86FD1C8ACECB00974C78 /* NSDefault.swift */; };
-		3E8D87001C8AD3DF00974C78 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D86FF1C8AD3DF00974C78 /* QRCodeReaderViewController.swift */; };
-		3E8D87021C8ADB5E00974C78 /* ProviderInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87011C8ADB5E00974C78 /* ProviderInformationViewController.swift */; };
-		3E8D87041C8AF43700974C78 /* vCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87031C8AF43700974C78 /* vCardViewController.swift */; };
-		3E8D87061C8B14B900974C78 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87051C8B14B900974C78 /* ContactDetailTableViewCell.swift */; };
-		3E8D87081C8B15BA00974C78 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D87071C8B15BA00974C78 /* ContactDetailViewController.swift */; };
-		3EA12BA91C75CD5A00AFB4EE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */; };
-		3EA12BAB1C75CF4B00AFB4EE /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */; };
-		3EAC95E91C763C3900421079 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */; };
+		3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0BA1C8C3E01001BB458 /* ContactDetailTableViewCell.swift */; };
+		3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0BB1C8C3E01001BB458 /* ContactTableCell.swift */; };
+		3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C01C8C3E12001BB458 /* ContactDetailViewController.swift */; };
+		3E98C0D41C8C3E12001BB458 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */; };
+		3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C31C8C3E12001BB458 /* ProviderInformationViewController.swift */; };
+		3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C41C8C3E12001BB458 /* QRCodeReaderViewController.swift */; };
+		3E98C0D71C8C3E12001BB458 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C51C8C3E12001BB458 /* SettingViewController.swift */; };
+		3E98C0D81C8C3E12001BB458 /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */; };
+		3E98C0D91C8C3E12001BB458 /* vCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */; };
+		3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */; };
+		3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */; };
+		3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CD1C8C3E12001BB458 /* People.swift */; };
+		3E98C0DD1C8C3E12001BB458 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CF1C8C3E12001BB458 /* Network.swift */; };
+		3E98C0DE1C8C3E12001BB458 /* NSDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0D01C8C3E12001BB458 /* NSDefault.swift */; };
+		3E98C0DF1C8C3E12001BB458 /* NSTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0D11C8C3E12001BB458 /* NSTimeExtension.swift */; };
+		3E98C0E01C8C3E12001BB458 /* Reachibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0D21C8C3E12001BB458 /* Reachibility.swift */; };
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
-		3EC23CFF1C775C7000CA92A2 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */; };
-		3EC23D021C775D8B00CA92A2 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC23D011C775D8B00CA92A2 /* People.swift */; };
-		3ED7B4871C89EA2F009FF4D6 /* Reachibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */; };
-		3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */; };
 		3EF050661C77196600F7774E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050641C77196600F7774E /* Login.storyboard */; };
 		3EF050691C77197900F7774E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050671C77197900F7774E /* Main.storyboard */; };
-		3EF134EE1C86E18C001A7894 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF134ED1C86E18C001A7894 /* SettingViewController.swift */; };
-		3EF134F11C86E67C001A7894 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF134F01C86E67C001A7894 /* Network.swift */; };
 		3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632991C75A9F300BBAB39 /* AppDelegate.swift */; };
 		3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632A01C75A9F300BBAB39 /* voiceIn.xcdatamodeld */; };
 		3EF632A71C75A9F300BBAB39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF632A51C75A9F300BBAB39 /* LaunchScreen.storyboard */; };
@@ -34,26 +34,26 @@
 
 /* Begin PBXFileReference section */
 		11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimeExtension.swift; sourceTree = "<group>"; };
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
-		3E8D86FD1C8ACECB00974C78 /* NSDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDefault.swift; sourceTree = "<group>"; };
-		3E8D86FF1C8AD3DF00974C78 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
-		3E8D87011C8ADB5E00974C78 /* ProviderInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInformationViewController.swift; sourceTree = "<group>"; };
-		3E8D87031C8AF43700974C78 /* vCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vCardViewController.swift; sourceTree = "<group>"; };
-		3E8D87051C8B14B900974C78 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
-		3E8D87071C8B15BA00974C78 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
-		3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewController.swift; sourceTree = "<group>"; };
-		3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
+		3E98C0BA1C8C3E01001BB458 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
+		3E98C0BB1C8C3E01001BB458 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
+		3E98C0C01C8C3E12001BB458 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
+		3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewController.swift; sourceTree = "<group>"; };
+		3E98C0C31C8C3E12001BB458 /* ProviderInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInformationViewController.swift; sourceTree = "<group>"; };
+		3E98C0C41C8C3E12001BB458 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
+		3E98C0C51C8C3E12001BB458 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
+		3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vCardViewController.swift; sourceTree = "<group>"; };
+		3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
+		3E98C0CD1C8C3E12001BB458 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
+		3E98C0CF1C8C3E12001BB458 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		3E98C0D01C8C3E12001BB458 /* NSDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDefault.swift; sourceTree = "<group>"; };
+		3E98C0D11C8C3E12001BB458 /* NSTimeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimeExtension.swift; sourceTree = "<group>"; };
+		3E98C0D21C8C3E12001BB458 /* Reachibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachibility.swift; sourceTree = "<group>"; };
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
-		3EC23D011C775D8B00CA92A2 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
-		3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachibility.swift; sourceTree = "<group>"; };
-		3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3EF050651C77196600F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		3EF050681C77197900F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3EF134ED1C86E18C001A7894 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		3EF134F01C86E67C001A7894 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3EF632961C75A9F300BBAB39 /* VoiceIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoiceIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF632991C75A9F300BBAB39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3EF632A11C75A9F300BBAB39 /* voiceIn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = voiceIn.xcdatamodel; sourceTree = "<group>"; };
@@ -75,25 +75,80 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E8D87091C8B29E100974C78 /* QRCode */ = {
+		3E98C0B91C8C3E01001BB458 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				3E8D87011C8ADB5E00974C78 /* ProviderInformationViewController.swift */,
-				3E8D86FF1C8AD3DF00974C78 /* QRCodeReaderViewController.swift */,
+				3E98C0BA1C8C3E01001BB458 /* ContactDetailTableViewCell.swift */,
+				3E98C0BB1C8C3E01001BB458 /* ContactTableCell.swift */,
 			);
-			name = QRCode;
+			path = Cells;
 			sourceTree = "<group>";
 		};
-		3EA12BA61C75C75000AFB4EE /* Controllers */ = {
+		3E98C0BE1C8C3E12001BB458 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3E8D87091C8B29E100974C78 /* QRCode */,
-				3EF134ED1C86E18C001A7894 /* SettingViewController.swift */,
-				3EE66B2B1C89B9C200EEAED6 /* Contact */,
-				3EE66B2A1C89B9B500EEAED6 /* User */,
-				3EE66B291C89B99700EEAED6 /* Validation */,
+				3E98C0BF1C8C3E12001BB458 /* Contact */,
+				3E98C0C21C8C3E12001BB458 /* QRCode */,
+				3E98C0C51C8C3E12001BB458 /* SettingViewController.swift */,
+				3E98C0C61C8C3E12001BB458 /* User */,
+				3E98C0C91C8C3E12001BB458 /* Validation */,
 			);
-			name = Controllers;
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3E98C0BF1C8C3E12001BB458 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				3E98C0C01C8C3E12001BB458 /* ContactDetailViewController.swift */,
+				3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		3E98C0C21C8C3E12001BB458 /* QRCode */ = {
+			isa = PBXGroup;
+			children = (
+				3E98C0C31C8C3E12001BB458 /* ProviderInformationViewController.swift */,
+				3E98C0C41C8C3E12001BB458 /* QRCodeReaderViewController.swift */,
+			);
+			path = QRCode;
+			sourceTree = "<group>";
+		};
+		3E98C0C61C8C3E12001BB458 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */,
+				3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		3E98C0C91C8C3E12001BB458 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */,
+				3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */,
+			);
+			path = Validation;
+			sourceTree = "<group>";
+		};
+		3E98C0CC1C8C3E12001BB458 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				3E98C0CD1C8C3E12001BB458 /* People.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		3E98C0CE1C8C3E12001BB458 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3E98C0CF1C8C3E12001BB458 /* Network.swift */,
+				3E98C0D01C8C3E12001BB458 /* NSDefault.swift */,
+				3E98C0D11C8C3E12001BB458 /* NSTimeExtension.swift */,
+				3E98C0D21C8C3E12001BB458 /* Reachibility.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		3EA12BA71C75C76100AFB4EE /* Storyboards */ = {
@@ -103,61 +158,6 @@
 				3EF050671C77197900F7774E /* Main.storyboard */,
 			);
 			name = Storyboards;
-			sourceTree = "<group>";
-		};
-		3EC23CFD1C775C0100CA92A2 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				3EC23CFE1C775C7000CA92A2 /* ContactTableCell.swift */,
-				3E8D87051C8B14B900974C78 /* ContactDetailTableViewCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		3EC23D001C775D6D00CA92A2 /* DataModel */ = {
-			isa = PBXGroup;
-			children = (
-				3EC23D011C775D8B00CA92A2 /* People.swift */,
-			);
-			name = DataModel;
-			sourceTree = "<group>";
-		};
-		3EE66B291C89B99700EEAED6 /* Validation */ = {
-			isa = PBXGroup;
-			children = (
-				3EA12BA81C75CD5A00AFB4EE /* LoginViewController.swift */,
-				3EAC95E81C763C3900421079 /* ValidationCodeViewController.swift */,
-			);
-			name = Validation;
-			sourceTree = "<group>";
-		};
-		3EE66B2A1C89B9B500EEAED6 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				3EEBEF671C856DD9002DD31E /* UserInformationViewController.swift */,
-				3E8D87031C8AF43700974C78 /* vCardViewController.swift */,
-			);
-			name = User;
-			sourceTree = "<group>";
-		};
-		3EE66B2B1C89B9C200EEAED6 /* Contact */ = {
-			isa = PBXGroup;
-			children = (
-				3EA12BAA1C75CF4B00AFB4EE /* ContactTableViewController.swift */,
-				3E8D87071C8B15BA00974C78 /* ContactDetailViewController.swift */,
-			);
-			name = Contact;
-			sourceTree = "<group>";
-		};
-		3EF134EF1C86E654001A7894 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				3EF134F01C86E67C001A7894 /* Network.swift */,
-				3E5466931C87392700F3A9A0 /* NSTimeExtension.swift */,
-				3ED7B4861C89EA2F009FF4D6 /* Reachibility.swift */,
-				3E8D86FD1C8ACECB00974C78 /* NSDefault.swift */,
-			);
-			name = Utilities;
 			sourceTree = "<group>";
 		};
 		3EF6328D1C75A9F300BBAB39 = {
@@ -181,12 +181,12 @@
 		3EF632981C75A9F300BBAB39 /* voiceIn */ = {
 			isa = PBXGroup;
 			children = (
+				3E98C0BE1C8C3E12001BB458 /* Controllers */,
+				3E98C0CC1C8C3E12001BB458 /* DataModels */,
+				3E98C0CE1C8C3E12001BB458 /* Utilities */,
+				3E98C0B91C8C3E01001BB458 /* Cells */,
 				3E5466951C873E1E00F3A9A0 /* bridge.h */,
-				3EF134EF1C86E654001A7894 /* Utilities */,
-				3EC23D001C775D6D00CA92A2 /* DataModel */,
-				3EC23CFD1C775C0100CA92A2 /* Cells */,
 				3EA12BA71C75C76100AFB4EE /* Storyboards */,
-				3EA12BA61C75C75000AFB4EE /* Controllers */,
 				3EF632991C75A9F300BBAB39 /* AppDelegate.swift */,
 				3EF632A51C75A9F300BBAB39 /* LaunchScreen.storyboard */,
 				3EF632A81C75A9F300BBAB39 /* Info.plist */,
@@ -352,24 +352,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EF134F11C86E67C001A7894 /* Network.swift in Sources */,
-				3EA12BAB1C75CF4B00AFB4EE /* ContactTableViewController.swift in Sources */,
-				3ED7B4871C89EA2F009FF4D6 /* Reachibility.swift in Sources */,
-				3E8D87041C8AF43700974C78 /* vCardViewController.swift in Sources */,
-				3E8D87081C8B15BA00974C78 /* ContactDetailViewController.swift in Sources */,
-				3E8D87021C8ADB5E00974C78 /* ProviderInformationViewController.swift in Sources */,
+				3E98C0DF1C8C3E12001BB458 /* NSTimeExtension.swift in Sources */,
+				3E98C0DE1C8C3E12001BB458 /* NSDefault.swift in Sources */,
+				3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */,
+				3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */,
+				3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */,
+				3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */,
+				3E98C0D91C8C3E12001BB458 /* vCardViewController.swift in Sources */,
+				3E98C0DD1C8C3E12001BB458 /* Network.swift in Sources */,
+				3E98C0D41C8C3E12001BB458 /* ContactTableViewController.swift in Sources */,
+				3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */,
+				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
+				3E98C0D81C8C3E12001BB458 /* UserInformationViewController.swift in Sources */,
+				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
+				3E98C0D71C8C3E12001BB458 /* SettingViewController.swift in Sources */,
+				3E98C0E01C8C3E12001BB458 /* Reachibility.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
-				3EEBEF681C856DD9002DD31E /* UserInformationViewController.swift in Sources */,
-				3EA12BA91C75CD5A00AFB4EE /* LoginViewController.swift in Sources */,
+				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
 				3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */,
-				3EF134EE1C86E18C001A7894 /* SettingViewController.swift in Sources */,
-				3EAC95E91C763C3900421079 /* ValidationCodeViewController.swift in Sources */,
-				3E8D86FE1C8ACECB00974C78 /* NSDefault.swift in Sources */,
-				3E8D87001C8AD3DF00974C78 /* QRCodeReaderViewController.swift in Sources */,
-				3EC23CFF1C775C7000CA92A2 /* ContactTableCell.swift in Sources */,
-				3E5466941C87392700F3A9A0 /* NSTimeExtension.swift in Sources */,
-				3EC23D021C775D8B00CA92A2 /* People.swift in Sources */,
-				3E8D87061C8B14B900974C78 /* ContactDetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
