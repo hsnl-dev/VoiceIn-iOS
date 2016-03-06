@@ -3,6 +3,8 @@ import Material
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
+    var userInformation: [String: String?] = [String: String?]()
+    
     private lazy var menuView: MenuView = MenuView()
     let spacing: CGFloat = 16
     let diameter: CGFloat = 56
@@ -27,19 +29,19 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         switch indexPath.row {
         case 0:
             cell.fieldLabel.text = "姓名"
-            cell.valueLabel.text = "Calvin Jeng"
+            cell.valueLabel.text = userInformation["userName"]!
         case 1:
             cell.fieldLabel.text = "公司"
-            cell.valueLabel.text = "High Speed Network Laboratory."
+            cell.valueLabel.text = userInformation["company"] != nil ? userInformation["company"]! as String! : "未設定"
         case 2:
             cell.fieldLabel.text = "職位"
-            cell.valueLabel.text = "學生"
+            cell.valueLabel.text = userInformation["jobTitle"] != nil ? userInformation["jobTitle"]! as String! : "未設定"
         case 3:
             cell.fieldLabel.text = "暱稱"
-            cell.valueLabel.text = "王大明"
+            cell.valueLabel.text = userInformation["nickName"] != nil ? userInformation["nickName"]! as String! : "未設定"
         case 4:
             cell.fieldLabel.text = "關於"
-            cell.valueLabel.text = "標性以白相走從電……主散畫的。存濟空是沒的出公鄉有連家力字了會冷原空：飛只用太……世因務分義民頭政這們洲……完預不女，喜育作山運國照家歌體子，力了後站難的近十，色一很情他觀爾維究多對各開量方說落相為同女中見白這力學業嗎媽民畫來為，門的長些有他講了老充吃綠重行子化可天願問！隨況麼級學：馬單結市領地開眼力的上變月學值健人，主歡人。報失麼己度是品出黨發手斷媽局話士向放行交外趣時族一衣收反，保命更出論分行中險走應：痛水得主為手氣一問斯出過那個的回病雖斯活水，每能利從心長是，香產的原是，亮都古庭轉的小們工不世我綠頭其們讓手，水原在日頭讀物。"
+            cell.valueLabel.text = userInformation["profile"] != nil ? userInformation["profile"]! as String! : "未設定"
         default:
             cell.fieldLabel.text = ""
             cell.valueLabel.text = ""
@@ -135,6 +137,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         view.addSubview(menuView)
         menuView.translatesAutoresizingMaskIntoConstraints = false
         MaterialLayout.size(view, child: menuView, width: diameter, height: diameter)
-        MaterialLayout.alignFromBottomLeft(view, child: menuView, bottom: 55, left: (view.bounds.width - diameter))
+        MaterialLayout.alignFromBottomLeft(view, child: menuView, bottom: 55, left: (view.bounds.width - diameter - 5))
     }
 }

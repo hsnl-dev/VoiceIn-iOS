@@ -5,5 +5,5 @@ class People {
     
     init(userInformation data: [String: String?]) {
         self.data = data
-    }
+    }    
 }

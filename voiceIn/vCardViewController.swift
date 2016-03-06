@@ -37,6 +37,7 @@ class vCardViewController: UIViewController {
                     
                     let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["profilePhotoId"].stringValue
                     
+                    // MARK: Retrieve the image
                     Alamofire
                         .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
                         .responseData {
@@ -45,6 +46,8 @@ class vCardViewController: UIViewController {
                                 self.userAvatar.image = UIImage(data: response.data!)
                             }
                     }
+                    
+                    // MARK: Generate the QRCode
                     
                     filter!.setValue(qrCodeData, forKey: "inputMessage")
                     filter!.setValue("Q", forKey: "inputCorrectionLevel")
