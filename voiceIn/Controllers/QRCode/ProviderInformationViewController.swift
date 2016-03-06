@@ -5,6 +5,8 @@ import SwiftyJSON
 class ProviderInformationViewController: UIViewController {
     var qrCodeUuid: String!
     let headers = Network.generateHeader(isTokenNeeded: true)
+    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var profile: UILabel!
     @IBOutlet weak var userName: UILabel!
@@ -57,6 +59,34 @@ class ProviderInformationViewController: UIViewController {
         let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func addNewContact(sender: UIButton!) {
+        let userUuid = userDefaultData.stringForKey("userUuid")!
+        let addNewContactApiRoute = API_END_POINT + "/accounts/" + userUuid + "/contacts/" + qrCodeUuid
+        let parameters = [
+            "isEnable": true,
+            "chargeType": 1,
+            "availableStartTime": "00:00",
+            "availableEndTime": "00:00",
+            "nickName": ""
+        ]
+        /**
+        POST: Add new contact.
+        **/
+        Alamofire
+            .request(.POST, addNewContactApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
+            .validate()
+            .response { request, response, data, error in
+                if error == nil {
+                    //MARK: error is nil, nothing happened! All is well :)
+                    let mainTabController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
+
+                    self.presentViewController(mainTabController, animated: true, completion: nil)
+                } else {
+                    print(error)
+                }
+        }
     }
 
 }

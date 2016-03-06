@@ -22,7 +22,6 @@ class ContactTableViewController: UITableViewController {
         self.tableView.reloadData()
         contactArray = []
         getContactList()
-        self.refreshControl?.endRefreshing()
     }
     
     // MARK: General preparation statements.
@@ -92,6 +91,7 @@ class ContactTableViewController: UITableViewController {
         /**
          GET: Get the user's information.
          **/
+        self.view.userInteractionEnabled = false
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -116,7 +116,10 @@ class ContactTableViewController: UITableViewController {
                         self.contactArray.append(people)
                     }
                     
+                    self.contactArray = self.contactArray.reverse()
                     self.tableView.reloadData()
+                    self.view.userInteractionEnabled = true
+                    self.refreshControl?.endRefreshing()
                 case .Failure(let error):
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     debugPrint(error)
@@ -128,7 +131,7 @@ class ContactTableViewController: UITableViewController {
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
                 let destinationViewController = segue.destinationViewController as? ContactDetailViewController {
-                destinationViewController.userInformation = contactArray[indexPath.row].data
+                    destinationViewController.userInformation = contactArray[indexPath.row].data
             }
         }
     }
