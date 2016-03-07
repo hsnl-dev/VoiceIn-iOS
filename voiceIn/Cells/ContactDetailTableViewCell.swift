@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Material
 
-class ContactDetailTableViewCell: UITableViewCell {
+class ContactDetailTableViewCell: MaterialTableViewCell {
     @IBOutlet var fieldLabel: UILabel!
     @IBOutlet var valueLabel: UILabel!
     

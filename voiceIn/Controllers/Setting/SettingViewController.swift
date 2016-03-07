@@ -3,6 +3,7 @@ import Eureka
 import Material
 import Alamofire
 import SwiftyJSON
+import EZLoadingActivity
 import ALCameraViewController
 
 class SettingViewController: FormViewController {
@@ -17,6 +18,7 @@ class SettingViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        EZLoadingActivity.show("讀取中...", disableUI: true)
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
         /**
         GET: Get the user's information.
@@ -27,9 +29,11 @@ class SettingViewController: FormViewController {
                 response in
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
+                    EZLoadingActivity.hide()
                     let jsonResponse = JSON(JSON_RESPONSE)
                     self.prepareInputForm(jsonResponse)
                 case .Failure(let error):
+                    EZLoadingActivity.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
@@ -55,6 +59,12 @@ class SettingViewController: FormViewController {
         } else {
             self.refreshButton.hidden = true
         }
+        
+        // MARK: Update to the original position.
+        var frame: CGRect = view.frame;
+        frame.origin.y = 0;
+        frame.origin.x = 0;
+        self.tableView?.frame = frame
     }
     
     func prepareInputForm(userInformation: JSON) {
@@ -155,13 +165,24 @@ class SettingViewController: FormViewController {
                 $0.title = "開始時間"
                 $0.value = NSDate()
                 $0.tag = "availableStartTime"
+                }.cellSetup {
+                    cell, row in
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "H:mm:"
+                        row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
             }
             
             <<< TimeInlineRow(){
                 $0.title = "結束時間"
                 $0.value = NSDate()
                 $0.tag = "availableEndTime"
+                }.cellSetup {
+                    cell, row in
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "H:mm:"
+                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
             }
+
             
             +++ Section("關於您")
             
@@ -189,6 +210,11 @@ class SettingViewController: FormViewController {
 
         }
         
+        // MARK: Update the wrong position.
+        var frame: CGRect = view.frame;
+        frame.origin.y = 60;
+        frame.origin.x = 0;
+        self.tableView?.frame = frame
     }
     
     @IBAction func saveButtonClicked(sender: UIButton!) {

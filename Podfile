@@ -12,5 +12,7 @@ target 'voiceIn' do
   pod 'ALCameraViewController'
   pod 'SnapKit'
   pod 'PhoneNumberKit', '~> 0.6'
+  pod 'SwiftSpinner'
+  pod 'EZLoadingActivity'
 end
 

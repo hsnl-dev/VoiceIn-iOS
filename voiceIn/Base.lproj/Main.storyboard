@@ -760,7 +760,6 @@
         <!--View Controller-->
         <scene sceneID="lUW-V2-ECJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="enR-hS-HB8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="SGY-Cz-edf" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2mV-Of-KYY"/>
@@ -978,6 +977,7 @@
                         <outlet property="userName" destination="Or1-Ug-eCN" id="rf5-Zc-CKD"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="enR-hS-HB8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4914" y="-838"/>
         </scene>
@@ -1211,4 +1211,5 @@
         <image name="ic_save_white" width="24" height="24"/>
         <image name="user" width="128" height="128"/>
     </resources>
+    <color key="tintColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
 </document>

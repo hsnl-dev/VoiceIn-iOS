@@ -2,6 +2,8 @@ import UIKit
 import Material
 import Alamofire
 import SwiftyJSON
+import SwiftSpinner
+import EZLoadingActivity
 //import SnapKit
 
 class ContactTableViewController: UITableViewController {
@@ -15,6 +17,7 @@ class ContactTableViewController: UITableViewController {
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
+        SwiftSpinner.show("讀取中...", animated: true)
         prepareView()
         getContactList()
     }
@@ -77,30 +80,38 @@ class ContactTableViewController: UITableViewController {
         cell.onCallButtonTapped = {
             debugPrint(cell.callee)
             
-            let callApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/calls"
-            let parameters = [
-                "caller": self.userDefaultData.stringForKey("phoneNumber")!,
-                "callee": cell.callee! as String
-            ]
-            let delay = 1.2 * Double(NSEC_PER_SEC)
-            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            let callConfirmAlert = UIAlertController(title: "即將為您撥號", message: "確定撥號嗎?", preferredStyle: UIAlertControllerStyle.Alert)
             
-            self.createAlertView("為您撥號中...", body: "幾秒後系統即將來電，請放心接聽", buttonValue: "確認")
-            
-            dispatch_after(time, dispatch_get_main_queue()) { () -> Void in
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            
-            Alamofire.request(.POST, callApiRoute, encoding: .JSON, headers: self.headers, parameters: parameters).response {
-                request, response, data, error in
-                if error != nil {
-                    debugPrint(error)
-                    
-                    self.createAlertView("抱歉!", body: "無法撥打成功請稍候再試。", buttonValue: "確認")
-                    self.view.userInteractionEnabled = true
-                    self.refreshControl?.endRefreshing()
+            callConfirmAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
+                
+                let callApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/calls"
+                let parameters = [
+                    "caller": self.userDefaultData.stringForKey("phoneNumber")!,
+                    "callee": cell.callee! as String
+                ]
+                let delay = 1.2 * Double(NSEC_PER_SEC)
+                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                
+                self.createAlertView("為您撥號中...", body: "幾秒後系統即將來電，請放心接聽", buttonValue: "確認")
+                
+                dispatch_after(time, dispatch_get_main_queue()) { () -> Void in
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }
-            }
+                
+                Alamofire.request(.POST, callApiRoute, encoding: .JSON, headers: self.headers, parameters: parameters).response {
+                    request, response, data, error in
+                    if error != nil {
+                        debugPrint(error)
+                        
+                        self.createAlertView("抱歉!", body: "無法撥打成功，請稍候再試。", buttonValue: "確認")
+                        self.view.userInteractionEnabled = true
+                        self.refreshControl?.endRefreshing()
+                    }
+                }
+            }))
+            
+            callConfirmAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(callConfirmAlert, animated: true, completion: nil)
         }
         
         cell.onFavoriteButtonTapped = {
@@ -116,15 +127,21 @@ class ContactTableViewController: UITableViewController {
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 print("deleting...")
+                EZLoadingActivity.show("刪除中", disableUI: true)
+                
                 let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).qrCodeUuid!
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
                     if error == nil {
                         debugPrint(error)
-                        print(indexPath.row)
+                        self.tableView.beginUpdates()
+                        EZLoadingActivity.hide()
                         self.contactArray.removeAtIndex(indexPath.row)
-                        self.tableView.reloadData()
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        self.tableView.endUpdates()
                         debugPrint(self.contactArray)
+                    } else {
+                        EZLoadingActivity.hide()
                     }
                 }
             }))
@@ -165,6 +182,7 @@ class ContactTableViewController: UITableViewController {
                     }
                     
                     self.contactArray = self.contactArray.reverse()
+                    SwiftSpinner.hide()
                     
                     self.tableView.reloadData()
                     self.view.userInteractionEnabled = true
@@ -172,6 +190,7 @@ class ContactTableViewController: UITableViewController {
                 case .Failure(let error):
                     debugPrint(error)
                     
+                    SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                     self.view.userInteractionEnabled = true
                     self.refreshControl?.endRefreshing()
