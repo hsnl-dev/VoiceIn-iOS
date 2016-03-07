@@ -2,6 +2,7 @@ import UIKit
 import Material
 import Alamofire
 import SwiftyJSON
+//import SnapKit
 
 class ContactTableViewController: UITableViewController {
     private var navigationBarView: NavigationBarView = NavigationBarView()
@@ -18,25 +19,13 @@ class ContactTableViewController: UITableViewController {
         getContactList()
     }
     
-    func refresh(sender:AnyObject) {
-        self.tableView.reloadData()
-        contactArray = []
-        getContactList()
-    }
-    
     // MARK: General preparation statements.
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
         navigationBarView.statusBarStyle = .Default
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // MARK: Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -54,19 +43,64 @@ class ContactTableViewController: UITableViewController {
         }
         
         var userInformation: [String: String?] = contactArray[indexPath.row].data
-        
+        var getImageApiRoute: String?
+        let photoUuid = userInformation["profilePhotoId"]! as String?
+
         cell.nameLabel.text = userInformation["userName"]!
         cell.type.text = "免費"
         cell.nickNameLabel.text = userInformation["nickName"] != nil ? userInformation["nickName"]! as String? : "未設定暱稱"
         cell.qrCodeUuid = userInformation["qrCodeUuid"]!
         cell.callee = userInformation["phoneNumber"]!
         
-        cell.thumbnailImageView.image = UIImage(named: "user")
-        cell.thumbnailImageView.layer.cornerRadius = 25.0
-        cell.thumbnailImageView.clipsToBounds = true
+        if photoUuid != "" {
+            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
+            
+            Alamofire
+                .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "small"])
+                .responseData {
+                    response in
+                    if response.data != nil {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            cell.thumbnailImageView.image = UIImage(data: response.data!)
+                            cell.thumbnailImageView.layer.cornerRadius = 25.0
+                            cell.thumbnailImageView.clipsToBounds = true
+                        })
+                    }
+                    
+                }
+        } else {
+            cell.thumbnailImageView.image = UIImage(named: "user")
+            cell.thumbnailImageView.layer.cornerRadius = 25.0
+            cell.thumbnailImageView.clipsToBounds = true
+        }
         
         cell.onCallButtonTapped = {
-            print(cell.callee)
+            debugPrint(cell.callee)
+            
+            let callApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/calls"
+            let parameters = [
+                "caller": self.userDefaultData.stringForKey("phoneNumber")!,
+                "callee": cell.callee! as String
+            ]
+            let delay = 1.2 * Double(NSEC_PER_SEC)
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            self.createAlertView("為您撥號中...", body: "幾秒後系統即將來電，請放心接聽", buttonValue: "確認")
+            
+            dispatch_after(time, dispatch_get_main_queue()) { () -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            Alamofire.request(.POST, callApiRoute, encoding: .JSON, headers: self.headers, parameters: parameters).response {
+                request, response, data, error in
+                if error != nil {
+                    debugPrint(error)
+                    
+                    self.createAlertView("抱歉!", body: "無法撥打成功請稍候再試。", buttonValue: "確認")
+                    self.view.userInteractionEnabled = true
+                    self.refreshControl?.endRefreshing()
+                }
+            }
         }
         
         cell.onFavoriteButtonTapped = {
@@ -78,21 +112,35 @@ class ContactTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath:NSIndexPath) {
         if editingStyle == .Delete {
+            let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此筆聯絡人?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
+                print("deleting...")
+                let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).qrCodeUuid!
+                Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
+                    request, response, data, error in
+                    if error == nil {
+                        debugPrint(error)
+                        print(indexPath.row)
+                        self.contactArray.removeAtIndex(indexPath.row)
+                        self.tableView.reloadData()
+                        debugPrint(self.contactArray)
+                    }
+                }
+            }))
+            
+            deleteAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(deleteAlert, animated: true, completion: nil)
         }
     }
     
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
+    /**
+     GET: Get the user's information.
+     **/
     private func getContactList() {
-        /**
-         GET: Get the user's information.
-         **/
         self.view.userInteractionEnabled = false
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
+        
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -117,14 +165,40 @@ class ContactTableViewController: UITableViewController {
                     }
                     
                     self.contactArray = self.contactArray.reverse()
+                    
                     self.tableView.reloadData()
                     self.view.userInteractionEnabled = true
                     self.refreshControl?.endRefreshing()
                 case .Failure(let error):
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     debugPrint(error)
+                    
+                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
+                    self.view.userInteractionEnabled = true
+                    self.refreshControl?.endRefreshing()
                 }
         }
+    }
+    
+    func refresh(sender: AnyObject) {
+        var reachability: Reachability
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            debugPrint("Unable to create Reachability")
+            return
+        }
+        
+        if reachability.isReachable() != true {
+            debugPrint("Network is not connected!")
+            self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
+            self.refreshControl?.endRefreshing()
+            self.view.userInteractionEnabled = true
+            return
+        }
+        
+        // MARK: Initialize the array.
+        contactArray = []
+        getContactList()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -135,5 +209,10 @@ class ContactTableViewController: UITableViewController {
             }
         }
     }
-
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }

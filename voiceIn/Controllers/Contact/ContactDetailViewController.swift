@@ -1,10 +1,13 @@
 import UIKit
 import Material
+import Alamofire
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var userAvatarImage: UIImageView!
     var userInformation: [String: String?] = [String: String?]()
-    
+    let headers = Network.generateHeader(isTokenNeeded: true)
+
     private lazy var menuView: MenuView = MenuView()
     let spacing: CGFloat = 16
     let diameter: CGFloat = 56
@@ -18,6 +21,27 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.estimatedRowHeight = 70;
         prepareView()
         prepareMenuView()
+        prepareUserAvatarImage()
+    }
+    
+    func prepareUserAvatarImage() {
+        let photoUuid = userInformation["profilePhotoId"]!
+        if photoUuid != "" {
+            let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
+            Alamofire
+                .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
+                .responseData {
+                    response in
+                    if response.data != nil {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.userAvatarImage.image = UIImage(data: response.data!)
+                            self.userAvatarImage.layer.cornerRadius = 64.0
+                            self.userAvatarImage.clipsToBounds = true
+                        })
+                    }
+                    
+            }
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -63,6 +87,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             }
             (menuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(duration: 0.125))
         }
+    }
+    
+    func updateUserImage(data: NSData!) {
+        
     }
     
     // MARK: Handle the menuView touch event.

@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var rootController: UIViewController
   
         if token != nil && userUuid != nil {
-            print("userUuid" + userUuid! + ", token:" + token!)
+            print("userUuid:" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
             // User does not sign in, sign them in.

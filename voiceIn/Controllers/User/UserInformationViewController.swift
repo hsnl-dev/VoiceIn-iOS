@@ -145,7 +145,7 @@ class UserInformationViewController: FormViewController {
         let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         let headers = Network.generateHeader(isTokenNeeded: true)
         let formValues = form.values()
-        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.5)
+        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 1)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "H:mm"
         

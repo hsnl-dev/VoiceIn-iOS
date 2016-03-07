@@ -120,5 +120,9 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
         }
     }
     
+    @IBAction func close(segue:UIStoryboardSegue) {
+    
+    }
+    
 }
 
