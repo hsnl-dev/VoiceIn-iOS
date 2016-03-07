@@ -2,6 +2,7 @@ import UIKit
 import Material
 import Alamofire
 import SwiftyJSON
+import PhoneNumberKit
 
 class LoginViewController: UIViewController, TextFieldDelegate {
     
@@ -47,7 +48,7 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         phoneNumberField.borderStyle = UITextBorderStyle.None;
         phoneNumberField.titleLabel = UILabel()
         phoneNumberField.titleLabel!.font = RobotoFont.mediumWithSize(12)
-        phoneNumberField.titleLabelColor = MaterialColor.grey.base
+        phoneNumberField.titleLabelColor = MaterialColor.grey.darken2
         phoneNumberField.titleLabelActiveColor = MaterialColor.grey.darken2
         phoneNumberField.backgroundColor = UIColor.clearColor()
     }
@@ -60,11 +61,20 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         print("Sending Validation Code..." + phoneNumberField.text!)
         
         let headers = Network.generateHeader(isTokenNeeded: false)
-        let parameters = [
-            "phoneNumber": "+886988779570"
-        ]
+        var parameters: [String: String!] = [String: String!]()
         
-        Alamofire.request(.POST, API_SANDBOX_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
+        do {
+            let phoneNumber = try PhoneNumber(rawNumber: "+886" + phoneNumberField.text!)
+            print(phoneNumber.toE164())
+            parameters = [
+                "phoneNumber": phoneNumber.toE164()
+            ]
+        }
+        catch {
+            print("Generic parser error")
+        }
+        
+        Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
             .responseJSON {
                 response in
                 switch response.result {
