@@ -10,6 +10,9 @@ target 'voiceIn' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'ALCameraViewController'
-  pod 'Cartography'
+  pod 'SnapKit'
+  pod 'PhoneNumberKit', '~> 0.6'
+  pod 'SwiftSpinner'
+  pod 'EZLoadingActivity'
 end
 

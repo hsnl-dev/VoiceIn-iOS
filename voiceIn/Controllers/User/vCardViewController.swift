@@ -11,7 +11,7 @@ class vCardViewController: UIViewController {
     @IBOutlet weak var company: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var qrCodeImage: UIImageView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
@@ -25,21 +25,17 @@ class vCardViewController: UIViewController {
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
-                    let qrCodeData = jsonResponse["qrCodeUuid"].stringValue.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
-                    let filter = CIFilter(name: "CIQRCodeGenerator")
-
-                    var qrcodeImage: CIImage!
+                    let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["profilePhotoId"].stringValue
 
                     self.userName.text = jsonResponse["userName"].stringValue
                     self.company.text = jsonResponse["company"].stringValue
                     self.profile.text = jsonResponse["profile"].stringValue
                     self.location.text = jsonResponse["location"].stringValue
-                    
-                    let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["profilePhotoId"].stringValue
-                    
+                    self.profile.sizeToFit()
+
                     // MARK: Retrieve the image
                     Alamofire
-                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
+                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
                         .responseData {
                             response in
                             if response.data != nil {
@@ -47,32 +43,27 @@ class vCardViewController: UIViewController {
                             }
                     }
                     
-                    // MARK: Generate the QRCode
-                    
-                    filter!.setValue(qrCodeData, forKey: "inputMessage")
-                    filter!.setValue("Q", forKey: "inputCorrectionLevel")
-                    
-                    qrcodeImage = filter!.outputImage
-                    let transformedImage = qrcodeImage.imageByApplyingTransform(CGAffineTransformMakeScale(125, 125))
-                    self.qrCodeImage.image = UIImage(CIImage: transformedImage)
-                    
+                    self.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)
+                
                 case .Failure(let error):
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
-
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        print("disappear")
+    private func generateQRCodeImage(qrCodeString qrCodeString: String) {
+        let qrCodeData = qrCodeString.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
+        let filter = CIFilter(name: "CIQRCodeGenerator")
+        var qrcodeImage: CIImage!
+        // MARK: Generate the QRCode
+        filter!.setValue(qrCodeData, forKey: "inputMessage")
+        filter!.setValue("Q", forKey: "inputCorrectionLevel")
+        
+        qrcodeImage = filter!.outputImage
+        let transformedImage = qrcodeImage.imageByApplyingTransform(CGAffineTransformMakeScale(125, 125))
+        self.qrCodeImage.image = UIImage(CIImage: transformedImage)
+
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {
@@ -80,5 +71,5 @@ class vCardViewController: UIViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
 }

@@ -3,6 +3,7 @@ import Eureka
 import Material
 import Alamofire
 import SwiftyJSON
+import EZLoadingActivity
 import ALCameraViewController
 
 class SettingViewController: FormViewController {
@@ -17,6 +18,7 @@ class SettingViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        EZLoadingActivity.show("讀取中...", disableUI: true)
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
         /**
         GET: Get the user's information.
@@ -27,10 +29,12 @@ class SettingViewController: FormViewController {
                 response in
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
+                    EZLoadingActivity.hide()
                     let jsonResponse = JSON(JSON_RESPONSE)
                     self.prepareInputForm(jsonResponse)
                 case .Failure(let error):
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    EZLoadingActivity.hide()
+                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
             }
@@ -38,30 +42,39 @@ class SettingViewController: FormViewController {
     
     override func viewDidAppear(animated: Bool) {
         var reachability: Reachability
+        
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
         } catch {
-            print("Unable to create Reachability")
+            debugPrint("Unable to create Reachability")
             return
         }
         
         self.view.bringSubviewToFront(self.refreshButton)
         
         if reachability.isReachable() != true {
-            print("Network is not connected!")
+            debugPrint("Network is not connected!")
             self.refreshButton.hidden = false
             self.refreshButton.alpha = 0.8
         } else {
             self.refreshButton.hidden = true
         }
+        
+        // MARK: Update to the original position.
+        var frame: CGRect = view.frame;
+        frame.origin.y = 0;
+        frame.origin.x = 0;
+        self.tableView?.frame = frame
     }
     
     func prepareInputForm(userInformation: JSON) {
         debugPrint(userInformation)
+        
         SelectImageRow.defaultCellUpdate = { cell, row in
             cell.accessoryView?.layer.cornerRadius = 0
             cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
         }
+        
         form.removeAll()
         form +++
             Section(header: "基本資料", footer: "* 記號表示為必填")
@@ -152,13 +165,24 @@ class SettingViewController: FormViewController {
                 $0.title = "開始時間"
                 $0.value = NSDate()
                 $0.tag = "availableStartTime"
+                }.cellSetup {
+                    cell, row in
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "H:mm:"
+                        row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
             }
             
             <<< TimeInlineRow(){
                 $0.title = "結束時間"
                 $0.value = NSDate()
                 $0.tag = "availableEndTime"
+                }.cellSetup {
+                    cell, row in
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "H:mm:"
+                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
             }
+
             
             +++ Section("關於您")
             
@@ -186,11 +210,18 @@ class SettingViewController: FormViewController {
 
         }
         
+        // MARK: Update the wrong position.
+        var frame: CGRect = view.frame;
+        frame.origin.y = 60;
+        frame.origin.x = 0;
+        self.tableView?.frame = frame
     }
     
     @IBAction func saveButtonClicked(sender: UIButton!) {
         let formValues = form.values()
-        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.7)
+        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 1)
+        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "H:mm"
         
@@ -209,10 +240,7 @@ class SettingViewController: FormViewController {
             "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
         ]
         
-        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
-        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
-        
-        print("PUT: " + updateInformationApiRoute)
+        debugPrint("PUT: " + updateInformationApiRoute)
         
         /**
         PUT: Update the user's information.
@@ -223,13 +251,11 @@ class SettingViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
-                    print("success")
+                    debugPrint("Success!")
                     self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
-                    return
-                } else {
-                    return
                 }
         }
+        
         /**
         POST: Upload avatar image.
         **/

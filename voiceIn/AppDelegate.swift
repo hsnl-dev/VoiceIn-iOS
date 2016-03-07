@@ -21,14 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
-        
+
+        UITabBar.appearance().tintColor = UIColor(red: 76/255.0, green: 76/255.0, blue: 76/255.0, alpha: 1.0)
+
         let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         let userUuid = userDefaultData.stringForKey("userUuid")
         let token = userDefaultData.stringForKey("token")
         var rootController: UIViewController
   
         if token != nil && userUuid != nil {
-            print("userUuid" + userUuid! + ", token:" + token!)
+            print("userUuid:" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
             // User does not sign in, sign them in.
