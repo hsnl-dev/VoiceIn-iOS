@@ -1,7 +1,7 @@
 import UIKit
 import Material
 
-class ProviderNickNameCell: MaterialTableViewCell {
+class ProviderInformationNickNameCell: MaterialTableViewCell {
     @IBOutlet var nickNameTextField: UITextField!
     
     override func awakeFromNib() {
