@@ -460,6 +460,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8H-Dc-d4v" userLabel="TopView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="234"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blurred-web-backgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="GWm-IY-0Jm">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="234"/>
+                                    </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="s9J-sU-3MD">
                                         <rect key="frame" x="236" y="35" width="128" height="128"/>
                                         <constraints>
@@ -1200,6 +1203,7 @@
     <resources>
         <image name="10259499" width="420" height="420"/>
         <image name="add-user" width="256" height="256"/>
+        <image name="blurred-web-backgrounds" width="1920" height="1440"/>
         <image name="close" width="84" height="84"/>
         <image name="ic_contact_phone_white" width="24" height="24"/>
         <image name="ic_contacts_white" width="24" height="24"/>

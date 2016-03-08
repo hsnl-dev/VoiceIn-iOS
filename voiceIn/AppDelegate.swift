@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  voiceIn
-//
-//  Created by Calvin Jeng on 2/18/16.
-//  Copyright © 2016 hsnl. All rights reserved.
-//
-
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
