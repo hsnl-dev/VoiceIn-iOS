@@ -115,7 +115,7 @@ class ProviderInformationViewController: UIViewController {
 
                     self.presentViewController(mainTabController, animated: true, completion: nil)
                 } else {
-                    print(error)
+                    debugPrint(error)
                 }
         }
     }
