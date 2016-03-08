@@ -19,6 +19,10 @@ class ContactTableViewController: UITableViewController {
         super.viewDidLoad()
         SwiftSpinner.show("讀取中...", animated: true)
         prepareView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        contactArray = []
         getContactList()
     }
     
@@ -48,10 +52,15 @@ class ContactTableViewController: UITableViewController {
         var userInformation: [String: String?] = contactArray[indexPath.row].data
         var getImageApiRoute: String?
         let photoUuid = userInformation["profilePhotoId"]! as String?
-
-        cell.nameLabel.text = userInformation["userName"]!
-        cell.type.text = "免費"
-        cell.nickNameLabel.text = userInformation["nickName"] != nil ? userInformation["nickName"]! as String? : "未設定暱稱"
+        let nickName = userInformation["nickName"]! as String?
+        
+        if nickName == "" {
+            cell.nameLabel.text = userInformation["userName"]!
+        } else {
+            cell.nameLabel.text = nickName
+        }
+        
+        cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
         cell.qrCodeUuid = userInformation["qrCodeUuid"]!
         cell.callee = userInformation["phoneNumber"]!
         
@@ -79,39 +88,8 @@ class ContactTableViewController: UITableViewController {
         
         cell.onCallButtonTapped = {
             debugPrint(cell.callee)
-            
-            let callConfirmAlert = UIAlertController(title: "即將為您撥號", message: "確定撥號嗎?", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            callConfirmAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
-                
-                let callApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/calls"
-                let parameters = [
-                    "caller": self.userDefaultData.stringForKey("phoneNumber")!,
-                    "callee": cell.callee! as String
-                ]
-                let delay = 1.2 * Double(NSEC_PER_SEC)
-                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                
-                self.createAlertView("為您撥號中...", body: "幾秒後系統即將來電，請放心接聽", buttonValue: "確認")
-                
-                dispatch_after(time, dispatch_get_main_queue()) { () -> Void in
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
-                
-                Alamofire.request(.POST, callApiRoute, encoding: .JSON, headers: self.headers, parameters: parameters).response {
-                    request, response, data, error in
-                    if error != nil {
-                        debugPrint(error)
-                        
-                        self.createAlertView("抱歉!", body: "無法撥打成功，請稍候再試。", buttonValue: "確認")
-                        self.view.userInteractionEnabled = true
-                        self.refreshControl?.endRefreshing()
-                    }
-                }
-            }))
-            
-            callConfirmAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
-            self.presentViewController(callConfirmAlert, animated: true, completion: nil)
+            let callService = CallService.init(view: self.view, _self: self)
+            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String)
         }
         
         cell.onFavoriteButtonTapped = {
