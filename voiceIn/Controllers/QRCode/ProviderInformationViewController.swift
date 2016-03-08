@@ -106,12 +106,12 @@ class ProviderInformationViewController: UIViewController {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("nickNameCell", forIndexPath: indexPath) as!
-            ProviderNickNameCell
+            ProviderInformationNickNameCell
             cell.nickNameTextField.addTarget(self, action: Selector("textIsChanged:"), forControlEvents: UIControlEvents.EditingChanged)
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("nickNameCell", forIndexPath: indexPath) as!
-            ProviderNickNameCell
+            ProviderInformationNickNameCell
             return cell
         }
     }

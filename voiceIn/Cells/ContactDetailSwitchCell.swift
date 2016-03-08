@@ -1,7 +1,7 @@
 import UIKit
 import Material
 
-class SwitchCell: MaterialTableViewCell {
+class ContactDetailSwitchCell: MaterialTableViewCell {
     @IBOutlet var switchButton: UISwitch!
     
     override func awakeFromNib() {
