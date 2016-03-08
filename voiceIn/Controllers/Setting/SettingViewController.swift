@@ -18,11 +18,15 @@ class SettingViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        EZLoadingActivity.show("讀取中...", disableUI: true)
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        getUserInformation()
+    }
+    
+    func getUserInformation() {
         /**
         GET: Get the user's information.
         **/
+        EZLoadingActivity.show("讀取中...", disableUI: true)
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -30,14 +34,18 @@ class SettingViewController: FormViewController {
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     EZLoadingActivity.hide()
+                    self.refreshButton.hidden = true
                     let jsonResponse = JSON(JSON_RESPONSE)
+                    
                     self.prepareInputForm(jsonResponse)
                 case .Failure(let error):
                     EZLoadingActivity.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
-            }
+        }
+
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -315,7 +323,6 @@ class SettingViewController: FormViewController {
     
     @IBAction func refreshTheView(sender: UIButton!) {
         print("refresh the view")
-        self.viewDidLoad()
-        self.viewDidAppear(true)
+        getUserInformation()
     }
 }

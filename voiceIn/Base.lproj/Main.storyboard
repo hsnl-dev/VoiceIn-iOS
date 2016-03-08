@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E56a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E61b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -64,13 +64,13 @@
         <!--聯絡簿-->
         <scene sceneID="zss-Po-3Wl">
             <objects>
-                <tableViewController id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="rUB-Wx-vki">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="AjL-3M-iWo" customClass="ContactTableCell" customModule="voiceIn" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="AjL-3M-iWo" customClass="ContactTableCell" customModule="VoiceIn" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AjL-3M-iWo" id="p1q-w1-2FU">
@@ -205,7 +205,7 @@
         <!--設定-->
         <scene sceneID="a46-Cd-x6A">
             <objects>
-                <viewController id="uei-sk-pti" customClass="SettingViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uei-sk-pti" customClass="SettingViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pVw-da-Xtw"/>
                         <viewControllerLayoutGuide type="bottom" id="MJS-Rb-Apm"/>
@@ -435,7 +435,7 @@
         <!--Provider Information View Controller-->
         <scene sceneID="Lj2-Mt-dEm">
             <objects>
-                <viewController id="c93-sp-AHU" customClass="ProviderInformationViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c93-sp-AHU" customClass="ProviderInformationViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Gp-Mw-PJ3"/>
                         <viewControllerLayoutGuide type="bottom" id="10Z-j7-QOV"/>
@@ -495,7 +495,7 @@
                                     <constraint firstAttribute="height" constant="316" id="Ezr-Jj-DcQ"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="70" id="uk5-Tf-iQD" customClass="ContactDetailTableViewCell" customModule="voiceIn" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="70" id="uk5-Tf-iQD" customClass="ContactDetailTableViewCell" customModule="VoiceIn" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uk5-Tf-iQD" id="dbX-L6-FIB">
@@ -532,7 +532,7 @@
                                             <outlet property="valueLabel" destination="R6U-sq-cZ5" id="awk-Mc-RmW"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nickNameCell" rowHeight="70" id="kto-yF-KiV" customClass="ProviderNickNameCell" customModule="voiceIn" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nickNameCell" rowHeight="70" id="kto-yF-KiV" customClass="ProviderNickNameCell" customModule="VoiceIn" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="98" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kto-yF-KiV" id="REP-PI-Gzi">
@@ -625,7 +625,7 @@
         <!--Contact Detail View Controller-->
         <scene sceneID="LCO-Zl-Vwd">
             <objects>
-                <viewController id="t7n-r4-Upf" customClass="ContactDetailViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="t7n-r4-Upf" customClass="ContactDetailViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WZc-Bu-9ka"/>
                         <viewControllerLayoutGuide type="bottom" id="JKT-te-DaP"/>
@@ -668,7 +668,7 @@
                                 <rect key="frame" x="0.0" y="234" width="600" height="317"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="70" id="X2S-Ll-NNH" customClass="ContactDetailTableViewCell" customModule="voiceIn" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="70" id="X2S-Ll-NNH" customClass="ContactDetailTableViewCell" customModule="VoiceIn" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X2S-Ll-NNH" id="TRj-CZ-eQ9">
@@ -705,7 +705,7 @@
                                             <outlet property="valueLabel" destination="9NL-2o-gaJ" id="O5X-Wg-1O0"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ToggleCell" rowHeight="70" id="JET-fw-aro" customClass="SwitchCell" customModule="voiceIn" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ToggleCell" rowHeight="70" id="JET-fw-aro" customClass="SwitchCell" customModule="VoiceIn" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="98" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JET-fw-aro" id="Byy-mC-ggQ">
@@ -715,7 +715,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="勿擾模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFD-r8-tcE">
                                                     <rect key="frame" x="16" y="24" width="68" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tYl-WR-ghh">
@@ -764,7 +764,7 @@
         <!--Code Reader View Controller-->
         <scene sceneID="NIC-qO-DNO">
             <objects>
-                <viewController id="9QW-br-tlc" customClass="QRCodeReaderViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9QW-br-tlc" customClass="QRCodeReaderViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="18P-Ed-Dds"/>
                         <viewControllerLayoutGuide type="bottom" id="XEP-vG-cW7"/>
@@ -834,7 +834,7 @@
                                     <constraint firstItem="RED-Yc-4pp" firstAttribute="centerY" secondItem="mvt-04-3cg" secondAttribute="centerY" id="ZCv-hu-26T"/>
                                 </constraints>
                             </view>
-                            <view tag="1" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QKF-A9-fn5" userLabel="Contaner" customClass="RotatedView" customModule="voiceIn" customModuleProvider="target">
+                            <view tag="1" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QKF-A9-fn5" userLabel="Contaner" customClass="RotatedView" customModule="VoiceIn" customModuleProvider="target">
                                 <rect key="frame" x="7" y="120" width="586" height="423"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-user" translatesAutoresizingMaskIntoConstraints="NO" id="iee-kN-bNg" userLabel="photo">
@@ -1028,7 +1028,7 @@
         <!--Card View Controller-->
         <scene sceneID="7pH-fW-lFQ">
             <objects>
-                <viewController id="NNy-iM-hOH" customClass="vCardViewController" customModule="voiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NNy-iM-hOH" customClass="vCardViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yxO-CG-JAK"/>
                         <viewControllerLayoutGuide type="bottom" id="c6m-bF-jKa"/>
@@ -1058,7 +1058,7 @@
                                     <constraint firstItem="H9L-mZ-UOv" firstAttribute="top" secondItem="kAE-C2-IJy" secondAttribute="top" constant="4" id="hss-fi-nkg"/>
                                 </constraints>
                             </view>
-                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qx6-8w-M59" userLabel="Contaner" customClass="RotatedView" customModule="voiceIn" customModuleProvider="target">
+                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qx6-8w-M59" userLabel="Contaner" customClass="RotatedView" customModule="VoiceIn" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="120" width="600" height="431"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="HtW-gJ-VSN" userLabel="photo">

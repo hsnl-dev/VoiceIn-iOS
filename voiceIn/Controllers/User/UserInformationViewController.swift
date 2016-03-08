@@ -181,10 +181,9 @@ class UserInformationViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
-                    self.presentViewController(contactTableView, animated: true, completion: nil)
-                    EZLoadingActivity.hide(success: true, animated: false)
                 } else {
                     print(error)
+                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     EZLoadingActivity.hide(success: false, animated: false)
                 }
             }
@@ -203,12 +202,12 @@ class UserInformationViewController: FormViewController {
                     encodingResult in
                     switch encodingResult {
                     case .Success(let upload, _, _):
-                        EZLoadingActivity.hide(success: true, animated: false)
                         upload.response { response in
-                            self.presentViewController(contactTableView, animated: true, completion: nil)
+                            
                         }
                     case .Failure(let encodingError):
                         self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                        EZLoadingActivity.hide(success: false, animated: false)
                         print(encodingError)
                     }
                 })
@@ -222,6 +221,11 @@ class UserInformationViewController: FormViewController {
                     request, response, data, error in
                 if error == nil {
                     print("Generate QR Code Successfully!")
+                    EZLoadingActivity.hide(success: true, animated: false)
+                    self.presentViewController(contactTableView, animated: true, completion: nil)
+                } else {
+                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    EZLoadingActivity.hide(success: false, animated: false)
                 }
         }
     }
