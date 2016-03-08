@@ -11,7 +11,7 @@ import Material
 
 class ContactTableCell: MaterialTableViewCell{
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var nickNameLabel: UILabel!
+    @IBOutlet var companyLabel: UILabel!
     @IBOutlet var type: UILabel!
     @IBOutlet var thumbnailImageView: UIImageView!
     @IBOutlet weak var callButton: FabButton!

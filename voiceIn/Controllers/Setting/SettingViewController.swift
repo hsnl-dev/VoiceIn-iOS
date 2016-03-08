@@ -241,7 +241,7 @@ class SettingViewController: FormViewController {
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)
-        
+        EZLoadingActivity.show("儲存中...", disableUI: true)
         /**
         PUT: Update the user's information.
         **/
@@ -252,6 +252,7 @@ class SettingViewController: FormViewController {
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
                     debugPrint("Success!")
+                    EZLoadingActivity.hide()
                     self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                 }
         }
@@ -272,6 +273,7 @@ class SettingViewController: FormViewController {
                         case .Success(let upload, _, _):
                             upload.response { response in
                                 print("photo success")
+                                EZLoadingActivity.hide()
                                 self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                                 return
                             }

@@ -4,6 +4,7 @@ import SwiftyJSON
 
 class ProviderInformationViewController: UIViewController {
     var qrCodeUuid: String!
+    var nickName: String! = ""
     let headers = Network.generateHeader(isTokenNeeded: true)
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
@@ -49,64 +50,94 @@ class ProviderInformationViewController: UIViewController {
                     self.tableView.reloadData()
                     
                 case .Failure(let error):
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     debugPrint(error)
+                    let statusCode: Int! = response.response?.statusCode
+                    switch statusCode {
+                    case 404:
+                        self.createAlertView("抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
+                        return
+                    default:
+                        self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                        return
+                    }
                 }
         }
     }
     
+    // MARK: - Table view data source
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return row
+        switch section {
+        case 0:
+            return row
+        case 1:
+            return 1
+        default:
+            return row
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
-
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
-            cell.fieldLabel.text = "姓名"
-            cell.valueLabel.text = userInformation["userName"]!
+            let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
+            switch indexPath.row {
+            case 0:
+                cell.fieldLabel.text = "姓名"
+                cell.valueLabel.text = userInformation["userName"]!
+            case 1:
+                cell.fieldLabel.text = "公司"
+                cell.valueLabel.text = userInformation["company"] != nil ? userInformation["company"]! as String! : "未設定"
+            case 2:
+                cell.fieldLabel.text = "位置"
+                cell.valueLabel.text = userInformation["location"] != nil ? userInformation["location"]! as String! : "未設定"
+            case 3:
+                cell.fieldLabel.text = "關於"
+                cell.valueLabel.text = userInformation["profile"] != nil ? userInformation["profile"]! as String! : "未設定"
+            default:
+                cell.fieldLabel.text = ""
+                cell.valueLabel.text = ""
+            }
+        
+            cell.backgroundColor = UIColor.clearColor()
+            return cell
         case 1:
-            cell.fieldLabel.text = "公司"
-            cell.valueLabel.text = userInformation["company"] != nil ? userInformation["company"]! as String! : "未設定"
-        case 2:
-            cell.fieldLabel.text = "位置"
-            cell.valueLabel.text = userInformation["location"] != nil ? userInformation["location"]! as String! : "未設定"
-        case 3:
-            cell.fieldLabel.text = "關於"
-            cell.valueLabel.text = userInformation["profile"] != nil ? userInformation["profile"]! as String! : "未設定"
+            let cell = tableView.dequeueReusableCellWithIdentifier("nickNameCell", forIndexPath: indexPath) as!
+            ProviderNickNameCell
+            cell.nickNameTextField.addTarget(self, action: Selector("textIsChanged:"), forControlEvents: UIControlEvents.EditingChanged)
+            return cell
         default:
-            cell.fieldLabel.text = ""
-            cell.valueLabel.text = ""
+            let cell = tableView.dequeueReusableCellWithIdentifier("nickNameCell", forIndexPath: indexPath) as!
+            ProviderNickNameCell
+            return cell
         }
-        
-        cell.backgroundColor = UIColor.clearColor()
-        
-        return cell
     }
     
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+    func textIsChanged(nickNameField :UITextField) {
+        debugPrint(nickNameField.text)
+        nickName = nickNameField.text
     }
     
     @IBAction func addNewContact(sender: UIButton!) {
         let userUuid = userDefaultData.stringForKey("userUuid")!
         let addNewContactApiRoute = API_END_POINT + "/accounts/" + userUuid + "/contacts/" + qrCodeUuid
+
         let parameters = [
             "isEnable": true,
             "chargeType": 1,
             "availableStartTime": "00:00",
             "availableEndTime": "00:00",
-            "nickName": ""
+            "nickName": nickName as String
         ]
-        
+        debugPrint(parameters)
         /**
         POST: Add new contact.
         **/
         Alamofire
-            .request(.POST, addNewContactApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
+            .request(.POST, addNewContactApiRoute, parameters: parameters as? [String : AnyObject], encoding: .JSON, headers: headers)
             .validate()
             .response { request, response, data, error in
                 if error == nil {
@@ -116,8 +147,24 @@ class ProviderInformationViewController: UIViewController {
                     self.presentViewController(mainTabController, animated: true, completion: nil)
                 } else {
                     debugPrint(error)
+                    debugPrint(response?.statusCode)
+                    let statusCode: Int! = (response?.statusCode)!
+                    switch statusCode {
+                    case 404:
+                        self.createAlertView("抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
+                    case 304:
+                        self.createAlertView("抱歉!", body: "您已擁有此聯絡人", buttonValue: "確認")
+                    default:
+                        self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    }
                 }
         }
+    }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }
