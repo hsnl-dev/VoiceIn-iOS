@@ -4,6 +4,7 @@ import Material
 import Alamofire
 import SwiftyJSON
 import ALCameraViewController
+import EZLoadingActivity
 
 class UserInformationViewController: FormViewController {
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
@@ -169,6 +170,7 @@ class UserInformationViewController: FormViewController {
         let generateQrcodeApiRoute = API_END_POINT + "/accounts/" + userUuid + "/qrcode"
         
         print("PUT: " + updateInformationApiRoute)
+        EZLoadingActivity.show("儲存中...", disableUI: true)
         
         /**
         PUT: Update the user's information.
@@ -180,8 +182,10 @@ class UserInformationViewController: FormViewController {
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
                     self.presentViewController(contactTableView, animated: true, completion: nil)
+                    EZLoadingActivity.hide(success: true, animated: false)
                 } else {
                     print(error)
+                    EZLoadingActivity.hide(success: false, animated: false)
                 }
             }
         
@@ -199,6 +203,7 @@ class UserInformationViewController: FormViewController {
                     encodingResult in
                     switch encodingResult {
                     case .Success(let upload, _, _):
+                        EZLoadingActivity.hide(success: true, animated: false)
                         upload.response { response in
                             self.presentViewController(contactTableView, animated: true, completion: nil)
                         }

@@ -57,8 +57,22 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         self.view.endEditing(true)
     }
     
+    func enableButton() {
+        self.sendValidationCodeButton.enabled = true
+        self.sendValidationCodeButton.setTitle("發送認證碼", forState: .Normal)
+    }
+    
     @IBAction func sendValidationCodeClicked(sender: UIButton!) {
         print("Sending Validation Code..." + phoneNumberField.text!)
+        
+        if (phoneNumberField.text! == "") {
+            self.createAlertView("小提醒", body: "請輸入手機號碼喔!", buttonValue: "確認")
+            return
+        }
+        
+        self.sendValidationCodeButton.enabled = false
+        self.sendValidationCodeButton.setTitle("10秒後可再發送", forState: .Disabled)
+        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "enableButton", userInfo: nil, repeats: false)
         
         let headers = Network.generateHeader(isTokenNeeded: false)
         var parameters: [String: String!] = [String: String!]()
@@ -100,5 +114,11 @@ class LoginViewController: UIViewController, TextFieldDelegate {
     @IBAction func unwindToLoginPage(segue:UIStoryboardSegue) {
         //MARK: Exit the validation code input page and go back to phone input page.
         //Do something here ...
+    }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }

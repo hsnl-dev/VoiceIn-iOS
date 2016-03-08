@@ -1,3 +1,6 @@
+/**
+ Cell class in ContactDetailView
+**/
 import UIKit
 import Material
 

@@ -1,3 +1,6 @@
+/**
+ Cell class in ProviderInformationView
+ **/
 import UIKit
 import Material
 
