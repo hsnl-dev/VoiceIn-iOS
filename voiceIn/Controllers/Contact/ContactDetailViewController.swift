@@ -9,7 +9,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var userInformation: [String: String?] = [String: String?]()
     let headers = Network.generateHeader(isTokenNeeded: true)
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
+    
     private lazy var menuView: MenuView = MenuView()
     let spacing: CGFloat = 16
     let diameter: CGFloat = 56
@@ -41,7 +41,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             self.userAvatarImage.clipsToBounds = true
                         })
                     }
-                    
             }
         }
     }
@@ -52,12 +51,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ContactDetailTableViewCell
             let nickNameChangeAlert = UIAlertController(title: "修改暱稱", message: "請輸入您欲修改的暱稱", preferredStyle: .Alert)
             
-
             nickNameChangeAlert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
                 textField.text = cell.textLabel?.text
             })
             
-            //3. Grab the value from the text field, and print it when the user clicks OK.
+            // 3. Grab the value from the text field, and print it when the user clicks OK.
             nickNameChangeAlert.addAction(UIAlertAction(title: "儲存", style: .Default, handler: { (action) -> Void in
                 let nickNameTextField = nickNameChangeAlert.textFields![0] as UITextField
                 let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
@@ -81,13 +79,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             EZLoadingActivity.hide(success: false, animated: true)
                         }
                 }
-                
             }))
             
             nickNameChangeAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
             // 4. Present the alert.
             self.presentViewController(nickNameChangeAlert, animated: true, completion: nil)
-            
         }
     }
     
@@ -96,13 +92,13 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         return 2
     }
     
-    func tableView( tableView : UITableView,  titleForHeaderInSection section: Int)->String? {
-        switch(section) {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch (section) {
         case 0:
             return "好友資訊"
         case 1:
             return "通話時間設定"
-        default :
+        default:
             return "Title"
         }
     }
@@ -129,15 +125,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.accessoryType = .None;
             case 1:
                 cell.fieldLabel.text = "公司"
-                cell.valueLabel.text = userInformation["company"]! as String! != "" ? userInformation["company"]! as String! : "未設定"
+                cell.valueLabel.text = userInformation["company"]! as String! != "" ? userInformation["company"]! as String!: "未設定"
                 cell.accessoryType = .None;
             case 2:
                 cell.fieldLabel.text = "暱稱"
-                cell.valueLabel.text = userInformation["nickName"]! as String! != "" ? userInformation["nickName"]! as String! : "未設定"
+                cell.valueLabel.text = userInformation["nickName"]! as String! != "" ? userInformation["nickName"]! as String!: "未設定"
                 cell.accessoryType = .DisclosureIndicator;
             case 3:
                 cell.fieldLabel.text = "關於"
-                cell.valueLabel.text = userInformation["profile"]! as String! != "" ? userInformation["profile"]! as String! : "未設定"
+                cell.valueLabel.text = userInformation["profile"]! as String! != "" ? userInformation["profile"]! as String!: "未設定"
             default:
                 cell.fieldLabel.text = ""
                 cell.valueLabel.text = ""
@@ -149,13 +145,13 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             case 0:
                 let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
                 cell.fieldLabel.text = "開始時間"
-                cell.valueLabel.text = userInformation["availableStartTime"]! as String! != "" ? userInformation["availableStartTime"]! as String! : "未設定"
+                cell.valueLabel.text = userInformation["availableStartTime"]! as String! != "" ? userInformation["availableStartTime"]! as String!: "未設定"
                 cell.accessoryType = .DisclosureIndicator;
                 return cell
             case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
                 cell.fieldLabel.text = "結束時間"
-                cell.valueLabel.text = userInformation["availableEndTime"]! as String! != "" ? userInformation["availableEndTime"]! as String! : "未設定"
+                cell.valueLabel.text = userInformation["availableEndTime"]! as String! != "" ? userInformation["availableEndTime"]! as String!: "未設定"
                 cell.accessoryType = .DisclosureIndicator;
                 return cell
             case 2:
@@ -182,7 +178,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         debugPrint(self.userDefaultData.stringForKey("phoneNumber")!)
         callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!)
     }
-
+    
     // MARK: Handle the menuView touch event.
     internal func handleMenu() {
         if menuView.menu.opened {
@@ -242,18 +238,18 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn3.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
         menuView.addSubview(btn3)
         
-//        image = UIImage(named: "ic_delete_forever_white")?.imageWithRenderingMode(.AlwaysTemplate)
-//        let btn4: FabButton = FabButton()
-//        btn4.depth = .None
-//        btn4.tintColor = MaterialColor.blue.accent3
-//        btn4.pulseColor = MaterialColor.blue.accent3
-//        btn4.borderColor = MaterialColor.blue.accent3
-//        btn4.backgroundColor = MaterialColor.white
-//        btn4.borderWidth = 1
-//        btn4.setImage(image, forState: .Normal)
-//        btn4.setImage(image, forState: .Highlighted)
-//        btn4.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
-//        menuView.addSubview(btn4)
+        // image = UIImage(named: "ic_delete_forever_white")?.imageWithRenderingMode(.AlwaysTemplate)
+        // let btn4: FabButton = FabButton()
+        // btn4.depth = .None
+        // btn4.tintColor = MaterialColor.blue.accent3
+        // btn4.pulseColor = MaterialColor.blue.accent3
+        // btn4.borderColor = MaterialColor.blue.accent3
+        // btn4.backgroundColor = MaterialColor.white
+        // btn4.borderWidth = 1
+        // btn4.setImage(image, forState: .Normal)
+        // btn4.setImage(image, forState: .Highlighted)
+        // btn4.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
+        // menuView.addSubview(btn4)
         
         // MARK: Initialize the menu and setup the configuration options.
         menuView.menu.direction = .Up

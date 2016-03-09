@@ -4,7 +4,7 @@ import Material
 import Alamofire
 import SwiftyJSON
 import ALCameraViewController
-import EZLoadingActivity
+import SwiftOverlays
 
 class UserInformationViewController: FormViewController {
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
@@ -28,53 +28,53 @@ class UserInformationViewController: FormViewController {
             +++ Section(header: "基本資料", footer: "* 記號表示為必填")
             
             <<< SelectImageRow(){
-                    $0.title = "您的大頭貼"
-                    $0.cell.height = {
-                        let height: CGFloat = 70.0
-                        return height
-                    }
-                    $0.tag = "avatar"
-                    $0.value = UIImage(named: "add-user")
+                $0.title = "您的大頭貼"
+                $0.cell.height = {
+                    let height: CGFloat = 70.0
+                    return height
+                }
+                $0.tag = "avatar"
+                $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
                     let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
                         { (image) -> Void in
-                                SelectImageRow.defaultCellUpdate = { cell, row in
-                                    cell.accessoryView?.layer.cornerRadius = 32
-                                    cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-                                }
-                                if image != nil {
-                                    row.value = image
-                                    row.updateCell()
-                                }
-                                self.isUserSelectPhoto = true
-                                self.dismissViewControllerAnimated(true, completion: nil)
-                        }
+                            SelectImageRow.defaultCellUpdate = { cell, row in
+                                cell.accessoryView?.layer.cornerRadius = 32
+                                cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                            }
+                            if image != nil {
+                                row.value = image
+                                row.updateCell()
+                            }
+                            self.isUserSelectPhoto = true
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                    }
                     
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 })
             
             <<< EmailRow() {
-                    $0.title = "您的姓名*:"
-                    $0.placeholder = ""
-                    $0.tag = "userName"
+                $0.title = "您的姓名*:"
+                $0.placeholder = ""
+                $0.tag = "userName"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
             }
             
             <<< EmailRow() {
-                    $0.title = "您的職稱:"
-                    $0.placeholder = ""
-                    $0.tag = "jobTitle"
+                $0.title = "您的職稱:"
+                $0.placeholder = ""
+                $0.tag = "jobTitle"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
             }
             
             <<< EmailRow() {
-                    $0.title = "所屬公司:"
-                    $0.placeholder = ""
-                    $0.tag = "company"
+                $0.title = "所屬公司:"
+                $0.placeholder = ""
+                $0.tag = "company"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
@@ -87,9 +87,9 @@ class UserInformationViewController: FormViewController {
             }
             
             <<< EmailRow() {
-                    $0.title = "位置:"
-                    $0.placeholder = "台北, 台灣"
-                    $0.tag = "location"
+                $0.title = "位置:"
+                $0.placeholder = "台北, 台灣"
+                $0.tag = "location"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
@@ -114,7 +114,7 @@ class UserInformationViewController: FormViewController {
             <<< TextAreaRow() {
                 $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
                 $0.tag = "profile"
-            }
+        }
     }
     
     func prepareNavigationBar() {
@@ -170,7 +170,8 @@ class UserInformationViewController: FormViewController {
         let generateQrcodeApiRoute = API_END_POINT + "/accounts/" + userUuid + "/qrcode"
         
         print("PUT: " + updateInformationApiRoute)
-        EZLoadingActivity.show("儲存中...", disableUI: true)
+        let text = "儲存中..."
+        self.showWaitOverlayWithText(text)
         
         /**
         PUT: Update the user's information.
@@ -184,32 +185,32 @@ class UserInformationViewController: FormViewController {
                 } else {
                     print(error)
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                    EZLoadingActivity.hide(success: false, animated: false)
+                    self.removeAllOverlays()
                 }
-            }
+        }
         
         /**
         POST: Upload avatar image.
         **/
         if isUserSelectPhoto == true {
             Alamofire
-            .upload(.POST, uploadAvatarApiRoute, headers: headers,
-                multipartFormData:
-                { multipartFormData in
-                    multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
-                },
-                encodingCompletion: {
-                    encodingResult in
-                    switch encodingResult {
-                    case .Success(let upload, _, _):
-                        upload.response { response in
-                            
+                .upload(.POST, uploadAvatarApiRoute, headers: headers,
+                    multipartFormData:
+                    { multipartFormData in
+                        multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
+                    },
+                    encodingCompletion: {
+                        encodingResult in
+                        switch encodingResult {
+                        case .Success(let upload, _, _):
+                            upload.response { response in
+                                
+                            }
+                        case .Failure(let encodingError):
+                            self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                            self.removeAllOverlays()
+                            print(encodingError)
                         }
-                    case .Failure(let encodingError):
-                        self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                        EZLoadingActivity.hide(success: false, animated: false)
-                        print(encodingError)
-                    }
                 })
         }
         
@@ -218,23 +219,23 @@ class UserInformationViewController: FormViewController {
         **/
         Alamofire
             .request(.POST, generateQrcodeApiRoute, headers: headers).response {
-                    request, response, data, error in
+                request, response, data, error in
                 if error == nil {
                     print("Generate QR Code Successfully!")
-                    EZLoadingActivity.hide(success: true, animated: false)
+                    self.removeAllOverlays()
                     self.presentViewController(contactTableView, animated: true, completion: nil)
                 } else {
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                    EZLoadingActivity.hide(success: false, animated: false)
+                    self.removeAllOverlays()
                 }
         }
     }
     
     /**
-    MARK: Function to validate if there are any bad values.
-    @param: formValues
-    @return: true if valid, false if unvalid.
-    **/
+     MARK: Function to validate if there are any bad values.
+     @param: formValues
+     @return: true if valid, false if unvalid.
+     **/
     private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
         if formValues["userName"] as? String == nil {
             createAlertView("小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
@@ -257,5 +258,5 @@ class UserInformationViewController: FormViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
 }

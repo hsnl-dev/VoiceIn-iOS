@@ -3,8 +3,8 @@ import Eureka
 import Material
 import Alamofire
 import SwiftyJSON
-import EZLoadingActivity
 import ALCameraViewController
+import SwiftOverlays
 
 class SettingViewController: FormViewController {
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
@@ -15,7 +15,7 @@ class SettingViewController: FormViewController {
     
     private var navigationBarView: NavigationBarView = NavigationBarView()
     private var isUserSelectPhoto: Bool! = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserInformation(true)
@@ -23,9 +23,11 @@ class SettingViewController: FormViewController {
     
     func getUserInformation(isRefreshButtonClicked: Bool) {
         /**
-        GET: Get the user's information.
-        **/
-        EZLoadingActivity.show("讀取中...", disableUI: true)
+         GET: Get the user's information.
+         **/
+        let text = "讀取中..."
+        self.showWaitOverlayWithText(text)
+        
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -33,16 +35,15 @@ class SettingViewController: FormViewController {
                 response in
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
-                    EZLoadingActivity.hide()
-                    self.refreshButton.hidden = true
-                    
                     let jsonResponse = JSON(JSON_RESPONSE)
+                    
+                    self.refreshButton.hidden = true
+                    self.removeAllOverlays()
                     self.prepareInputForm(jsonResponse, isRefreshButtonClicked: isRefreshButtonClicked)
                 case .Failure(let error):
-                    EZLoadingActivity.hide()
                     self.refreshButton.hidden = false
                     self.refreshButton.alpha = 0.8
-                    
+                    self.removeAllOverlays()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
@@ -89,13 +90,13 @@ class SettingViewController: FormViewController {
         form +++
             Section(header: "基本資料", footer: "* 記號表示為必填")
             <<< SelectImageRow(){
-                    $0.title = "您的大頭貼"
-                    $0.cell.height = {
-                        let height: CGFloat = 70.0
-                        return height
-                    }
-                    $0.tag = "avatar"
-                    $0.value = UIImage(named: "add-user")
+                $0.title = "您的大頭貼"
+                $0.cell.height = {
+                    let height: CGFloat = 70.0
+                    return height
+                }
+                $0.tag = "avatar"
+                $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
                     let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
                         { (image) -> Void in
@@ -116,13 +117,13 @@ class SettingViewController: FormViewController {
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 }).cellSetup {
                     cell, row in
-                        print("image cell setup!")
-                }
+                    print("image cell setup!")
+            }
             
             <<< EmailRow() {
-                    $0.title = "您的姓名*:"
-                    $0.placeholder = ""
-                    $0.tag = "userName"
+                $0.title = "您的姓名*:"
+                $0.placeholder = ""
+                $0.tag = "userName"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
@@ -150,14 +151,14 @@ class SettingViewController: FormViewController {
             }
             
             <<< EmailRow() {
-                    $0.title = "您的信箱"
-                    $0.value = ""
-                    $0.tag = "email"
+                $0.title = "您的信箱"
+                $0.value = ""
+                $0.tag = "email"
                 }.cellSetup{
                     cell, row in
                     row.value = userInformation["email"].stringValue
-                }
-    
+            }
+            
             
             <<< EmailRow() {
                 $0.title = "位置:"
@@ -177,9 +178,9 @@ class SettingViewController: FormViewController {
                 $0.tag = "availableStartTime"
                 }.cellSetup {
                     cell, row in
-                        let dateFormatter = NSDateFormatter()
-                        dateFormatter.dateFormat = "H:mm:"
-                        row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "H:mm"
+                    row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
             }
             
             <<< TimeInlineRow(){
@@ -189,35 +190,38 @@ class SettingViewController: FormViewController {
                 }.cellSetup {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "H:mm:"
+                    dateFormatter.dateFormat = "H:mm"
                     row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
             }
-
+            
             
             +++ Section("關於您")
             
             <<< TextAreaRow() {
-                    $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
-                    $0.tag = "profile"
+                $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
+                $0.tag = "profile"
                 }.cellSetup {
                     cell, row in
                     row.value = userInformation["profile"].stringValue
-                }
-            let getImageApiRoute = API_END_POINT + "/avatars/" + userInformation["profilePhotoId"].stringValue
+        }
         
-            Alamofire
-                .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
-                .responseData {
-                    response in
+        let getImageApiRoute = API_END_POINT + "/avatars/" + userInformation["profilePhotoId"].stringValue
+        
+        Alamofire
+            .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
+            .responseData {
+                response in
                 if response.data != nil {
                     SelectImageRow.defaultCellUpdate = { cell, row in
                         cell.accessoryView?.layer.cornerRadius = 32
                         cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
                     }
+                    
+                    self.removeAllOverlays()
                     self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
                     self.form.rowByTag("avatar")?.updateCell()
                 }
-
+                
         }
         
         if isRefreshButtonClicked {
@@ -253,7 +257,8 @@ class SettingViewController: FormViewController {
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)
-        EZLoadingActivity.show("儲存中...", disableUI: true)
+        let text = "儲存中..."
+        self.showWaitOverlayWithText(text)
         /**
         PUT: Update the user's information.
         **/
@@ -264,7 +269,7 @@ class SettingViewController: FormViewController {
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
                     debugPrint("Success!")
-                    EZLoadingActivity.hide()
+                    self.removeAllOverlays()
                     self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                 }
         }
@@ -285,7 +290,7 @@ class SettingViewController: FormViewController {
                         case .Success(let upload, _, _):
                             upload.response { response in
                                 print("photo success")
-                                EZLoadingActivity.hide()
+                                self.removeAllOverlays()
                                 self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
                                 return
                             }

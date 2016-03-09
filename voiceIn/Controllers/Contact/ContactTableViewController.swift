@@ -13,7 +13,7 @@ class ContactTableViewController: UITableViewController {
     
     // MARK: Array of ContactList
     var contactArray: [People] = []
-
+    
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
@@ -31,16 +31,16 @@ class ContactTableViewController: UITableViewController {
         view.backgroundColor = MaterialColor.white
         navigationBarView.statusBarStyle = .Default
     }
-
+    
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contactArray.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ContactTableCell
@@ -79,7 +79,7 @@ class ContactTableViewController: UITableViewController {
                         })
                     }
                     
-                }
+            }
         } else {
             cell.thumbnailImageView.image = UIImage(named: "user")
             cell.thumbnailImageView.layer.cornerRadius = 25.0
