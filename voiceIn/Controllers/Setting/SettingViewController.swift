@@ -18,10 +18,10 @@ class SettingViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUserInformation()
+        getUserInformation(true)
     }
     
-    func getUserInformation() {
+    func getUserInformation(isRefreshButtonClicked: Bool) {
         /**
         GET: Get the user's information.
         **/
@@ -35,16 +35,18 @@ class SettingViewController: FormViewController {
                 case .Success(let JSON_RESPONSE):
                     EZLoadingActivity.hide()
                     self.refreshButton.hidden = true
-                    let jsonResponse = JSON(JSON_RESPONSE)
                     
-                    self.prepareInputForm(jsonResponse)
+                    let jsonResponse = JSON(JSON_RESPONSE)
+                    self.prepareInputForm(jsonResponse, isRefreshButtonClicked: isRefreshButtonClicked)
                 case .Failure(let error):
                     EZLoadingActivity.hide()
+                    self.refreshButton.hidden = false
+                    self.refreshButton.alpha = 0.8
+                    
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
-
         
     }
     
@@ -67,16 +69,16 @@ class SettingViewController: FormViewController {
         } else {
             self.refreshButton.hidden = true
         }
-        
-        // MARK: Update to the original position.
+        // MARK: Update the wrong position.
         var frame: CGRect = view.frame;
         frame.origin.y = 0;
         frame.origin.x = 0;
         self.tableView?.frame = frame
     }
     
-    func prepareInputForm(userInformation: JSON) {
+    func prepareInputForm(userInformation: JSON, isRefreshButtonClicked: Bool) {
         debugPrint(userInformation)
+        self.refreshButton.hidden = true
         
         SelectImageRow.defaultCellUpdate = { cell, row in
             cell.accessoryView?.layer.cornerRadius = 0
@@ -218,11 +220,13 @@ class SettingViewController: FormViewController {
 
         }
         
-        // MARK: Update the wrong position.
-        var frame: CGRect = view.frame;
-        frame.origin.y = 60;
-        frame.origin.x = 0;
-        self.tableView?.frame = frame
+        if isRefreshButtonClicked {
+            // MARK: Update the wrong position.
+            var frame: CGRect = view.frame;
+            frame.origin.y = 60;
+            frame.origin.x = 0;
+            self.tableView?.frame = frame
+        }
     }
     
     @IBAction func saveButtonClicked(sender: UIButton!) {
@@ -323,6 +327,11 @@ class SettingViewController: FormViewController {
     
     @IBAction func refreshTheView(sender: UIButton!) {
         print("refresh the view")
-        getUserInformation()
+        getUserInformation(false)
+        // MARK: Update the wrong position.
+        var frame: CGRect = view.frame;
+        frame.origin.y = 0;
+        frame.origin.x = 0;
+        self.tableView?.frame = frame
     }
 }

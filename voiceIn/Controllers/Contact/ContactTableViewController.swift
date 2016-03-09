@@ -93,7 +93,6 @@ class ContactTableViewController: UITableViewController {
         }
         
         cell.onFavoriteButtonTapped = {
-            print(cell.type.text)
         }
         
         return cell
