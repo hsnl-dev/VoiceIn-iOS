@@ -45,7 +45,7 @@ class ProviderInformationViewController: UIViewController {
                                 self.userAvatar.image = UIImage(data: response.data!)
                             }
                     }
-
+                    
                     self.row = 4
                     self.tableView.reloadData()
                     
@@ -101,7 +101,7 @@ class ProviderInformationViewController: UIViewController {
                 cell.fieldLabel.text = ""
                 cell.valueLabel.text = ""
             }
-        
+            
             cell.backgroundColor = UIColor.clearColor()
             return cell
         case 1:
@@ -124,7 +124,7 @@ class ProviderInformationViewController: UIViewController {
     @IBAction func addNewContact(sender: UIButton!) {
         let userUuid = userDefaultData.stringForKey("userUuid")!
         let addNewContactApiRoute = API_END_POINT + "/accounts/" + userUuid + "/contacts/" + qrCodeUuid
-
+        
         let parameters = [
             "isEnable": true,
             "chargeType": 1,
@@ -143,7 +143,7 @@ class ProviderInformationViewController: UIViewController {
                 if error == nil {
                     //MARK: error is nil, nothing happened! All is well :)
                     let mainTabController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
-
+                    
                     self.presentViewController(mainTabController, animated: true, completion: nil)
                 } else {
                     debugPrint(error)
@@ -166,5 +166,5 @@ class ProviderInformationViewController: UIViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
 }

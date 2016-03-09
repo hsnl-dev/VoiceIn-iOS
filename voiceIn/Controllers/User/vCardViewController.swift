@@ -26,13 +26,13 @@ class vCardViewController: UIViewController {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["profilePhotoId"].stringValue
-
+                    
                     self.userName.text = jsonResponse["userName"].stringValue
                     self.company.text = jsonResponse["company"].stringValue
                     self.profile.text = jsonResponse["profile"].stringValue
                     self.location.text = jsonResponse["location"].stringValue
                     self.profile.sizeToFit()
-
+                    
                     // MARK: Retrieve the image
                     Alamofire
                         .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
@@ -44,7 +44,7 @@ class vCardViewController: UIViewController {
                     }
                     
                     self.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)
-                
+                    
                 case .Failure(let error):
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     debugPrint(error)
@@ -63,7 +63,7 @@ class vCardViewController: UIViewController {
         qrcodeImage = filter!.outputImage
         let transformedImage = qrcodeImage.imageByApplyingTransform(CGAffineTransformMakeScale(125, 125))
         self.qrCodeImage.image = UIImage(CIImage: transformedImage)
-
+        
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {

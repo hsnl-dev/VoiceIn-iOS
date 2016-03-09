@@ -3,7 +3,8 @@ import Material
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
-import EZLoadingActivity
+import SwiftOverlays
+
 //import SnapKit
 
 class ContactTableViewController: UITableViewController {
@@ -22,7 +23,6 @@ class ContactTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        contactArray = []
         getContactList()
     }
     
@@ -93,6 +93,7 @@ class ContactTableViewController: UITableViewController {
         }
         
         cell.onFavoriteButtonTapped = {
+            
         }
         
         return cell
@@ -104,7 +105,7 @@ class ContactTableViewController: UITableViewController {
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 print("deleting...")
-                EZLoadingActivity.show("刪除中", disableUI: true)
+                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
                 let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).qrCodeUuid!
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
@@ -112,13 +113,13 @@ class ContactTableViewController: UITableViewController {
                     if error == nil {
                         debugPrint(error)
                         self.tableView.beginUpdates()
-                        EZLoadingActivity.hide()
+                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         self.contactArray.removeAtIndex(indexPath.row)
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         self.tableView.endUpdates()
                         debugPrint(self.contactArray)
                     } else {
-                        EZLoadingActivity.hide()
+                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                     }
                 }
             }))
@@ -133,8 +134,12 @@ class ContactTableViewController: UITableViewController {
      **/
     private func getContactList() {
         self.view.userInteractionEnabled = false
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
         
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -143,6 +148,7 @@ class ContactTableViewController: UITableViewController {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
+                    self.contactArray = []
                     
                     for var index = 0; index < jsonResponse.count; ++index {
                         var contactInformation: [String: String?] = [String: String?]()
@@ -163,14 +169,14 @@ class ContactTableViewController: UITableViewController {
                     
                     self.tableView.reloadData()
                     self.view.userInteractionEnabled = true
-                    self.refreshControl?.endRefreshing()
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 case .Failure(let error):
                     debugPrint(error)
                     
                     SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                     self.view.userInteractionEnabled = true
-                    self.refreshControl?.endRefreshing()
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
         }
     }
@@ -192,8 +198,6 @@ class ContactTableViewController: UITableViewController {
             return
         }
         
-        // MARK: Initialize the array.
-        contactArray = []
         getContactList()
     }
     
