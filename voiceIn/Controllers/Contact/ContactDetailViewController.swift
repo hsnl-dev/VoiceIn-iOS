@@ -1,7 +1,7 @@
 import UIKit
 import Material
 import Alamofire
-import EZLoadingActivity
+import SwiftOverlays
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
@@ -64,7 +64,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 debugPrint(updateContactRoute)
                 
-                EZLoadingActivity.show("儲存暱稱中...", disableUI: true)
+                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "儲存暱稱中...")
                 
                 Alamofire
                     .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["nickName": nickName], encoding: .URLEncodedInURL)
@@ -72,11 +72,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         request, response, data, error in
                         if error == nil {
                             debugPrint(response)
-                            EZLoadingActivity.hide()
-                            cell.valueLabel?.text = nickName
+                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                            if nickName == "" {
+                                cell.valueLabel?.text = "未設定"
+                            } else {
+                                cell.valueLabel?.text = nickName
+                            }
                         } else {
-                            EZLoadingActivity.Settings.FailText = "儲存失敗"
-                            EZLoadingActivity.hide(success: false, animated: true)
+                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         }
                 }
             }))
