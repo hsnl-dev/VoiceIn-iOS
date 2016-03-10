@@ -11,6 +11,7 @@ class vCardViewController: UIViewController {
     @IBOutlet weak var company: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var qrCodeImage: UIImageView!
+    @IBOutlet weak var cardView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,17 +69,8 @@ class vCardViewController: UIViewController {
     
     @IBAction func shareQRCodeButtonClicked(sender: UIButton!) {
         let defaultText = "這是我的 VoiceIn QR Code 名片"
-        //        UIGraphicsBeginImageContext(self.view.frame.size)
-        //        self.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, true, 0)
-        debugPrint(view.bounds)
-        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
-        var image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
         
-        image = RBSquareImage(image)
-        
-        if let imageToShare = image {
+        if let imageToShare: UIImage! = self.cardView.image() {
             let activityController = UIActivityViewController(activityItems:[defaultText, imageToShare], applicationActivities: nil)
             self.presentViewController(activityController, animated: true,completion: nil)
         }
@@ -89,17 +81,28 @@ class vCardViewController: UIViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    func RBSquareImage(image: UIImage) -> UIImage {
-        let originalWidth  = image.size.width
-        let originalHeight = image.size.height
-        let x: CGFloat = 0.0
-        let y: CGFloat = (originalHeight - originalWidth) / 2.0 + 5
+}
+
+extension UIView {
+    func image() -> UIImage {
+        var image: UIImage!
         
-        let cropSquare = CGRectMake(x, y, originalWidth * 2, originalHeight * 1.63)
-        let imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
-        print(UIScreen.mainScreen().scale)
-        return UIImage(CGImage: imageRef!, scale: image.scale, orientation: image.imageOrientation)
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, UIScreen.mainScreen().scale)
+        
+        if let context = UIGraphicsGetCurrentContext() {
+            CGContextTranslateCTM(context, -frame.origin.x - 4, 0)
+            
+            if let scrollView = self as? UIScrollView {
+                CGContextTranslateCTM(context, -scrollView.contentOffset.x, -scrollView.contentOffset.y)
+            }
+            
+            layer.renderInContext(context)
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        } else {
+            image = UIImage()
+        }
+        
+        return image
     }
-    
 }

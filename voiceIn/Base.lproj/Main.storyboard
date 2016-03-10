@@ -814,10 +814,10 @@
                                             <constraint firstItem="H9L-mZ-UOv" firstAttribute="top" secondItem="kAE-C2-IJy" secondAttribute="top" constant="4" id="hss-fi-nkg"/>
                                         </constraints>
                                     </view>
-                                    <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qx6-8w-M59" userLabel="Contaner">
+                                    <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qx6-8w-M59" userLabel="Container">
                                         <rect key="frame" x="0.0" y="56" width="600" height="431"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blurred-web-backgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="0Qx-Yg-ZD9">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blurred-web-backgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="0Qx-Yg-ZD9">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="431"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R2M-Kl-EOj">
@@ -974,11 +974,15 @@
                                             </view>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="0Qx-Yg-ZD9" firstAttribute="leading" secondItem="Qx6-8w-M59" secondAttribute="leading" id="60l-gK-U5E"/>
                                             <constraint firstItem="R2M-Kl-EOj" firstAttribute="centerX" secondItem="Qx6-8w-M59" secondAttribute="centerX" constant="-9.5" id="NkZ-2p-jnd"/>
+                                            <constraint firstAttribute="bottom" secondItem="0Qx-Yg-ZD9" secondAttribute="bottom" id="Vvy-hs-aZt"/>
                                             <constraint firstItem="R2M-Kl-EOj" firstAttribute="top" secondItem="Qx6-8w-M59" secondAttribute="top" constant="8" id="WcM-1y-VTZ"/>
                                             <constraint firstItem="LIq-Tq-cjf" firstAttribute="centerX" secondItem="Qx6-8w-M59" secondAttribute="centerX" constant="-9.5" id="iU6-oB-HgA"/>
                                             <constraint firstItem="LIq-Tq-cjf" firstAttribute="top" secondItem="R2M-Kl-EOj" secondAttribute="bottom" constant="16" id="ihY-cq-6kd"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Qx-Yg-ZD9" secondAttribute="trailing" id="izD-3z-F9k"/>
                                             <constraint firstAttribute="bottom" secondItem="LIq-Tq-cjf" secondAttribute="bottom" constant="21" id="kGL-C4-57L"/>
+                                            <constraint firstItem="0Qx-Yg-ZD9" firstAttribute="top" secondItem="Qx6-8w-M59" secondAttribute="top" id="sGT-3E-T8e"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1010,6 +1014,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cardView" destination="gAN-kM-ST0" id="9ln-Lb-YAY"/>
                         <outlet property="company" destination="rGo-b6-c51" id="mZI-mg-ePE"/>
                         <outlet property="location" destination="Dt2-bi-q2Z" id="rre-0A-zZg"/>
                         <outlet property="profile" destination="X81-DB-HdU" id="gzv-sV-qUG"/>
