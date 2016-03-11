@@ -9,6 +9,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var userInformation: [String: String?] = [String: String?]()
     let headers = Network.generateHeader(isTokenNeeded: true)
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    var searchController: UISearchController = UISearchController()
     
     private lazy var menuView: MenuView = MenuView()
     let spacing: CGFloat = 16
@@ -24,6 +25,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         prepareView()
         prepareMenuView()
         prepareUserAvatarImage()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.searchController.active = false
     }
     
     func prepareUserAvatarImage() {

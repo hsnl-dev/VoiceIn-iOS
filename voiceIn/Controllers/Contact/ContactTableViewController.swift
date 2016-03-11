@@ -4,22 +4,63 @@ import Alamofire
 import SwiftyJSON
 import SwiftSpinner
 import SwiftOverlays
-
+import CoreData
 //import SnapKit
 
-class ContactTableViewController: UITableViewController {
+class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    var resultSearchController = UISearchController()
     
     // MARK: Array of ContactList
     var contactArray: [People] = []
+    var filterContactArray: [People] = [People]()
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
         SwiftSpinner.show("讀取中...", animated: true)
+        
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.searchBar.placeholder = "搜尋聯絡人..."
+            controller.searchBar.tintColor = UIColor.grayColor()
+            controller.searchBar.barTintColor = UIColor(red: 245.0/255.0, green:245/255.0, blue: 245.0/255.0, alpha: 1.0)
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            self.tableView.contentOffset = CGPointMake(0, controller.searchBar.frame.size.height);
+            return controller
+        })()
+        
         prepareView()
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        if let searchText = resultSearchController.searchBar.text {
+            filterContactArray.removeAll(keepCapacity: false)
+            filterContentForSearchText(searchText)
+            tableView.reloadData()
+        }
+        
+    }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filterContactArray = contactArray.filter { contact in
+            let contactData = contact.data
+            if contactData["userName"]!!.lowercaseString.containsString(searchText.lowercaseString) != false {
+                return contactData["userName"]!!.lowercaseString.containsString(searchText.lowercaseString)
+            } else {
+                return contactData["nickName"]!!.lowercaseString.containsString(searchText.lowercaseString)
+            }
+        }
+        
+        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -38,35 +79,59 @@ class ContactTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactArray.count
+        if self.resultSearchController.active {
+            return filterContactArray.count
+        } else {
+            return contactArray.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ContactTableCell
-        
-        if indexPath.row > contactArray.count - 1 {
-            return cell
-        }
-        
-        var userInformation: [String: String?] = contactArray[indexPath.row].data
+        var photoUuid = ""
         var getImageApiRoute: String?
-        let photoUuid = userInformation["profilePhotoId"]! as String?
-        let nickName = userInformation["nickName"]! as String?
         
-        if nickName == "" {
-            cell.nameLabel.text = userInformation["userName"]!
+        if self.resultSearchController.active {
+            if indexPath.row > filterContactArray.count - 1 {
+                return cell
+            }
+            
+            var userInformation: [String: String?] = filterContactArray[indexPath.row].data
+            let nickName = userInformation["nickName"]! as String?
+            photoUuid = (userInformation["profilePhotoId"]! as String?)!
+            
+            if nickName == "" {
+                cell.nameLabel.text = userInformation["userName"]!
+            } else {
+                cell.nameLabel.text = nickName
+            }
+            
+            cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
+            cell.qrCodeUuid = userInformation["qrCodeUuid"]!
+            cell.callee = userInformation["phoneNumber"]!
         } else {
-            cell.nameLabel.text = nickName
+            if indexPath.row > contactArray.count - 1 {
+                return cell
+            }
+            
+            var userInformation: [String: String?] = contactArray[indexPath.row].data
+            let nickName = userInformation["nickName"]! as String?
+            photoUuid = (userInformation["profilePhotoId"]! as String?)!
+            
+            if nickName == "" {
+                cell.nameLabel.text = userInformation["userName"]!
+            } else {
+                cell.nameLabel.text = nickName
+            }
+            
+            cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
+            cell.qrCodeUuid = userInformation["qrCodeUuid"]!
+            cell.callee = userInformation["phoneNumber"]!
         }
-        
-        cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-        cell.qrCodeUuid = userInformation["qrCodeUuid"]!
-        cell.callee = userInformation["phoneNumber"]!
         
         if photoUuid != "" {
-            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
-            
+            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid            
             Alamofire
                 .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "small"])
                 .responseData {
@@ -206,6 +271,7 @@ class ContactTableViewController: UITableViewController {
             if  let indexPath = tableView.indexPathForSelectedRow,
                 let destinationViewController = segue.destinationViewController as? ContactDetailViewController {
                     destinationViewController.userInformation = contactArray[indexPath.row].data
+                    destinationViewController.searchController = self.resultSearchController
             }
         }
     }

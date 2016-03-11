@@ -20,8 +20,6 @@ class UserInformationViewController: FormViewController {
     }
     
     func prepareInputForm() {
-        
-        
         form +++
             Section(header: "", footer: "")
             +++ Section("")
