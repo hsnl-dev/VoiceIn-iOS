@@ -6,6 +6,10 @@ import SwiftOverlays
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var userAvatarImage: UIImageView!
+    @IBOutlet var timePickerView: UIView!
+    @IBOutlet var availableStartTimeDatePicker: UIDatePicker!
+    @IBOutlet var availableEndTimeDatePicker: UIDatePicker!
+    
     var userInformation: [String: String?] = [String: String?]()
     let headers = Network.generateHeader(isTokenNeeded: true)
     let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
@@ -22,6 +26,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         // MARK: self-sizing cell setting.
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 70;
+        
         prepareView()
         prepareMenuView()
         prepareUserAvatarImage()
@@ -29,6 +34,74 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidAppear(animated: Bool) {
         self.searchController.active = false
+    }
+    
+    func switchIsChanged(switchButton: UISwitch) {
+        let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
+        let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+        
+        if switchButton.on {
+            debugPrint("Switch On")
+            Alamofire
+                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isEnable": "True"], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    if error == nil {
+                        debugPrint(response)
+                        self.userInformation["isEnable"] = "true"
+                    } else {
+                        self.userInformation["isEnable"] = "false"
+                    }
+            }
+            
+        } else {
+            debugPrint("Switch Off")
+            Alamofire
+                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isEnable": "False"], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    if error == nil {
+                        debugPrint(response)
+                        self.userInformation["isEnable"] = "false"
+                    } else {
+                        self.userInformation["isEnable"] = "true"
+                    }
+            }
+        }
+    }
+    
+    @IBAction func closeTimePickerView(sender: UIButton!) {
+        timePickerView.hidden = true
+    }
+    
+    @IBAction func saveTimePeriod() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "H:mm"
+        
+        let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
+        let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+        let availableStartTime: String = dateFormatter.stringFromDate(availableStartTimeDatePicker.date)
+        let availableEndTime: String = dateFormatter.stringFromDate(availableEndTimeDatePicker.date)
+        
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "儲存中...")
+        
+        Alamofire
+            .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["availableStartTime": availableStartTime, "availableEndTime": availableEndTime], encoding: .URLEncodedInURL)
+            .response {
+                request, response, data, error in
+                if error == nil {
+                    debugPrint(response)
+                    self.userInformation["availableStartTime"] = availableStartTime
+                    self.userInformation["availableEndTime"] = availableEndTime
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                    self.tableView.reloadData()
+                } else {
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    self.createAlertView("抱歉", body: "網路發生錯誤...", buttonValue: "確認")
+                }
+        }
+        
     }
     
     func prepareUserAvatarImage() {
@@ -50,6 +123,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    //MARK: Deal with table selection.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         debugPrint(indexPath)
         if indexPath.section == 0 && indexPath.row == 2 {
@@ -93,6 +167,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // 4. Present the alert.
             self.presentViewController(nickNameChangeAlert, animated: true, completion: nil)
         }
+        
+        if indexPath.section == 1 && (indexPath.row == 0 || indexPath.row == 1) {
+            timePickerView.hidden = false
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "H:mm"
+            availableStartTimeDatePicker.setDate(dateFormatter.dateFromString(userInformation["availableStartTime"]! as String!)!, animated: true)
+            availableEndTimeDatePicker.setDate(dateFormatter.dateFromString(userInformation["availableEndTime"]! as String!)!, animated: true)
+        }
     }
     
     // MARK: - Table view data source
@@ -100,17 +182,19 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         return 2
     }
     
+    // MARK: Title for section.
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch (section) {
         case 0:
             return "好友資訊"
         case 1:
-            return "通話時間設定"
+            return "方便通話時間設定"
         default:
             return "Title"
         }
     }
     
+    // MARK: row of every section
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -122,6 +206,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    // MARK: Load the data to table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -163,7 +248,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.accessoryType = .DisclosureIndicator;
                 return cell
             case 2:
-                let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath) as! SwitchCell
+                
+                if self.userInformation["isEnable"]! == "true" {
+                    cell.switchButton.setOn(true, animated: true)
+                } else {
+                    cell.switchButton.setOn(false, animated: true)
+                }
+                
+                cell.switchButton.addTarget(self, action: Selector("switchIsChanged:"), forControlEvents: UIControlEvents.ValueChanged)
                 return cell
             default:
                 let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath)
@@ -187,6 +280,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!)
     }
     
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     // MARK: Handle the menuView touch event.
     internal func handleMenu() {
         if menuView.menu.opened {
@@ -203,6 +302,16 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: General preparation statements are placed here.
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
+        timePickerView.hidden = true
+        timePickerView.layer.shadowColor = UIColor.blackColor().CGColor
+        timePickerView.layer.shadowOffset = CGSizeZero
+        timePickerView.layer.shadowOpacity = 0.5
+        timePickerView.layer.shadowRadius = 5
+        timePickerView.layer.cornerRadius = 10.0
+        timePickerView.clipsToBounds = true
+        timePickerView.layer.borderColor = UIColor.grayColor().CGColor
+        timePickerView.layer.borderWidth = 0.5
+        timePickerView.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     // MARK: Prepares the MenuView example.

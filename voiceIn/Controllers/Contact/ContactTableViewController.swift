@@ -20,7 +20,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
-        SwiftSpinner.show("讀取中...", animated: true)
         
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -37,30 +36,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             return controller
         })()
         
+        SwiftSpinner.show("讀取中...", animated: true)
         prepareView()
-    }
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        if let searchText = resultSearchController.searchBar.text {
-            filterContactArray.removeAll(keepCapacity: false)
-            filterContentForSearchText(searchText)
-            tableView.reloadData()
-        }
-        
-    }
-    
-    func filterContentForSearchText(searchText: String, scope: String = "All") {
-        filterContactArray = contactArray.filter { contact in
-            let contactData = contact.data
-            if contactData["userName"]!!.lowercaseString.containsString(searchText.lowercaseString) != false {
-                return contactData["userName"]!!.lowercaseString.containsString(searchText.lowercaseString)
-            } else {
-                return contactData["nickName"]!!.lowercaseString.containsString(searchText.lowercaseString)
-            }
-        }
-        
-        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -199,12 +176,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
      **/
     private func getContactList() {
         self.view.userInteractionEnabled = false
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        //        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
         let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
         
         self.tableView.reloadData()
-        self.refreshControl?.endRefreshing()
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -234,16 +210,44 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     
                     self.tableView.reloadData()
                     self.view.userInteractionEnabled = true
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    self.refreshControl?.endRefreshing()
+                    //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 case .Failure(let error):
                     debugPrint(error)
                     
                     SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                     self.view.userInteractionEnabled = true
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    self.refreshControl?.endRefreshing()
+                    //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
         }
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        if let searchText = resultSearchController.searchBar.text {
+            filterContactArray.removeAll(keepCapacity: false)
+            filterContentForSearchText(searchText)
+            tableView.reloadData()
+        }
+        
+    }
+    
+    /**
+     Search the contact list.
+     **/
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filterContactArray = contactArray.filter { contact in
+            let contactData = contact.data
+            if contactData["userName"]!!.lowercaseString.containsString(searchText.lowercaseString) != false {
+                return contactData["userName"]!!.lowercaseString.containsString(searchText.lowercaseString)
+            } else {
+                return contactData["nickName"]!!.lowercaseString.containsString(searchText.lowercaseString)
+            }
+        }
+        
+        tableView.reloadData()
     }
     
     func refresh(sender: AnyObject) {
@@ -260,10 +264,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
             self.refreshControl?.endRefreshing()
             self.view.userInteractionEnabled = true
-            return
+        } else {
+            getContactList()
         }
-        
-        getContactList()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
