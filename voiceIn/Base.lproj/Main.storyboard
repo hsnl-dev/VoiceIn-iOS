@@ -193,7 +193,7 @@
         <!--設定-->
         <scene sceneID="a46-Cd-x6A">
             <objects>
-                <viewController id="uei-sk-pti" customClass="SettingViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uei-sk-pti" customClass="EditProfileViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pVw-da-Xtw"/>
                         <viewControllerLayoutGuide type="bottom" id="MJS-Rb-Apm"/>
@@ -227,6 +227,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="設定" id="w7G-uU-sXM">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lNE-xF-086">
+                            <connections>
+                                <segue destination="t1h-41-fAo" kind="unwind" unwindAction="closeTheEditProfileModal:" id="I7h-dR-nfM"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="ic_save_white" id="zqd-zh-QIy">
                             <connections>
                                 <action selector="saveButtonClicked:" destination="uei-sk-pti" id="7GB-xT-gWu"/>
@@ -238,8 +243,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FcT-lD-yT7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="t1h-41-fAo" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1655" y="1456.9999999999995"/>
+            <point key="canvasLocation" x="3387" y="1456"/>
         </scene>
         <!--個人設定-->
         <scene sceneID="rO0-wK-ovC">
@@ -254,7 +260,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="uei-sk-pti" kind="relationship" relationship="rootViewController" id="gdQ-0d-O6p"/>
+                        <segue destination="MCB-d4-IpU" kind="relationship" relationship="rootViewController" id="ufk-pw-RVh"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VyF-F9-Bov" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1077,6 +1083,96 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DZr-kt-sTm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3430" y="-86"/>
+        </scene>
+        <!--個人資訊-->
+        <scene sceneID="emb-RH-LDi">
+            <objects>
+                <tableViewController id="MCB-d4-IpU" customClass="SettingViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Asj-3V-Gyv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="設定" id="eki-en-qBd">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" id="56j-GG-6p8" customClass="MaterialTableViewCell" customModule="Material">
+                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="56j-GG-6p8" id="bmT-aY-WQP">
+                                            <rect key="frame" x="0.0" y="0.0" width="553" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="個人資料設定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biE-wW-k6O">
+                                                    <rect key="frame" x="8" y="14" width="102" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="biE-wW-k6O" firstAttribute="leading" secondItem="bmT-aY-WQP" secondAttribute="leadingMargin" id="gTf-7e-HLu"/>
+                                                <constraint firstItem="biE-wW-k6O" firstAttribute="bottom" secondItem="bmT-aY-WQP" secondAttribute="bottomMargin" id="jJU-ms-gF1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="2V3-kn-mV4" kind="presentation" id="a4g-o3-ZwN"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="其他" id="BaA-nW-Hns">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="WTh-AG-Zbp" customClass="MaterialTableViewCell" customModule="Material">
+                                        <rect key="frame" x="0.0" y="209" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WTh-AG-Zbp" id="XOO-fl-KLM">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="常見問題" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diI-42-dv0">
+                                                    <rect key="frame" x="8" y="11" width="68" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="diI-42-dv0" firstAttribute="centerY" secondItem="XOO-fl-KLM" secondAttribute="centerY" id="Sw8-BK-4gO"/>
+                                                <constraint firstItem="diI-42-dv0" firstAttribute="leading" secondItem="XOO-fl-KLM" secondAttribute="leadingMargin" id="Vh8-Nh-8qH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="MCB-d4-IpU" id="M8s-3s-6HP"/>
+                            <outlet property="delegate" destination="MCB-d4-IpU" id="UAU-d8-mOq"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="個人資訊" id="4rB-u8-Qzp"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V7Y-gh-ymI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1746" y="1456"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="kbg-Gv-3dD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2V3-kn-mV4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="seE-0E-XIv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="uei-sk-pti" kind="relationship" relationship="rootViewController" id="wRQ-Re-gDp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="foN-TO-Eun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2575" y="1456"/>
         </scene>
     </scenes>
     <resources>
