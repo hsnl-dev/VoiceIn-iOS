@@ -43,7 +43,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if switchButton.on {
             debugPrint("Switch On")
             Alamofire
-                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isEnable": "True"], encoding: .URLEncodedInURL)
+                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isEnable": "False"], encoding: .URLEncodedInURL)
                 .response {
                     request, response, data, error in
                     if error == nil {
@@ -57,7 +57,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             debugPrint("Switch Off")
             Alamofire
-                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isEnable": "False"], encoding: .URLEncodedInURL)
+                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isEnable": "True"], encoding: .URLEncodedInURL)
                 .response {
                     request, response, data, error in
                     if error == nil {
@@ -198,7 +198,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 4
+            return 6
         case 1:
             return 3
         default:
@@ -227,6 +227,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             case 3:
                 cell.fieldLabel.text = "關於"
                 cell.valueLabel.text = userInformation["profile"]! as String! != "" ? userInformation["profile"]! as String!: "未設定"
+            case 4:
+                cell.fieldLabel.text = "對方狀態"
+                cell.valueLabel.text = userInformation["providerIsEnable"]! as String! == "true" ? "可撥打" : "不可撥打"
+            case 5:
+                cell.fieldLabel.text = "對方方便時段"
+                cell.valueLabel.text = userInformation["providerAvailableStartTime"]! as String! + " - " + userInformation["providerAvailableEndTime"]!! as String!
             default:
                 cell.fieldLabel.text = ""
                 cell.valueLabel.text = ""
@@ -250,7 +256,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             case 2:
                 let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath) as! SwitchCell
                 
-                if self.userInformation["isEnable"]! == "true" {
+                if self.userInformation["isEnable"]! == "false" {
                     cell.switchButton.setOn(true, animated: true)
                 } else {
                     cell.switchButton.setOn(false, animated: true)
@@ -319,10 +325,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         var image: UIImage? = UIImage(named: "ic_menu_white")?.imageWithRenderingMode(.AlwaysTemplate)
         let btn1: FabButton = FabButton()
         btn1.depth = .None
-        btn1.tintColor = MaterialColor.blue.accent3
-        btn1.pulseColor = nil
+        btn1.tintColor = MaterialColor.white
+        btn1.pulseColor = MaterialColor.grey.lighten1
         btn1.borderColor = MaterialColor.blue.accent3
-        btn1.backgroundColor = MaterialColor.white
+        btn1.backgroundColor = MaterialColor.blue.accent3
         btn1.borderWidth = 1
         btn1.setImage(image, forState: .Normal)
         btn1.setImage(image, forState: .Highlighted)
@@ -332,10 +338,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         image = UIImage(named: "ic_call_white")?.imageWithRenderingMode(.AlwaysTemplate)
         let btn2: FabButton = FabButton()
         btn2.depth = .None
-        btn2.tintColor = MaterialColor.blue.accent3
-        btn2.pulseColor = MaterialColor.blue.accent3
+        btn2.tintColor = MaterialColor.white
+        btn2.pulseColor = MaterialColor.grey.lighten1
         btn2.borderColor = MaterialColor.blue.accent3
-        btn2.backgroundColor = MaterialColor.white
+        btn2.backgroundColor = MaterialColor.blue.accent3
         btn2.borderWidth = 1
         btn2.setImage(image, forState: .Normal)
         btn2.setImage(image, forState: .Highlighted)
@@ -345,10 +351,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         image = UIImage(named: "ic_favorite_white")?.imageWithRenderingMode(.AlwaysTemplate)
         let btn3: FabButton = FabButton()
         btn3.depth = .None
-        btn3.tintColor = MaterialColor.blue.accent3
-        btn3.pulseColor = MaterialColor.blue.accent3
+        btn3.tintColor = MaterialColor.white
+        btn3.pulseColor = MaterialColor.grey.lighten1
         btn3.borderColor = MaterialColor.blue.accent3
-        btn3.backgroundColor = MaterialColor.white
+        btn3.backgroundColor = MaterialColor.blue.accent3
         btn3.borderWidth = 1
         btn3.setImage(image, forState: .Normal)
         btn3.setImage(image, forState: .Highlighted)
@@ -376,6 +382,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         view.addSubview(menuView)
         menuView.translatesAutoresizingMaskIntoConstraints = false
         MaterialLayout.size(view, child: menuView, width: diameter, height: diameter)
-        MaterialLayout.alignFromBottomLeft(view, child: menuView, bottom: 55, left: (view.bounds.width - diameter - 5))
+        MaterialLayout.alignFromBottomLeft(view, child: menuView, bottom: 5, left: (view.bounds.width - diameter - 4))
     }
 }
