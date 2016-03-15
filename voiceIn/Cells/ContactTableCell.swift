@@ -20,23 +20,20 @@ class ContactTableCell: MaterialTableViewCell{
     var onFavoriteButtonTapped: (() -> Void)? = nil
     var callee: String?
     var qrCodeUuid: String?
+    var isProviderEnable: Bool!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         //self.contentView.layer.borderColor = UIColor.lightGrayColor().CGColor
         //self.contentView.layer.borderWidth = 1
-        let phoneImgage: UIImage? = UIImage(named: "ic_call_white")
-        self.callButton.setImage(phoneImgage, forState: .Normal)
-        self.callButton.setImage(phoneImgage, forState: .Highlighted)
         self.callButton.tintColor = UIColor.whiteColor()
-        self.callButton.backgroundColor = MaterialColor.blue.accent3
         
         let favoriteImgage: UIImage? = UIImage(named: "ic_favorite_white")
         self.favoriteButton.setImage(favoriteImgage, forState: .Normal)
         self.favoriteButton.setImage(favoriteImgage, forState: .Highlighted)
         self.favoriteButton.tintColor = UIColor.whiteColor()
-
+        
         self.layoutMargins = UIEdgeInsetsZero //or UIEdgeInsetsMake(top, left, bottom, right)
         self.separatorInset = UIEdgeInsetsZero //if you also want to adjust separatorInset
     }
@@ -58,5 +55,5 @@ class ContactTableCell: MaterialTableViewCell{
             onFavoriteButtonTapped()
         }
     }
-
+    
 }

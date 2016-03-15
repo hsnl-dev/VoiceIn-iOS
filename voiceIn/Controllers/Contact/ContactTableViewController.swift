@@ -76,12 +76,33 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             var userInformation: [String: String?] = filterContactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
+            let providerIsEnable = userInformation["providerIsEnable"]!!
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
                 cell.nameLabel.text = userInformation["userName"]!
             } else {
                 cell.nameLabel.text = nickName
+            }
+            
+            if providerIsEnable == "false" {
+                debugPrint(providerIsEnable == "false")
+                let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
+                cell.callButton.setImage(phoneImgage, forState: .Normal)
+                cell.callButton.backgroundColor = MaterialColor.black
+                cell.isProviderEnable = false
+            } else {
+                let phoneImgage: UIImage? = UIImage(named: "ic_call_white")
+                cell.callButton.setImage(phoneImgage, forState: .Normal)
+                cell.callButton.backgroundColor = MaterialColor.blue.accent3
+                cell.isProviderEnable = true
+            }
+            
+            if userInformation["chargeType"]! as String? == "1" {
+                cell.type.text = "免費"
+            } else if userInformation["chargeType"]! as String? == "2" {
+                cell.type.text = "需付費"
+                cell.type.textColor = MaterialColor.teal.darken4
             }
             
             cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
@@ -94,12 +115,33 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             var userInformation: [String: String?] = contactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
+            let providerIsEnable = userInformation["providerIsEnable"]!!
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
                 cell.nameLabel.text = userInformation["userName"]!
             } else {
                 cell.nameLabel.text = nickName
+            }
+            
+            if providerIsEnable == "false" {
+                debugPrint(providerIsEnable == "false")
+                let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
+                cell.callButton.setImage(phoneImgage, forState: .Normal)
+                cell.callButton.backgroundColor = MaterialColor.black
+                cell.isProviderEnable = false
+            } else {
+                let phoneImgage: UIImage? = UIImage(named: "ic_call_white")
+                cell.callButton.setImage(phoneImgage, forState: .Normal)
+                cell.callButton.backgroundColor = MaterialColor.blue.accent3
+                cell.isProviderEnable = true
+            }
+            
+            if userInformation["chargeType"]! as String? == "1" {
+                cell.type.text = "免費"
+            } else if userInformation["chargeType"]! as String? == "2" {
+                cell.type.text = "需付費"
+                cell.type.textColor = MaterialColor.teal.darken4
             }
             
             cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
@@ -130,8 +172,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         cell.onCallButtonTapped = {
             debugPrint(cell.callee)
+            if cell.isProviderEnable == false {
+                self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
+                return
+            }
             let callService = CallService.init(view: self.view, _self: self)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String)
+            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, qrCodeUuid: cell.qrCodeUuid)
         }
         
         cell.onFavoriteButtonTapped = {

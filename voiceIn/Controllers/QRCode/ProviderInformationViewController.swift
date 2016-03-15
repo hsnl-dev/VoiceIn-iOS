@@ -17,7 +17,8 @@ class ProviderInformationViewController: UIViewController {
         super.viewDidLoad()
         let getInformationApiRoute = API_END_POINT + "/providers/" + qrCodeUuid
         debugPrint(getInformationApiRoute)
-        
+        // MARK: self-sizing cell setting.
+        tableView.rowHeight = UITableViewAutomaticDimension;
         /**
         GET: Get the user's information.
         **/
@@ -133,7 +134,7 @@ class ProviderInformationViewController: UIViewController {
             "isEnable": true,
             "chargeType": 1,
             "availableStartTime": "00:00",
-            "availableEndTime": "00:00",
+            "availableEndTime": "23:59",
             "nickName": nickName as String
         ]
         debugPrint(parameters)

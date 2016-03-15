@@ -70,6 +70,41 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    func AvailableSwitchIsChanged(switchButton: UISwitch) {
+        let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
+        let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+        
+        if switchButton.on {
+            debugPrint("Switch On")
+            Alamofire
+                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isHigherPriorityThanGlobal": "True"], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    if error == nil {
+                        debugPrint(response)
+                        self.userInformation["isHigherPriorityThanGlobal"] = "true"
+                    } else {
+                        self.userInformation["isHigherPriorityThanGlobal"] = "false"
+                    }
+            }
+            
+        } else {
+            debugPrint("Switch Off")
+            Alamofire
+                .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["isHigherPriorityThanGlobal": "False"], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    if error == nil {
+                        debugPrint(response)
+                        self.userInformation["isHigherPriorityThanGlobal"] = "false"
+                    } else {
+                        self.userInformation["isHigherPriorityThanGlobal"] = "true"
+                    }
+            }
+        }
+        
+    }
+    
     @IBAction func closeTimePickerView(sender: UIButton!) {
         timePickerView.hidden = true
     }
@@ -168,7 +203,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.presentViewController(nickNameChangeAlert, animated: true, completion: nil)
         }
         
-        if indexPath.section == 1 && (indexPath.row == 0 || indexPath.row == 1) {
+        if indexPath.section == 1 && (indexPath.row == 1 || indexPath.row == 2) {
             timePickerView.hidden = false
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "H:mm"
@@ -188,7 +223,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         case 0:
             return "好友資訊"
         case 1:
-            return "方便通話時間設定"
+            return "設定方便通話時間"
         default:
             return "Title"
         }
@@ -200,7 +235,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         case 0:
             return 6
         case 1:
-            return 3
+            return 4
         default:
             return 0
         }
@@ -227,12 +262,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             case 3:
                 cell.fieldLabel.text = "關於"
                 cell.valueLabel.text = userInformation["profile"]! as String! != "" ? userInformation["profile"]! as String!: "未設定"
+                cell.accessoryType = .None;
             case 4:
                 cell.fieldLabel.text = "對方狀態"
                 cell.valueLabel.text = userInformation["providerIsEnable"]! as String! == "true" ? "可撥打" : "不可撥打"
+                cell.accessoryType = .None;
             case 5:
-                cell.fieldLabel.text = "對方方便時段"
+                cell.fieldLabel.text = "對方方便通話時段"
                 cell.valueLabel.text = userInformation["providerAvailableStartTime"]! as String! + " - " + userInformation["providerAvailableEndTime"]!! as String!
+                cell.accessoryType = .None;
             default:
                 cell.fieldLabel.text = ""
                 cell.valueLabel.text = ""
@@ -242,20 +280,30 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         case 1:
             switch indexPath.row {
             case 0:
-                let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
-                cell.fieldLabel.text = "開始時間"
-                cell.valueLabel.text = userInformation["availableStartTime"]! as String! != "" ? userInformation["availableStartTime"]! as String!: "未設定"
-                cell.accessoryType = .DisclosureIndicator;
+                let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath) as! SwitchCell
+                cell.labelText.text = "以下面方便通話時間為主"
+                if self.userInformation["isHigherPriorityThanGlobal"]! == "true" {
+                    cell.switchButton.setOn(true, animated: true)
+                } else {
+                    cell.switchButton.setOn(false, animated: true)
+                }
+                
+                cell.switchButton.addTarget(self, action: Selector("AvailableSwitchIsChanged:"), forControlEvents: UIControlEvents.ValueChanged)
                 return cell
             case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
-                cell.fieldLabel.text = "結束時間"
-                cell.valueLabel.text = userInformation["availableEndTime"]! as String! != "" ? userInformation["availableEndTime"]! as String!: "未設定"
+                cell.fieldLabel.text = "設定開始時間"
+                cell.valueLabel.text = userInformation["availableStartTime"]! as String! != "" ? userInformation["availableStartTime"]! as String!: "未設定"
                 cell.accessoryType = .DisclosureIndicator;
                 return cell
             case 2:
+                let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
+                cell.fieldLabel.text = "設定結束時間"
+                cell.valueLabel.text = userInformation["availableEndTime"]! as String! != "" ? userInformation["availableEndTime"]! as String!: "未設定"
+                cell.accessoryType = .DisclosureIndicator;
+                return cell
+            case 3:
                 let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath) as! SwitchCell
-                
                 if self.userInformation["isEnable"]! == "false" {
                     cell.switchButton.setOn(true, animated: true)
                 } else {
@@ -281,9 +329,17 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     internal func callButton(button: UIButton) {
-        let callService = CallService.init(view: self.view, _self: self)
-        debugPrint(self.userDefaultData.stringForKey("phoneNumber")!)
-        callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!)
+        
+        if self.userInformation["providerIsEnable"]!! as String == "true" {
+            let callService = CallService.init(view: self.view, _self: self)
+            let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
+            
+            debugPrint(self.userDefaultData.stringForKey("phoneNumber")!)
+            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!, qrCodeUuid: qrCodeUuid)
+        } else {
+            self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
+            return
+        }
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {
@@ -326,22 +382,31 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let btn1: FabButton = FabButton()
         btn1.depth = .None
         btn1.tintColor = MaterialColor.white
-        btn1.pulseColor = MaterialColor.grey.lighten1
-        btn1.borderColor = MaterialColor.blue.accent3
-        btn1.backgroundColor = MaterialColor.blue.accent3
+        btn1.pulseColor = MaterialColor.lightBlue.base
+        btn1.borderColor = MaterialColor.grey.lighten1
+        btn1.backgroundColor = MaterialColor.grey.lighten1
         btn1.borderWidth = 1
         btn1.setImage(image, forState: .Normal)
         btn1.setImage(image, forState: .Highlighted)
         btn1.addTarget(self, action: "handleMenu", forControlEvents: .TouchUpInside)
         menuView.addSubview(btn1)
         
-        image = UIImage(named: "ic_call_white")?.imageWithRenderingMode(.AlwaysTemplate)
+        let isProviderEnable = self.userInformation["providerIsEnable"]!!
+        debugPrint("isProviderEnale: " + isProviderEnable)
+        
         let btn2: FabButton = FabButton()
+        
+        if isProviderEnable == "true" {
+            image = UIImage(named: "ic_call_white")?.imageWithRenderingMode(.AlwaysTemplate)
+        } else {
+            image = UIImage(named: "ic_phone_locked_white")?.imageWithRenderingMode(.AlwaysTemplate)
+        }
+        
         btn2.depth = .None
         btn2.tintColor = MaterialColor.white
-        btn2.pulseColor = MaterialColor.grey.lighten1
-        btn2.borderColor = MaterialColor.blue.accent3
-        btn2.backgroundColor = MaterialColor.blue.accent3
+        btn2.pulseColor = MaterialColor.lightBlue.base
+        btn2.borderColor = MaterialColor.grey.lighten1
+        btn2.backgroundColor = MaterialColor.grey.lighten1
         btn2.borderWidth = 1
         btn2.setImage(image, forState: .Normal)
         btn2.setImage(image, forState: .Highlighted)
@@ -352,27 +417,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let btn3: FabButton = FabButton()
         btn3.depth = .None
         btn3.tintColor = MaterialColor.white
-        btn3.pulseColor = MaterialColor.grey.lighten1
-        btn3.borderColor = MaterialColor.blue.accent3
-        btn3.backgroundColor = MaterialColor.blue.accent3
+        btn3.pulseColor = MaterialColor.lightBlue.base
+        btn3.borderColor = MaterialColor.grey.lighten1
+        btn3.backgroundColor = MaterialColor.grey.lighten1
         btn3.borderWidth = 1
         btn3.setImage(image, forState: .Normal)
         btn3.setImage(image, forState: .Highlighted)
         btn3.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
         menuView.addSubview(btn3)
-        
-        // image = UIImage(named: "ic_delete_forever_white")?.imageWithRenderingMode(.AlwaysTemplate)
-        // let btn4: FabButton = FabButton()
-        // btn4.depth = .None
-        // btn4.tintColor = MaterialColor.blue.accent3
-        // btn4.pulseColor = MaterialColor.blue.accent3
-        // btn4.borderColor = MaterialColor.blue.accent3
-        // btn4.backgroundColor = MaterialColor.white
-        // btn4.borderWidth = 1
-        // btn4.setImage(image, forState: .Normal)
-        // btn4.setImage(image, forState: .Highlighted)
-        // btn4.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
-        // menuView.addSubview(btn4)
         
         // MARK: Initialize the menu and setup the configuration options.
         menuView.menu.direction = .Up

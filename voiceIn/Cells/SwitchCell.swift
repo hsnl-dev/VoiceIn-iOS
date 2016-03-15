@@ -7,6 +7,7 @@ import Alamofire
 
 class SwitchCell: MaterialTableViewCell {
     @IBOutlet var switchButton: UISwitch!
+    @IBOutlet var labelText: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
