@@ -11,6 +11,7 @@ class vCardViewController: UIViewController {
     @IBOutlet weak var company: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var qrCodeImage: UIImageView!
+    @IBOutlet weak var cardView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +27,13 @@ class vCardViewController: UIViewController {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["profilePhotoId"].stringValue
-
+                    
                     self.userName.text = jsonResponse["userName"].stringValue
                     self.company.text = jsonResponse["company"].stringValue
                     self.profile.text = jsonResponse["profile"].stringValue
                     self.location.text = jsonResponse["location"].stringValue
                     self.profile.sizeToFit()
-
+                    
                     // MARK: Retrieve the image
                     Alamofire
                         .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
@@ -44,9 +45,9 @@ class vCardViewController: UIViewController {
                     }
                     
                     self.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)
-                
+                    
                 case .Failure(let error):
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
@@ -63,7 +64,16 @@ class vCardViewController: UIViewController {
         qrcodeImage = filter!.outputImage
         let transformedImage = qrcodeImage.imageByApplyingTransform(CGAffineTransformMakeScale(125, 125))
         self.qrCodeImage.image = UIImage(CIImage: transformedImage)
-
+        
+    }
+    
+    @IBAction func shareQRCodeButtonClicked(sender: UIButton!) {
+        let defaultText = "這是我的 VoiceIn QR Code 名片"
+        
+        if let imageToShare: UIImage! = self.cardView.image() {
+            let activityController = UIActivityViewController(activityItems:[defaultText, imageToShare], applicationActivities: nil)
+            self.presentViewController(activityController, animated: true,completion: nil)
+        }
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {
@@ -71,5 +81,28 @@ class vCardViewController: UIViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
+}
+
+extension UIView {
+    func image() -> UIImage {
+        var image: UIImage!
+        
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, UIScreen.mainScreen().scale)
+        
+        if let context = UIGraphicsGetCurrentContext() {
+            CGContextTranslateCTM(context, -frame.origin.x - 4, 0)
+            
+            if let scrollView = self as? UIScrollView {
+                CGContextTranslateCTM(context, -scrollView.contentOffset.x, -scrollView.contentOffset.y)
+            }
+            
+            layer.renderInContext(context)
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        } else {
+            image = UIImage()
+        }
+        
+        return image
+    }
 }
