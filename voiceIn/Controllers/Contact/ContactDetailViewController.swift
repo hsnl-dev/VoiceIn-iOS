@@ -223,7 +223,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         case 0:
             return "好友資訊"
         case 1:
-            return "設定方便通話時間"
+            return "設定可通話時段"
         default:
             return "Title"
         }
@@ -268,7 +268,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.valueLabel.text = userInformation["providerIsEnable"]! as String! == "true" ? "可撥打" : "不可撥打"
                 cell.accessoryType = .None;
             case 5:
-                cell.fieldLabel.text = "對方方便通話時段"
+                cell.fieldLabel.text = "對方可通話時段"
                 cell.valueLabel.text = userInformation["providerAvailableStartTime"]! as String! + " - " + userInformation["providerAvailableEndTime"]!! as String!
                 cell.accessoryType = .None;
             default:
@@ -281,7 +281,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             switch indexPath.row {
             case 0:
                 let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath) as! SwitchCell
-                cell.labelText.text = "以下面方便通話時間為主"
+                cell.labelText.text = "以下方可通話時間為主"
                 if self.userInformation["isHigherPriorityThanGlobal"]! == "true" {
                     cell.switchButton.setOn(true, animated: true)
                 } else {
