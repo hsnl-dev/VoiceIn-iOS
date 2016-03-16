@@ -39,32 +39,19 @@ class vCardViewController: UIViewController {
                         .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
                         .responseData {
                             response in
+                            // MARK: TODO Error handling
                             if response.data != nil {
                                 self.userAvatar.image = UIImage(data: response.data!)
                             }
                     }
                     
-                    self.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)
+                    self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)))
                     
                 case .Failure(let error):
                     self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
-    }
-    
-    private func generateQRCodeImage(qrCodeString qrCodeString: String) {
-        let qrCodeData = qrCodeString.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
-        let filter = CIFilter(name: "CIQRCodeGenerator")
-        var qrcodeImage: CIImage!
-        // MARK: Generate the QRCode
-        filter!.setValue(qrCodeData, forKey: "inputMessage")
-        filter!.setValue("Q", forKey: "inputCorrectionLevel")
-        
-        qrcodeImage = filter!.outputImage
-        let transformedImage = qrcodeImage.imageByApplyingTransform(CGAffineTransformMakeScale(125, 125))
-        self.qrCodeImage.image = UIImage(CIImage: transformedImage)
-        
     }
     
     @IBAction func shareQRCodeButtonClicked(sender: UIButton!) {
@@ -81,28 +68,8 @@ class vCardViewController: UIViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-}
-
-extension UIView {
-    func image() -> UIImage {
-        var image: UIImage!
+    
+    @IBAction func closeQRCodeList(segue: UIStoryboardSegue) {
         
-        UIGraphicsBeginImageContextWithOptions(frame.size, false, UIScreen.mainScreen().scale)
-        
-        if let context = UIGraphicsGetCurrentContext() {
-            CGContextTranslateCTM(context, -frame.origin.x - 4, 0)
-            
-            if let scrollView = self as? UIScrollView {
-                CGContextTranslateCTM(context, -scrollView.contentOffset.x, -scrollView.contentOffset.y)
-            }
-            
-            layer.renderInContext(context)
-            image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-        } else {
-            image = UIImage()
-        }
-        
-        return image
     }
 }

@@ -1,12 +1,11 @@
 import UIKit
 import AVFoundation
-import Alamofire
 import SwiftyJSON
 
 class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     @IBOutlet weak var messageLabel:UILabel!
-  
+    
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
@@ -121,7 +120,7 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
     }
     
     @IBAction func close(segue:UIStoryboardSegue) {
-    
+        
     }
     
 }

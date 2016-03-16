@@ -147,6 +147,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
                 .responseData {
                     response in
+                    // MARK: TODO error handling...
                     if response.data != nil {
                         dispatch_async(dispatch_get_main_queue(), {
                             self.userAvatarImage.image = UIImage(data: response.data!)
@@ -193,6 +194,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                                 cell.valueLabel?.text = nickName
                             }
                         } else {
+                            // MARK: TODO Error handling
                             SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         }
                 }
