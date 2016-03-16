@@ -147,6 +147,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
                 .responseData {
                     response in
+                    // MARK: TODO error handling...
                     if response.data != nil {
                         dispatch_async(dispatch_get_main_queue(), {
                             self.userAvatarImage.image = UIImage(data: response.data!)
@@ -193,6 +194,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                                 cell.valueLabel?.text = nickName
                             }
                         } else {
+                            // MARK: TODO Error handling
                             SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         }
                 }
@@ -206,7 +208,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if indexPath.section == 1 && (indexPath.row == 1 || indexPath.row == 2) {
             timePickerView.hidden = false
             let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "H:mm"
+            // MARK: 24Hr two digit. such as 23:11
+            dateFormatter.dateFormat = "HH:mm"
             availableStartTimeDatePicker.setDate(dateFormatter.dateFromString(userInformation["availableStartTime"]! as String!)!, animated: true)
             availableEndTimeDatePicker.setDate(dateFormatter.dateFromString(userInformation["availableEndTime"]! as String!)!, animated: true)
         }

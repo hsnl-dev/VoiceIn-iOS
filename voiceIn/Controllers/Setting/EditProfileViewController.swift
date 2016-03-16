@@ -182,7 +182,7 @@ class EditProfileViewController: FormViewController {
                 }.cellSetup {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "H:mm"
+                    dateFormatter.dateFormat = "HH:mm"
                     row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
             }
             
@@ -193,7 +193,7 @@ class EditProfileViewController: FormViewController {
                 }.cellSetup {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "H:mm"
+                    dateFormatter.dateFormat = "HH:mm"
                     row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
             }
             

@@ -45,6 +45,7 @@ class ProviderInformationViewController: UIViewController {
                             .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
                             .responseData {
                                 response in
+                                // MARK: TODO Error handling
                                 if response.data != nil {
                                     self.userAvatar.image = UIImage(data: response.data!)
                                 }
