@@ -14,6 +14,7 @@ class QRCodeListVeiwController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         getQrCodeList()
     }
     
@@ -117,14 +118,33 @@ class QRCodeListVeiwController: UITableViewController {
                     }
                     
                     self.tableView.reloadData()
-                    self.view.userInteractionEnabled = true
-                    self.removeAllOverlays()
                 case .Failure(let error):
                     //MARK: TODO Error handling
                     debugPrint(error)
-                    self.view.userInteractionEnabled = true
-                    self.removeAllOverlays()
                 }
+                
+                self.removeAllOverlays()
+                self.view.userInteractionEnabled = true
+                self.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func refresh(sender: AnyObject) {
+        var reachability: Reachability
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            debugPrint("Unable to create Reachability")
+            return
+        }
+        
+        if reachability.isReachable() != true {
+            debugPrint("Network is not connected!")
+            // MARK: TODO Error handling
+            self.refreshControl?.endRefreshing()
+            self.view.userInteractionEnabled = true
+        } else {
+            getQrCodeList()
         }
     }
     

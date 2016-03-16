@@ -208,7 +208,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if indexPath.section == 1 && (indexPath.row == 1 || indexPath.row == 2) {
             timePickerView.hidden = false
             let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "H:mm"
+            // MARK: 24Hr two digit. such as 23:11
+            dateFormatter.dateFormat = "HH:mm"
             availableStartTimeDatePicker.setDate(dateFormatter.dateFromString(userInformation["availableStartTime"]! as String!)!, animated: true)
             availableEndTimeDatePicker.setDate(dateFormatter.dateFromString(userInformation["availableEndTime"]! as String!)!, animated: true)
         }

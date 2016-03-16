@@ -255,18 +255,16 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     SwiftSpinner.hide()
                     
                     self.tableView.reloadData()
-                    self.view.userInteractionEnabled = true
-                    self.refreshControl?.endRefreshing()
                     //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 case .Failure(let error):
                     debugPrint(error)
                     
                     SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
-                    self.view.userInteractionEnabled = true
-                    self.refreshControl?.endRefreshing()
                     //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
+                self.view.userInteractionEnabled = true
+                self.refreshControl?.endRefreshing()
         }
     }
     

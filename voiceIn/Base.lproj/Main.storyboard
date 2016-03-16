@@ -1067,7 +1067,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="GHD-cf-e2M">
                         <rightBarButtonItems>
-                            <barButtonItem image="ic_format_list_bulleted_48pt" id="cvY-Tn-i1Z">
+                            <barButtonItem image="ic_folder_shared" id="cvY-Tn-i1Z">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Hpf-tg-6eZ" kind="popoverPresentation" popoverAnchorBarButtonItem="cvY-Tn-i1Z" id="YVQ-SQ-xLy">
@@ -1075,7 +1075,7 @@
                                     </segue>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="action" id="kFS-YO-OM6">
+                            <barButtonItem image="ic_share" id="kFS-YO-OM6">
                                 <connections>
                                     <action selector="shareQRCodeButtonClicked:" destination="NNy-iM-hOH" id="sV6-uc-cXI"/>
                                 </connections>
@@ -1374,7 +1374,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="為您的朋友先設定資料" id="v4p-45-Khn">
+                            <tableViewSection headerTitle="為您的朋友先設定資料" footerTitle="設定完，分享此特殊 QR Code 給朋友，朋友不必輸入資料即可建立撥號 icon" id="v4p-45-Khn">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ziu-Ox-wuj" customClass="MaterialTableViewCell" customModule="Material">
                                         <rect key="frame" x="0.0" y="114" width="600" height="60"/>
@@ -1512,11 +1512,12 @@
         <image name="ic_contacts_white" width="24" height="24"/>
         <image name="ic_face_white" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
-        <image name="ic_format_list_bulleted_48pt" width="48" height="48"/>
+        <image name="ic_folder_shared" width="24" height="24"/>
         <image name="ic_history_white" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add_white" width="24" height="24"/>
         <image name="ic_save_white" width="24" height="24"/>
+        <image name="ic_share" width="24" height="24"/>
         <image name="user" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>

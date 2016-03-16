@@ -146,7 +146,7 @@ class UserInformationViewController: FormViewController {
         let formValues = form.values()
         let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 1)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
         
         if !isFormValuesValid(formValues) {
             // Form is not valid
