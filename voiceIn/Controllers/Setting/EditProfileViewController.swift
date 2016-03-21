@@ -234,7 +234,7 @@ class EditProfileViewController: FormViewController {
         let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
         
         if !isFormValuesValid(formValues) {
             // Form is not valid

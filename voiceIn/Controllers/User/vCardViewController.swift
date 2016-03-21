@@ -45,7 +45,7 @@ class vCardViewController: UIViewController {
                             }
                     }
                     
-                    self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)))
+                    self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
                     
                 case .Failure(let error):
                     self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")

@@ -167,6 +167,7 @@ class UserInformationViewController: FormViewController {
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let generateQrcodeApiRoute = API_END_POINT + "/accounts/" + userUuid + "/qrcode"
         
+        print(dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!))
         print("PUT: " + updateInformationApiRoute)
         let text = "儲存中..."
         self.showWaitOverlayWithText(text)
