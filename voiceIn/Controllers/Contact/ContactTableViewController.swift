@@ -195,7 +195,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 print("deleting...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
-                let deleteApiRoute = API_END_POINT + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
+                let deleteApiRoute = API_URI + versionV2 + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
