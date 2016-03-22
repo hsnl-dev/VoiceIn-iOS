@@ -86,7 +86,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if providerIsEnable == "false" {
-                debugPrint(providerIsEnable == "false")
                 let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
                 cell.callButton.setImage(phoneImgage, forState: .Normal)
                 cell.callButton.backgroundColor = MaterialColor.black
@@ -100,13 +99,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             if userInformation["chargeType"]! as String? == "1" {
                 cell.type.text = "免費"
-            } else if userInformation["chargeType"]! as String? == "2" {
+            } else {
                 cell.type.text = "需付費"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
             cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-            cell.qrCodeUuid = userInformation["qrCodeUuid"]!
+            cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         } else {
             if indexPath.row > contactArray.count - 1 {
@@ -125,7 +124,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if providerIsEnable == "false" {
-                debugPrint(providerIsEnable == "false")
                 let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
                 cell.callButton.setImage(phoneImgage, forState: .Normal)
                 cell.callButton.backgroundColor = MaterialColor.black
@@ -139,13 +137,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             if userInformation["chargeType"]! as String? == "1" {
                 cell.type.text = "免費"
-            } else if userInformation["chargeType"]! as String? == "2" {
+            } else {
                 cell.type.text = "需付費"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
             cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-            cell.qrCodeUuid = userInformation["qrCodeUuid"]!
+            cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         }
         
@@ -171,13 +169,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
         
         cell.onCallButtonTapped = {
-            debugPrint(cell.callee)
             if cell.isProviderEnable == false {
                 self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
                 return
             }
             let callService = CallService.init(view: self.view, _self: self)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, qrCodeUuid: cell.qrCodeUuid)
+            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, contactId: cell.id)
         }
         
         cell.onFavoriteButtonTapped = {
@@ -195,17 +192,16 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 print("deleting...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
-                let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).qrCodeUuid!
+                let deleteApiRoute = API_URI + versionV2 + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
+                
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
                     if error == nil {
-                        debugPrint(error)
                         self.tableView.beginUpdates()
                         SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         self.contactArray.removeAtIndex(indexPath.row)
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         self.tableView.endUpdates()
-                        debugPrint(self.contactArray)
                     } else {
                         SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                     }
@@ -224,7 +220,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         self.view.userInteractionEnabled = false
         //        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
+        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
         
         self.tableView.reloadData()
         Alamofire
@@ -237,13 +233,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     debugPrint(jsonResponse)
                     self.contactArray = []
                     
-                    for var index = 0; index < jsonResponse.count; ++index {
+                    for index in 0 ..< jsonResponse.count {
                         var contactInformation: [String: String?] = [String: String?]()
                         var people: People!
                         var keyValuePair = Array(jsonResponse[index])
                         
-                        for var indexKeys = 0; indexKeys < keyValuePair.count; ++indexKeys {
-                            debugPrint(jsonResponse[index][keyValuePair[indexKeys].0])
+                        for indexKeys in 0 ..< keyValuePair.count {
                             contactInformation[keyValuePair[indexKeys].0] = jsonResponse[index][keyValuePair[indexKeys].0].stringValue
                         }
                         

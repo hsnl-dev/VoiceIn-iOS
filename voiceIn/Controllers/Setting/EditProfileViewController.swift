@@ -90,7 +90,6 @@ class EditProfileViewController: FormViewController {
         form.removeAll()
         form +++
             Section("")
-            +++ Section("")
             +++ Section(header: "基本資料", footer: "* 記號表示為必填")
             <<< SelectImageRow(){
                 $0.title = "您的大頭貼"
@@ -113,10 +112,10 @@ class EditProfileViewController: FormViewController {
                                 row.updateCell()
                             }
                             
-                            self.isUserSelectPhoto = true
                             self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
+                    self.isUserSelectPhoto = true
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 }).cellSetup {
                     cell, row in
@@ -234,7 +233,7 @@ class EditProfileViewController: FormViewController {
         let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
         
         if !isFormValuesValid(formValues) {
             // Form is not valid

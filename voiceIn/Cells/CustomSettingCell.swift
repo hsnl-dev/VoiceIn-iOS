@@ -8,8 +8,7 @@ public final class SelectImageRow : _SelectImageRow<PushSelectorCell<UIImage>>, 
     }
 }
 
-public class _SelectImageRow<Cell: CellType where Cell: BaseCell, Cell.Value == UIImage> : SelectorRow<UIImage, ImagePickerController, Cell> {
-    
+public class _SelectImageRow<Cell: CellType where Cell: BaseCell, Cell: TypedCellType, Cell.Value == UIImage>: SelectorRow<UIImage, Cell, ImagePickerController> {
     public required init(tag: String?) {
         super.init(tag: tag)
         self.displayValueFor = nil

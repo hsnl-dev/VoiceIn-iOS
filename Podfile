@@ -6,7 +6,7 @@ target 'voiceIn' do
     pod 'Material', '1.34.8'
     pod 'IQKeyboardManagerSwift'
     pod 'Alamofire', '~> 3.1.2'
-    pod 'Eureka', '~> 1.3'
+    pod 'Eureka', '~> 1.5'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'ALCameraViewController'
