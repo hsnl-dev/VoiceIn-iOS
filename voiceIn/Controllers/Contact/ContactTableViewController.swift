@@ -86,7 +86,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if providerIsEnable == "false" {
-                debugPrint(providerIsEnable == "false")
                 let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
                 cell.callButton.setImage(phoneImgage, forState: .Normal)
                 cell.callButton.backgroundColor = MaterialColor.black
@@ -100,7 +99,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             if userInformation["chargeType"]! as String? == "1" {
                 cell.type.text = "免費"
-            } else if userInformation["chargeType"]! as String? == "2" {
+            } else {
                 cell.type.text = "需付費"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
@@ -125,7 +124,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if providerIsEnable == "false" {
-                debugPrint(providerIsEnable == "false")
                 let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
                 cell.callButton.setImage(phoneImgage, forState: .Normal)
                 cell.callButton.backgroundColor = MaterialColor.black
@@ -139,7 +137,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             if userInformation["chargeType"]! as String? == "1" {
                 cell.type.text = "免費"
-            } else if userInformation["chargeType"]! as String? == "2" {
+            } else {
                 cell.type.text = "需付費"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
@@ -171,7 +169,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
         
         cell.onCallButtonTapped = {
-            debugPrint(cell.callee)
             if cell.isProviderEnable == false {
                 self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
                 return
@@ -200,13 +197,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
                     if error == nil {
-                        debugPrint(error)
                         self.tableView.beginUpdates()
                         SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         self.contactArray.removeAtIndex(indexPath.row)
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         self.tableView.endUpdates()
-                        debugPrint(self.contactArray)
                     } else {
                         SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                     }
@@ -238,13 +233,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     debugPrint(jsonResponse)
                     self.contactArray = []
                     
-                    for var index = 0; index < jsonResponse.count; ++index {
+                    for index in 0 ..< jsonResponse.count {
                         var contactInformation: [String: String?] = [String: String?]()
                         var people: People!
                         var keyValuePair = Array(jsonResponse[index])
                         
-                        for var indexKeys = 0; indexKeys < keyValuePair.count; ++indexKeys {
-                            debugPrint(jsonResponse[index][keyValuePair[indexKeys].0])
+                        for indexKeys in 0 ..< keyValuePair.count {
                             contactInformation[keyValuePair[indexKeys].0] = jsonResponse[index][keyValuePair[indexKeys].0].stringValue
                         }
                         
