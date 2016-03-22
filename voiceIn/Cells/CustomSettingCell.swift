@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 import Eureka
 
-public final class SelectImageRow : _ImageRow<PushSelectorCell<UIImage>>, RowType {
+public final class SelectImageRow : _SelectImageRow<PushSelectorCell<UIImage>>, RowType {
     public required init(tag: String?) {
         super.init(tag: tag)
     }

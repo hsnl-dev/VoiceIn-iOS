@@ -91,7 +91,7 @@ class EditProfileViewController: FormViewController {
         form +++
             Section("")
             +++ Section(header: "基本資料", footer: "* 記號表示為必填")
-            <<< ImageRow(){
+            <<< SelectImageRow(){
                 $0.title = "您的大頭貼"
                 $0.cell.height = {
                     let height: CGFloat = 70.0
@@ -100,24 +100,23 @@ class EditProfileViewController: FormViewController {
                 $0.tag = "avatar"
                 $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
-                    self.isUserSelectPhoto = true
-//                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
-//                        { (image) -> Void in
-//                            SelectImageRow.defaultCellUpdate = { cell, row in
-//                                cell.accessoryView?.layer.cornerRadius = 32
-//                                cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-//                            }
-//                            
-//                            if image != nil {
-//                                row.value = image
-//                                row.updateCell()
-//                            }
-//                            
-//                            self.isUserSelectPhoto = true
-//                            self.dismissViewControllerAnimated(true, completion: nil)
-//                    }
-//                    
-//                    self.presentViewController(cameraViewController, animated: true, completion: nil)
+                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
+                        { (image) -> Void in
+                            SelectImageRow.defaultCellUpdate = { cell, row in
+                                cell.accessoryView?.layer.cornerRadius = 32
+                                cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                            }
+                            
+                            if image != nil {
+                                row.value = image
+                                row.updateCell()
+                            }
+                            
+                            self.isUserSelectPhoto = true
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    
+                    self.presentViewController(cameraViewController, animated: true, completion: nil)
                 }).cellSetup {
                     cell, row in
                     print("image cell setup!")
