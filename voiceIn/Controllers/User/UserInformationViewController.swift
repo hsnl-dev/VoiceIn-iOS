@@ -204,7 +204,7 @@ class UserInformationViewController: FormViewController {
                         switch encodingResult {
                         case .Success(let upload, _, _):
                             upload.response { response in
-                                
+                                print("上傳成功。")
                             }
                         case .Failure(let encodingError):
                             self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
