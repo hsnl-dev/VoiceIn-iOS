@@ -37,8 +37,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func switchIsChanged(switchButton: UISwitch) {
-        let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
-        let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+        let contactId: String! = self.userInformation["id"]!
+        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
         
         if switchButton.on {
             debugPrint("Switch On")
@@ -71,8 +71,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func AvailableSwitchIsChanged(switchButton: UISwitch) {
-        let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
-        let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+        let contactId: String! = self.userInformation["id"]!
+        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
         
         if switchButton.on {
             debugPrint("Switch On")
@@ -111,10 +111,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func saveTimePeriod() {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
         
-        let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
-        let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+        let contactId: String! = self.userInformation["id"]!
+        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
         let availableStartTime: String = dateFormatter.stringFromDate(availableStartTimeDatePicker.date)
         let availableEndTime: String = dateFormatter.stringFromDate(availableEndTimeDatePicker.date)
         
@@ -173,9 +173,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // 3. Grab the value from the text field, and print it when the user clicks OK.
             nickNameChangeAlert.addAction(UIAlertAction(title: "儲存", style: .Default, handler: { (action) -> Void in
                 let nickNameTextField = nickNameChangeAlert.textFields![0] as UITextField
-                let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
                 let nickName: String! = nickNameTextField.text!
-                let updateContactRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + qrCodeUuid
+                let contactId: String! = self.userInformation["id"]!
+                let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
                 
                 debugPrint(updateContactRoute)
                 
@@ -335,10 +335,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.userInformation["providerIsEnable"]!! as String == "true" {
             let callService = CallService.init(view: self.view, _self: self)
-            let qrCodeUuid: String! = self.userInformation["qrCodeUuid"]!
+            let id: String! = self.userInformation["id"]!
             
             debugPrint(self.userDefaultData.stringForKey("phoneNumber")!)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!, qrCodeUuid: qrCodeUuid)
+            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!, contactId: id)
         } else {
             self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
             return

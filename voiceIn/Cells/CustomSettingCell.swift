@@ -2,14 +2,13 @@ import UIKit
 import Foundation
 import Eureka
 
-public final class SelectImageRow : _SelectImageRow<PushSelectorCell<UIImage>>, RowType {
+public final class SelectImageRow : _ImageRow<PushSelectorCell<UIImage>>, RowType {
     public required init(tag: String?) {
         super.init(tag: tag)
     }
 }
 
-public class _SelectImageRow<Cell: CellType where Cell: BaseCell, Cell.Value == UIImage> : SelectorRow<UIImage, ImagePickerController, Cell> {
-    
+public class _SelectImageRow<Cell: CellType where Cell: BaseCell, Cell: TypedCellType, Cell.Value == UIImage>: SelectorRow<UIImage, Cell, ImagePickerController> {
     public required init(tag: String?) {
         super.init(tag: tag)
         self.displayValueFor = nil

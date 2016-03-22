@@ -13,16 +13,15 @@ class CallService {
         self._self = _self
     }
     
-    func call(userUuid: String!, caller: String!, callee: String!, qrCodeUuid: String!) {
+    func call(userUuid: String!, caller: String!, callee: String!, contactId: String!) {
         let callConfirmAlert = UIAlertController(title: "即將為您撥號", message: "確定撥號嗎?", preferredStyle: UIAlertControllerStyle.Alert)
         
         callConfirmAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
             
-            let callApiRoute = API_END_POINT + "/accounts/" + userUuid + "/calls/" + qrCodeUuid
-            
+            let callApiRoute = API_URI + versionV2 + "/accounts/" + userUuid + "/calls"
+            print(contactId)
             let parameters = [
-                "caller": caller,
-                "callee": callee
+                "contactId": contactId
             ]
             
             SwiftOverlays.showCenteredWaitOverlayWithText(self.view!.superview!, text: "為您撥號中，系統即將來電...")

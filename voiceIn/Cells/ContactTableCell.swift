@@ -19,7 +19,7 @@ class ContactTableCell: MaterialTableViewCell{
     var onCallButtonTapped: (() -> Void)? = nil
     var onFavoriteButtonTapped: (() -> Void)? = nil
     var callee: String?
-    var qrCodeUuid: String?
+    var id: String?
     var isProviderEnable: Bool!
     
     override func awakeFromNib() {

@@ -106,7 +106,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-            cell.qrCodeUuid = userInformation["qrCodeUuid"]!
+            cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         } else {
             if indexPath.row > contactArray.count - 1 {
@@ -145,7 +145,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-            cell.qrCodeUuid = userInformation["qrCodeUuid"]!
+            cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         }
         
@@ -177,7 +177,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 return
             }
             let callService = CallService.init(view: self.view, _self: self)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, qrCodeUuid: cell.qrCodeUuid)
+            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, contactId: cell.id)
         }
         
         cell.onFavoriteButtonTapped = {
@@ -195,7 +195,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 print("deleting...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
-                let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/contacts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).qrCodeUuid!
+                let deleteApiRoute = API_END_POINT + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
+                
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
                     if error == nil {
@@ -224,7 +225,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         self.view.userInteractionEnabled = false
         //        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
+        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
         
         self.tableView.reloadData()
         Alamofire
