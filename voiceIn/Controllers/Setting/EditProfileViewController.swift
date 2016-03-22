@@ -112,10 +112,10 @@ class EditProfileViewController: FormViewController {
                                 row.updateCell()
                             }
                             
-                            self.isUserSelectPhoto = true
                             self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
+                    self.isUserSelectPhoto = true
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 }).cellSetup {
                     cell, row in

@@ -45,10 +45,10 @@ class UserInformationViewController: FormViewController {
                                 row.value = image
                                 row.updateCell()
                             }
-                            self.isUserSelectPhoto = true
                             self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
+                    self.isUserSelectPhoto = true
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 })
             
@@ -182,7 +182,7 @@ class UserInformationViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
-                } else {
+                } else if error != nil {
                     print(error)
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     self.removeAllOverlays()
