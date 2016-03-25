@@ -332,7 +332,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     internal func callButton(button: UIButton) {
-        
+        // MARK & NOTE : !! to unwrap double optional value.
         if self.userInformation["providerIsEnable"]!! as String == "true" {
             let callService = CallService.init(view: self.view, _self: self)
             let id: String! = self.userInformation["id"]!

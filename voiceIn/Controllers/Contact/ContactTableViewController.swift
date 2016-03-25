@@ -55,6 +55,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         return 1
     }
     
+    // MARK: - the number of row in a section
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.resultSearchController.active {
             return filterContactArray.count
@@ -63,6 +64,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
+    // MARK: Brain to show contactlist.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ContactTableCell
@@ -70,6 +72,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         var getImageApiRoute: String?
         
         if self.resultSearchController.active {
+            // MARK: When searchbar is active, do this block!
             if indexPath.row > filterContactArray.count - 1 {
                 return cell
             }
@@ -108,6 +111,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         } else {
+            // MARK: When searchbar is inactive, do this block!
             if indexPath.row > contactArray.count - 1 {
                 return cell
             }
@@ -184,6 +188,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         return cell
     }
     
+    // MARK: Deletion
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath:NSIndexPath) {
         if editingStyle == .Delete {
             let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此筆聯絡人?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -213,12 +218,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    /**
-     GET: Get the user's information.
-     **/
+    // MARK: GET: Get the contact list.
     private func getContactList() {
         self.view.userInteractionEnabled = false
-        //        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        //SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
         let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
         
@@ -308,6 +311,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
+    // MARK: Trigger when user click the row of contact, show detail.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,

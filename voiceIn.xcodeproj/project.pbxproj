@@ -26,6 +26,7 @@
 		3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */; };
 		3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */; };
 		3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CD1C8C3E12001BB458 /* People.swift */; };
+		3EA737671CA50DA60054C78C /* UserPref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA737661CA50DA60054C78C /* UserPref.swift */; };
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
 		3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */; };
 		3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */; };
@@ -64,6 +65,7 @@
 		3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
 		3E98C0CD1C8C3E12001BB458 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
+		3EA737661CA50DA60054C78C /* UserPref.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPref.swift; sourceTree = "<group>"; };
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderNickNameCell.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				3EE4EC301C8DE38600805447 /* Network.swift */,
 				3E773EBE1C9940AF003CD1B3 /* QRCodeGenerator.swift */,
+				3EA737661CA50DA60054C78C /* UserPref.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */,
 				3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */,
 				3EE4EC371C8DE47D00805447 /* EditProfileViewController.swift in Sources */,
+				3EA737671CA50DA60054C78C /* UserPref.swift in Sources */,
 				3E98C0D91C8C3E12001BB458 /* vCardViewController.swift in Sources */,
 				3E773EB71C991861003CD1B3 /* QRCodeListVeiwController.swift in Sources */,
 				3E98C0D41C8C3E12001BB458 /* ContactTableViewController.swift in Sources */,
