@@ -60,7 +60,7 @@
 		3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewController.swift; sourceTree = "<group>"; };
 		3E98C0C31C8C3E12001BB458 /* ProviderInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInformationViewController.swift; sourceTree = "<group>"; };
 		3E98C0C41C8C3E12001BB458 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
-		3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
+		3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserInformationViewController.swift; path = ../User/UserInformationViewController.swift; sourceTree = "<group>"; };
 		3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vCardViewController.swift; sourceTree = "<group>"; };
 		3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +175,6 @@
 		3E98C0C61C8C3E12001BB458 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */,
 				3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */,
 			);
 			path = User;
@@ -184,6 +183,7 @@
 		3E98C0C91C8C3E12001BB458 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
+				3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */,
 				3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */,
 				3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */,
 			);
