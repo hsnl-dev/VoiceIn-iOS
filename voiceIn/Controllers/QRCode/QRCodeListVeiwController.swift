@@ -6,11 +6,9 @@ import SwiftOverlays
 class QRCodeListVeiwController: UITableViewController {
     var qrCodeList: [QRCode] = [QRCode]()
     let headers = Network.generateHeader(isTokenNeeded: true)
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getQrCodeList()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -76,7 +74,7 @@ class QRCodeListVeiwController: UITableViewController {
                 let text = "刪除中..."
                 self.showWaitOverlayWithText(text)
                 
-                let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/customQrcodes/" + (tableView.cellForRowAtIndexPath(indexPath) as! QrCodeListCell).qrCodeUuid!
+                let deleteApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/customQrcodes/" + (tableView.cellForRowAtIndexPath(indexPath) as! QrCodeListCell).qrCodeUuid!
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
@@ -100,7 +98,7 @@ class QRCodeListVeiwController: UITableViewController {
     
     
     func getQrCodeList() {
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/customQrcodes"
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/customQrcodes"
         
         self.tableView.reloadData()
         self.showWaitOverlay()

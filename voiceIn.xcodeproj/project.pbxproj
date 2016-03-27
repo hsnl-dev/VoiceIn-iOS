@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */; };
 		3E13C2D31C9874840060BC0B /* CallingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E13C2D21C9874840060BC0B /* CallingService.swift */; };
 		3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */; };
 		3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767851C96B1900089FD6B /* SettingViewController.swift */; };
@@ -21,7 +22,6 @@
 		3E98C0D41C8C3E12001BB458 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */; };
 		3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C31C8C3E12001BB458 /* ProviderInformationViewController.swift */; };
 		3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C41C8C3E12001BB458 /* QRCodeReaderViewController.swift */; };
-		3E98C0D81C8C3E12001BB458 /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */; };
 		3E98C0D91C8C3E12001BB458 /* vCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */; };
 		3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */; };
 		3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */; };
@@ -45,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3E13C2D21C9874840060BC0B /* CallingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingService.swift; sourceTree = "<group>"; };
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
 		3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSettingCell.swift; sourceTree = "<group>"; };
@@ -60,7 +61,6 @@
 		3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewController.swift; sourceTree = "<group>"; };
 		3E98C0C31C8C3E12001BB458 /* ProviderInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInformationViewController.swift; sourceTree = "<group>"; };
 		3E98C0C41C8C3E12001BB458 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
-		3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserInformationViewController.swift; path = ../User/UserInformationViewController.swift; sourceTree = "<group>"; };
 		3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vCardViewController.swift; sourceTree = "<group>"; };
 		3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 		3E98C0C91C8C3E12001BB458 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
-				3E98C0C71C8C3E12001BB458 /* UserInformationViewController.swift */,
+				3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */,
 				3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */,
 				3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */,
 			);
@@ -449,12 +449,12 @@
 				3E98C0D41C8C3E12001BB458 /* ContactTableViewController.swift in Sources */,
 				3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */,
 				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
-				3E98C0D81C8C3E12001BB458 /* UserInformationViewController.swift in Sources */,
 				3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */,
 				3EE4EC311C8DE38600805447 /* Network.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
+				3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */,
 				3E773EBF1C9940AF003CD1B3 /* QRCodeGenerator.swift in Sources */,
 				3E773EBB1C9934CD003CD1B3 /* QrCodeListCell.swift in Sources */,
 				3EE4EC2E1C8DE30700805447 /* Reachibility.swift in Sources */,

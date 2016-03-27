@@ -7,7 +7,6 @@ import ALCameraViewController
 import SwiftOverlays
 
 class EditProfileViewController: FormViewController {
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     let headers = Network.generateHeader(isTokenNeeded: true)
     
     @IBOutlet weak var refreshButton: UIButton!
@@ -34,7 +33,7 @@ class EditProfileViewController: FormViewController {
         let text = "讀取中..."
         self.showWaitOverlayWithText(text)
         
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -229,10 +228,12 @@ class EditProfileViewController: FormViewController {
     
     @IBAction func saveButtonClicked(sender: UIButton!) {
         let formValues = form.values()
+        let userUuid = UserPref.getUserPrefByKey("userUuid")
         let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.6)
-        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
-        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
+        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
+        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let dateFormatter = NSDateFormatter()
+        
         dateFormatter.dateFormat = "HH:mm"
         
         if !isFormValuesValid(formValues) {
@@ -247,7 +248,7 @@ class EditProfileViewController: FormViewController {
             "company": formValues["company"] as? String != nil ? formValues["company"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
-            "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
+            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)

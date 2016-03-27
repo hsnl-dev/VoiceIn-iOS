@@ -14,14 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
         
+        // MAKR: Set the color of UITabBar
         UITabBar.appearance().tintColor = UIColor(red: 76/255.0, green: 76/255.0, blue: 76/255.0, alpha: 1.0)
         UITabBar.appearance().translucent = false
         
-        
-        let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        let userUuid = userDefaultData.stringForKey("userUuid")
-        let token = userDefaultData.stringForKey("token")
-        var rootController: UIViewController
+        let userUuid = UserPref.getUserPrefByKey("userUuid")
+        let token = UserPref.getUserPrefByKey("token")
+        let rootController: UIViewController
         
         if token != nil && userUuid != nil {
             print("userUuid:" + userUuid! + ", token:" + token!)

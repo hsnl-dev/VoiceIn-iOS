@@ -178,7 +178,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 return
             }
             let callService = CallService.init(view: self.view, _self: self)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, contactId: cell.id)
+            callService.call(UserPref.getUserPrefByKey("userUuid"), caller: UserPref.getUserPrefByKey("phoneNumber"), callee: cell.callee! as String, contactId: cell.id)
         }
         
         cell.onFavoriteButtonTapped = {
@@ -223,7 +223,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         self.view.userInteractionEnabled = false
         //SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
-        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
+        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
         self.tableView.reloadData()
         Alamofire

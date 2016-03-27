@@ -6,7 +6,6 @@ class ProviderInformationViewController: UIViewController {
     var qrCodeUuid: String!
     var nickName: String! = ""
     let headers = Network.generateHeader(isTokenNeeded: true)
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet var tableView: UITableView!
@@ -128,7 +127,7 @@ class ProviderInformationViewController: UIViewController {
     }
     
     @IBAction func addNewContact(sender: UIButton!) {
-        let userUuid = userDefaultData.stringForKey("userUuid")!
+        let userUuid = UserPref.getUserPrefByKey("userUuid")
         let addNewContactApiRoute = API_END_POINT + "/accounts/" + userUuid + "/contacts/" + qrCodeUuid
         
         let parameters = [
