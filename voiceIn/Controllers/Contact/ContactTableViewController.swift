@@ -142,7 +142,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             if userInformation["chargeType"]! as String? == "1" {
                 cell.type.text = "免費"
             } else {
-                cell.type.text = "需付費"
+                cell.type.text = userInformation["chargeType"]! as String? == "2" ? "付費" : "付費-由無 App 客戶產生"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
