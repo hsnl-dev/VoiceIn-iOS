@@ -179,7 +179,7 @@ class UserInformationViewController: FormViewController {
                     cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
                 }
                 
-                if response.data != nil {
+                if response.data != nil && response.response?.statusCode == 200 {
                     self.removeAllOverlays()
                     self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
                     self.form.rowByTag("avatar")?.updateCell()
