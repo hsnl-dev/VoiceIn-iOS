@@ -81,11 +81,6 @@ class EditProfileViewController: FormViewController {
         debugPrint(userInformation)
         self.refreshButton.hidden = true
         
-        SelectImageRow.defaultCellUpdate = { cell, row in
-            cell.accessoryView?.layer.cornerRadius = 0
-            cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-        }
-        
         form.removeAll()
         form +++
             Section("")
@@ -212,15 +207,17 @@ class EditProfileViewController: FormViewController {
             .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
             .responseData {
                 response in
+                SelectImageRow.defaultCellUpdate = { cell, row in
+                    cell.accessoryView?.layer.cornerRadius = 32
+                    cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                }
+                
                 if response.data != nil {
-                    SelectImageRow.defaultCellUpdate = { cell, row in
-                        cell.accessoryView?.layer.cornerRadius = 32
-                        cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-                    }
-                    
                     self.removeAllOverlays()
                     self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
                     self.form.rowByTag("avatar")?.updateCell()
+                } else {
+                    self.removeAllOverlays()
                 }
                 
         }
