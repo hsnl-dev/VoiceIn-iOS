@@ -105,8 +105,15 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
                 } else {
                     //MARK: TODO Error handling
                     debugPrint(error)
+                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                 }
         }
+    }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }
