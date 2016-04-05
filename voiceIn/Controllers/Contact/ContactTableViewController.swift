@@ -10,7 +10,6 @@ import CoreData
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     var resultSearchController = UISearchController()
     
     // MARK: Array of ContactList
@@ -80,6 +79,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             var userInformation: [String: String?] = filterContactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
             let providerIsEnable = userInformation["providerIsEnable"]!!
+            let isThisContactLike = userInformation["isLike"]!!
+            
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
@@ -100,10 +101,18 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.isProviderEnable = true
             }
             
-            if userInformation["chargeType"]! as String? == "1" {
-                cell.type.text = "免費"
+            if isThisContactLike == "true" {
+                cell.isLike = true
+                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
-                cell.type.text = "需付費"
+                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+            }
+            
+            if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
+                cell.type.text = "免費"
+                cell.type.textColor = MaterialColor.red.base
+            } else {
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : "付費-由無 App 客戶產生"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -119,6 +128,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             var userInformation: [String: String?] = contactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
             let providerIsEnable = userInformation["providerIsEnable"]!!
+            let isThisContactLike = userInformation["isLike"]!!
+            
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
@@ -139,10 +150,17 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.isProviderEnable = true
             }
             
-            if userInformation["chargeType"]! as String? == "1" {
+            if isThisContactLike == "true" {
+                cell.isLike = true
+                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+            } else {
+                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+            }
+            
+            if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
                 cell.type.text = "免費"
             } else {
-                cell.type.text = userInformation["chargeType"]! as String? == "2" ? "付費" : "付費-由無 App 客戶產生"
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : "付費-由無 App 客戶產生"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -182,7 +200,37 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
         
         cell.onFavoriteButtonTapped = {
-            
+            let contactId = cell.id
+            let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
+
+            if cell.isLike == true {
+                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.isLike = false
+                
+                Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "False"], encoding: .URLEncodedInURL)
+                    .response {
+                        request, response, data, error in
+                        if error != nil {
+                            debugPrint(response)
+                            cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+                            cell.isLike = true
+                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                        }
+                }
+            } else {
+                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+                cell.isLike = true
+                
+                Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "True"], encoding: .URLEncodedInURL)
+                    .response {
+                        request, response, data, error in
+                        if error != nil {
+                            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                            cell.isLike = false
+                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                        }
+                }
+            }
         }
         
         return cell
@@ -220,7 +268,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList() {
-        self.view.userInteractionEnabled = false
+        //self.view.userInteractionEnabled = false
         //SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
         let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
@@ -261,7 +309,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                     //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
-                self.view.userInteractionEnabled = true
+                //self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
     }
