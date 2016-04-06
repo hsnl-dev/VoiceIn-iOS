@@ -26,11 +26,11 @@ class FavoriteContactTableViewController: UITableViewController {
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
-        SwiftSpinner.show("讀取中...", animated: true)
         prepareView()
     }
     
     override func viewDidAppear(animated: Bool) {
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         getContactList()
     }
     
@@ -66,7 +66,6 @@ class FavoriteContactTableViewController: UITableViewController {
         var userInformation: [String: String?] = contactArray[indexPath.row].data
         let nickName = userInformation["nickName"]! as String?
         let providerIsEnable = userInformation["providerIsEnable"]!!
-        let isThisContactLike = userInformation["isLike"]!!
         
         photoUuid = (userInformation["profilePhotoId"]! as String?)!
         
@@ -76,6 +75,7 @@ class FavoriteContactTableViewController: UITableViewController {
             cell.nameLabel.text = nickName
         }
         
+        // MARK - Set the images to indicate if the user is busy or not.
         if providerIsEnable == "false" {
             let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
             cell.callButton.setImage(phoneImgage, forState: .Normal)
@@ -88,13 +88,6 @@ class FavoriteContactTableViewController: UITableViewController {
             cell.isProviderEnable = true
         }
         
-        if isThisContactLike == "true" {
-            cell.isLike = true
-            cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
-        } else {
-            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
-        }
-        
         if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
             cell.type.text = "免費"
             cell.type.textColor = MaterialColor.red.base
@@ -103,9 +96,17 @@ class FavoriteContactTableViewController: UITableViewController {
             cell.type.textColor = MaterialColor.teal.darken4
         }
         
+        cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+        cell.isLike = true
+        
         cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
         cell.id = userInformation["id"]!
         cell.callee = userInformation["phoneNumber"]!
+        
+        // MARK - Set the photo of users.
+        cell.thumbnailImageView.image = UIImage(named: "user")
+        cell.thumbnailImageView.layer.cornerRadius = 25.0
+        cell.thumbnailImageView.clipsToBounds = true
         
         if photoUuid != "" {
             getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
@@ -122,10 +123,6 @@ class FavoriteContactTableViewController: UITableViewController {
                     }
                     
             }
-        } else {
-            cell.thumbnailImageView.image = UIImage(named: "user")
-            cell.thumbnailImageView.layer.cornerRadius = 25.0
-            cell.thumbnailImageView.clipsToBounds = true
         }
         
         cell.onCallButtonTapped = {
@@ -138,37 +135,31 @@ class FavoriteContactTableViewController: UITableViewController {
         }
         
         cell.onFavoriteButtonTapped = {
+            debugPrint(indexPath)
+            
             let contactId = cell.id
             let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
             
-            if cell.isLike == true {
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
-                cell.isLike = false
-                
-                Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "False"], encoding: .URLEncodedInURL)
-                    .response {
-                        request, response, data, error in
-                        if error != nil {
-                            debugPrint(response)
-                            cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
-                            cell.isLike = true
-                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
-                        }
-                }
-            } else {
-                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
-                cell.isLike = true
-                
-                Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "True"], encoding: .URLEncodedInURL)
-                    .response {
-                        request, response, data, error in
-                        if error != nil {
-                            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
-                            cell.isLike = false
-                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
-                        }
-                }
+            debugPrint("Tap favorite false!")
+            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+            cell.isLike = false
+            
+            Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "False"], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    if error != nil {
+                        debugPrint(response)
+                        cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+                        cell.isLike = true
+                        self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                    } else {
+                        self.tableView.beginUpdates()
+                        self.contactArray.removeAtIndex(indexPath.row)
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        self.tableView.endUpdates()
+                    }
             }
+            
         }
         
         return cell
@@ -178,7 +169,6 @@ class FavoriteContactTableViewController: UITableViewController {
     private func getContactList() {
         let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
-        self.tableView.reloadData()
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers, parameters: ["filter": "like"], encoding: .URLEncodedInURL)
             .responseJSON {
@@ -203,16 +193,13 @@ class FavoriteContactTableViewController: UITableViewController {
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    SwiftSpinner.hide()
-                    
                     self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
-                    
-                    SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
+                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.refreshControl?.endRefreshing()
         }
     }

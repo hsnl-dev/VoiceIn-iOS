@@ -40,6 +40,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     override func viewDidAppear(animated: Bool) {
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         getContactList()
     }
     
@@ -105,6 +106,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.isLike = true
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
+                cell.isLike = false
                 cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
             }
             
@@ -138,6 +140,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.nameLabel.text = nickName
             }
             
+            // MARK - Set the images to indicate if the user is busy or not.
             if providerIsEnable == "false" {
                 let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
                 cell.callButton.setImage(phoneImgage, forState: .Normal)
@@ -154,6 +157,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.isLike = true
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
+                cell.isLike = false
                 cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
             }
             
@@ -170,6 +174,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             cell.callee = userInformation["phoneNumber"]!
         }
         
+        // MARK - Setting the user photo.
+        cell.thumbnailImageView.image = UIImage(named: "user")
+        cell.thumbnailImageView.layer.cornerRadius = 25.0
+        cell.thumbnailImageView.clipsToBounds = true
+        
         if photoUuid != "" {
             getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid            
             Alamofire
@@ -185,10 +194,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
             }
-        } else {
-            cell.thumbnailImageView.image = UIImage(named: "user")
-            cell.thumbnailImageView.layer.cornerRadius = 25.0
-            cell.thumbnailImageView.clipsToBounds = true
         }
         
         cell.onCallButtonTapped = {
@@ -205,6 +210,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
 
             if cell.isLike == true {
+                debugPrint("Tap favorite false!")
                 cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
                 cell.isLike = false
                 
@@ -219,6 +225,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                         }
                 }
             } else {
+                debugPrint("Tap favorite true")
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
                 cell.isLike = true
                 
@@ -243,7 +250,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此筆聯絡人?", preferredStyle: UIAlertControllerStyle.Alert)
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
-                print("deleting...")
+                debugPrint("Deleting a row...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
                 let deleteApiRoute = API_URI + versionV2 + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
@@ -269,12 +276,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList() {
-        //self.view.userInteractionEnabled = false
-        //SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
         let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
-        self.tableView.reloadData()
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -299,18 +303,17 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    SwiftSpinner.hide()
                     
+                    SwiftSpinner.hide()
                     self.tableView.reloadData()
-                    //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 case .Failure(let error):
                     debugPrint(error)
                     
                     SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
-                    //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
-                //self.view.userInteractionEnabled = true
+                
+                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.refreshControl?.endRefreshing()
         }
     }
@@ -325,9 +328,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
     }
     
-    /**
-     Search the contact list.
-     **/
+    // MARK - Search the contact list.
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filterContactArray = contactArray.filter { contact in
             let contactData = contact.data
