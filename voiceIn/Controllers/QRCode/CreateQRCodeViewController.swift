@@ -5,13 +5,12 @@ import AddressBookUI
 import PhoneNumberKit
 
 class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigationControllerDelegate {
+    let headers = Network.generateHeader(isTokenNeeded: true)
+    var personPicker: ABPeoplePickerNavigationController
+    
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var companyTextField: UITextField!
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-    let headers = Network.generateHeader(isTokenNeeded: true)
-    
-    var personPicker: ABPeoplePickerNavigationController
     
     required init(coder aDecoder: NSCoder) {
         personPicker = ABPeoplePickerNavigationController()
@@ -88,8 +87,8 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     }
     
     @IBAction func createCustomQrCode(sender: UIButton!) {
-        let userUuid = userDefaultData.stringForKey("userUuid")!
-        let createCustomQrCodeRoute = API_END_POINT + "/accounts/" + userUuid + "/customQrcodes"
+        let userUuid = UserPref.getUserPrefByKey("userUuid")
+        let createCustomQrCodeRoute = API_END_POINT + "/accounts/" + userUuid! + "/customQrcodes"
         let parameters = [
             "name": userNameTextField.text as! AnyObject,
             "phoneNumber": phoneNumberTextField.text as! AnyObject,
@@ -106,8 +105,15 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
                 } else {
                     //MARK: TODO Error handling
                     debugPrint(error)
+                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                 }
         }
+    }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

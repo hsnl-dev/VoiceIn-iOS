@@ -7,7 +7,6 @@ import ALCameraViewController
 import SwiftOverlays
 
 class EditProfileViewController: FormViewController {
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     let headers = Network.generateHeader(isTokenNeeded: true)
     
     @IBOutlet weak var refreshButton: UIButton!
@@ -34,7 +33,7 @@ class EditProfileViewController: FormViewController {
         let text = "讀取中..."
         self.showWaitOverlayWithText(text)
         
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -82,15 +81,9 @@ class EditProfileViewController: FormViewController {
         debugPrint(userInformation)
         self.refreshButton.hidden = true
         
-        SelectImageRow.defaultCellUpdate = { cell, row in
-            cell.accessoryView?.layer.cornerRadius = 0
-            cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-        }
-        
         form.removeAll()
         form +++
             Section("")
-            +++ Section("")
             +++ Section(header: "基本資料", footer: "* 記號表示為必填")
             <<< SelectImageRow(){
                 $0.title = "您的大頭貼"
@@ -113,10 +106,10 @@ class EditProfileViewController: FormViewController {
                                 row.updateCell()
                             }
                             
-                            self.isUserSelectPhoto = true
                             self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
+                    self.isUserSelectPhoto = true
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
                 }).cellSetup {
                     cell, row in
@@ -214,15 +207,17 @@ class EditProfileViewController: FormViewController {
             .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
             .responseData {
                 response in
-                if response.data != nil {
-                    SelectImageRow.defaultCellUpdate = { cell, row in
-                        cell.accessoryView?.layer.cornerRadius = 32
-                        cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-                    }
-                    
+                SelectImageRow.defaultCellUpdate = { cell, row in
+                    cell.accessoryView?.layer.cornerRadius = 32
+                    cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                }
+
+                if response.data != nil && response.response?.statusCode == 200 {
                     self.removeAllOverlays()
                     self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
                     self.form.rowByTag("avatar")?.updateCell()
+                } else {
+                    self.removeAllOverlays()
                 }
                 
         }
@@ -230,11 +225,13 @@ class EditProfileViewController: FormViewController {
     
     @IBAction func saveButtonClicked(sender: UIButton!) {
         let formValues = form.values()
+        let userUuid = UserPref.getUserPrefByKey("userUuid")
         let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.6)
-        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
-        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/avatar"
+        let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
+        let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "H:mm"
+        
+        dateFormatter.dateFormat = "HH:mm"
         
         if !isFormValuesValid(formValues) {
             // Form is not valid
@@ -248,7 +245,7 @@ class EditProfileViewController: FormViewController {
             "company": formValues["company"] as? String != nil ? formValues["company"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
-            "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
+            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)

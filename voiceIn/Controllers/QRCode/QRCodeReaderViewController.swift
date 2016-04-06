@@ -114,7 +114,8 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
         if segue.identifier == "isQRCodeReadSeque" {
             // TODO: Send Data.
             if let providerInformationViewController = segue.destinationViewController as? ProviderInformationViewController {
-                providerInformationViewController.qrCodeUuid = messageLabel.text
+                let qrCodeArr = messageLabel.text?.componentsSeparatedByString("=")
+                providerInformationViewController.qrCodeUuid = qrCodeArr![1]
             }
         }
     }

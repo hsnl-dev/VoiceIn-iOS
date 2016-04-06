@@ -3,8 +3,9 @@ import Alamofire
 import SwiftyJSON
 
 class vCardViewController: UIViewController {
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
     let headers = Network.generateHeader(isTokenNeeded: true)
+    
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var profile: UILabel!
     @IBOutlet weak var userName: UILabel!
@@ -15,7 +16,8 @@ class vCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")!
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
+        
         /**
         GET: Get the user's information.
         **/
@@ -45,7 +47,7 @@ class vCardViewController: UIViewController {
                             }
                     }
                     
-                    self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: jsonResponse["qrCodeUuid"].stringValue)))
+                    self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
                     
                 case .Failure(let error):
                     self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")

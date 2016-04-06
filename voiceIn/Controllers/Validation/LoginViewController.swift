@@ -7,7 +7,6 @@ import PhoneNumberKit
 class LoginViewController: UIViewController, TextFieldDelegate {
     
     var json: JSON?
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     // MARK: TextField.
     @IBOutlet weak var phoneNumberField: TextField!
@@ -21,7 +20,6 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         prepareView()
         prepareField()
         blurBackgroundImage()
-        
         //MARK: Set up send validation button.
         sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
         sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
@@ -83,31 +81,30 @@ class LoginViewController: UIViewController, TextFieldDelegate {
             parameters = [
                 "phoneNumber": phoneNumber.toE164()
             ]
+            
+            Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
+                .responseJSON {
+                    response in
+                    switch response.result {
+                    case .Success(let JSON_DATA):
+                        self.json = JSON(JSON_DATA)
+                        self.performSegueWithIdentifier("sendValidationCodeSegue", sender: nil)
+                        UserPref.setUserPref("phoneNumber", value: phoneNumber.toE164())
+                    case .Failure(let error):
+                        print("Request failed with error: \(error)")
+                    }
+            }
+
         }
         catch {
             print("Generic parser error")
         }
-        
-        Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
-            .responseJSON {
-                response in
-                switch response.result {
-                case .Success(let JSON_DATA):
-                    self.json = JSON(JSON_DATA)
-                    self.performSegueWithIdentifier("sendValidationCodeSegue", sender: nil)
-                    self.userDefaultData.setValue("+886988779570", forKey: "phoneNumber")
-                case .Failure(let error):
-                    print("Request failed with error: \(error)")
-                }
-        }
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "sendValidationCodeSegue" {
             let destinationController = segue.destinationViewController as! ValidationCodeViewController
             destinationController.userUuid = self.json!["userUuid"].stringValue
-            
         }
     }
     

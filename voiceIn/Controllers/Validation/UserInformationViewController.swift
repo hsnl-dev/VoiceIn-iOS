@@ -7,24 +7,51 @@ import ALCameraViewController
 import SwiftOverlays
 
 class UserInformationViewController: FormViewController {
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     // MARK: The API Information.
-    
+    let headers = Network.generateHeader(isTokenNeeded: true)
+
     private var navigationBarView: NavigationBarView = NavigationBarView()
     private var isUserSelectPhoto: Bool! = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareInputForm()
         prepareNavigationBar()
+        getUserInformation()
     }
     
-    func prepareInputForm() {
+    func getUserInformation() {
+        /**
+         GET: Get the user's information.
+         **/
+        let text = "讀取中..."
+        self.showWaitOverlayWithText(text)
+        
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")
+        Alamofire
+            .request(.GET, getInformationApiRoute, headers: headers)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .Success(let JSON_RESPONSE):
+                    let jsonResponse = JSON(JSON_RESPONSE)
+                    
+                    self.removeAllOverlays()
+                    self.prepareInputForm(jsonResponse)
+                case .Failure(let error):
+                    self.removeAllOverlays()
+                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
+                    debugPrint(error)
+                }
+        }
+        
+    }
+    
+    func prepareInputForm(userInformation: JSON) {
+        form.removeAll()
         form +++
             Section(header: "", footer: "")
             +++ Section("")
             +++ Section(header: "基本資料", footer: "* 記號表示為必填")
-            
             <<< SelectImageRow(){
                 $0.title = "您的大頭貼"
                 $0.cell.height = {
@@ -35,21 +62,26 @@ class UserInformationViewController: FormViewController {
                 $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
                     let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
-                        { (image) -> Void in
-                            SelectImageRow.defaultCellUpdate = { cell, row in
-                                cell.accessoryView?.layer.cornerRadius = 32
-                                cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-                            }
-                            if image != nil {
-                                row.value = image
-                                row.updateCell()
-                            }
-                            self.isUserSelectPhoto = true
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                    { (image) -> Void in
+                        SelectImageRow.defaultCellUpdate = { cell, row in
+                            cell.accessoryView?.layer.cornerRadius = 32
+                            cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                        }
+                        
+                        if image != nil {
+                            row.value = image
+                            row.updateCell()
+                        }
+                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
+                    self.isUserSelectPhoto = true
                     self.presentViewController(cameraViewController, animated: true, completion: nil)
-                })
+                }).cellSetup {
+                    cell, row in
+                    print("image cell setup!")
+            }
             
             <<< EmailRow() {
                 $0.title = "您的姓名*:"
@@ -58,6 +90,7 @@ class UserInformationViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["userName"].stringValue
             }
             
             <<< EmailRow() {
@@ -67,6 +100,7 @@ class UserInformationViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["jobTitle"].stringValue
             }
             
             <<< EmailRow() {
@@ -76,13 +110,18 @@ class UserInformationViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["company"].stringValue
             }
             
             <<< EmailRow() {
                 $0.title = "您的信箱"
                 $0.value = ""
                 $0.tag = "email"
+                }.cellSetup{
+                    cell, row in
+                    row.value = userInformation["email"].stringValue
             }
+            
             
             <<< EmailRow() {
                 $0.title = "位置:"
@@ -91,6 +130,7 @@ class UserInformationViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "plus_image")
+                    row.value = userInformation["location"].stringValue
             }
             
             +++ Section(header: "方便通話時段", footer: "您可以隨時設定您方便的通話同段")
@@ -99,19 +139,53 @@ class UserInformationViewController: FormViewController {
                 $0.title = "開始時間"
                 $0.value = NSDate()
                 $0.tag = "availableStartTime"
+                }.cellSetup {
+                    cell, row in
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "HH:mm"
+                    row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
             }
             
             <<< TimeInlineRow(){
                 $0.title = "結束時間"
                 $0.value = NSDate()
                 $0.tag = "availableEndTime"
+                }.cellSetup {
+                    cell, row in
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "HH:mm"
+                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
             }
+            
             
             +++ Section("關於您")
             
             <<< TextAreaRow() {
                 $0.placeholder = "介紹您自己，讓大家更能夠瞭解您。"
                 $0.tag = "profile"
+                }.cellSetup {
+                    cell, row in
+                    row.value = userInformation["profile"].stringValue
+        }
+        
+        let getImageApiRoute = API_END_POINT + "/avatars/" + userInformation["profilePhotoId"].stringValue
+        
+        Alamofire
+            .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "small"])
+            .responseData {
+                response in
+                SelectImageRow.defaultCellUpdate = { cell, row in
+                    cell.accessoryView?.layer.cornerRadius = 32
+                    cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                }
+                
+                if response.data != nil && response.response?.statusCode == 200 {
+                    self.removeAllOverlays()
+                    self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
+                    self.form.rowByTag("avatar")?.updateCell()
+                } else {
+                    self.removeAllOverlays()
+                }
         }
     }
     
@@ -142,14 +216,13 @@ class UserInformationViewController: FormViewController {
     
     func saveButtonClicked(sender: UIButton!) {
         let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
-        let headers = Network.generateHeader(isTokenNeeded: true)
         let formValues = form.values()
         let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 1)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         
         if !isFormValuesValid(formValues) {
-            // Form is not valid
+            // MARK - Form is not valid
             return
         }
         
@@ -160,13 +233,15 @@ class UserInformationViewController: FormViewController {
             "company": formValues["company"] as? String != nil ? formValues["company"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
-            "phoneNumber": userDefaultData.stringForKey("phoneNumber") as String!
+            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
         ]
-        let userUuid = userDefaultData.stringForKey("userUuid")!
+        
+        let userUuid = UserPref.getUserPrefByKey("userUuid")
         let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let generateQrcodeApiRoute = API_END_POINT + "/accounts/" + userUuid + "/qrcode"
         
+        print(dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!))
         print("PUT: " + updateInformationApiRoute)
         let text = "儲存中..."
         self.showWaitOverlayWithText(text)
@@ -180,7 +255,7 @@ class UserInformationViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
-                } else {
+                } else if error != nil {
                     print(error)
                     self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     self.removeAllOverlays()
@@ -202,7 +277,7 @@ class UserInformationViewController: FormViewController {
                         switch encodingResult {
                         case .Success(let upload, _, _):
                             upload.response { response in
-                                
+                                print("上傳成功。")
                             }
                         case .Failure(let encodingError):
                             self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
