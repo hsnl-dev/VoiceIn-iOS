@@ -31,6 +31,7 @@ class FavoriteContactTableViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        self.view.userInteractionEnabled = false
         getContactList()
     }
     
@@ -200,6 +201,7 @@ class FavoriteContactTableViewController: UITableViewController {
                 }
                 
                 SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
     }
