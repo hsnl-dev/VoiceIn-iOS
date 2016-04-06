@@ -6,11 +6,9 @@ import SwiftOverlays
 class QRCodeListVeiwController: UITableViewController {
     var qrCodeList: [QRCode] = [QRCode]()
     let headers = Network.generateHeader(isTokenNeeded: true)
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getQrCodeList()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -36,6 +34,7 @@ class QRCodeListVeiwController: UITableViewController {
                 } else {
                     //MARK: TODO Error handling
                     debugPrint(response)
+                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                 }
         }
     }
@@ -76,7 +75,7 @@ class QRCodeListVeiwController: UITableViewController {
                 let text = "刪除中..."
                 self.showWaitOverlayWithText(text)
                 
-                let deleteApiRoute = API_END_POINT + "/accounts/" + self.userDefaultData.stringForKey("userUuid")! + "/customQrcodes/" + (tableView.cellForRowAtIndexPath(indexPath) as! QrCodeListCell).qrCodeUuid!
+                let deleteApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/customQrcodes/" + (tableView.cellForRowAtIndexPath(indexPath) as! QrCodeListCell).qrCodeUuid!
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
@@ -90,6 +89,7 @@ class QRCodeListVeiwController: UITableViewController {
                     } else {
                         //MARK: TODO Error handling
                         self.removeAllOverlays()
+                        self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                     }
                 }
             }))
@@ -100,7 +100,7 @@ class QRCodeListVeiwController: UITableViewController {
     
     
     func getQrCodeList() {
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/customQrcodes"
+        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/customQrcodes"
         
         self.tableView.reloadData()
         self.showWaitOverlay()
@@ -130,6 +130,7 @@ class QRCodeListVeiwController: UITableViewController {
                 case .Failure(let error):
                     //MARK: TODO Error handling
                     debugPrint(error)
+                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                 }
                 
                 self.removeAllOverlays()
@@ -141,4 +142,11 @@ class QRCodeListVeiwController: UITableViewController {
     @IBAction func closeCreateQRCode(segue: UIStoryboardSegue) {
         debugPrint("closeCreateQRCode Modal")
     }
+    
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
 }

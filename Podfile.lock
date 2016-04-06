@@ -8,7 +8,6 @@ PODS:
   - IQKeyboardManagerSwift (3.3.4)
   - Material (1.34.8)
   - PhoneNumberKit (0.6)
-  - SnapKit (0.19.1)
   - SwiftOverlays (1.0)
   - SwiftSpinner (0.8.0)
   - SwiftyJSON (2.3.2)
@@ -22,7 +21,6 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - Material (= 1.34.8)
   - PhoneNumberKit (~> 0.6)
-  - SnapKit
   - SwiftOverlays (~> 1.0)
   - SwiftSpinner
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
@@ -45,11 +43,10 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
   Material: 3865b011d8e4d42f7588bd9719498e025a82360a
   PhoneNumberKit: 683f1287a88c1f27386b27cad851081c7c45cb62
-  SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
   SwiftSpinner: 11c2c5ec7443d92f3026d3067ca8a91d4adef13f
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 2be67da31e4424ceed02f27763fd4a1288201635
+PODFILE CHECKSUM: 0acf450d5c0411cf284dfebe0d31f5cb33b05ca9
 
 COCOAPODS: 1.0.0.beta.2

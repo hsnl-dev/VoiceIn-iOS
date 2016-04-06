@@ -21,6 +21,7 @@ class ContactTableCell: MaterialTableViewCell{
     var callee: String?
     var id: String?
     var isProviderEnable: Bool!
+    var isLike: Bool! = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,7 +32,6 @@ class ContactTableCell: MaterialTableViewCell{
         
         let favoriteImgage: UIImage? = UIImage(named: "ic_favorite_white")
         self.favoriteButton.setImage(favoriteImgage, forState: .Normal)
-        self.favoriteButton.setImage(favoriteImgage, forState: .Highlighted)
         self.favoriteButton.tintColor = UIColor.whiteColor()
         
         self.layoutMargins = UIEdgeInsetsZero //or UIEdgeInsetsMake(top, left, bottom, right)

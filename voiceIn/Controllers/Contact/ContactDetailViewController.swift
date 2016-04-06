@@ -12,7 +12,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     var userInformation: [String: String?] = [String: String?]()
     let headers = Network.generateHeader(isTokenNeeded: true)
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     var searchController: UISearchController = UISearchController()
     
     private lazy var menuView: MenuView = MenuView()
@@ -332,13 +331,13 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     internal func callButton(button: UIButton) {
-        
+        // MARK & NOTE : !! to unwrap double optional value.
         if self.userInformation["providerIsEnable"]!! as String == "true" {
             let callService = CallService.init(view: self.view, _self: self)
             let id: String! = self.userInformation["id"]!
             
-            debugPrint(self.userDefaultData.stringForKey("phoneNumber")!)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: userInformation["phoneNumber"]!, contactId: id)
+            debugPrint(UserPref.getUserPrefByKey("phoneNumber"))
+            callService.call(UserPref.getUserPrefByKey("userUuid"), caller: UserPref.getUserPrefByKey("phoneNumber"), callee: userInformation["phoneNumber"]!, contactId: id)
         } else {
             self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
             return

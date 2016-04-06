@@ -10,7 +10,6 @@ import CoreData
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     var resultSearchController = UISearchController()
     
     // MARK: Array of ContactList
@@ -41,6 +40,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     override func viewDidAppear(animated: Bool) {
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        self.view.userInteractionEnabled = false
         getContactList()
     }
     
@@ -55,6 +56,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         return 1
     }
     
+    // MARK: - the number of row in a section
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.resultSearchController.active {
             return filterContactArray.count
@@ -63,6 +65,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
+    // MARK: Brain to show contactlist.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ContactTableCell
@@ -70,6 +73,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         var getImageApiRoute: String?
         
         if self.resultSearchController.active {
+            // MARK: When searchbar is active, do this block!
             if indexPath.row > filterContactArray.count - 1 {
                 return cell
             }
@@ -77,6 +81,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             var userInformation: [String: String?] = filterContactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
             let providerIsEnable = userInformation["providerIsEnable"]!!
+            let isThisContactLike = userInformation["isLike"]!!
+            
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
@@ -97,10 +103,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.isProviderEnable = true
             }
             
-            if userInformation["chargeType"]! as String? == "1" {
-                cell.type.text = "免費"
+            if isThisContactLike == "true" {
+                cell.isLike = true
+                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
-                cell.type.text = "需付費"
+                cell.isLike = false
+                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+            }
+            
+            if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
+                cell.type.text = "免費"
+                cell.type.textColor = MaterialColor.red.base
+            } else {
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : "付費-由無 App 客戶產生"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -108,6 +123,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         } else {
+            // MARK: When searchbar is inactive, do this block!
             if indexPath.row > contactArray.count - 1 {
                 return cell
             }
@@ -115,6 +131,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             var userInformation: [String: String?] = contactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
             let providerIsEnable = userInformation["providerIsEnable"]!!
+            let isThisContactLike = userInformation["isLike"]!!
+            
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
@@ -123,6 +141,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.nameLabel.text = nickName
             }
             
+            // MARK - Set the images to indicate if the user is busy or not.
             if providerIsEnable == "false" {
                 let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
                 cell.callButton.setImage(phoneImgage, forState: .Normal)
@@ -135,10 +154,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.isProviderEnable = true
             }
             
-            if userInformation["chargeType"]! as String? == "1" {
-                cell.type.text = "免費"
+            if isThisContactLike == "true" {
+                cell.isLike = true
+                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
-                cell.type.text = "需付費"
+                cell.isLike = false
+                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+            }
+            
+            if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
+                cell.type.text = "免費"
+                cell.type.textColor = MaterialColor.red.base
+            } else {
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : "付費-由無 App 客戶產生"
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -146,6 +174,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             cell.id = userInformation["id"]!
             cell.callee = userInformation["phoneNumber"]!
         }
+        
+        // MARK - Setting the user photo.
+        cell.thumbnailImageView.image = UIImage(named: "user")
+        cell.thumbnailImageView.layer.cornerRadius = 25.0
+        cell.thumbnailImageView.clipsToBounds = true
         
         if photoUuid != "" {
             getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid            
@@ -162,10 +195,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
             }
-        } else {
-            cell.thumbnailImageView.image = UIImage(named: "user")
-            cell.thumbnailImageView.layer.cornerRadius = 25.0
-            cell.thumbnailImageView.clipsToBounds = true
         }
         
         cell.onCallButtonTapped = {
@@ -174,22 +203,55 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 return
             }
             let callService = CallService.init(view: self.view, _self: self)
-            callService.call(self.userDefaultData.stringForKey("userUuid")!, caller: self.userDefaultData.stringForKey("phoneNumber")!, callee: cell.callee! as String, contactId: cell.id)
+            callService.call(UserPref.getUserPrefByKey("userUuid"), caller: UserPref.getUserPrefByKey("phoneNumber"), callee: cell.callee! as String, contactId: cell.id)
         }
         
         cell.onFavoriteButtonTapped = {
-            
+            let contactId = cell.id
+            let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
+
+            if cell.isLike == true {
+                debugPrint("Tap favorite false!")
+                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.isLike = false
+                
+                Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "False"], encoding: .URLEncodedInURL)
+                    .response {
+                        request, response, data, error in
+                        if error != nil {
+                            debugPrint(response)
+                            cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+                            cell.isLike = true
+                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                        }
+                }
+            } else {
+                debugPrint("Tap favorite true")
+                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+                cell.isLike = true
+                
+                Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "True"], encoding: .URLEncodedInURL)
+                    .response {
+                        request, response, data, error in
+                        if error != nil {
+                            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                            cell.isLike = false
+                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                        }
+                }
+            }
         }
         
         return cell
     }
     
+    // MARK: Deletion
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath:NSIndexPath) {
         if editingStyle == .Delete {
             let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此筆聯絡人?", preferredStyle: UIAlertControllerStyle.Alert)
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
-                print("deleting...")
+                debugPrint("Deleting a row...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
                 let deleteApiRoute = API_URI + versionV2 + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
@@ -213,16 +275,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    /**
-     GET: Get the user's information.
-     **/
+    // MARK: GET: Get the contact list.
     private func getContactList() {
-        self.view.userInteractionEnabled = false
-        //        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
-        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + userDefaultData.stringForKey("userUuid")! + "/contacts"
+        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
-        self.tableView.reloadData()
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -247,17 +304,17 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    SwiftSpinner.hide()
                     
+                    SwiftSpinner.hide()
                     self.tableView.reloadData()
-                    //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 case .Failure(let error):
                     debugPrint(error)
                     
                     SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
-                    //                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
+                
+                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
@@ -273,9 +330,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
     }
     
-    /**
-     Search the contact list.
-     **/
+    // MARK - Search the contact list.
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filterContactArray = contactArray.filter { contact in
             let contactData = contact.data
@@ -308,6 +363,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
+    // MARK: Trigger when user click the row of contact, show detail.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,

@@ -6,7 +6,6 @@ import SwiftyJSON
 class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
     
     private var navigationBarView: NavigationBarView = NavigationBarView()
-    let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet weak var validationCodeField: UITextField!
     @IBOutlet weak var checkValidationButton: RaisedButton!
@@ -24,11 +23,13 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
         blurBackgroundImage()
         
         print(self.userUuid)
-        userDefaultData.setValue(self.userUuid, forKey: "userUuid")
+        
+        UserPref.setUserPref("userUuid", value: self.userUuid)
     }
     
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
+        
         //MARK: Set the status bar to light.
         navigationBarView.statusBarStyle = .LightContent
     }
@@ -70,63 +71,16 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-//    func textFieldDidBeginEditing(textField: UITextField) {
-//        if UIDevice().userInterfaceIdiom == .Phone {
-//            switch UIScreen.mainScreen().nativeBounds.height {
-//            case 480:
-//                return
-//            case 960:
-//                return
-//            case 1136:
-//                animateViewMoving(true, moveValue: 150)
-//            case 1334:
-//                return
-//            case 2208:
-//                return
-//            default:
-//                return
-//            }
-//        }
-//    }
-
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        if UIDevice().userInterfaceIdiom == .Phone {
-//            switch UIScreen.mainScreen().nativeBounds.height {
-//            case 480:
-//                return
-//            case 960:
-//                return
-//            case 1136:
-//                animateViewMoving(false, moveValue: 150)
-//            case 1334:
-//                return
-//            case 2208:
-//                return
-//            default:
-//                return
-//            }
-//        }
-//
-//    }
-    
-//    func animateViewMoving (up:Bool, moveValue :CGFloat){
-//        let movementDuration: NSTimeInterval = 0.3
-//        let movement: CGFloat = (up ? -moveValue : moveValue)
-//        UIView.beginAnimations("animateView", context: nil)
-//        UIView.setAnimationBeginsFromCurrentState(true)
-//        UIView.setAnimationDuration(movementDuration)
-//        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
-//        UIView.commitAnimations()
-//    }
-    
     @IBAction func validationButtonClicked(sender: UIButton!) {
         print("Check if the validation code is correct or not.")
         
         let headers = Network.generateHeader(isTokenNeeded: false)
         let parameters = [
-            "userUuid": userDefaultData.stringForKey("userUuid"),
+            "userUuid": UserPref.getUserPrefByKey("userUuid"),
             "code": validationCodeField.text as String!
         ]
+        
+        print(parameters)
         
         Alamofire.request(.POST, API_END_POINT + "/accounts/tokens", parameters: parameters, encoding: .JSON, headers: headers)
             .responseJSON {
@@ -139,10 +93,10 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
                     let json = JSON(JSON_DATA)
                     let token = json["token"]
                     
-                    
                     if token != nil {
+                        
                         // MARK: User input the right code, save the token and show information view.
-                        self.userDefaultData.setValue(json["token"].stringValue, forKey: "token")
+                        UserPref.setUserPref("token", value: json["token"].stringValue)
                         
                         let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
                         self.presentViewController(userInformationController, animated: true, completion: nil)
@@ -151,8 +105,6 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
                         let alert = UIAlertController(title: "抱歉", message: "您的認證碼輸入錯誤，請再確認一次", preferredStyle: UIAlertControllerStyle.Alert)
                         alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(alert, animated: true, completion: nil)
-//                        let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
-//                        self.presentViewController(userInformationController, animated: true, completion: nil)
                     }
                     
                 case .Failure(let error):
