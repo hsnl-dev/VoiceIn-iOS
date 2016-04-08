@@ -5,8 +5,6 @@ target 'voiceIn' do
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'Material', '1.34.8'
     pod 'IQKeyboardManagerSwift'
-    pod 'Fabric'
-    pod 'Crashlytics'
     pod 'Alamofire', '~> 3.1.2'
     pod 'Eureka', '~> 1.5'
     pod 'ALCameraViewController'

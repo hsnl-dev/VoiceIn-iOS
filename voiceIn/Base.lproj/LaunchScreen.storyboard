@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E56a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,15 +18,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Voice-icon" translatesAutoresizingMaskIntoConstraints="NO" id="4CD-nw-JGx">
-                                <rect key="frame" x="180" y="193" width="240" height="128"/>
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="QJE-fS-JXX"/>
+                                    <constraint firstAttribute="height" constant="128" id="LfB-Bv-wdQ"/>
+                                    <constraint firstAttribute="width" constant="240" id="OCK-zp-112"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VoiceIn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OQ-xe-nEq">
-                                <rect key="frame" x="272" y="385" width="56" height="21"/>
+                                <rect key="frame" x="272" y="372" width="56" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="NoD-4f-9XW"/>
+                                    <constraint firstAttribute="width" constant="56" id="8b7-uH-Ncp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -35,11 +36,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8OQ-xe-nEq" firstAttribute="top" secondItem="4CD-nw-JGx" secondAttribute="bottom" constant="64" id="1nr-Jv-15p"/>
-                            <constraint firstItem="4CD-nw-JGx" firstAttribute="centerX" secondItem="8OQ-xe-nEq" secondAttribute="centerX" id="Fmb-En-0wQ"/>
-                            <constraint firstItem="8OQ-xe-nEq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="sIA-9O-3w8"/>
-                            <constraint firstItem="4CD-nw-JGx" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="173" id="tKo-jc-6wU"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="8OQ-xe-nEq" secondAttribute="bottom" constant="194" id="tac-ko-xSO"/>
+                            <constraint firstItem="8OQ-xe-nEq" firstAttribute="top" secondItem="4CD-nw-JGx" secondAttribute="bottom" constant="8" id="cTz-OW-0Qv"/>
+                            <constraint firstItem="4CD-nw-JGx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="g03-xd-I6F"/>
+                            <constraint firstItem="8OQ-xe-nEq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jH1-EB-zIb"/>
+                            <constraint firstItem="4CD-nw-JGx" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ppk-9J-ErU"/>
                         </constraints>
                     </view>
                 </viewController>
