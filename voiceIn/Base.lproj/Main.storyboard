@@ -844,7 +844,7 @@
                                 </connections>
                             </tableView>
                             <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBV-GZ-N3X" userLabel="TimePicker">
-                                <rect key="frame" x="159" y="84" width="280" height="365"/>
+                                <rect key="frame" x="159" y="177" width="280" height="326"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m0I-w9-hbd">
                                         <rect key="frame" x="20" y="160" width="240" height="128"/>
@@ -860,22 +860,6 @@
                                         <date key="date" timeIntervalSinceReferenceDate="479479237.78605098">
                                             <!--2016-03-12 12:40:37 +0000-->
                                         </date>
-                                    </datePicker>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nM3-IX-uv0">
-                                        <rect key="frame" x="8" y="45" width="265" height="112"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="265" id="0Kr-Qa-QPm"/>
-                                            <constraint firstAttribute="width" secondItem="nM3-IX-uv0" secondAttribute="height" multiplier="265:112" id="VtU-OD-b0u"/>
-                                            <constraint firstAttribute="height" constant="112" id="p9P-Ee-Er7"/>
-                                        </constraints>
-                                        <date key="date" timeIntervalSinceReferenceDate="479479237.78605098">
-                                            <!--2016-03-12 12:40:37 +0000-->
-                                        </date>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="0Kr-Qa-QPm"/>
-                                            </mask>
-                                        </variation>
                                     </datePicker>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8R-V8-7Pb" userLabel="CloseButton">
                                         <rect key="frame" x="8" y="8" width="30" height="30"/>
@@ -919,36 +903,40 @@
                                             <action selector="saveTimePeriod" destination="t7n-r4-Upf" eventType="touchUpInside" id="rKe-vl-hhl"/>
                                         </connections>
                                     </button>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nM3-IX-uv0">
+                                        <rect key="frame" x="8" y="40" width="265" height="112"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="265" id="0Kr-Qa-QPm"/>
+                                            <constraint firstAttribute="width" secondItem="nM3-IX-uv0" secondAttribute="height" multiplier="265:112" id="VtU-OD-b0u"/>
+                                            <constraint firstAttribute="height" constant="112" id="p9P-Ee-Er7"/>
+                                        </constraints>
+                                        <date key="date" timeIntervalSinceReferenceDate="479479237.78605098">
+                                            <!--2016-03-12 12:40:37 +0000-->
+                                        </date>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="0Kr-Qa-QPm"/>
+                                            </mask>
+                                        </variation>
+                                    </datePicker>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="nM3-IX-uv0" secondAttribute="trailing" constant="8" id="6d4-nF-3OP"/>
                                     <constraint firstItem="w8R-V8-7Pb" firstAttribute="top" secondItem="hBV-GZ-N3X" secondAttribute="top" constant="8" id="82T-xX-ZYk"/>
                                     <constraint firstAttribute="width" constant="280" id="9Bb-EQ-8PV"/>
                                     <constraint firstItem="w8R-V8-7Pb" firstAttribute="leading" secondItem="hBV-GZ-N3X" secondAttribute="leading" constant="8" id="Ccb-yp-vuc"/>
-                                    <constraint firstAttribute="width" constant="281" id="EwN-w0-xxk"/>
-                                    <constraint firstItem="eiN-pf-t9e" firstAttribute="top" secondItem="nM3-IX-uv0" secondAttribute="bottom" constant="8" id="FLG-99-nj7"/>
+                                    <constraint firstItem="eiN-pf-t9e" firstAttribute="top" secondItem="nM3-IX-uv0" secondAttribute="bottom" constant="13" id="FLG-99-nj7"/>
                                     <constraint firstItem="EnC-SE-EiL" firstAttribute="top" secondItem="hBV-GZ-N3X" secondAttribute="top" constant="8" id="Nu1-bL-JE5"/>
-                                    <constraint firstAttribute="height" constant="365" id="UB9-tF-cvH"/>
-                                    <constraint firstItem="nM3-IX-uv0" firstAttribute="centerX" secondItem="hBV-GZ-N3X" secondAttribute="centerX" id="Uad-jE-91b"/>
-                                    <constraint firstItem="nM3-IX-uv0" firstAttribute="top" secondItem="5r4-G1-bNE" secondAttribute="bottom" constant="8" id="WfD-ZI-4hs"/>
+                                    <constraint firstAttribute="height" constant="326" id="UB9-tF-cvH"/>
+                                    <constraint firstItem="nM3-IX-uv0" firstAttribute="top" secondItem="5r4-G1-bNE" secondAttribute="bottom" constant="3" id="WfD-ZI-4hs"/>
                                     <constraint firstItem="5r4-G1-bNE" firstAttribute="centerX" secondItem="hBV-GZ-N3X" secondAttribute="centerX" constant="1" id="Y8a-gj-HRY"/>
                                     <constraint firstAttribute="trailing" secondItem="EnC-SE-EiL" secondAttribute="trailing" constant="6" id="bze-15-SBz"/>
                                     <constraint firstItem="5r4-G1-bNE" firstAttribute="top" secondItem="hBV-GZ-N3X" secondAttribute="top" constant="16" id="eNA-EP-FLc"/>
-                                    <constraint firstAttribute="height" constant="425" id="lCd-us-ceX"/>
                                     <constraint firstItem="eiN-pf-t9e" firstAttribute="centerX" secondItem="hBV-GZ-N3X" secondAttribute="centerX" constant="1" id="lk3-R7-Mw1"/>
                                     <constraint firstItem="bfj-dI-cEu" firstAttribute="top" secondItem="eiN-pf-t9e" secondAttribute="bottom" constant="8" id="qvC-QK-evN"/>
                                     <constraint firstItem="nM3-IX-uv0" firstAttribute="leading" secondItem="hBV-GZ-N3X" secondAttribute="leading" constant="8" id="z6n-dF-TS1"/>
                                     <constraint firstItem="bfj-dI-cEu" firstAttribute="centerX" secondItem="hBV-GZ-N3X" secondAttribute="centerX" constant="2.5" id="zYA-66-ULG"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="EwN-w0-xxk"/>
-                                        <exclude reference="lCd-us-ceX"/>
-                                        <exclude reference="6d4-nF-3OP"/>
-                                        <exclude reference="Uad-jE-91b"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -957,12 +945,11 @@
                             <constraint firstItem="sys-Bo-MHd" firstAttribute="top" secondItem="WZc-Bu-9ka" secondAttribute="bottom" id="4cJ-mH-WE7"/>
                             <constraint firstItem="sys-Bo-MHd" firstAttribute="leading" secondItem="R5v-W6-53V" secondAttribute="leadingMargin" constant="-20" id="59H-In-fjc"/>
                             <constraint firstItem="hBV-GZ-N3X" firstAttribute="centerX" secondItem="R5v-W6-53V" secondAttribute="centerX" constant="-1" id="FKw-vk-Kfa"/>
-                            <constraint firstItem="hBV-GZ-N3X" firstAttribute="centerX" secondItem="R5v-W6-53V" secondAttribute="centerX" constant="-1" id="dt2-A5-wFd"/>
+                            <constraint firstItem="hBV-GZ-N3X" firstAttribute="centerY" secondItem="R5v-W6-53V" secondAttribute="centerY" constant="40" id="KA2-6N-a1v"/>
                             <constraint firstItem="gq8-7p-q67" firstAttribute="top" secondItem="sys-Bo-MHd" secondAttribute="bottom" id="e4K-R1-Uxh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sys-Bo-MHd" secondAttribute="trailing" constant="-20" id="ii2-UQ-ghP"/>
                             <constraint firstItem="gq8-7p-q67" firstAttribute="bottom" secondItem="JKT-te-DaP" secondAttribute="top" id="qf8-kq-d0l"/>
                             <constraint firstItem="gq8-7p-q67" firstAttribute="leading" secondItem="sys-Bo-MHd" secondAttribute="leading" id="rcL-2s-fDo"/>
-                            <constraint firstItem="hBV-GZ-N3X" firstAttribute="top" secondItem="WZc-Bu-9ka" secondAttribute="bottom" constant="20" id="rcU-W1-xqz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XYq-X7-VR6"/>
