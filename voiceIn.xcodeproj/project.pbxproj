@@ -29,6 +29,8 @@
 		3EA737671CA50DA60054C78C /* UserPref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA737661CA50DA60054C78C /* UserPref.swift */; };
 		3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */; };
 		3EA92A6D1CB515F70024C737 /* GroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */; };
+		3EAA592A1CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */; };
+		3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */; };
 		3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */; };
 		3EAD8E361CB40672008A09E3 /* FavoriteContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */; };
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
@@ -72,6 +74,8 @@
 		3EA737661CA50DA60054C78C /* UserPref.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPref.swift; sourceTree = "<group>"; };
 		3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableCell.swift; sourceTree = "<group>"; };
 		3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewController.swift; sourceTree = "<group>"; };
+		3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectTableViewController.swift; sourceTree = "<group>"; };
+		3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectCell.swift; sourceTree = "<group>"; };
 		3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewParam.swift; sourceTree = "<group>"; };
 		3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteContactTableViewController.swift; sourceTree = "<group>"; };
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 				3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */,
 				3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */,
 				3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */,
+				3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 				3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */,
 				3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */,
 				3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */,
+				3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -438,6 +444,7 @@
 				3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */,
 				3EF27F041C9913BC00D62844 /* UIView+VoiceIn.swift in Sources */,
 				3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */,
+				3EAA592A1CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift in Sources */,
 				3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */,
 				3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */,
 				3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */,
@@ -450,6 +457,7 @@
 				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
 				3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */,
 				3EE4EC311C8DE38600805447 /* Network.swift in Sources */,
+				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,

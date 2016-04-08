@@ -108,7 +108,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
                 cell.isLike = false
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
@@ -159,7 +159,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
                 cell.isLike = false
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
@@ -212,7 +212,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
 
             if cell.isLike == true {
                 debugPrint("Tap favorite false!")
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
                 cell.isLike = false
                 
                 Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "False"], encoding: .URLEncodedInURL)
@@ -234,7 +234,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     .response {
                         request, response, data, error in
                         if error != nil {
-                            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                            cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
                             cell.isLike = false
                             self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
                         }
