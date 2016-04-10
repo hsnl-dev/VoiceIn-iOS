@@ -47,7 +47,7 @@
         <!--聯絡簿-->
         <scene sceneID="zss-Po-3Wl">
             <objects>
-                <tableViewController id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContactViewController" id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="28" sectionFooterHeight="28" id="rUB-Wx-vki">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -167,6 +167,10 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <outlet property="addPeopelItem" destination="lM0-Ee-xoW" id="5Je-sD-rZG"/>
+                        <outlet property="cardBarItem" destination="TaM-EP-ADq" id="sYB-1u-ZdP"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVC-1w-bTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -486,13 +490,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5Im-vJ-Ndt" customClass="GroupTableCell" customModule="VoiceIn" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" id="5Im-vJ-Ndt" customClass="GroupTableCell" customModule="VoiceIn" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Im-vJ-Ndt" id="FSs-rT-laV">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群組名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLr-NE-kv1">
+                                            <rect key="frame" x="24" y="19" width="92" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="pLr-NE-kv1" firstAttribute="leading" secondItem="FSs-rT-laV" secondAttribute="leadingMargin" constant="16" id="aV7-8k-ZRS"/>
+                                        <constraint firstItem="pLr-NE-kv1" firstAttribute="top" secondItem="FSs-rT-laV" secondAttribute="topMargin" constant="11" id="mWj-L5-qd6"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="groupName" destination="pLr-NE-kv1" id="rrU-RA-ZVP"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -510,7 +529,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fIg-kq-UWM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="88" y="743"/>
+            <point key="canvasLocation" x="66" y="734"/>
         </scene>
         <!--請選擇聯絡人-->
         <scene sceneID="jiG-jE-cbE">
@@ -1728,7 +1747,7 @@
         <image name="user" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AaO-Ri-zBh"/>
+        <segue reference="69A-sT-gUi"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
 </document>

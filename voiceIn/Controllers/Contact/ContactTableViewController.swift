@@ -8,6 +8,9 @@ import CoreData
 //import SnapKit
 
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
+    @IBOutlet var cardBarItem: UIBarButtonItem?
+    @IBOutlet var addPeopelItem: UIBarButtonItem?
+
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var resultSearchController = UISearchController()
@@ -15,9 +18,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK: Array of ContactList
     var contactArray: [People] = []
     var filterContactArray: [People] = [People]()
+    var isFromGroupListView: Bool = false
+    var navigationTitle: String? = "聯絡簿"
+    var getContactRoute: String! = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
         super.viewDidLoad()
         
         self.resultSearchController = ({
@@ -30,19 +37,32 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             controller.searchBar.barTintColor = UIColor(red: 245.0/255.0, green:245/255.0, blue: 245.0/255.0, alpha: 1.0)
             
             self.tableView.tableHeaderView = controller.searchBar
-            
             self.tableView.contentOffset = CGPointMake(0, controller.searchBar.frame.size.height);
             return controller
         })()
         
+        self.navigationItem.title = navigationTitle
         SwiftSpinner.show("讀取中...", animated: true)
+        
         prepareView()
     }
     
     override func viewDidAppear(animated: Bool) {
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
-        self.view.userInteractionEnabled = false
-        getContactList()
+        getContactList(getContactRoute)
+        
+        if isFromGroupListView == true {
+            self.navigationItem.setRightBarButtonItems(nil, animated: true)
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "buttonTapped:")
+            self.navigationItem.rightBarButtonItem = button
+        } else {
+            
+        }
+    }
+    
+    func buttonTapped(sender:UIButton) {
+        let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! UINavigationController
+        self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
     }
     
     // MARK: General preparation statements.
@@ -276,10 +296,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     // MARK: GET: Get the contact list.
-    private func getContactList() {
-        
-        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
-        
+    private func getContactList(getInformationApiRoute: String!) {
+        self.view.userInteractionEnabled = false
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -304,12 +322,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    
                     SwiftSpinner.hide()
                     self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
-                    
                     SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
@@ -359,7 +375,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.refreshControl?.endRefreshing()
             self.view.userInteractionEnabled = true
         } else {
-            getContactList()
+            getContactList(getContactRoute)
         }
     }
     
