@@ -27,6 +27,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         super.viewDidLoad()
         
+        //MAKR - Init search view contrller
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
@@ -42,25 +43,23 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         })()
         
         self.navigationItem.title = navigationTitle
-        SwiftSpinner.show("讀取中...", animated: true)
-        
         prepareView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         getContactList(getContactRoute)
         
         if isFromGroupListView == true {
+            // MARK - it is from the group list tab
             self.navigationItem.setRightBarButtonItems(nil, animated: true)
-            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "buttonTapped:")
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editButtonTapped:")
             self.navigationItem.rightBarButtonItem = button
         } else {
-            
+            // MARK - Not from the Group List tab ...
         }
     }
     
-    func buttonTapped(sender:UIButton) {
+    func editButtonTapped(sender:UIButton) {
         let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! UINavigationController
         self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
     }
@@ -297,6 +296,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
+        SwiftSpinner.show("讀取中...", animated: true)
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         self.view.userInteractionEnabled = false
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -337,13 +338,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
         if let searchText = resultSearchController.searchBar.text {
             filterContactArray.removeAll(keepCapacity: false)
             filterContentForSearchText(searchText)
             tableView.reloadData()
         }
-        
     }
     
     // MARK - Search the contact list.

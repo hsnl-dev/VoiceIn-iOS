@@ -34,7 +34,7 @@ class GroupTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: GET: Get the contact list.
+    // MARK: GET: Get the Group list.
     private func getGroupList() {
         SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "讀取中...")
         let getInformationApiRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
