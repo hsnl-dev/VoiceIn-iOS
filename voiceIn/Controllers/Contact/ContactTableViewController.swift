@@ -216,6 +216,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
         }
         
+        // MARK - Set up the ation of button
         cell.onCallButtonTapped = {
             if cell.isProviderEnable == false {
                 self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
@@ -279,13 +280,14 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     request, response, data, error in
                     if error == nil {
                         self.tableView.beginUpdates()
-                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         self.contactArray.removeAtIndex(indexPath.row)
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         self.tableView.endUpdates()
                     } else {
-                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        debugPrint(error)
                     }
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
             }))
             
@@ -299,6 +301,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         SwiftSpinner.show("讀取中...", animated: true)
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         self.view.userInteractionEnabled = false
+        
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -323,20 +326,20 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    SwiftSpinner.hide()
                     self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
-                    SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
+                SwiftSpinner.hide()
                 SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
     }
     
+    // MARK - Update the searching result.
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if let searchText = resultSearchController.searchBar.text {
             filterContactArray.removeAll(keepCapacity: false)
@@ -359,6 +362,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         tableView.reloadData()
     }
     
+    // MARK - Pull down to refresh
     func refresh(sender: AnyObject) {
         var reachability: Reachability
         do {
