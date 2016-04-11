@@ -19,6 +19,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var contactArray: [People] = []
+    var groupName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        UIApplication.sharedApplication().statusBarHidden = true;
     }
 
     override func didReceiveMemoryWarning() {
@@ -196,6 +201,35 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func createGroup(sender: UIButton!) {
+        let selectedPaths = self.tableView.indexPathsForSelectedRows!
+        let createNewGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
+        var contactsId: [String] = [String]()
+        
+        for selectedPath in selectedPaths {
+            let selectedCell = self.tableView.cellForRowAtIndexPath(selectedPath) as! GroupMutipleSelectCell
+            contactsId.append(selectedCell.id)
+        }
+        
+        let parameters = [
+            "groupName": groupName,
+            "contacts": contactsId
+        ]
+        
+        Alamofire
+            .request(.POST, createNewGroupRoute, headers: self.headers, parameters: parameters as? [String : AnyObject], encoding: .JSON)
+            .response {
+                request, response, data, error in
+                if response?.statusCode >= 400 {
+                    debugPrint(error)
+                } else {
+                    debugPrint(response?.statusCode)
+                    UIApplication.sharedApplication().statusBarHidden = false;
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+        }
+    }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {
         let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)

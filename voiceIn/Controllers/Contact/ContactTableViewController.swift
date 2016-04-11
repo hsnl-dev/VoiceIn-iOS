@@ -60,7 +60,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     func editButtonTapped(sender:UIButton) {
-        let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! UINavigationController
+        let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
         self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
     }
     

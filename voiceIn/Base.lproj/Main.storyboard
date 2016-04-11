@@ -534,14 +534,32 @@
         <!--請選擇聯絡人-->
         <scene sceneID="jiG-jE-cbE">
             <objects>
-                <tableViewController id="hu4-Jc-xaX" customClass="GroupMutipleSelectTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MutipleSelectContactView" id="hu4-Jc-xaX" customClass="GroupMutipleSelectTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="28" sectionFooterHeight="28" id="2qz-om-SoX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="7QX-rn-ubl">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <items>
+                                <navigationItem title="選擇聯絡人" id="1xQ-9D-7Rw">
+                                    <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="GFr-gr-DYS">
+                                        <connections>
+                                            <segue destination="90d-Qe-cfj" kind="unwind" unwindAction="closeTheMutipleSelectionView:" id="FoW-ZP-cjg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" systemItem="done" id="xYc-eC-0IY">
+                                        <connections>
+                                            <action selector="createGroup:" destination="hu4-Jc-xaX" id="ZXE-m3-iKU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="85" id="OyB-Qj-31k" customClass="GroupMutipleSelectCell" customModule="VoiceIn" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="85"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="85"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OyB-Qj-31k" id="2V0-YF-jjJ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
@@ -1710,24 +1728,6 @@
                 <exit id="WZb-94-ZUN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6279" y="-85"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="6QD-9m-lhd">
-            <objects>
-                <navigationController storyboardIdentifier="MutipleSelectContactView" automaticallyAdjustsScrollViewInsets="NO" id="CjW-j1-wpA" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="l54-cs-g4p">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="hu4-Jc-xaX" kind="relationship" relationship="rootViewController" id="z7D-SJ-JTM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sJC-tW-QyP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-727" y="1463"/>
         </scene>
     </scenes>
     <resources>

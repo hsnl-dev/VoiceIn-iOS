@@ -126,6 +126,40 @@ class GroupTableViewController: UITableViewController {
         return true
     }
     */
+    
+    // MARK: Deletion
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath:NSIndexPath) {
+        if editingStyle == .Delete {
+            let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此分類?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
+                debugPrint("Deleting a row...")
+                SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "刪除中...")
+                
+                let deleteApiRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + (tableView.cellForRowAtIndexPath(indexPath) as! GroupTableCell).id!
+                
+                Alamofire
+                    .request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers)
+                    .response {
+                        request, response, data, error in
+                        if error == nil {
+                            self.tableView.beginUpdates()
+                            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                            self.groupArray.arrayObject?.removeLast()
+                            self.tableView.endUpdates()
+                        } else {
+                            debugPrint(error)
+                        }
+                    
+                        SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
+                }
+            }))
+            
+            deleteAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(deleteAlert, animated: true, completion: nil)
+        }
+    }
+
 
     @IBAction func showCreateGroupNameModal(sender: AnyObject) {
         let groupNameBox = UIAlertController(title: "請輸入分類名稱", message: "", preferredStyle: .Alert)
@@ -134,7 +168,9 @@ class GroupTableViewController: UITableViewController {
         groupNameBox.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler:{
             (UIAlertAction) in
                 debugPrint("Item : \(self.groupNameTextField.text)")
-                let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! UINavigationController
+                let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
+            
+                mutipleSelectContactViewController.groupName = self.groupNameTextField.text
                 self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
             
         }))
@@ -150,6 +186,7 @@ class GroupTableViewController: UITableViewController {
     
     @IBAction func closeTheMutipleSelectionView(segue: UIStoryboardSegue) {
         debugPrint("closeTheMutipleSelectionView")
+        UIApplication.sharedApplication().statusBarHidden = false;
     }
 
 }
