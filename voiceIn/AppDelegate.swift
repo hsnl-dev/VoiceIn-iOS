@@ -1,8 +1,6 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
-import Fabric
-import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -35,9 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
         
-        IQKeyboardManager.sharedManager().enable = true
-        
-        Fabric.with([Crashlytics.self()])
+        IQKeyboardManager.sharedManager().enable = true        
         return true
     }
     

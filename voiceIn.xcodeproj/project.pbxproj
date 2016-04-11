@@ -11,6 +11,7 @@
 		3E13C2D31C9874840060BC0B /* CallingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E13C2D21C9874840060BC0B /* CallingService.swift */; };
 		3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */; };
 		3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767851C96B1900089FD6B /* SettingViewController.swift */; };
+		3E6FABA51CBA53640077B0C0 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6FABA41CBA53640077B0C0 /* Group.swift */; };
 		3E773EB71C991861003CD1B3 /* QRCodeListVeiwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EB61C991861003CD1B3 /* QRCodeListVeiwController.swift */; };
 		3E773EB91C9928DC003CD1B3 /* CreateQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EB81C9928DC003CD1B3 /* CreateQRCodeViewController.swift */; };
 		3E773EBB1C9934CD003CD1B3 /* QrCodeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */; };
@@ -27,6 +28,10 @@
 		3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */; };
 		3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CD1C8C3E12001BB458 /* People.swift */; };
 		3EA737671CA50DA60054C78C /* UserPref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA737661CA50DA60054C78C /* UserPref.swift */; };
+		3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */; };
+		3EA92A6D1CB515F70024C737 /* GroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */; };
+		3EAA592A1CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */; };
+		3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */; };
 		3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */; };
 		3EAD8E361CB40672008A09E3 /* FavoriteContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */; };
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
@@ -52,6 +57,7 @@
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
 		3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSettingCell.swift; sourceTree = "<group>"; };
 		3E5767851C96B1900089FD6B /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		3E6FABA41CBA53640077B0C0 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		3E773EB61C991861003CD1B3 /* QRCodeListVeiwController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeListVeiwController.swift; sourceTree = "<group>"; };
 		3E773EB81C9928DC003CD1B3 /* CreateQRCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQRCodeViewController.swift; sourceTree = "<group>"; };
 		3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrCodeListCell.swift; sourceTree = "<group>"; };
@@ -68,6 +74,10 @@
 		3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
 		3E98C0CD1C8C3E12001BB458 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
 		3EA737661CA50DA60054C78C /* UserPref.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPref.swift; sourceTree = "<group>"; };
+		3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableCell.swift; sourceTree = "<group>"; };
+		3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewController.swift; sourceTree = "<group>"; };
+		3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectTableViewController.swift; sourceTree = "<group>"; };
+		3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectCell.swift; sourceTree = "<group>"; };
 		3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewParam.swift; sourceTree = "<group>"; };
 		3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteContactTableViewController.swift; sourceTree = "<group>"; };
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,6 +151,8 @@
 				3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */,
 				3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */,
 				3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */,
+				3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */,
+				3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -163,6 +175,8 @@
 				3E98C0C01C8C3E12001BB458 /* ContactDetailViewController.swift */,
 				3E98C0C11C8C3E12001BB458 /* ContactTableViewController.swift */,
 				3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */,
+				3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */,
+				3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -201,6 +215,7 @@
 			children = (
 				3E98C0CD1C8C3E12001BB458 /* People.swift */,
 				3E773EBC1C99374B003CD1B3 /* QRCode.swift */,
+				3E6FABA41CBA53640077B0C0 /* Group.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -313,7 +328,6 @@
 				3EF632941C75A9F300BBAB39 /* Resources */,
 				900FDFAA77EE9BC848DD2FF7 /* Embed Pods Frameworks */,
 				A8E59EF46553B42CB8BB0E07 /* Copy Pods Resources */,
-				3E4605751C86927F00F94813 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -373,20 +387,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3E4605751C86927F00F94813 /* Fabric */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Fabric;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" dbfd20da22aa03dc0a58087776c7f7ddb33a9a82 96999449c59a263ebee86c867b368a74d4c6ec0aa56437d31ff24272c35bc9dc";
-		};
 		900FDFAA77EE9BC848DD2FF7 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -443,9 +443,11 @@
 				3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */,
 				3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */,
 				3E773EB91C9928DC003CD1B3 /* CreateQRCodeViewController.swift in Sources */,
+				3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */,
 				3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */,
 				3EF27F041C9913BC00D62844 /* UIView+VoiceIn.swift in Sources */,
 				3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */,
+				3EAA592A1CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift in Sources */,
 				3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */,
 				3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */,
 				3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */,
@@ -458,11 +460,13 @@
 				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
 				3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */,
 				3EE4EC311C8DE38600805447 /* Network.swift in Sources */,
+				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
 				3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */,
 				3E773EBF1C9940AF003CD1B3 /* QRCodeGenerator.swift in Sources */,
+				3E6FABA51CBA53640077B0C0 /* Group.swift in Sources */,
 				3E773EBB1C9934CD003CD1B3 /* QrCodeListCell.swift in Sources */,
 				3EE4EC2E1C8DE30700805447 /* Reachibility.swift in Sources */,
 				3EAD8E361CB40672008A09E3 /* FavoriteContactTableViewController.swift in Sources */,
@@ -470,6 +474,7 @@
 				3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */,
 				3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */,
 				3E13C2D31C9874840060BC0B /* CallingService.swift in Sources */,
+				3EA92A6D1CB515F70024C737 /* GroupTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
