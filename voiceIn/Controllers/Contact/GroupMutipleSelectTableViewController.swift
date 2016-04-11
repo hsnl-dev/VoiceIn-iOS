@@ -19,7 +19,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var contactArray: [People] = []
+    var seletedContactArray: [String] = []
     var groupName: String!
+    var groupId: String!
+    var isFromUpdateView: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +134,13 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
         cell.id = userInformation["id"]!
         
+        // MARK - De-Select the cell and select the already selected contacts.
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if seletedContactArray.contains(cell.id) == true {
+            self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.None)
+        }
+        
         // MARK - Setting the user photo.
         cell.thumbnailImageView.image = UIImage(named: "user")
         cell.thumbnailImageView.layer.cornerRadius = 25.0
@@ -203,31 +213,59 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     */
     
     @IBAction func createGroup(sender: UIButton!) {
-        let selectedPaths = self.tableView.indexPathsForSelectedRows!
-        let createNewGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
-        var contactsId: [String] = [String]()
+        let selectedPaths = self.tableView.indexPathsForSelectedRows
         
-        for selectedPath in selectedPaths {
+        if selectedPaths == nil {
+            self.createAlertView("抱歉", body: "請至少選擇一個聯絡人!", buttonValue: "確認")
+            return
+        }
+        
+        var contactsId: [String] = []
+        
+        for selectedPath in selectedPaths! {
             let selectedCell = self.tableView.cellForRowAtIndexPath(selectedPath) as! GroupMutipleSelectCell
             contactsId.append(selectedCell.id)
         }
         
-        let parameters = [
-            "groupName": groupName,
-            "contacts": contactsId
-        ]
-        
-        Alamofire
-            .request(.POST, createNewGroupRoute, headers: self.headers, parameters: parameters as? [String : AnyObject], encoding: .JSON)
-            .response {
-                request, response, data, error in
-                if response?.statusCode >= 400 {
-                    debugPrint(error)
-                } else {
+        if self.isFromUpdateView == false {
+            let createNewGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
+            let parameters = [
+                "groupName": groupName,
+                "contacts": contactsId
+            ]
+            
+            debugPrint(parameters)
+            Alamofire
+                .request(.POST, createNewGroupRoute, headers: self.headers, parameters: parameters as? [String : AnyObject], encoding: .JSON)
+                .response {
+                    request, response, data, error in
+                    if response?.statusCode >= 400 {
+                        debugPrint(error)
+                    } else {
+                        debugPrint(response?.statusCode)
+                        UIApplication.sharedApplication().statusBarHidden = false;
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+            }
+        } else {
+            let updateGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + groupId + "/contacts"
+            let parameters = [
+                "contacts": contactsId
+            ]
+            
+            debugPrint(parameters)
+            Alamofire
+                .request(.PUT, updateGroupRoute, headers: self.headers, parameters: parameters, encoding: .JSON)
+                .response {
+                    request, response, data, error in
                     debugPrint(response?.statusCode)
-                    UIApplication.sharedApplication().statusBarHidden = false;
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
+                    if response?.statusCode >= 400 {
+                        debugPrint(error)
+                    } else {
+                        UIApplication.sharedApplication().statusBarHidden = false;
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+            }
         }
     }
     

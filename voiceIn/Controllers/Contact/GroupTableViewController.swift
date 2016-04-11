@@ -85,9 +85,12 @@ class GroupTableViewController: UITableViewController {
         
         let getInformationApiRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + cell.id + "/contacts"
         debugPrint(getInformationApiRoute)
+        
         contactListController.getContactRoute = getInformationApiRoute
         contactListController.isFromGroupListView = true
         contactListController.navigationTitle = cell.groupName.text
+        contactListController.groupId = cell.id
+        
         self.navigationController?.pushViewController(contactListController, animated: true)
     }
     

@@ -18,9 +18,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK: Array of ContactList
     var contactArray: [People] = []
     var filterContactArray: [People] = [People]()
-    var isFromGroupListView: Bool = false
     var navigationTitle: String? = "聯絡簿"
     var getContactRoute: String! = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+    
+    // MARK - For Group related
+    var selectedContactId: [String] = []
+    var isFromGroupListView: Bool = false
+    var groupId: String = ""
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -55,12 +59,26 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editButtonTapped:")
             self.navigationItem.rightBarButtonItem = button
         } else {
-            // MARK - Not from the Group List tab ...
+            // MARK - TODO Not from the Group List tab ...
         }
     }
     
     func editButtonTapped(sender:UIButton) {
         let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
+        
+        // MARK - Initialize the selected array cause it is modal view.
+        selectedContactId = []
+        
+        mutipleSelectContactViewController.isFromUpdateView = true
+        mutipleSelectContactViewController.groupId = groupId
+        
+        for contact in contactArray {
+            selectedContactId.append(contact.data["id"]!!)
+        }
+        
+        debugPrint(selectedContactId)
+        
+        mutipleSelectContactViewController.seletedContactArray = selectedContactId
         self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
     }
     
