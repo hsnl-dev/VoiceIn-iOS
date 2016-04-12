@@ -12,5 +12,6 @@ target 'voiceIn' do
     pod 'SwiftSpinner'
     pod 'SwiftOverlays', '~> 1.0'
     pod 'NSDate+TimeAgo'
+    pod 'BWWalkthrough'
 end
 

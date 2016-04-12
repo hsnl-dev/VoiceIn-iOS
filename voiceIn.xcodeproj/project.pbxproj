@@ -36,6 +36,8 @@
 		3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */; };
 		3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */; };
 		3EAD8E361CB40672008A09E3 /* FavoriteContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */; };
+		3EB2A6DC1CBD3D0700C2D406 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EB2A6DB1CBD3D0700C2D406 /* Introduction.storyboard */; };
+		3EB2A6E11CBD3E9300C2D406 /* WalkThroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2A6E01CBD3E9300C2D406 /* WalkThroughViewController.swift */; };
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
 		3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */; };
 		3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */; };
@@ -84,6 +86,8 @@
 		3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectCell.swift; sourceTree = "<group>"; };
 		3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewParam.swift; sourceTree = "<group>"; };
 		3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteContactTableViewController.swift; sourceTree = "<group>"; };
+		3EB2A6DB1CBD3D0700C2D406 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
+		3EB2A6E01CBD3E9300C2D406 /* WalkThroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkThroughViewController.swift; sourceTree = "<group>"; };
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderNickNameCell.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 		3E98C0BE1C8C3E12001BB458 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3EB2A6DD1CBD3E6600C2D406 /* Introduction */,
 				3EE4EC351C8DE47D00805447 /* Setting */,
 				3E98C0BF1C8C3E12001BB458 /* Contact */,
 				3E98C0C21C8C3E12001BB458 /* QRCode */,
@@ -231,8 +236,17 @@
 			children = (
 				3EF050641C77196600F7774E /* Login.storyboard */,
 				3EF050671C77197900F7774E /* Main.storyboard */,
+				3EB2A6DB1CBD3D0700C2D406 /* Introduction.storyboard */,
 			);
 			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		3EB2A6DD1CBD3E6600C2D406 /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+				3EB2A6E01CBD3E9300C2D406 /* WalkThroughViewController.swift */,
+			);
+			path = Introduction;
 			sourceTree = "<group>";
 		};
 		3EE4EC2A1C8DE30700805447 /* ThirdPartyHelpers */ = {
@@ -383,6 +397,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EB2A6DC1CBD3D0700C2D406 /* Introduction.storyboard in Resources */,
 				3EF050661C77196600F7774E /* Login.storyboard in Resources */,
 				3EF632A71C75A9F300BBAB39 /* LaunchScreen.storyboard in Resources */,
 				3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */,
@@ -470,6 +485,7 @@
 				3EE4EC311C8DE38600805447 /* Network.swift in Sources */,
 				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
+				3EB2A6E11CBD3E9300C2D406 /* WalkThroughViewController.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
 				3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */,
