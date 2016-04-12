@@ -10,6 +10,8 @@ class vCardViewController: UIViewController {
     @IBOutlet weak var profile: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var company: UILabel!
+    @IBOutlet weak var jobTitle: UILabel!
+    @IBOutlet weak var email: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var qrCodeImage: UIImageView!
     @IBOutlet weak var cardView: UIView!
@@ -34,6 +36,8 @@ class vCardViewController: UIViewController {
                     self.company.text = jsonResponse["company"].stringValue
                     self.profile.text = jsonResponse["profile"].stringValue
                     self.location.text = jsonResponse["location"].stringValue
+                    self.jobTitle.text = jsonResponse["jobTitle"].stringValue
+                    self.email.text = jsonResponse["email"].stringValue
                     self.profile.sizeToFit()
                     
                     // MARK: Retrieve the image

@@ -1302,6 +1302,8 @@
                     <connections>
                         <outlet property="cardView" destination="gAN-kM-ST0" id="9ln-Lb-YAY"/>
                         <outlet property="company" destination="rGo-b6-c51" id="mZI-mg-ePE"/>
+                        <outlet property="email" destination="zdl-u6-NlX" id="sza-2k-lOQ"/>
+                        <outlet property="jobTitle" destination="0MC-fc-qok" id="Qa3-Mh-f0r"/>
                         <outlet property="location" destination="Dt2-bi-q2Z" id="rre-0A-zZg"/>
                         <outlet property="profile" destination="X81-DB-HdU" id="gzv-sV-qUG"/>
                         <outlet property="qrCodeImage" destination="Ekt-4i-aGm" id="RdT-28-Tb4"/>

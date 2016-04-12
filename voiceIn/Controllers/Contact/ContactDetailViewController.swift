@@ -235,7 +235,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 6
+            return 8
         case 1:
             return 4
         default:
@@ -258,18 +258,26 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.valueLabel.text = userInformation["company"]! as String! != "" ? userInformation["company"]! as String!: "未設定"
                 cell.accessoryType = .None;
             case 2:
+                cell.fieldLabel.text = "職稱"
+                cell.valueLabel.text = userInformation["jobTitle"]! as String! != "" ? userInformation["jobTitle"]! as String!: "未設定"
+                cell.accessoryType = .None;
+            case 3:
+                cell.fieldLabel.text = "聯絡方式"
+                cell.valueLabel.text = userInformation["email"]! as String! != "" ? userInformation["email"]! as String!: "未設定"
+                cell.accessoryType = .None;
+            case 4:
                 cell.fieldLabel.text = "暱稱"
                 cell.valueLabel.text = userInformation["nickName"]! as String! != "" ? userInformation["nickName"]! as String!: "未設定"
                 cell.accessoryType = .DisclosureIndicator;
-            case 3:
+            case 5:
                 cell.fieldLabel.text = "關於"
                 cell.valueLabel.text = userInformation["profile"]! as String! != "" ? userInformation["profile"]! as String!: "未設定"
                 cell.accessoryType = .None;
-            case 4:
+            case 6:
                 cell.fieldLabel.text = "對方狀態"
                 cell.valueLabel.text = userInformation["providerIsEnable"]! as String! == "true" ? "可撥打" : "不可撥打"
                 cell.accessoryType = .None;
-            case 5:
+            case 7:
                 cell.fieldLabel.text = "對方可通話時段"
                 cell.valueLabel.text = userInformation["providerAvailableStartTime"]! as String! + " - " + userInformation["providerAvailableEndTime"]!! as String!
                 cell.accessoryType = .None;
