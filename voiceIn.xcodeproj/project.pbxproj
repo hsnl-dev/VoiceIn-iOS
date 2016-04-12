@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */; };
 		3E13C2D31C9874840060BC0B /* CallingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E13C2D21C9874840060BC0B /* CallingService.swift */; };
+		3E3701EA1CBCF0A100B0F4CB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */; };
+		3E3701EC1CBCF1F200B0F4CB /* HistoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */; };
 		3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */; };
 		3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767851C96B1900089FD6B /* SettingViewController.swift */; };
 		3E6FABA51CBA53640077B0C0 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6FABA41CBA53640077B0C0 /* Group.swift */; };
@@ -54,6 +56,8 @@
 		11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3E13C2D21C9874840060BC0B /* CallingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingService.swift; sourceTree = "<group>"; };
+		3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
+		3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableCell.swift; sourceTree = "<group>"; };
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
 		3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSettingCell.swift; sourceTree = "<group>"; };
 		3E5767851C96B1900089FD6B /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */,
 				3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */,
 				3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */,
+				3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 				3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */,
 				3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */,
 				3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */,
+				3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 				3EE4EC2D1C8DE30700805447 /* NSTimeExtension.swift in Sources */,
 				3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */,
 				3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */,
+				3E3701EC1CBCF1F200B0F4CB /* HistoryTableCell.swift in Sources */,
 				3E773EB91C9928DC003CD1B3 /* CreateQRCodeViewController.swift in Sources */,
 				3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */,
 				3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */,
@@ -458,6 +465,7 @@
 				3E98C0D41C8C3E12001BB458 /* ContactTableViewController.swift in Sources */,
 				3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */,
 				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
+				3E3701EA1CBCF0A100B0F4CB /* HistoryTableViewController.swift in Sources */,
 				3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */,
 				3EE4EC311C8DE38600805447 /* Network.swift in Sources */,
 				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,

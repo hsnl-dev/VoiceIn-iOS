@@ -25,6 +25,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var selectedContactId: [String] = []
     var isFromGroupListView: Bool = false
     var groupId: String = ""
+    var groupNameTextField: UITextField! = nil
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -56,14 +57,14 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         if isFromGroupListView == true {
             // MARK - it is from the group list tab
             self.navigationItem.setRightBarButtonItems(nil, animated: true)
-            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editButtonTapped:")
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "showEditActionSheet:")
             self.navigationItem.rightBarButtonItem = button
         } else {
             // MARK - TODO Not from the Group List tab ...
         }
     }
     
-    func editButtonTapped(sender:UIButton) {
+    func editContactTapped() {
         let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
         
         // MARK - Initialize the selected array cause it is modal view.
@@ -80,6 +81,39 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         mutipleSelectContactViewController.seletedContactArray = selectedContactId
         self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
+    }
+    
+    func showUpdateGroupNameModal() {
+        let groupNameBox = UIAlertController(title: "請輸入分類名稱", message: "", preferredStyle: .Alert)
+        groupNameBox.addTextFieldWithConfigurationHandler(configureGroupNameTextField)
+        groupNameBox.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+        groupNameBox.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler:{
+            (UIAlertAction) in
+            debugPrint("Item : \(self.groupNameTextField.text)")
+            let updateGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + self.groupId + "/contacts"
+            
+            Alamofire
+                .request(.PUT, updateGroupRoute, headers: self.headers, parameters: ["groupName" : self.groupNameTextField.text!], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    debugPrint(response?.statusCode)
+                    if response?.statusCode >= 400 {
+                        debugPrint(error)
+                    } else {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+            }
+            
+            
+        }))
+        self.presentViewController(groupNameBox, animated: true, completion: {
+            debugPrint("completion block")
+        })
+    }
+    
+    private func configureGroupNameTextField(textField: UITextField!) {
+        textField.placeholder = "分類名稱"
+        groupNameTextField = textField
     }
     
     // MARK: General preparation statements.
@@ -312,6 +346,36 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             deleteAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
             self.presentViewController(deleteAlert, animated: true, completion: nil)
         }
+    }
+    
+    func showEditActionSheet(sender: UIButton) {
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "您想要 ..", preferredStyle: .ActionSheet)
+        
+        // 2
+        let renameAction = UIAlertAction(title: "更改分類名稱", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.showUpdateGroupNameModal()
+        })
+        let editContact = UIAlertAction(title: "編輯通訊錄", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.editContactTapped()
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        
+        // 4
+        optionMenu.addAction(renameAction)
+        optionMenu.addAction(editContact)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
     // MARK: GET: Get the contact list.
