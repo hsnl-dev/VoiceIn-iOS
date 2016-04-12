@@ -143,7 +143,7 @@ class UserInformationViewController: FormViewController {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm"
-                    row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
+                    row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue == "" ? "12:00" : userInformation["availableStartTime"].stringValue)
             }
             
             <<< TimeInlineRow(){
@@ -154,7 +154,7 @@ class UserInformationViewController: FormViewController {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm"
-                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
+                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue == "" ? "17:00" : userInformation["availableEndTime"].stringValue)
             }
             
             
