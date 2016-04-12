@@ -11,5 +11,6 @@ target 'voiceIn' do
     pod 'PhoneNumberKit', '~> 0.6'
     pod 'SwiftSpinner'
     pod 'SwiftOverlays', '~> 1.0'
+    pod 'NSDate+TimeAgo'
 end
 
