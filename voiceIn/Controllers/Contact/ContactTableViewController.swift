@@ -64,58 +64,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    func editContactTapped() {
-        let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
-        
-        // MARK - Initialize the selected array cause it is modal view.
-        selectedContactId = []
-        
-        mutipleSelectContactViewController.isFromUpdateView = true
-        mutipleSelectContactViewController.groupId = groupId
-        
-        for contact in contactArray {
-            selectedContactId.append(contact.data["id"]!!)
-        }
-        
-        debugPrint(selectedContactId)
-        
-        mutipleSelectContactViewController.seletedContactArray = selectedContactId
-        self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
-    }
-    
-    func showUpdateGroupNameModal() {
-        let groupNameBox = UIAlertController(title: "請輸入分類名稱", message: "", preferredStyle: .Alert)
-        groupNameBox.addTextFieldWithConfigurationHandler(configureGroupNameTextField)
-        groupNameBox.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
-        groupNameBox.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler:{
-            (UIAlertAction) in
-            debugPrint("Item : \(self.groupNameTextField.text)")
-            let updateGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + self.groupId + "/contacts"
-            
-            Alamofire
-                .request(.PUT, updateGroupRoute, headers: self.headers, parameters: ["groupName" : self.groupNameTextField.text!], encoding: .URLEncodedInURL)
-                .response {
-                    request, response, data, error in
-                    debugPrint(response?.statusCode)
-                    if response?.statusCode >= 400 {
-                        debugPrint(error)
-                    } else {
-                        self.navigationController?.popViewControllerAnimated(true)
-                    }
-            }
-            
-            
-        }))
-        self.presentViewController(groupNameBox, animated: true, completion: {
-            debugPrint("completion block")
-        })
-    }
-    
-    private func configureGroupNameTextField(textField: UITextField!) {
-        textField.placeholder = "分類名稱"
-        groupNameTextField = textField
-    }
-    
     // MARK: General preparation statements.
     private func prepareView() {
         view.backgroundColor = MaterialColor.white
@@ -348,6 +296,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
+    // MARK - Group related function.
     func showEditActionSheet(sender: UIButton) {
         // 1
         let optionMenu = UIAlertController(title: nil, message: "您想要 ..", preferredStyle: .ActionSheet)
@@ -376,6 +325,58 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         // 5
         self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+    
+    func editContactTapped() {
+        let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
+        
+        // MARK - Initialize the selected array cause it is modal view.
+        selectedContactId = []
+        
+        mutipleSelectContactViewController.isFromUpdateView = true
+        mutipleSelectContactViewController.groupId = groupId
+        
+        for contact in contactArray {
+            selectedContactId.append(contact.data["id"]!!)
+        }
+        
+        debugPrint(selectedContactId)
+        
+        mutipleSelectContactViewController.seletedContactArray = selectedContactId
+        self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
+    }
+    
+    func showUpdateGroupNameModal() {
+        let groupNameBox = UIAlertController(title: "請輸入分類名稱", message: "", preferredStyle: .Alert)
+        groupNameBox.addTextFieldWithConfigurationHandler(configureGroupNameTextField)
+        groupNameBox.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+        groupNameBox.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler:{
+            (UIAlertAction) in
+            debugPrint("Item : \(self.groupNameTextField.text)")
+            let updateGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + self.groupId + "/contacts"
+            
+            Alamofire
+                .request(.PUT, updateGroupRoute, headers: self.headers, parameters: ["groupName" : self.groupNameTextField.text!], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    debugPrint(response?.statusCode)
+                    if response?.statusCode >= 400 {
+                        debugPrint(error)
+                    } else {
+                        self.navigationItem.title = self.groupNameTextField.text!
+                    }
+            }
+            
+            
+        }))
+        self.presentViewController(groupNameBox, animated: true, completion: {
+            debugPrint("completion block")
+        })
+    }
+    
+    private func configureGroupNameTextField(textField: UITextField!) {
+        textField.placeholder = "分類名稱"
+        groupNameTextField = textField
     }
     
     // MARK: GET: Get the contact list.

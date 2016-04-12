@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (3.1.5)
   - ALCameraViewController (1.1.7)
+  - BWWalkthrough (1.1.0)
   - Eureka (1.5.0)
   - IQKeyboardManagerSwift (3.3.4)
   - Material (1.34.8)
@@ -13,6 +14,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
   - ALCameraViewController
+  - BWWalkthrough
   - Eureka (~> 1.5)
   - IQKeyboardManagerSwift
   - Material (= 1.34.8)
@@ -34,6 +36,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   ALCameraViewController: 15bd245a247cff0f8a038c349ac2bbe79152b686
+  BWWalkthrough: 0c27ad2773a25c8f4fb9004bc7d6685deb35fecc
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
   IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
   Material: 3865b011d8e4d42f7588bd9719498e025a82360a
