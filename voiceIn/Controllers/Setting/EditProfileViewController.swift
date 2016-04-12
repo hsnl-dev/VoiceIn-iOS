@@ -243,6 +243,8 @@ class EditProfileViewController: FormViewController {
             "profile": formValues["profile"] as? String != nil ? formValues["profile"] as? String : "",
             "location": formValues["location"] as? String != nil ? formValues["location"] as? String : "",
             "company": formValues["company"] as? String != nil ? formValues["company"] as? String : "",
+            "jobTitle": formValues["jobTitle"] as? String != nil ? formValues["jobTitle"] as? String : "",
+            "email": formValues["email"] as? String != nil ? formValues["email"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
