@@ -33,22 +33,25 @@ class vCardViewController: UIViewController {
                     let getImageApiRoute = API_END_POINT + "/avatars/" + jsonResponse["profilePhotoId"].stringValue
                     
                     self.userName.text = jsonResponse["userName"].stringValue
-                    self.company.text = jsonResponse["company"].stringValue
-                    self.profile.text = jsonResponse["profile"].stringValue
-                    self.location.text = jsonResponse["location"].stringValue
-                    self.jobTitle.text = jsonResponse["jobTitle"].stringValue
-                    self.email.text = jsonResponse["email"].stringValue
+                    self.company.text = jsonResponse["company"].stringValue == "" ? "尚未填寫公司" : jsonResponse["company"].stringValue
+                    self.profile.text = jsonResponse["profile"].stringValue == "" ? "尚未填寫介紹" : jsonResponse["profile"].stringValue
+                    self.location.text = jsonResponse["location"].stringValue == "" ? "未填寫地址" : jsonResponse["location"].stringValue
+                    self.jobTitle.text = jsonResponse["jobTitle"].stringValue == "" ? "尚未填寫職位" : jsonResponse["jobTitle"].stringValue
+                    self.email.text = jsonResponse["email"].stringValue == "" ? "尚未填寫聯絡方式" : jsonResponse["email"].stringValue
                     self.profile.sizeToFit()
                     
-                    // MARK: Retrieve the image
-                    Alamofire
-                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
-                        .responseData {
-                            response in
-                            // MARK: TODO Error handling
-                            if response.data != nil {
-                                self.userAvatar.image = UIImage(data: response.data!)
-                            }
+                    if jsonResponse["profilePhotoId"].stringValue != "" {
+                        // MARK: Retrieve the image
+                        Alamofire
+                            .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
+                            .responseData {
+                                response in
+                                // MARK: TODO Error handling
+                                if response.data != nil {
+                                    self.userAvatar.image = UIImage(data: response.data!)
+                                }
+                        }
+
                     }
                     
                     self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
