@@ -48,7 +48,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     // MARK: GET: Get the contact list.
     private func getContactList() {
         
-        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+        let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
