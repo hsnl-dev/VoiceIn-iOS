@@ -19,6 +19,7 @@
 		3E773EBB1C9934CD003CD1B3 /* QrCodeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */; };
 		3E773EBD1C99374C003CD1B3 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EBC1C99374B003CD1B3 /* QRCode.swift */; };
 		3E773EBF1C9940AF003CD1B3 /* QRCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EBE1C9940AF003CD1B3 /* QRCodeGenerator.swift */; };
+		3E7A63F51CC67FD900C43961 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7A63F41CC67FD900C43961 /* NotificationTableViewController.swift */; };
 		3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0BA1C8C3E01001BB458 /* ContactDetailTableViewCell.swift */; };
 		3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0BB1C8C3E01001BB458 /* ContactTableCell.swift */; };
 		3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0C01C8C3E12001BB458 /* ContactDetailViewController.swift */; };
@@ -69,6 +70,7 @@
 		3E773EBA1C9934CD003CD1B3 /* QrCodeListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrCodeListCell.swift; sourceTree = "<group>"; };
 		3E773EBC1C99374B003CD1B3 /* QRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		3E773EBE1C9940AF003CD1B3 /* QRCodeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeGenerator.swift; sourceTree = "<group>"; };
+		3E7A63F41CC67FD900C43961 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		3E98C0BA1C8C3E01001BB458 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
 		3E98C0BB1C8C3E01001BB458 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
 		3E98C0C01C8C3E12001BB458 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				3E98C0C81C8C3E12001BB458 /* vCardViewController.swift */,
+				3E7A63F41CC67FD900C43961 /* NotificationTableViewController.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -371,6 +374,11 @@
 					3EF632951C75A9F300BBAB39 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = Y73V382M7G;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -490,6 +498,7 @@
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
 				3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */,
 				3E773EBF1C9940AF003CD1B3 /* QRCodeGenerator.swift in Sources */,
+				3E7A63F51CC67FD900C43961 /* NotificationTableViewController.swift in Sources */,
 				3E6FABA51CBA53640077B0C0 /* Group.swift in Sources */,
 				3E773EBB1C9934CD003CD1B3 /* QrCodeListCell.swift in Sources */,
 				3EE4EC2E1C8DE30700805447 /* Reachibility.swift in Sources */,

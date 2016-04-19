@@ -154,6 +154,11 @@
                                     <segue destination="NNy-iM-hOH" kind="show" id="C9l-Gu-0Xu"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="ic_inbox" id="1PS-E1-ceI">
+                                <connections>
+                                    <segue destination="xSZ-hx-inN" kind="presentation" modalTransitionStyle="coverVertical" id="cK7-FI-avh"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="L3F-aZ-WrW">
@@ -174,7 +179,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVC-1w-bTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2537" y="-94"/>
+            <point key="canvasLocation" x="2575" y="-70"/>
         </scene>
         <!--聯絡簿-->
         <scene sceneID="6gf-NO-WQ3">
@@ -1367,6 +1372,83 @@
             </objects>
             <point key="canvasLocation" x="3430" y="-86"/>
         </scene>
+        <!--通知中心-->
+        <scene sceneID="qEN-i6-wLB">
+            <objects>
+                <exit id="JJU-xV-fZK" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FPc-m5-TyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="uQg-Sf-2Ce" customClass="NotificationTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" id="nRf-hb-d2e">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="qho-8Y-HVm" customClass="HistoryTableCell" customModule="VoiceIn" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qho-8Y-HVm" id="ONb-Ra-zTU">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_done" translatesAutoresizingMaskIntoConstraints="NO" id="4qn-Sc-eNg">
+                                            <rect key="frame" x="8" y="8" width="35" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="35" id="56n-eh-vS2"/>
+                                                <constraint firstAttribute="height" constant="35" id="NIB-U1-xqZ"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="敘述" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IC0-af-Tqe">
+                                            <rect key="frame" x="51" y="0.0" width="28" height="26"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="26" id="5dS-ub-OVn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="狀態" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="siu-OI-ySr">
+                                            <rect key="frame" x="51" y="23" width="28" height="26"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="26" id="Wla-SX-Ygh"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="IC0-af-Tqe" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="-8" id="QlD-g8-C4V"/>
+                                        <constraint firstItem="siu-OI-ySr" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="15" id="bB4-iQ-RDa"/>
+                                        <constraint firstItem="4qn-Sc-eNg" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" id="dhR-wc-XEk"/>
+                                        <constraint firstItem="IC0-af-Tqe" firstAttribute="leading" secondItem="4qn-Sc-eNg" secondAttribute="trailing" constant="8" id="ekG-La-Xw9"/>
+                                        <constraint firstItem="siu-OI-ySr" firstAttribute="leading" secondItem="4qn-Sc-eNg" secondAttribute="trailing" constant="8" id="qX1-6d-dmo"/>
+                                        <constraint firstItem="4qn-Sc-eNg" firstAttribute="leading" secondItem="ONb-Ra-zTU" secondAttribute="leadingMargin" id="sPR-og-YhR"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="callStatusImage" destination="4qn-Sc-eNg" id="BxF-4Q-vhr"/>
+                                    <outlet property="nameLabel" destination="IC0-af-Tqe" id="S0k-NP-2qo"/>
+                                    <outlet property="statusLabel" destination="siu-OI-ySr" id="J6G-hp-B86"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="uQg-Sf-2Ce" id="tyt-ve-cwA"/>
+                            <outlet property="delegate" destination="uQg-Sf-2Ce" id="y2K-6c-v8X"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="通知中心" id="DZF-LU-EAh">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="Kfn-k0-90p">
+                            <connections>
+                                <segue destination="JJU-xV-fZK" kind="unwind" unwindAction="closeToTableViewController:" id="pR5-eU-j50"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="4156" y="675"/>
+        </scene>
         <!--Code List Veiw Controller-->
         <scene sceneID="wH1-YF-yhz">
             <objects>
@@ -1814,6 +1896,24 @@
             </objects>
             <point key="canvasLocation" x="6279" y="-85"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hgH-OZ-9kC">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="22L-3V-ivP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xSZ-hx-inN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fCh-2a-zMM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="uQg-Sf-2Ce" kind="relationship" relationship="rootViewController" id="IUD-wV-J6l"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="3403" y="675"/>
+        </scene>
     </scenes>
     <resources>
         <image name="10259499" width="420" height="420"/>
@@ -1823,10 +1923,12 @@
         <image name="ic_call_white" width="24" height="24"/>
         <image name="ic_contact_phone_white" width="24" height="24"/>
         <image name="ic_contacts_white" width="24" height="24"/>
+        <image name="ic_done" width="24" height="24"/>
         <image name="ic_face_white" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
         <image name="ic_folder_shared" width="24" height="24"/>
         <image name="ic_history_white" width="24" height="24"/>
+        <image name="ic_inbox" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add_white" width="24" height="24"/>
         <image name="ic_save_white" width="24" height="24"/>

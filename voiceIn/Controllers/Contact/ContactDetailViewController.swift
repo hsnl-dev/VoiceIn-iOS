@@ -37,7 +37,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func switchIsChanged(switchButton: UISwitch) {
         let contactId: String! = self.userInformation["id"]!
-        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+        let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
         
         if switchButton.on {
             debugPrint("Switch On")
@@ -71,7 +71,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func AvailableSwitchIsChanged(switchButton: UISwitch) {
         let contactId: String! = self.userInformation["id"]!
-        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+        let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
         
         if switchButton.on {
             debugPrint("Switch On")
@@ -113,7 +113,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dateFormatter.dateFormat = "HH:mm"
         
         let contactId: String! = self.userInformation["id"]!
-        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+        let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
         let availableStartTime: String = dateFormatter.stringFromDate(availableStartTimeDatePicker.date)
         let availableEndTime: String = dateFormatter.stringFromDate(availableEndTimeDatePicker.date)
         
@@ -174,7 +174,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let nickNameTextField = nickNameChangeAlert.textFields![0] as UITextField
                 let nickName: String! = nickNameTextField.text!
                 let contactId: String! = self.userInformation["id"]!
-                let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+                let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
                 
                 debugPrint(updateContactRoute)
                 

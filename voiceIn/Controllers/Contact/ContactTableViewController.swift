@@ -19,7 +19,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var contactArray: [People] = []
     var filterContactArray: [People] = [People]()
     var navigationTitle: String? = "聯絡簿"
-    var getContactRoute: String! = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+    var getContactRoute: String! = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
     
     // MARK - For Group related
     var selectedContactId: [String] = []
@@ -228,7 +228,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         cell.onFavoriteButtonTapped = {
             let contactId = cell.id
-            let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
+            let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId! + "/contacts/"
 
             if cell.isLike == true {
                 debugPrint("Tap favorite false!")
@@ -274,7 +274,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 debugPrint("Deleting a row...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
-                let deleteApiRoute = API_URI + versionV2 + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
+                let deleteApiRoute = API_URI + latestVersion + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
@@ -474,6 +474,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     destinationViewController.searchController = self.resultSearchController
             }
         }
+    }
+    
+    @IBAction func closeToTableViewController(segue: UIStoryboardSegue!) {
+        
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {

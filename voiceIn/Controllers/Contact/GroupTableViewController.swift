@@ -37,7 +37,7 @@ class GroupTableViewController: UITableViewController {
     // MARK: GET: Get the Group list.
     private func getGroupList() {
         SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "讀取中...")
-        let getInformationApiRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
+        let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
         
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -83,7 +83,7 @@ class GroupTableViewController: UITableViewController {
         let contactListController = self.storyboard?.instantiateViewControllerWithIdentifier("ContactViewController") as! ContactTableViewController
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! GroupTableCell
         
-        let getInformationApiRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + cell.id + "/contacts"
+        let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + cell.id + "/contacts"
         debugPrint(getInformationApiRoute)
         
         contactListController.getContactRoute = getInformationApiRoute
@@ -139,7 +139,7 @@ class GroupTableViewController: UITableViewController {
                 debugPrint("Deleting a row...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "刪除中...")
                 
-                let deleteApiRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + (tableView.cellForRowAtIndexPath(indexPath) as! GroupTableCell).id!
+                let deleteApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + (tableView.cellForRowAtIndexPath(indexPath) as! GroupTableCell).id!
                 
                 Alamofire
                     .request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers)
