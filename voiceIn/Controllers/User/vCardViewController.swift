@@ -15,11 +15,11 @@ class vCardViewController: UIViewController {
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var qrCodeImage: UIImageView!
     @IBOutlet weak var cardView: UIView!
+    var qrCodeLink: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
-        
         /**
         GET: Get the user's information.
         **/
@@ -55,6 +55,7 @@ class vCardViewController: UIViewController {
                     }
                     
                     self.qrCodeImage.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
+                    self.qrCodeLink = QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue
                     
                 case .Failure(let error):
                     self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
@@ -64,7 +65,7 @@ class vCardViewController: UIViewController {
     }
     
     @IBAction func shareQRCodeButtonClicked(sender: UIButton!) {
-        let defaultText = "這是我的 VoiceIn QR Code 名片"
+        let defaultText = "這是我的 VoiceIn QR Code 名片，請掃描 QRCode 或點以下連結加入我\n \(qrCodeLink)"
         
         if let imageToShare: UIImage! = self.cardView.image() {
             let activityController = UIActivityViewController(activityItems:[defaultText, imageToShare], applicationActivities: nil)

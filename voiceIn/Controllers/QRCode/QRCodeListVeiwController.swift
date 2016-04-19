@@ -17,7 +17,8 @@ class QRCodeListVeiwController: UITableViewController {
     
     // MARK: Trigger when user selected the row.
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let defaultText = "這是給您的專屬 QRCode，請掃描加入我"
+        let qrCodeLink = QRCODE_ROUTE + (tableView.cellForRowAtIndexPath(indexPath) as! QrCodeListCell).qrCodeUuid
+        let defaultText = "這是給您的專屬 QRCode，請掃描加入我，或點以下連結加入我\n \(qrCodeLink)"
         let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! QrCodeListCell
         let getQrCodeApiRoute = API_END_POINT + "/qrcodes/" + cell.qrCodeUuid! + "/image"
         
