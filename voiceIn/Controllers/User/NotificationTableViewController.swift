@@ -13,17 +13,17 @@ import SwiftyJSON
 import SwiftOverlays
 import NSDate_TimeAgo
 
-class HistoryTableViewController: UITableViewController {
+class NotificationTableViewController: UITableViewController {
     private var navigationBarView: NavigationBarView = NavigationBarView()
     let headers = Network.generateHeader(isTokenNeeded: true)
-    var historyArray: JSON = []
+    var notificationArray: JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
-        getHistoryList()
+        getNotificationList()
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,20 +31,20 @@ class HistoryTableViewController: UITableViewController {
     }
     
     // MARK: GET: Get the contact list.
-    private func getHistoryList() {
+    private func getNotificationList() {
         self.view.userInteractionEnabled = false
-        let getHistoryRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/history"
+        let getNotificationRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/notifications"
         SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView, text: "讀取中...")
         
         Alamofire
-            .request(.GET, getHistoryRoute, headers: headers)
+            .request(.GET, getNotificationRoute, headers: headers)
             .responseJSON {
                 response in
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
-                    self.historyArray = jsonResponse["record"]
+                    self.notificationArray = jsonResponse["notifications"]
                     self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
@@ -66,7 +66,7 @@ class HistoryTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return historyArray.count
+        return notificationArray.count
     }
     
     
@@ -74,48 +74,26 @@ class HistoryTableViewController: UITableViewController {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! HistoryTableCell
         
-        cell.nameLabel.text = historyArray[indexPath.row]["anotherNickName"].stringValue == "" ? historyArray[indexPath.row]["anotherName"].stringValue : historyArray[indexPath.row]["anotherNickName"].stringValue
-            
-        cell.statusLabel.text = generateHistoryText(historyArray[indexPath.row]["type"].stringValue, startTime: historyArray[indexPath.row]["reqTime"].stringValue, hangup: historyArray[indexPath.row]["answer"].stringValue)
+        cell.nameLabel.text = notificationArray[indexPath.row]["notificationContent"].stringValue
         
-        switch historyArray[indexPath.row]["type"].stringValue {
-        case "outgoing":
-            cell.callStatusImage.image = UIImage(named: "ic_call_made")
-            break;
-        case "incoming":
-            cell.callStatusImage.image = UIImage(named: "ic_call_received")
-            break;
-        default:
-            break;
-        }
+        cell.statusLabel.text = generateNotificationText(notificationArray[indexPath.row]["createdAt"].stringValue)
         
-        cell.contactId = historyArray[indexPath.row]["contactId"].stringValue
-        
-        if historyArray[indexPath.row]["answer"].stringValue == "false" {
-            cell.statusLabel?.textColor = MaterialColor.red.base
-            cell.callStatusImage.image = UIImage(named: "ic_call_missed")
-        }
+        cell.contactId = notificationArray[indexPath.row]["contactId"].stringValue
         
         return cell
     }
     
-    private func generateHistoryText(type: String!, startTime: String?, hangup: String!) -> String! {
+    private func generateNotificationText(createAt: String?) -> String! {
         var timeAgo: String!
         
-        if startTime == "-1" {
+        if createAt == "-1" {
             timeAgo = ""
         } else {
-            let time = (NSDate(timeIntervalSince1970: NSTimeInterval(startTime!)!/1000)).timeAgo()
+            let time = (NSDate(timeIntervalSince1970: NSTimeInterval(createAt!)!/1000)).timeAgo()
             timeAgo = "於\(time)"
         }
         
-        if type == "outgoing" {
-            let isHangupText: String! = hangup == "true" ? "有接通" : "未接通"
-            return "\(timeAgo)撥出 - \(isHangupText)"
-        } else {
-            let isHangupText: String! = hangup == "true" ? "有接通" : "未接通"
-            return "\(timeAgo)撥入 - \(isHangupText)"
-        }
+        return timeAgo
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -174,6 +152,6 @@ class HistoryTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
-
+    
+    
 }

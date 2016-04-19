@@ -228,7 +228,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         }
         
         if self.isFromUpdateView == false {
-            let createNewGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
+            let createNewGroupRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
             let parameters = [
                 "groupName": groupName,
                 "contacts": contactsId
@@ -248,7 +248,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     }
             }
         } else {
-            let updateGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + groupId + "/contacts"
+            let updateGroupRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + groupId + "/contacts"
             let parameters = [
                 "contacts": contactsId
             ]

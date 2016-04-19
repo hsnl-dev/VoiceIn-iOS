@@ -476,6 +476,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
+    @IBAction func closeToTableViewController(segue: UIStoryboardSegue!) {
+        
+    }
+    
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {
         let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
