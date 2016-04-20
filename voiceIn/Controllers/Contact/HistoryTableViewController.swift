@@ -73,10 +73,17 @@ class HistoryTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! HistoryTableCell
+        let dateFormatter = NSDateFormatter()
+        let time: String? = historyArray[indexPath.row]["reqTime"].stringValue
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         
         cell.nameLabel.text = historyArray[indexPath.row]["anotherNickName"].stringValue == "" ? historyArray[indexPath.row]["anotherName"].stringValue : historyArray[indexPath.row]["anotherNickName"].stringValue
             
-        cell.statusLabel.text = generateHistoryText(historyArray[indexPath.row]["type"].stringValue, startTime: historyArray[indexPath.row]["reqTime"].stringValue, hangup: historyArray[indexPath.row]["answer"].stringValue)
+        cell.statusLabel.text = generateHistoryText(historyArray[indexPath.row]["type"].stringValue, startTime: time, hangup: historyArray[indexPath.row]["answer"].stringValue)
+        
+        debugPrint(time)
+        
+        cell.detailTimeLabel.text = dateFormatter.stringFromDate((NSDate(timeIntervalSince1970: NSTimeInterval(time!)!/1000)))
         
         switch historyArray[indexPath.row]["type"].stringValue {
         case "outgoing":

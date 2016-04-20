@@ -437,20 +437,20 @@
         <scene sceneID="2Aw-D9-Wsj">
             <objects>
                 <tableViewController id="BH7-3f-3u7" customClass="HistoryTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" id="VDj-zR-cl2">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" id="VDj-zR-cl2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="raw-HV-Kk7" customClass="HistoryTableCell" customModule="VoiceIn" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="50"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="raw-HV-Kk7" id="lia-FP-bib">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="74"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_call_made" translatesAutoresizingMaskIntoConstraints="NO" id="5Pe-Sq-t44">
-                                            <rect key="frame" x="8" y="8" width="35" height="35"/>
+                                            <rect key="frame" x="8" y="18" width="35" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="M0s-rG-P8C"/>
                                                 <constraint firstAttribute="width" constant="35" id="mib-gN-xvi"/>
@@ -474,9 +474,8 @@
                                             <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_call_white" translatesAutoresizingMaskIntoConstraints="NO" id="sM9-vk-TH6">
-                                            <rect key="frame" x="562" y="11" width="30" height="30"/>
-                                            <color key="backgroundColor" red="0.11764705882352941" green="0.53333333333333333" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_phone_black" translatesAutoresizingMaskIntoConstraints="NO" id="sM9-vk-TH6">
+                                            <rect key="frame" x="562" y="21" width="30" height="30"/>
                                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="0WI-eA-J4E"/>
@@ -488,11 +487,22 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdc-Le-6IY">
+                                            <rect key="frame" x="51" y="48" width="26" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="7xk-RU-aQ3"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="hdc-Le-6IY" firstAttribute="leading" secondItem="lia-FP-bib" secondAttribute="leadingMargin" constant="43" id="2xm-xp-a49"/>
                                         <constraint firstItem="5Pe-Sq-t44" firstAttribute="leading" secondItem="lia-FP-bib" secondAttribute="leadingMargin" id="6DU-hv-0gI"/>
-                                        <constraint firstItem="5Pe-Sq-t44" firstAttribute="top" secondItem="lia-FP-bib" secondAttribute="topMargin" id="6G0-uz-SFc"/>
-                                        <constraint firstItem="sM9-vk-TH6" firstAttribute="top" secondItem="lia-FP-bib" secondAttribute="topMargin" constant="3" id="IWD-1b-P8n"/>
+                                        <constraint firstItem="5Pe-Sq-t44" firstAttribute="top" secondItem="lia-FP-bib" secondAttribute="topMargin" constant="10" id="6G0-uz-SFc"/>
+                                        <constraint firstItem="sM9-vk-TH6" firstAttribute="top" secondItem="lia-FP-bib" secondAttribute="topMargin" constant="13" id="IWD-1b-P8n"/>
+                                        <constraint firstItem="hdc-Le-6IY" firstAttribute="top" secondItem="jBA-ae-55l" secondAttribute="bottom" constant="-1" id="LBT-96-Z9E"/>
                                         <constraint firstItem="bb3-42-g0Z" firstAttribute="leading" secondItem="5Pe-Sq-t44" secondAttribute="trailing" constant="8" id="T5W-mp-zWy"/>
                                         <constraint firstItem="jBA-ae-55l" firstAttribute="leading" secondItem="5Pe-Sq-t44" secondAttribute="trailing" constant="8" id="Wm7-Fs-YFG"/>
                                         <constraint firstItem="sM9-vk-TH6" firstAttribute="trailing" secondItem="lia-FP-bib" secondAttribute="trailingMargin" id="cI3-2K-9Bh"/>
@@ -502,6 +512,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="callStatusImage" destination="5Pe-Sq-t44" id="YdQ-sz-zlx"/>
+                                    <outlet property="detailTimeLabel" destination="hdc-Le-6IY" id="Gsc-P6-FOq"/>
                                     <outlet property="nameLabel" destination="bb3-42-g0Z" id="rwT-Sc-8px"/>
                                     <outlet property="statusLabel" destination="jBA-ae-55l" id="F56-uW-pax"/>
                                 </connections>
@@ -1375,19 +1386,17 @@
         <!--通知中心-->
         <scene sceneID="qEN-i6-wLB">
             <objects>
-                <exit id="JJU-xV-fZK" userLabel="Exit" sceneMemberID="exit"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FPc-m5-TyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="uQg-Sf-2Ce" customClass="NotificationTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" id="nRf-hb-d2e">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="nRf-hb-d2e">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="qho-8Y-HVm" customClass="HistoryTableCell" customModule="VoiceIn" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="qho-8Y-HVm" customClass="HistoryTableCell" customModule="VoiceIn" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qho-8Y-HVm" id="ONb-Ra-zTU">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_done" translatesAutoresizingMaskIntoConstraints="NO" id="4qn-Sc-eNg">
@@ -1415,8 +1424,19 @@
                                             <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mg1-LW-aeT">
+                                            <rect key="frame" x="51" y="50" width="30" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="1ky-BH-fYc"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Mg1-LW-aeT" firstAttribute="top" secondItem="siu-OI-ySr" secondAttribute="bottom" constant="1" id="12D-7G-Fj3"/>
+                                        <constraint firstItem="Mg1-LW-aeT" firstAttribute="leading" secondItem="ONb-Ra-zTU" secondAttribute="leadingMargin" constant="43" id="G8g-kq-LuK"/>
                                         <constraint firstItem="IC0-af-Tqe" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="-8" id="QlD-g8-C4V"/>
                                         <constraint firstItem="siu-OI-ySr" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="15" id="bB4-iQ-RDa"/>
                                         <constraint firstItem="4qn-Sc-eNg" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" id="dhR-wc-XEk"/>
@@ -1427,6 +1447,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="callStatusImage" destination="4qn-Sc-eNg" id="BxF-4Q-vhr"/>
+                                    <outlet property="detailTimeLabel" destination="Mg1-LW-aeT" id="g2p-dM-kZc"/>
                                     <outlet property="nameLabel" destination="IC0-af-Tqe" id="S0k-NP-2qo"/>
                                     <outlet property="statusLabel" destination="siu-OI-ySr" id="J6G-hp-B86"/>
                                 </connections>
@@ -1446,6 +1467,8 @@
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
+                <exit id="JJU-xV-fZK" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FPc-m5-TyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4156" y="675"/>
         </scene>
@@ -1899,7 +1922,6 @@
         <!--Navigation Controller-->
         <scene sceneID="hgH-OZ-9kC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="22L-3V-ivP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xSZ-hx-inN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fCh-2a-zMM">
@@ -1911,6 +1933,7 @@
                         <segue destination="uQg-Sf-2Ce" kind="relationship" relationship="rootViewController" id="IUD-wV-J6l"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="22L-3V-ivP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3403" y="675"/>
         </scene>
@@ -1920,7 +1943,6 @@
         <image name="blurred-web-backgrounds" width="1920" height="1440"/>
         <image name="close" width="84" height="84"/>
         <image name="ic_call_made" width="24" height="24"/>
-        <image name="ic_call_white" width="24" height="24"/>
         <image name="ic_contact_phone_white" width="24" height="24"/>
         <image name="ic_contacts_white" width="24" height="24"/>
         <image name="ic_done" width="24" height="24"/>
@@ -1931,6 +1953,7 @@
         <image name="ic_inbox" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add_white" width="24" height="24"/>
+        <image name="ic_phone_black" width="24" height="24"/>
         <image name="ic_save_white" width="24" height="24"/>
         <image name="ic_share" width="24" height="24"/>
         <image name="user" width="128" height="128"/>

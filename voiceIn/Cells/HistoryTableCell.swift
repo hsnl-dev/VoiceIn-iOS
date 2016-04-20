@@ -13,6 +13,7 @@ class HistoryTableCell: MaterialTableViewCell {
     @IBOutlet var callStatusImage: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var detailTimeLabel: UILabel!
     var contactId: String!
 
     override func awakeFromNib() {

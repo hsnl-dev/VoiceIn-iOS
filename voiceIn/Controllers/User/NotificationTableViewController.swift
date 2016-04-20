@@ -73,12 +73,17 @@ class NotificationTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! HistoryTableCell
+        let dateFormatter = NSDateFormatter()
+        let time: String! = notificationArray[indexPath.row]["createdAt"].stringValue
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         
         cell.nameLabel.text = notificationArray[indexPath.row]["notificationContent"].stringValue
         
-        cell.statusLabel.text = generateNotificationText(notificationArray[indexPath.row]["createdAt"].stringValue)
+        cell.statusLabel.text = generateNotificationText(time)
         
         cell.contactId = notificationArray[indexPath.row]["contactId"].stringValue
+        
+        cell.detailTimeLabel.text = dateFormatter.stringFromDate((NSDate(timeIntervalSince1970: NSTimeInterval(time!)!/1000)))
         
         return cell
     }
