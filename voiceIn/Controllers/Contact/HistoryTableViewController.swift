@@ -75,7 +75,7 @@ class HistoryTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! HistoryTableCell
         let dateFormatter = NSDateFormatter()
         let time: String? = historyArray[indexPath.row]["reqTime"].stringValue
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
         
         cell.nameLabel.text = historyArray[indexPath.row]["anotherNickName"].stringValue == "" ? historyArray[indexPath.row]["anotherName"].stringValue : historyArray[indexPath.row]["anotherNickName"].stringValue
             

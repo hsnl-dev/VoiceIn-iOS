@@ -144,19 +144,19 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="聯絡簿" id="rCk-AD-PY7">
                         <rightBarButtonItems>
-                            <barButtonItem image="ic_person_add_white" id="lM0-Ee-xoW">
+                            <barButtonItem image="ic_person_add" id="TwL-dh-vTm">
                                 <connections>
-                                    <segue destination="9QW-br-tlc" kind="show" id="zAF-GN-m0i"/>
+                                    <segue destination="9QW-br-tlc" kind="show" id="IP9-MB-7Js"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="ic_contact_phone_white" id="TaM-EP-ADq">
+                            <barButtonItem image="ic_contact_phone" id="Nvg-gC-tMH">
                                 <connections>
-                                    <segue destination="NNy-iM-hOH" kind="show" id="C9l-Gu-0Xu"/>
+                                    <segue destination="NNy-iM-hOH" kind="show" id="RWy-Lu-oKH"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="ic_inbox" id="1PS-E1-ceI">
+                            <barButtonItem image="ic_inbox" id="6tr-c3-iHP">
                                 <connections>
-                                    <segue destination="xSZ-hx-inN" kind="presentation" modalTransitionStyle="coverVertical" id="cK7-FI-avh"/>
+                                    <segue destination="xSZ-hx-inN" kind="presentation" id="NPm-Vs-eVi"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -172,10 +172,6 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
-                    <connections>
-                        <outlet property="addPeopelItem" destination="lM0-Ee-xoW" id="5Je-sD-rZG"/>
-                        <outlet property="cardBarItem" destination="TaM-EP-ADq" id="sYB-1u-ZdP"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVC-1w-bTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1937,13 +1933,47 @@
             </objects>
             <point key="canvasLocation" x="3403" y="675"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="h8e-7K-6ET">
+            <objects>
+                <viewController id="Al8-Py-OgH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pKG-10-BvW"/>
+                        <viewControllerLayoutGuide type="bottom" id="imn-5m-XMw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="g3k-kA-IxN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aLP-dW-Jvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ard-LH-zSy">
+            <objects>
+                <viewController id="aGR-Ft-axG" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M09-CK-rkG"/>
+                        <viewControllerLayoutGuide type="bottom" id="wdi-ZZ-YUF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zU6-t4-ZdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wzv-aA-VBf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="10259499" width="420" height="420"/>
         <image name="blurred-web-backgrounds" width="1920" height="1440"/>
         <image name="close" width="84" height="84"/>
         <image name="ic_call_made" width="24" height="24"/>
-        <image name="ic_contact_phone_white" width="24" height="24"/>
+        <image name="ic_contact_phone" width="24" height="24"/>
         <image name="ic_contacts_white" width="24" height="24"/>
         <image name="ic_done" width="24" height="24"/>
         <image name="ic_face_white" width="24" height="24"/>
@@ -1952,7 +1982,7 @@
         <image name="ic_history_white" width="24" height="24"/>
         <image name="ic_inbox" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
-        <image name="ic_person_add_white" width="24" height="24"/>
+        <image name="ic_person_add" width="24" height="24"/>
         <image name="ic_phone_black" width="24" height="24"/>
         <image name="ic_save_white" width="24" height="24"/>
         <image name="ic_share" width="24" height="24"/>

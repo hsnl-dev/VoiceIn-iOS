@@ -252,6 +252,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             case 0:
                 cell.fieldLabel.text = "姓名"
                 cell.valueLabel.text = userInformation["userName"]!
+                self.navigationItem.title = userInformation["userName"]!
                 cell.accessoryType = .None;
             case 1:
                 cell.fieldLabel.text = "公司"
