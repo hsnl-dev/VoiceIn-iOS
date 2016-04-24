@@ -75,7 +75,7 @@ class NotificationTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! HistoryTableCell
         let dateFormatter = NSDateFormatter()
         let time: String! = notificationArray[indexPath.row]["createdAt"].stringValue
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
         
         cell.nameLabel.text = notificationArray[indexPath.row]["notificationContent"].stringValue
         

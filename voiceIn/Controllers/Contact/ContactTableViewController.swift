@@ -61,6 +61,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.navigationItem.rightBarButtonItem = button
         } else {
             // MARK - TODO Not from the Group List tab ...
+            self.navigationItem.title = ""
+            
         }
     }
     
