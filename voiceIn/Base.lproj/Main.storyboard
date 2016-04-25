@@ -1541,7 +1541,7 @@
                                 <segue destination="G6a-Bz-0Og" kind="unwind" unwindAction="closeQRCodeList:" id="vxU-4O-e29"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="客製 QRCode" id="EW6-3T-F9Q">
+                        <barButtonItem key="rightBarButtonItem" title="製作專屬 QRCode" id="EW6-3T-F9Q">
                             <connections>
                                 <segue destination="sds-VJ-9dc" kind="presentation" id="clE-EB-OPs"/>
                             </connections>
