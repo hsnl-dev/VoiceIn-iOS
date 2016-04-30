@@ -74,6 +74,7 @@ class GroupTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! GroupTableCell
 
         cell.groupName.text = groupArray[indexPath.row]["groupName"].stringValue
+        cell.groupNum.text = "有\(groupArray[indexPath.row]["contactCount"].stringValue)個聯絡人"
         cell.id = groupArray[indexPath.row]["groupId"].stringValue
         debugPrint(cell.groupName.text)
         return cell
