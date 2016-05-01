@@ -16,7 +16,7 @@ import CoreData
 
 class FavoriteContactTableViewController: UITableViewController {
     
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var resultSearchController = UISearchController()
     

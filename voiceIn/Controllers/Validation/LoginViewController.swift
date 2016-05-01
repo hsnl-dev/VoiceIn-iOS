@@ -23,9 +23,11 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         prepareView()
         prepareField()
         blurBackgroundImage()
+        
         //MARK: Set up send validation button.
         sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
         sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
+        sendValidationCodeButton.backgroundColor = MaterialColor.blue.base
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -89,10 +91,7 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         phoneNumberField.font = RobotoFont.regularWithSize(20)
         phoneNumberField.textColor = MaterialColor.grey.darken3
         phoneNumberField.borderStyle = UITextBorderStyle.None;
-        phoneNumberField.titleLabel = UILabel()
-        phoneNumberField.titleLabel!.font = RobotoFont.mediumWithSize(12)
-        phoneNumberField.titleLabelColor = MaterialColor.grey.darken2
-        phoneNumberField.titleLabelActiveColor = MaterialColor.grey.darken2
+        phoneNumberField.delegate = self
         phoneNumberField.backgroundColor = UIColor.clearColor()
     }
     

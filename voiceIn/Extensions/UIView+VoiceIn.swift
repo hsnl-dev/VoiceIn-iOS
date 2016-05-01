@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIView {
-    func image() -> UIImage {
+    func toImage() -> UIImage {
         var image: UIImage!
         
         UIGraphicsBeginImageContextWithOptions(frame.size, false, UIScreen.mainScreen().scale)

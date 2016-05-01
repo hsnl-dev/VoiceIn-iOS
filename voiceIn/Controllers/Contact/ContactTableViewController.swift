@@ -11,7 +11,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     @IBOutlet var cardBarItem: UIBarButtonItem?
     @IBOutlet var addPeopelItem: UIBarButtonItem?
 
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var resultSearchController = UISearchController()
     

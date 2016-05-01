@@ -16,7 +16,7 @@ import CoreData
 
 class GroupMutipleSelectTableViewController: UITableViewController {
     
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var contactArray: [People] = []
     var seletedContactArray: [String] = []

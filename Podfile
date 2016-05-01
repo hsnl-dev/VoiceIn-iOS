@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'voiceIn' do
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
-    pod 'Material', '1.34.8'
+    pod 'Material', '1.39.17'
     pod 'IQKeyboardManagerSwift'
     pod 'Alamofire', '~> 3.1.2'
     pod 'Eureka', '~> 1.5'

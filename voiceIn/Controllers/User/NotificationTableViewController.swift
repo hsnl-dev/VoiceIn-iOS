@@ -14,7 +14,7 @@ import SwiftOverlays
 import NSDate_TimeAgo
 
 class NotificationTableViewController: UITableViewController {
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var notificationArray: JSON = []
     
