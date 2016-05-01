@@ -14,7 +14,7 @@ import SwiftOverlays
 import NSDate_TimeAgo
 
 class HistoryTableViewController: UITableViewController {
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var historyArray: JSON = []
     

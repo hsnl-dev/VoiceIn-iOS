@@ -10,7 +10,7 @@ class UserInformationViewController: FormViewController {
     // MARK: The API Information.
     let headers = Network.generateHeader(isTokenNeeded: true)
 
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
     
     override func viewDidLoad() {
@@ -18,6 +18,12 @@ class UserInformationViewController: FormViewController {
         prepareNavigationBar()
         getUserInformation()
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationBarView.frame = CGRectMake(0, 0, view.bounds.width, MaterialDevice.landscape ? .iPad == MaterialDevice.type ? 64 : navigationBarView.intrinsicContentSize().height : 64)
+    }
+
     
     func getUserInformation() {
         /**
@@ -205,13 +211,17 @@ class UserInformationViewController: FormViewController {
         saveButton.setImage(image, forState: .Normal)
         saveButton.setImage(image, forState: .Highlighted)
         saveButton.addTarget(self, action: "saveButtonClicked:", forControlEvents: .TouchUpInside)
+
+        view.addSubview(navigationBarView)
+
+        let item: UINavigationItem = UINavigationItem()
         
         navigationBarView.statusBarStyle = .LightContent
         navigationBarView.backgroundColor = MaterialColor.blue.base
-        navigationBarView.titleLabel = titleLabel
-        navigationBarView.rightControls = [saveButton]
-        
-        view.addSubview(navigationBarView)
+        item.titleLabel = titleLabel
+        item.rightControls = [saveButton]
+        navigationBarView.pushNavigationItem(item, animated: true)
+
     }
     
     func saveButtonClicked(sender: UIButton!) {

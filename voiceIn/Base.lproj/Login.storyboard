@@ -55,13 +55,25 @@
                                     <constraint firstAttribute="height" constant="30" id="IRG-0M-gcg"/>
                                     <constraint firstAttribute="width" constant="167" id="WSt-yt-Do0"/>
                                 </constraints>
-                                <state key="normal" title="發送驗證碼"/>
+                                <state key="normal" title="發送驗證碼">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="sendValidationCodeClicked:" destination="bR2-Lt-Ria" eventType="touchUpInside" id="ctP-8A-WyV"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請使用您的手機登入" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSo-uT-25p">
+                                <rect key="frame" x="224" y="170" width="153" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="2wz-5z-yXa"/>
+                                    <constraint firstAttribute="width" constant="153" id="zjD-qy-3rg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oIn-X4-93x">
-                                <rect key="frame" x="266" y="230" width="69" height="30"/>
+                                <rect key="frame" x="266" y="209" width="69" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="+886" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCQ-Xa-crf">
                                         <rect key="frame" x="13" y="4" width="43" height="21"/>
@@ -93,16 +105,6 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請使用您的手機登入" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSo-uT-25p">
-                                <rect key="frame" x="224" y="170" width="153" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="2wz-5z-yXa"/>
-                                    <constraint firstAttribute="width" constant="153" id="zjD-qy-3rg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -110,14 +112,14 @@
                             <constraint firstItem="kSo-uT-25p" firstAttribute="centerX" secondItem="SgN-lG-PHi" secondAttribute="centerX" id="132-wd-yYm"/>
                             <constraint firstItem="gEI-WM-1E3" firstAttribute="top" secondItem="QEN-1a-Tkj" secondAttribute="bottom" constant="17" id="AnP-Jg-Vs9"/>
                             <constraint firstItem="kSo-uT-25p" firstAttribute="top" secondItem="fDV-8Q-wS2" secondAttribute="bottom" constant="18" id="BqT-vp-icB"/>
-                            <constraint firstItem="oIn-X4-93x" firstAttribute="top" secondItem="kSo-uT-25p" secondAttribute="bottom" constant="29" id="KDs-ML-bLx"/>
+                            <constraint firstItem="oIn-X4-93x" firstAttribute="top" secondItem="kSo-uT-25p" secondAttribute="bottom" constant="8" id="KDs-ML-bLx"/>
                             <constraint firstItem="fDV-8Q-wS2" firstAttribute="centerX" secondItem="SgN-lG-PHi" secondAttribute="centerX" id="MYn-Xl-Wdp"/>
                             <constraint firstItem="gEI-WM-1E3" firstAttribute="centerX" secondItem="SgN-lG-PHi" secondAttribute="centerX" id="aLt-Jf-g1g"/>
                             <constraint firstItem="0o8-CT-Ms9" firstAttribute="centerX" secondItem="SgN-lG-PHi" secondAttribute="centerX" id="dh5-f3-UrJ"/>
                             <constraint firstItem="fDV-8Q-wS2" firstAttribute="top" secondItem="gEI-WM-1E3" secondAttribute="bottom" constant="8" id="e8x-sA-IP3"/>
                             <constraint firstItem="QMh-Bd-RA7" firstAttribute="top" secondItem="0o8-CT-Ms9" secondAttribute="bottom" constant="22" id="fbW-fa-0NU"/>
                             <constraint firstItem="QMh-Bd-RA7" firstAttribute="centerX" secondItem="SgN-lG-PHi" secondAttribute="centerX" id="kzn-hb-can"/>
-                            <constraint firstItem="0o8-CT-Ms9" firstAttribute="top" secondItem="oIn-X4-93x" secondAttribute="bottom" constant="25" id="qgx-5V-wUZ"/>
+                            <constraint firstItem="0o8-CT-Ms9" firstAttribute="top" secondItem="oIn-X4-93x" secondAttribute="bottom" constant="46" id="qgx-5V-wUZ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -187,7 +189,9 @@
                                     <constraint firstAttribute="height" constant="41" id="2fy-xR-15g"/>
                                     <constraint firstAttribute="height" constant="27" id="HnQ-7N-wvb"/>
                                 </constraints>
-                                <state key="normal" title="確認"/>
+                                <state key="normal" title="確認">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="HnQ-7N-wvb"/>

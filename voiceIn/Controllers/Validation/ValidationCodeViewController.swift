@@ -5,7 +5,7 @@ import SwiftyJSON
 
 class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
     
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
 
     @IBOutlet weak var validationCodeField: UITextField!
     @IBOutlet weak var checkValidationButton: RaisedButton!
@@ -45,6 +45,7 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
     private func prepareButton() {
         checkValidationButton.setTitle("確認", forState: .Normal)
         checkValidationButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
+        checkValidationButton.backgroundColor = MaterialColor.blueGrey.base
         
         let backImage: UIImage? = UIImage(named: "ic_arrow_back_white")
         self.backButton.setImage(backImage, forState: .Normal)

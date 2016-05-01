@@ -12,7 +12,7 @@ class EditProfileViewController: FormViewController {
     @IBOutlet weak var refreshButton: UIButton!
     // MARK: The API Information.
     
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
     
     override func viewDidLoad() {
