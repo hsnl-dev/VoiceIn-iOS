@@ -562,19 +562,31 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群組名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLr-NE-kv1">
-                                            <rect key="frame" x="24" y="19" width="92" height="28"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                            <rect key="frame" x="18" y="8" width="72" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="聯絡人數量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XwM-fW-HWV">
+                                            <rect key="frame" x="18" y="30" width="75" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="FZ4-t1-kuO"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="pLr-NE-kv1" firstAttribute="leading" secondItem="FSs-rT-laV" secondAttribute="leadingMargin" constant="16" id="aV7-8k-ZRS"/>
-                                        <constraint firstItem="pLr-NE-kv1" firstAttribute="top" secondItem="FSs-rT-laV" secondAttribute="topMargin" constant="11" id="mWj-L5-qd6"/>
+                                        <constraint firstItem="XwM-fW-HWV" firstAttribute="leading" secondItem="FSs-rT-laV" secondAttribute="leadingMargin" constant="10" id="LZv-FA-yWW"/>
+                                        <constraint firstItem="XwM-fW-HWV" firstAttribute="top" secondItem="pLr-NE-kv1" secondAttribute="bottom" id="Wcr-oH-kX4"/>
+                                        <constraint firstItem="pLr-NE-kv1" firstAttribute="leading" secondItem="FSs-rT-laV" secondAttribute="leadingMargin" constant="10" id="aV7-8k-ZRS"/>
+                                        <constraint firstItem="pLr-NE-kv1" firstAttribute="top" secondItem="FSs-rT-laV" secondAttribute="topMargin" id="mWj-L5-qd6"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="groupName" destination="pLr-NE-kv1" id="rrU-RA-ZVP"/>
+                                    <outlet property="groupNum" destination="XwM-fW-HWV" id="vYm-AS-NCz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1348,12 +1360,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="GHD-cf-e2M">
                         <rightBarButtonItems>
-                            <barButtonItem image="ic_share" id="kFS-YO-OM6">
+                            <barButtonItem systemItem="action" id="kFS-YO-OM6">
                                 <connections>
                                     <action selector="shareQRCodeButtonClicked:" destination="NNy-iM-hOH" id="sV6-uc-cXI"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="ic_folder_shared" id="cvY-Tn-i1Z">
+                            <barButtonItem systemItem="add" id="cvY-Tn-i1Z">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Hpf-tg-6eZ" kind="popoverPresentation" popoverAnchorBarButtonItem="cvY-Tn-i1Z" id="YVQ-SQ-xLy">
@@ -1395,13 +1407,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_done" translatesAutoresizingMaskIntoConstraints="NO" id="4qn-Sc-eNg">
-                                            <rect key="frame" x="8" y="8" width="35" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="35" id="56n-eh-vS2"/>
-                                                <constraint firstAttribute="height" constant="35" id="NIB-U1-xqZ"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="敘述" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IC0-af-Tqe">
                                             <rect key="frame" x="51" y="0.0" width="28" height="26"/>
                                             <constraints>
@@ -1429,13 +1434,20 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_done" translatesAutoresizingMaskIntoConstraints="NO" id="4qn-Sc-eNg">
+                                            <rect key="frame" x="8" y="18" width="35" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="35" id="56n-eh-vS2"/>
+                                                <constraint firstAttribute="height" constant="35" id="NIB-U1-xqZ"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Mg1-LW-aeT" firstAttribute="top" secondItem="siu-OI-ySr" secondAttribute="bottom" constant="1" id="12D-7G-Fj3"/>
                                         <constraint firstItem="Mg1-LW-aeT" firstAttribute="leading" secondItem="ONb-Ra-zTU" secondAttribute="leadingMargin" constant="43" id="G8g-kq-LuK"/>
                                         <constraint firstItem="IC0-af-Tqe" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="-8" id="QlD-g8-C4V"/>
                                         <constraint firstItem="siu-OI-ySr" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="15" id="bB4-iQ-RDa"/>
-                                        <constraint firstItem="4qn-Sc-eNg" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" id="dhR-wc-XEk"/>
+                                        <constraint firstItem="4qn-Sc-eNg" firstAttribute="top" secondItem="ONb-Ra-zTU" secondAttribute="topMargin" constant="10" id="dhR-wc-XEk"/>
                                         <constraint firstItem="IC0-af-Tqe" firstAttribute="leading" secondItem="4qn-Sc-eNg" secondAttribute="trailing" constant="8" id="ekG-La-Xw9"/>
                                         <constraint firstItem="siu-OI-ySr" firstAttribute="leading" secondItem="4qn-Sc-eNg" secondAttribute="trailing" constant="8" id="qX1-6d-dmo"/>
                                         <constraint firstItem="4qn-Sc-eNg" firstAttribute="leading" secondItem="ONb-Ra-zTU" secondAttribute="leadingMargin" id="sPR-og-YhR"/>
@@ -1978,14 +1990,12 @@
         <image name="ic_done" width="24" height="24"/>
         <image name="ic_face_white" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
-        <image name="ic_folder_shared" width="24" height="24"/>
         <image name="ic_history_white" width="24" height="24"/>
         <image name="ic_inbox" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add" width="24" height="24"/>
         <image name="ic_phone_black" width="24" height="24"/>
         <image name="ic_save_white" width="24" height="24"/>
-        <image name="ic_share" width="24" height="24"/>
         <image name="user" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
