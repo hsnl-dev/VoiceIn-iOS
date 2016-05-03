@@ -161,7 +161,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     //MARK: Deal with table selection.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         debugPrint(indexPath)
-        if indexPath.section == 0 && indexPath.row == 2 {
+        if indexPath.section == 0 && indexPath.row == 4 {
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ContactDetailTableViewCell
             let nickNameChangeAlert = UIAlertController(title: "修改暱稱", message: "請輸入您欲修改的暱稱", preferredStyle: .Alert)
             
