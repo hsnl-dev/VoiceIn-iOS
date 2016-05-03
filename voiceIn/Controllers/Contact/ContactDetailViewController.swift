@@ -37,7 +37,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func switchIsChanged(switchButton: UISwitch) {
         let contactId: String! = self.userInformation["id"]!
-        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+        let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
         
         if switchButton.on {
             debugPrint("Switch On")
@@ -71,7 +71,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func AvailableSwitchIsChanged(switchButton: UISwitch) {
         let contactId: String! = self.userInformation["id"]!
-        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+        let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
         
         if switchButton.on {
             debugPrint("Switch On")
@@ -113,7 +113,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dateFormatter.dateFormat = "HH:mm"
         
         let contactId: String! = self.userInformation["id"]!
-        let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+        let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
         let availableStartTime: String = dateFormatter.stringFromDate(availableStartTimeDatePicker.date)
         let availableEndTime: String = dateFormatter.stringFromDate(availableEndTimeDatePicker.date)
         
@@ -161,7 +161,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     //MARK: Deal with table selection.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         debugPrint(indexPath)
-        if indexPath.section == 0 && indexPath.row == 2 {
+        if indexPath.section == 0 && indexPath.row == 4 {
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ContactDetailTableViewCell
             let nickNameChangeAlert = UIAlertController(title: "修改暱稱", message: "請輸入您欲修改的暱稱", preferredStyle: .Alert)
             
@@ -174,7 +174,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let nickNameTextField = nickNameChangeAlert.textFields![0] as UITextField
                 let nickName: String! = nickNameTextField.text!
                 let contactId: String! = self.userInformation["id"]!
-                let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId + "/contacts/"
+                let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId + "/contacts/"
                 
                 debugPrint(updateContactRoute)
                 
@@ -235,7 +235,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 6
+            return 8
         case 1:
             return 4
         default:
@@ -252,24 +252,33 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             case 0:
                 cell.fieldLabel.text = "姓名"
                 cell.valueLabel.text = userInformation["userName"]!
+                self.navigationItem.title = userInformation["userName"]!
                 cell.accessoryType = .None;
             case 1:
                 cell.fieldLabel.text = "公司"
                 cell.valueLabel.text = userInformation["company"]! as String! != "" ? userInformation["company"]! as String!: "未設定"
                 cell.accessoryType = .None;
             case 2:
+                cell.fieldLabel.text = "職稱"
+                cell.valueLabel.text = userInformation["jobTitle"]! as String! != "" ? userInformation["jobTitle"]! as String!: "未設定"
+                cell.accessoryType = .None;
+            case 3:
+                cell.fieldLabel.text = "聯絡方式"
+                cell.valueLabel.text = userInformation["email"]! as String! != "" ? userInformation["email"]! as String!: "未設定"
+                cell.accessoryType = .None;
+            case 4:
                 cell.fieldLabel.text = "暱稱"
                 cell.valueLabel.text = userInformation["nickName"]! as String! != "" ? userInformation["nickName"]! as String!: "未設定"
                 cell.accessoryType = .DisclosureIndicator;
-            case 3:
+            case 5:
                 cell.fieldLabel.text = "關於"
                 cell.valueLabel.text = userInformation["profile"]! as String! != "" ? userInformation["profile"]! as String!: "未設定"
                 cell.accessoryType = .None;
-            case 4:
+            case 6:
                 cell.fieldLabel.text = "對方狀態"
                 cell.valueLabel.text = userInformation["providerIsEnable"]! as String! == "true" ? "可撥打" : "不可撥打"
                 cell.accessoryType = .None;
-            case 5:
+            case 7:
                 cell.fieldLabel.text = "對方可通話時段"
                 cell.valueLabel.text = userInformation["providerAvailableStartTime"]! as String! + " - " + userInformation["providerAvailableEndTime"]!! as String!
                 cell.accessoryType = .None;

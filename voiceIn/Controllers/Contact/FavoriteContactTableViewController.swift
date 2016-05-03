@@ -16,7 +16,7 @@ import CoreData
 
 class FavoriteContactTableViewController: UITableViewController {
     
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var resultSearchController = UISearchController()
     
@@ -139,7 +139,7 @@ class FavoriteContactTableViewController: UITableViewController {
             debugPrint(indexPath)
             
             let contactId = cell.id
-            let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
+            let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId! + "/contacts/"
             
             debugPrint("Tap favorite false!")
             cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
@@ -168,7 +168,7 @@ class FavoriteContactTableViewController: UITableViewController {
     
     // MARK: GET: Get the contact list.
     private func getContactList() {
-        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+        let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers, parameters: ["filter": "like"], encoding: .URLEncodedInURL)

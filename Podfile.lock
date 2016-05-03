@@ -1,12 +1,11 @@
 PODS:
   - Alamofire (3.1.5)
   - ALCameraViewController (1.1.7)
-  - Crashlytics (3.7.0):
-    - Fabric (~> 1.6.3)
+  - BWWalkthrough (1.1.0)
   - Eureka (1.5.0)
-  - Fabric (1.6.6)
   - IQKeyboardManagerSwift (3.3.4)
-  - Material (1.34.8)
+  - Material (1.39.17)
+  - NSDate+TimeAgo (1.0.6)
   - PhoneNumberKit (0.6)
   - SwiftOverlays (1.0)
   - SwiftSpinner (0.8.0)
@@ -15,11 +14,11 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
   - ALCameraViewController
-  - Crashlytics
+  - BWWalkthrough
   - Eureka (~> 1.5)
-  - Fabric
   - IQKeyboardManagerSwift
-  - Material (= 1.34.8)
+  - Material (= 1.39.17)
+  - NSDate+TimeAgo
   - PhoneNumberKit (~> 0.6)
   - SwiftOverlays (~> 1.0)
   - SwiftSpinner
@@ -37,16 +36,14 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   ALCameraViewController: 15bd245a247cff0f8a038c349ac2bbe79152b686
-  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  BWWalkthrough: 0c27ad2773a25c8f4fb9004bc7d6685deb35fecc
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
-  Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
   IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
-  Material: 3865b011d8e4d42f7588bd9719498e025a82360a
+  Material: eccc5afdac89e10aa7a635ad34d6c3564387bfd3
+  NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   PhoneNumberKit: 683f1287a88c1f27386b27cad851081c7c45cb62
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
   SwiftSpinner: 11c2c5ec7443d92f3026d3067ca8a91d4adef13f
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 0acf450d5c0411cf284dfebe0d31f5cb33b05ca9
-
-COCOAPODS: 1.0.0.beta.2
+COCOAPODS: 0.39.0

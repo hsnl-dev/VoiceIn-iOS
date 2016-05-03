@@ -8,18 +8,31 @@ import CoreData
 //import SnapKit
 
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    @IBOutlet var cardBarItem: UIBarButtonItem?
+    @IBOutlet var addPeopelItem: UIBarButtonItem?
+
+    private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var resultSearchController = UISearchController()
     
     // MARK: Array of ContactList
     var contactArray: [People] = []
     var filterContactArray: [People] = [People]()
+    var navigationTitle: String? = "聯絡簿"
+    var getContactRoute: String! = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+    
+    // MARK - For Group related
+    var selectedContactId: [String] = []
+    var isFromGroupListView: Bool = false
+    var groupId: String = ""
+    var groupNameTextField: UITextField! = nil
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
         super.viewDidLoad()
         
+        //MAKR - Init search view contrller
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
@@ -30,19 +43,27 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             controller.searchBar.barTintColor = UIColor(red: 245.0/255.0, green:245/255.0, blue: 245.0/255.0, alpha: 1.0)
             
             self.tableView.tableHeaderView = controller.searchBar
-            
             self.tableView.contentOffset = CGPointMake(0, controller.searchBar.frame.size.height);
             return controller
         })()
         
-        SwiftSpinner.show("讀取中...", animated: true)
+        self.navigationItem.title = navigationTitle
         prepareView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
-        self.view.userInteractionEnabled = false
-        getContactList()
+        getContactList(getContactRoute)
+        
+        if isFromGroupListView == true {
+            // MARK - it is from the group list tab
+            self.navigationItem.setRightBarButtonItems(nil, animated: true)
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "showEditActionSheet:")
+            self.navigationItem.rightBarButtonItem = button
+        } else {
+            // MARK - TODO Not from the Group List tab ...
+            self.navigationItem.title = ""
+            
+        }
     }
     
     // MARK: General preparation statements.
@@ -108,7 +129,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
                 cell.isLike = false
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
@@ -159,7 +180,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
             } else {
                 cell.isLike = false
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
@@ -197,6 +218,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
         }
         
+        // MARK - Set up the ation of button
         cell.onCallButtonTapped = {
             if cell.isProviderEnable == false {
                 self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
@@ -208,11 +230,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         cell.onFavoriteButtonTapped = {
             let contactId = cell.id
-            let updateContactRoute = API_URI + versionV2 + "/accounts/" + contactId! + "/contacts/"
+            let updateContactRoute = API_URI + latestVersion + "/accounts/" + contactId! + "/contacts/"
 
             if cell.isLike == true {
                 debugPrint("Tap favorite false!")
-                cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
                 cell.isLike = false
                 
                 Alamofire.request(.PUT, updateContactRoute, headers: self.headers, parameters: ["like": "False"], encoding: .URLEncodedInURL)
@@ -234,7 +256,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     .response {
                         request, response, data, error in
                         if error != nil {
-                            cell.favoriteButton.backgroundColor = MaterialColor.red.accent1
+                            cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
                             cell.isLike = false
                             self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
                         }
@@ -254,19 +276,20 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 debugPrint("Deleting a row...")
                 SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
-                let deleteApiRoute = API_URI + versionV2 + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
+                let deleteApiRoute = API_URI + latestVersion + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
                     request, response, data, error in
                     if error == nil {
                         self.tableView.beginUpdates()
-                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         self.contactArray.removeAtIndex(indexPath.row)
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         self.tableView.endUpdates()
                     } else {
-                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        debugPrint(error)
                     }
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
             }))
             
@@ -275,10 +298,94 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    // MARK: GET: Get the contact list.
-    private func getContactList() {
+    // MARK - Group related function.
+    func showEditActionSheet(sender: UIButton) {
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "您想要 ..", preferredStyle: .ActionSheet)
         
-        let getInformationApiRoute = API_URI + versionV2 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+        // 2
+        let renameAction = UIAlertAction(title: "更改分類名稱", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.showUpdateGroupNameModal()
+        })
+        let editContact = UIAlertAction(title: "編輯通訊錄", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.editContactTapped()
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        
+        // 4
+        optionMenu.addAction(renameAction)
+        optionMenu.addAction(editContact)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+    
+    func editContactTapped() {
+        let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
+        
+        // MARK - Initialize the selected array cause it is modal view.
+        selectedContactId = []
+        
+        mutipleSelectContactViewController.isFromUpdateView = true
+        mutipleSelectContactViewController.groupId = groupId
+        
+        for contact in contactArray {
+            selectedContactId.append(contact.data["id"]!!)
+        }
+        
+        debugPrint(selectedContactId)
+        
+        mutipleSelectContactViewController.seletedContactArray = selectedContactId
+        self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
+    }
+    
+    func showUpdateGroupNameModal() {
+        let groupNameBox = UIAlertController(title: "請輸入分類名稱", message: "", preferredStyle: .Alert)
+        groupNameBox.addTextFieldWithConfigurationHandler(configureGroupNameTextField)
+        groupNameBox.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+        groupNameBox.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler:{
+            (UIAlertAction) in
+            debugPrint("Item : \(self.groupNameTextField.text)")
+            let updateGroupRoute = API_URI + versionV1 + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + self.groupId + "/contacts"
+            
+            Alamofire
+                .request(.PUT, updateGroupRoute, headers: self.headers, parameters: ["groupName" : self.groupNameTextField.text!], encoding: .URLEncodedInURL)
+                .response {
+                    request, response, data, error in
+                    debugPrint(response?.statusCode)
+                    if response?.statusCode >= 400 {
+                        debugPrint(error)
+                    } else {
+                        self.navigationItem.title = self.groupNameTextField.text!
+                    }
+            }
+            
+            
+        }))
+        self.presentViewController(groupNameBox, animated: true, completion: {
+            debugPrint("completion block")
+        })
+    }
+    
+    private func configureGroupNameTextField(textField: UITextField!) {
+        textField.placeholder = "分類名稱"
+        groupNameTextField = textField
+    }
+    
+    // MARK: GET: Get the contact list.
+    private func getContactList(getInformationApiRoute: String!) {
+        SwiftSpinner.show("讀取中...", animated: true)
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        self.view.userInteractionEnabled = false
         
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -304,30 +411,26 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    
-                    SwiftSpinner.hide()
                     self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
-                    
-                    SwiftSpinner.hide()
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
+                SwiftSpinner.hide()
                 SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
     }
     
+    // MARK - Update the searching result.
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
         if let searchText = resultSearchController.searchBar.text {
             filterContactArray.removeAll(keepCapacity: false)
             filterContentForSearchText(searchText)
             tableView.reloadData()
         }
-        
     }
     
     // MARK - Search the contact list.
@@ -344,6 +447,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         tableView.reloadData()
     }
     
+    // MARK - Pull down to refresh
     func refresh(sender: AnyObject) {
         var reachability: Reachability
         do {
@@ -359,7 +463,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.refreshControl?.endRefreshing()
             self.view.userInteractionEnabled = true
         } else {
-            getContactList()
+            getContactList(getContactRoute)
         }
     }
     
@@ -372,6 +476,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     destinationViewController.searchController = self.resultSearchController
             }
         }
+    }
+    
+    @IBAction func closeToTableViewController(segue: UIStoryboardSegue!) {
+        
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {

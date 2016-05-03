@@ -40,6 +40,10 @@ class CallService {
                         self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
                         self.view!.userInteractionEnabled = true
                         return
+                    } else if (response?.statusCode)! == 402 {
+                        self.createAlertView("抱歉!", body: "您的點數或對方點數已經用盡，需要儲值。", buttonValue: "確認")
+                        self.view!.userInteractionEnabled = true
+                        return
                     }
                 }
             }

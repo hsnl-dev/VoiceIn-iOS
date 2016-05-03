@@ -10,7 +10,7 @@ class UserInformationViewController: FormViewController {
     // MARK: The API Information.
     let headers = Network.generateHeader(isTokenNeeded: true)
 
-    private var navigationBarView: NavigationBarView = NavigationBarView()
+    private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
     
     override func viewDidLoad() {
@@ -18,6 +18,12 @@ class UserInformationViewController: FormViewController {
         prepareNavigationBar()
         getUserInformation()
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationBarView.frame = CGRectMake(0, 0, view.bounds.width, MaterialDevice.landscape ? .iPad == MaterialDevice.type ? 64 : navigationBarView.intrinsicContentSize().height : 64)
+    }
+
     
     func getUserInformation() {
         /**
@@ -143,7 +149,7 @@ class UserInformationViewController: FormViewController {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm"
-                    row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue)
+                    row.value = dateFormatter.dateFromString(userInformation["availableStartTime"].stringValue == "" ? "12:00" : userInformation["availableStartTime"].stringValue)
             }
             
             <<< TimeInlineRow(){
@@ -154,7 +160,7 @@ class UserInformationViewController: FormViewController {
                     cell, row in
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm"
-                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
+                    row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue == "" ? "17:00" : userInformation["availableEndTime"].stringValue)
             }
             
             
@@ -205,13 +211,17 @@ class UserInformationViewController: FormViewController {
         saveButton.setImage(image, forState: .Normal)
         saveButton.setImage(image, forState: .Highlighted)
         saveButton.addTarget(self, action: "saveButtonClicked:", forControlEvents: .TouchUpInside)
+
+        view.addSubview(navigationBarView)
+
+        let item: UINavigationItem = UINavigationItem()
         
         navigationBarView.statusBarStyle = .LightContent
         navigationBarView.backgroundColor = MaterialColor.blue.base
-        navigationBarView.titleLabel = titleLabel
-        navigationBarView.rightControls = [saveButton]
-        
-        view.addSubview(navigationBarView)
+        item.titleLabel = titleLabel
+        item.rightControls = [saveButton]
+        navigationBarView.pushNavigationItem(item, animated: true)
+
     }
     
     func saveButtonClicked(sender: UIButton!) {
@@ -231,9 +241,13 @@ class UserInformationViewController: FormViewController {
             "profile": formValues["profile"] as? String != nil ? formValues["profile"] as? String : "",
             "location": formValues["location"] as? String != nil ? formValues["location"] as? String : "",
             "company": formValues["company"] as? String != nil ? formValues["company"] as? String : "",
+            "jobTitle": formValues["jobTitle"] as? String != nil ? formValues["jobTitle"] as? String : "",
+            "email": formValues["email"] as? String != nil ? formValues["email"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
-            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
+            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
+            "deviceOS": "ios",
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String!
         ]
         
         let userUuid = UserPref.getUserPrefByKey("userUuid")

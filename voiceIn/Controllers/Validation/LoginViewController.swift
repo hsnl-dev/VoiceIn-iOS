@@ -3,8 +3,9 @@ import Material
 import Alamofire
 import SwiftyJSON
 import PhoneNumberKit
+import BWWalkthrough
 
-class LoginViewController: UIViewController, TextFieldDelegate {
+class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughViewControllerDelegate {
     
     var json: JSON?
     
@@ -14,15 +15,61 @@ class LoginViewController: UIViewController, TextFieldDelegate {
     // MARK: Button
     @IBOutlet weak var sendValidationCodeButton: RaisedButton!
     @IBOutlet var backgroundImageView: UIImageView!
+    var isWalkThrough: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showWalkthrough()
         prepareView()
         prepareField()
         blurBackgroundImage()
+        
         //MARK: Set up send validation button.
         sendValidationCodeButton.setTitle("發送驗證碼", forState: .Normal)
         sendValidationCodeButton.titleLabel!.font = RobotoFont.mediumWithSize(15)
+        sendValidationCodeButton.backgroundColor = MaterialColor.blue.base
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if isWalkThrough == false {
+            showWalkthrough()
+            isWalkThrough = true
+        }
+    }
+    
+    func showWalkthrough() {
+        debugPrint("showWalkThrough")
+        // Get view controllers and build the walkthrough
+        let stb = UIStoryboard(name: "Introduction", bundle: nil)
+        let walkthrough = stb.instantiateViewControllerWithIdentifier("walk") as! BWWalkthroughViewController
+        let page_zero = stb.instantiateViewControllerWithIdentifier("walk0")
+        let page_one = stb.instantiateViewControllerWithIdentifier("walk1")
+        let page_two = stb.instantiateViewControllerWithIdentifier("walk2")
+        let page_three = stb.instantiateViewControllerWithIdentifier("walk3")
+        let page_four = stb.instantiateViewControllerWithIdentifier("walk4")
+
+        // Attach the pages to the master
+        walkthrough.delegate = self
+        walkthrough.addViewController(page_one)
+        walkthrough.addViewController(page_two)
+        walkthrough.addViewController(page_three)
+        walkthrough.addViewController(page_four)
+        walkthrough.addViewController(page_zero)
+        
+        self.presentViewController(walkthrough, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Walkthrough delegate -
+    
+    func walkthroughPageDidChange(pageNumber: Int) {
+        print("Current Page \(pageNumber)")
+    }
+    
+    @IBAction func walkthroughCloseButtonPressed(segue:UIStoryboardSegue) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     private func blurBackgroundImage() {
@@ -44,10 +91,7 @@ class LoginViewController: UIViewController, TextFieldDelegate {
         phoneNumberField.font = RobotoFont.regularWithSize(20)
         phoneNumberField.textColor = MaterialColor.grey.darken3
         phoneNumberField.borderStyle = UITextBorderStyle.None;
-        phoneNumberField.titleLabel = UILabel()
-        phoneNumberField.titleLabel!.font = RobotoFont.mediumWithSize(12)
-        phoneNumberField.titleLabelColor = MaterialColor.grey.darken2
-        phoneNumberField.titleLabelActiveColor = MaterialColor.grey.darken2
+        phoneNumberField.delegate = self
         phoneNumberField.backgroundColor = UIColor.clearColor()
     }
     
