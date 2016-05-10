@@ -383,7 +383,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
-        SwiftSpinner.show("讀取中...", animated: true)
+        //SwiftSpinner.show("讀取中...", animated: true)
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         self.view.userInteractionEnabled = false
         
@@ -417,7 +417,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                SwiftSpinner.hide()
+                //SwiftSpinner.hide()
                 SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
