@@ -94,8 +94,8 @@ class EditProfileViewController: FormViewController {
                 $0.tag = "avatar"
                 $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
-                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
-                        { (image) -> Void in
+                    let cameraViewController = CameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
+                        { image, asset in
                             SelectImageRow.defaultCellUpdate = { cell, row in
                                 cell.accessoryView?.layer.cornerRadius = 32
                                 cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
