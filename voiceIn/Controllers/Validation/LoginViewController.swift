@@ -68,7 +68,8 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         print("Current Page \(pageNumber)")
     }
     
-    @IBAction func walkthroughCloseButtonPressed(segue:UIStoryboardSegue) {
+    @IBAction func walkthroughCloseButtonPressed(segue: UIStoryboardSegue) {
+        print("walkthroughCloseButtonPressed:")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -152,11 +153,6 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
             let destinationController = segue.destinationViewController as! ValidationCodeViewController
             destinationController.userUuid = self.json!["userUuid"].stringValue
         }
-    }
-    
-    @IBAction func unwindToLoginPage(segue:UIStoryboardSegue) {
-        //MARK: Exit the validation code input page and go back to phone input page.
-        //Do something here ...
     }
     
     private func createAlertView(title: String!, body: String!, buttonValue: String!) {
