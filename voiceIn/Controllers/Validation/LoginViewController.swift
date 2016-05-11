@@ -136,6 +136,8 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
                         UserPref.setUserPref("phoneNumber", value: phoneNumber.toE164())
                     case .Failure(let error):
                         print("Request failed with error: \(error)")
+                        self.createAlertView("小提醒", body: "請記得開啟網路喔!", buttonValue: "確認")
+                        self.enableButton()
                     }
             }
 
