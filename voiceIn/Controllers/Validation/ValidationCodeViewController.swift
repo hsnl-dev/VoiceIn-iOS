@@ -72,6 +72,12 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
+    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func validationButtonClicked(sender: UIButton!) {
         print("Check if the validation code is correct or not.")
         
@@ -103,18 +109,14 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
                         self.presentViewController(userInformationController, animated: true, completion: nil)
                     } else {
                          //MARK: User input the wrong code, pop out the alert window.
-                        let alert = UIAlertController(title: "抱歉", message: "您的認證碼輸入錯誤，請再確認一次", preferredStyle: UIAlertControllerStyle.Alert)
-                        alert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.createAlertView("抱歉", body: "您的認證碼輸入錯誤，請再確認一次", buttonValue: "確認")
                     }
                     
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
+                    self.createAlertView("抱歉", body: "網路或認證碼錯誤。", buttonValue: "確認")
                 }
         }
-        
-        
-
     }
     
 }
