@@ -17,7 +17,9 @@ class ProviderInformationViewController: UIViewController {
         let getInformationApiRoute = API_END_POINT + "/providers/" + qrCodeUuid
         debugPrint(getInformationApiRoute)
         // MARK: self-sizing cell setting.
+        // MARK: self-sizing cell setting.
         tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.estimatedRowHeight = 70;
         /**
         GET: Get the user's information.
         **/
