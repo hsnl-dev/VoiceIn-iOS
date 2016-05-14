@@ -49,7 +49,7 @@ class EditProfileViewController: FormViewController {
                     self.refreshButton.hidden = false
                     self.refreshButton.alpha = 0.8
                     self.removeAllOverlays()
-                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
+                    AlertBox.createAlertView(self, title: "您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
@@ -264,7 +264,7 @@ class EditProfileViewController: FormViewController {
                     //MARK: error is nil, nothing happened! All is well :)
                     debugPrint("Success!")
                     self.removeAllOverlays()
-                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                 }
         }
         
@@ -285,7 +285,7 @@ class EditProfileViewController: FormViewController {
                             upload.response { response in
                                 print("photo success")
                                 self.removeAllOverlays()
-                                self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                                AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                             }
                         case .Failure(let encodingError):
                             print(encodingError)
@@ -301,7 +301,7 @@ class EditProfileViewController: FormViewController {
      **/
     private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
         if formValues["userName"] as? String == nil {
-            createAlertView("小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
             return false
         }
         
@@ -309,17 +309,11 @@ class EditProfileViewController: FormViewController {
         let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
         
         if (availableStartTime.isGreaterThanDate(availableEndTime)) {
-            createAlertView("小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
             return false
         }
         
         return true
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func refreshTheView(sender: UIButton!) {

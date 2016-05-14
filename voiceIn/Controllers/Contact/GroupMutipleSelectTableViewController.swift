@@ -79,7 +79,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                 case .Failure(let error):
                     debugPrint(error)
                     
-                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
                 self.view.userInteractionEnabled = true
@@ -216,7 +216,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         let selectedPaths = self.tableView.indexPathsForSelectedRows
         
         if selectedPaths == nil {
-            self.createAlertView("抱歉", body: "請至少選擇一個聯絡人!", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "抱歉", body: "請至少選擇一個聯絡人!", buttonValue: "確認")
             return
         }
         
@@ -267,12 +267,6 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     }
             }
         }
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }

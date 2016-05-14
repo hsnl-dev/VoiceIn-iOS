@@ -221,7 +221,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         // MARK - Set up the ation of button
         cell.onCallButtonTapped = {
             if cell.isProviderEnable == false {
-                self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
+                AlertBox.createAlertView(self ,title: "抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
                 return
             }
             let callService = CallService.init(view: self.view, _self: self)
@@ -244,7 +244,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                             debugPrint(response)
                             cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
                             cell.isLike = true
-                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                            AlertBox.createAlertView(self ,title: "發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
                         }
                 }
             } else {
@@ -258,7 +258,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                         if error != nil {
                             cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
                             cell.isLike = false
-                            self.createAlertView("發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
+                            AlertBox.createAlertView(self ,title: "發生了錯誤!", body: "抱歉，請再次嘗試一次...", buttonValue: "確認")
                         }
                 }
             }
@@ -414,7 +414,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
-                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
                 //SwiftSpinner.hide()
@@ -459,7 +459,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         if reachability.isReachable() != true {
             debugPrint("Network is not connected!")
-            self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
             self.refreshControl?.endRefreshing()
             self.view.userInteractionEnabled = true
         } else {
@@ -480,11 +480,5 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     @IBAction func closeToTableViewController(segue: UIStoryboardSegue!) {
         
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
