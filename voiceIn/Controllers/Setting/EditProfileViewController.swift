@@ -49,7 +49,7 @@ class EditProfileViewController: FormViewController {
                     self.refreshButton.hidden = false
                     self.refreshButton.alpha = 0.8
                     self.removeAllOverlays()
-                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
+                    AlertBox.createAlertView(self, title: "您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
