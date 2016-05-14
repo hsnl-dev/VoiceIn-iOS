@@ -61,10 +61,10 @@ class ProviderInformationViewController: UIViewController {
                     let statusCode: Int! = response.response?.statusCode
                     switch statusCode {
                     case 404:
-                        self.createAlertView("抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
+                        AlertBox.createAlertView(self, title: "抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
                         return
                     default:
-                        self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                        AlertBox.createAlertView(self, title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                         return
                     }
                 }
@@ -158,20 +158,14 @@ class ProviderInformationViewController: UIViewController {
                     let statusCode: Int! = (response?.statusCode)!
                     switch statusCode {
                     case 404:
-                        self.createAlertView("抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
+                        AlertBox.createAlertView(self, title: "抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
                     case 304:
-                        self.createAlertView("抱歉!", body: "您已擁有此聯絡人", buttonValue: "確認")
+                        AlertBox.createAlertView(self, title: "抱歉!", body: "您已擁有此聯絡人", buttonValue: "確認")
                     default:
-                        self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                        AlertBox.createAlertView(self, title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     }
                 }
         }
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

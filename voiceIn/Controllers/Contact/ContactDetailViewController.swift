@@ -128,11 +128,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.userInformation["availableStartTime"] = availableStartTime
                     self.userInformation["availableEndTime"] = availableEndTime
                     SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
-                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                     self.tableView.reloadData()
                 } else {
                     SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
-                    self.createAlertView("抱歉", body: "網路發生錯誤...", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "抱歉", body: "網路發生錯誤...", buttonValue: "確認")
                 }
         }
         
@@ -348,15 +348,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             debugPrint(UserPref.getUserPrefByKey("phoneNumber"))
             callService.call(UserPref.getUserPrefByKey("userUuid"), caller: UserPref.getUserPrefByKey("phoneNumber"), callee: userInformation["phoneNumber"]!, contactId: id)
         } else {
-            self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
             return
         }
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: Handle the menuView touch event.
