@@ -97,6 +97,7 @@ class HistoryTableViewController: UITableViewController {
         }
         
         cell.contactId = historyArray[indexPath.row]["contactId"].stringValue
+        cell.textLabel?.textColor = MaterialColor.grey.lighten2
         
         if historyArray[indexPath.row]["answer"].stringValue == "false" {
             cell.statusLabel?.textColor = MaterialColor.red.base

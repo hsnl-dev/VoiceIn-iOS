@@ -30,6 +30,8 @@ class Network {
             ]
         }
         
+        debugPrint(headers)
+        
         return headers
     }    
 }
