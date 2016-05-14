@@ -207,6 +207,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "small"])
                 .responseData {
                     response in
+                    debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
                     if response.data != nil {
                         dispatch_async(dispatch_get_main_queue(), {
                             cell.thumbnailImageView.image = UIImage(data: response.data!)
@@ -295,6 +296,14 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             deleteAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
             self.presentViewController(deleteAlert, animated: true, completion: nil)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        if isFromGroupListView == false {
+            return .Delete
+        } else {
+            return .None
         }
     }
     

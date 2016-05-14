@@ -146,6 +146,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
                 .responseData {
                     response in
+                    debugPrint("The status code is \(response.response?.statusCode)")
                     // MARK: TODO error handling...
                     if response.data != nil {
                         dispatch_async(dispatch_get_main_queue(), {
