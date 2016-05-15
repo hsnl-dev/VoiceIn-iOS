@@ -7,7 +7,7 @@ extension UIView {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, UIScreen.mainScreen().scale)
         
         if let context = UIGraphicsGetCurrentContext() {
-            CGContextTranslateCTM(context, -frame.origin.x - 4, 0)
+            CGContextTranslateCTM(context, -frame.origin.x + 5, 0)
             
             if let scrollView = self as? UIScrollView {
                 CGContextTranslateCTM(context, -scrollView.contentOffset.x, -scrollView.contentOffset.y)

@@ -93,7 +93,7 @@ class vCardViewController: UIViewController {
                     if response.data != nil {
                         avatarView.image = UIImage(data: response.data!)
                         self.imageCardView.addSubview(avatarView)
-                        avatarView.frame = CGRect(x: 5, y: 5, width: 100, height: 100)
+                        avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
                         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
                         avatarView.clipsToBounds = true;
                         
