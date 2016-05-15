@@ -68,6 +68,10 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         print("Current Page \(pageNumber)")
     }
     
+    @IBAction func unwindToLoginPage(segue: UIStoryboardSegue) {
+        
+    }
+    
     @IBAction func walkthroughCloseButtonPressed(segue: UIStoryboardSegue) {
         print("walkthroughCloseButtonPressed:")
         self.dismissViewControllerAnimated(true, completion: nil)
