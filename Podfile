@@ -13,5 +13,6 @@ target 'voiceIn' do
     pod 'SwiftOverlays', '~> 1.0'
     pod 'NSDate+TimeAgo', '1.0.6'
     pod 'BWWalkthrough', '1.1.0'
+    pod 'AlamofireImage', '~> 2.0'
 end
 

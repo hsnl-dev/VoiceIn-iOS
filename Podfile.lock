@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (3.1.5)
+  - AlamofireImage (2.3.0):
+    - Alamofire (~> 3.1)
   - ALCameraViewController (1.2.0)
   - BWWalkthrough (1.1.0)
   - Eureka (1.5.0)
@@ -13,12 +15,13 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
-  - ALCameraViewController
-  - BWWalkthrough
+  - AlamofireImage (~> 2.0)
+  - ALCameraViewController (= 1.2.0)
+  - BWWalkthrough (= 1.1.0)
   - Eureka (~> 1.5)
   - IQKeyboardManagerSwift
   - Material (= 1.39.17)
-  - NSDate+TimeAgo
+  - NSDate+TimeAgo (= 1.0.6)
   - PhoneNumberKit (~> 0.6)
   - SwiftOverlays (~> 1.0)
   - SwiftSpinner
@@ -35,6 +38,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
+  AlamofireImage: 4013fb5b99b10117bf2554a67b9bd2231d476b45
   ALCameraViewController: 03b480d0b41d3afc21fca48fc45345893ce2680a
   BWWalkthrough: 0c27ad2773a25c8f4fb9004bc7d6685deb35fecc
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0

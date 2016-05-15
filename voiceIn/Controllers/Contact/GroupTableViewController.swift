@@ -36,7 +36,7 @@ class GroupTableViewController: UITableViewController {
     
     // MARK: GET: Get the Group list.
     private func getGroupList() {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "讀取中...")
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
         
         Alamofire
@@ -52,7 +52,7 @@ class GroupTableViewController: UITableViewController {
                     debugPrint(error)
                     // MARK - TODO Error Handling
                 }
-                SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
+                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
         }
     }
 

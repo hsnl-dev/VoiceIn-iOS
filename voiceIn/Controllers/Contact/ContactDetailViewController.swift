@@ -1,6 +1,7 @@
 import UIKit
 import Material
 import Alamofire
+import AlamofireImage
 import SwiftOverlays
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -18,6 +19,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let spacing: CGFloat = 16
     let diameter: CGFloat = 56
     let height: CGFloat = 36
+    
+    // MARK - Image Cache
+    let imageCache = AutoPurgingImageCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,20 +146,48 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let photoUuid = userInformation["profilePhotoId"]!
         if photoUuid != "" {
             let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
-            Alamofire
-                .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
-                .responseData {
-                    response in
-                    debugPrint("The status code is \(response.response?.statusCode)")
-                    // MARK: TODO error handling...
-                    if response.data != nil {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.userAvatarImage.image = UIImage(data: response.data!)
-                            self.userAvatarImage.layer.cornerRadius = 64.0
-                            self.userAvatarImage.clipsToBounds = true
-                        })
-                    }
+            let avatarImage = self.imageCache.imageWithIdentifier(photoUuid!)
+            debugPrint(avatarImage)
+            
+            if avatarImage == nil {
+                Alamofire
+                    .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
+                    .responseData {
+                        response in
+                        //debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                        if response.data != nil {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                let avatarImage = UIImage(data: response.data!)
+                                
+                                self.userAvatarImage.layer.cornerRadius = 64.0
+                                self.userAvatarImage.clipsToBounds = true
+                                
+                                UIView.transitionWithView(self.userAvatarImage,
+                                    duration: 0.5,
+                                    options: .TransitionCrossDissolve,
+                                    animations: { self.userAvatarImage.image = avatarImage },
+                                    completion: nil
+                                )
+                                
+                                debugPrint("Image cached - \(photoUuid)")
+                                self.imageCache.removeImageWithIdentifier(photoUuid!)
+                                self.imageCache.addImage(avatarImage!, withIdentifier: photoUuid!)
+                            })
+                        }
+                        
+                }
+            } else {
+                debugPrint("Cache Image used.")
+                UIView.transitionWithView(self.userAvatarImage,
+                                          duration: 0.5,
+                                          options: .TransitionCrossDissolve,
+                                          animations: { self.userAvatarImage.image = avatarImage },
+                                          completion: nil
+                )
+                self.userAvatarImage.layer.cornerRadius = 64.0
+                self.userAvatarImage.clipsToBounds = true
             }
+
         }
     }
     

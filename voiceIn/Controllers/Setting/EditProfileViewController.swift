@@ -247,7 +247,9 @@ class EditProfileViewController: FormViewController {
             "email": formValues["email"] as? String != nil ? formValues["email"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
-            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
+            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
+            "deviceOS": "ios",
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String!
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)

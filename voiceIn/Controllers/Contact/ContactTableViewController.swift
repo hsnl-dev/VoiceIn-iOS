@@ -1,6 +1,7 @@
 import UIKit
 import Material
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 import SwiftSpinner
 import SwiftOverlays
@@ -27,6 +28,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var isFromGroupListView: Bool = false
     var groupId: String = ""
     var groupNameTextField: UITextField! = nil
+    
+    // MARK - Image Cache
+    let imageCache = AutoPurgingImageCache()
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -203,20 +207,43 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         cell.thumbnailImageView.clipsToBounds = true
         
         if photoUuid != "" {
-            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid            
-            Alamofire
-                .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "small"])
+            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
+            let avatarImage = self.imageCache.imageWithIdentifier(photoUuid)
+            
+            if avatarImage == nil {
+                Alamofire
+                .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "mid"])
                 .responseData {
                     response in
                     debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
                     if response.data != nil {
                         dispatch_async(dispatch_get_main_queue(), {
-                            cell.thumbnailImageView.image = UIImage(data: response.data!)
+                            let avatarImage = UIImage(data: response.data!)
+                            UIView.transitionWithView(cell.thumbnailImageView,
+                                duration: 0.5,
+                                options: .TransitionCrossDissolve,
+                                animations: { cell.thumbnailImageView.image = avatarImage },
+                                completion: nil
+                            )
+                            
                             cell.thumbnailImageView.layer.cornerRadius = 25.0
                             cell.thumbnailImageView.clipsToBounds = true
+                            self.imageCache.removeImageWithIdentifier(photoUuid)
+                            self.imageCache.addImage(avatarImage!, withIdentifier: photoUuid)
                         })
                     }
                     
+                }
+            } else {
+                debugPrint("Cache Image used. \(photoUuid)")
+                UIView.transitionWithView(cell.thumbnailImageView,
+                                          duration: 0.5,
+                                          options: .TransitionCrossDissolve,
+                                          animations: { cell.thumbnailImageView.image = avatarImage },
+                                          completion: nil
+                )
+                cell.thumbnailImageView.layer.cornerRadius = 25.0
+                cell.thumbnailImageView.clipsToBounds = true
             }
         }
         
@@ -318,7 +345,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             (alert: UIAlertAction!) -> Void in
             self.showUpdateGroupNameModal()
         })
-        let editContact = UIAlertAction(title: "編輯通訊錄", style: .Default, handler: {
+        let editContact = UIAlertAction(title: "編輯此分類成員", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.editContactTapped()
         })
@@ -473,6 +500,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.refreshControl?.endRefreshing()
             self.view.userInteractionEnabled = true
         } else {
+            imageCache.removeAllImages()
             getContactList(getContactRoute)
         }
     }
