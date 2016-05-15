@@ -18,7 +18,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var contactArray: [People] = []
     var filterContactArray: [People] = [People]()
     var navigationTitle: String? = "聯絡簿"
-    let IconPaidText: String = "付費-對方無安裝 App"
     var getContactRoute: String! = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
     
     // MARK - For Group related
@@ -136,10 +135,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-                cell.type.text = "免費"
+                cell.type.text = CallTypeText.freeCallText
                 cell.type.textColor = MaterialColor.red.base
             } else {
-                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : IconPaidText
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -187,10 +186,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-                cell.type.text = "免費"
+                cell.type.text = CallTypeText.freeCallText
                 cell.type.textColor = MaterialColor.red.base
             } else {
-                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : IconPaidText
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             

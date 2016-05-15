@@ -93,10 +93,10 @@ class FavoriteContactTableViewController: UITableViewController {
         }
         
         if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-            cell.type.text = "免費"
+            cell.type.text = CallTypeText.freeCallText
             cell.type.textColor = MaterialColor.red.base
         } else {
-            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : "付費-由無 App 客戶產生"
+            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
             cell.type.textColor = MaterialColor.teal.darken4
         }
         

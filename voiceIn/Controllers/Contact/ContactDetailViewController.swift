@@ -452,12 +452,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn3.setImage(image, forState: .Normal)
         btn3.setImage(image, forState: .Highlighted)
         btn3.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
-        menuView.addSubview(btn3)
+        //menuView.addSubview(btn3)
         
         // MARK: Initialize the menu and setup the configuration options.
         menuView.menu.direction = .Up
         menuView.menu.baseViewSize = CGSizeMake(diameter, diameter)
-        menuView.menu.views = [btn1, btn2, btn3]
+        menuView.menu.views = [btn1, btn2]
         
         view.addSubview(menuView)
         menuView.translatesAutoresizingMaskIntoConstraints = false

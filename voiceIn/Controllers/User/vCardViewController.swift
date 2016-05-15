@@ -22,7 +22,8 @@ class vCardViewController: UIViewController {
         view.addSubview(scrollView)
         prepareGenQrCodeCardView()
         
-        SwiftOverlays.showTextOverlay(self.view, text: "讀取名片中...")
+        self.navigationController?.view.userInteractionEnabled = false
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
         /**
         GET: Get the user's information.
@@ -95,6 +96,8 @@ class vCardViewController: UIViewController {
                         avatarView.frame = CGRect(x: 5, y: 5, width: 100, height: 100)
                         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
                         avatarView.clipsToBounds = true;
+                        
+                        self.navigationController?.view.userInteractionEnabled = true
                         SwiftOverlays.removeAllOverlaysFromView(self.view!)
                     }
             }
