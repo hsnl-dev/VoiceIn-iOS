@@ -15,7 +15,7 @@ class Network {
         
     }
     
-    static func generateHeader(isTokenNeeded isTokenNeeded: Bool) -> [String: String]? {
+    class func generateHeader(isTokenNeeded isTokenNeeded: Bool) -> [String: String]? {
         let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         var headers: [String: String]?
         

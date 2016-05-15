@@ -641,7 +641,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.edu.nthu.hsnl.voiceIn;
 				PRODUCT_NAME = VoiceIn;
-				PROVISIONING_PROFILE = "f7c0d566-854c-4d81-a52e-43842a5ff0b0";
+				PROVISIONING_PROFILE = "d1e5387f-e0d0-48ce-b019-bd3a411bf933";
 				SWIFT_OBJC_BRIDGING_HEADER = bridge.h;
 			};
 			name = Debug;
@@ -658,7 +658,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.edu.nthu.hsnl.voiceIn;
 				PRODUCT_NAME = VoiceIn;
-				PROVISIONING_PROFILE = "f7c0d566-854c-4d81-a52e-43842a5ff0b0";
+				PROVISIONING_PROFILE = "d1e5387f-e0d0-48ce-b019-bd3a411bf933";
 				SWIFT_OBJC_BRIDGING_HEADER = bridge.h;
 			};
 			name = Release;
