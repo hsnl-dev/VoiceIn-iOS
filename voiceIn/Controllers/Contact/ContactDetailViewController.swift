@@ -1,7 +1,7 @@
 import UIKit
 import Material
 import Alamofire
-import AlamofireImage
+import Haneke
 import SwiftOverlays
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -21,7 +21,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let height: CGFloat = 36
     
     // MARK - Image Cache
-    let imageCache = AutoPurgingImageCache()
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,50 +144,40 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func prepareUserAvatarImage() {
         let photoUuid = userInformation["profilePhotoId"]!
+        
+        
         if photoUuid != "" {
-            let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
-            let avatarImage = self.imageCache.imageWithIdentifier(photoUuid!)
-            debugPrint(avatarImage)
-            
-            if avatarImage == nil {
-                Alamofire
-                    .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
-                    .responseData {
-                        response in
-                        //debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
-                        if response.data != nil {
-                            dispatch_async(dispatch_get_main_queue(), {
-                                let avatarImage = UIImage(data: response.data!)
-                                
-                                self.userAvatarImage.layer.cornerRadius = 64.0
-                                self.userAvatarImage.clipsToBounds = true
-                                
-                                UIView.transitionWithView(self.userAvatarImage,
-                                    duration: 0.5,
-                                    options: .TransitionCrossDissolve,
-                                    animations: { self.userAvatarImage.image = avatarImage },
-                                    completion: nil
-                                )
-                                
-                                debugPrint("Image cached - \(photoUuid)")
-                                self.imageCache.removeImageWithIdentifier(photoUuid!)
-                                self.imageCache.addImage(avatarImage!, withIdentifier: photoUuid!)
-                            })
-                        }
-                        
-                }
-            } else {
-                debugPrint("Cache Image used.")
-                UIView.transitionWithView(self.userAvatarImage,
-                                          duration: 0.5,
-                                          options: .TransitionCrossDissolve,
-                                          animations: { self.userAvatarImage.image = avatarImage },
-                                          completion: nil
-                )
+            hnkImageCache.fetch(key: photoUuid!).onSuccess { avatarImage in
+                debugPrint("Cache Image used. \(photoUuid)")
                 self.userAvatarImage.layer.cornerRadius = 64.0
                 self.userAvatarImage.clipsToBounds = true
+                self.userAvatarImage.hnk_setImage(avatarImage, key: photoUuid!)
+                }.onFailure { _ in
+                    debugPrint("failed")
+                    let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
+                    Alamofire
+                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
+                        .responseData {
+                            response in
+                            debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                            if response.data != nil {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    let avatarImage = UIImage(data: response.data!)
+                                    UIView.transitionWithView(self.userAvatarImage,
+                                        duration: 0.5,
+                                        options: .TransitionCrossDissolve,
+                                        animations: { self.userAvatarImage.image = avatarImage },
+                                        completion: nil
+                                    )
+                                    
+                                    self.userAvatarImage.layer.cornerRadius = 64.0
+                                    self.userAvatarImage.clipsToBounds = true
+                                    self.hnkImageCache.set(value: avatarImage!, key: photoUuid!)
+                                })
+                            }
+                            
+                    }
             }
-
         }
     }
     

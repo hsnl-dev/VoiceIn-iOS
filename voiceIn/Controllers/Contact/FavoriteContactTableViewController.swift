@@ -9,11 +9,11 @@
 import UIKit
 import Material
 import Alamofire
-import AlamofireImage
 import SwiftyJSON
 import SwiftSpinner
 import SwiftOverlays
 import CoreData
+import Haneke
 
 class FavoriteContactTableViewController: UITableViewController {
     
@@ -24,7 +24,7 @@ class FavoriteContactTableViewController: UITableViewController {
     // MARK: Array of ContactList
     var contactArray: [People] = []
     // MARK - Image Cache
-    let imageCache = AutoPurgingImageCache()
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -113,43 +113,36 @@ class FavoriteContactTableViewController: UITableViewController {
         cell.thumbnailImageView.clipsToBounds = true
         
         if photoUuid != "" {
-            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
-            let avatarImage = self.imageCache.imageWithIdentifier(photoUuid)
-            
-            if avatarImage == nil {
-                Alamofire
-                    .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "mid"])
-                    .responseData {
-                        response in
-                        debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
-                        if response.data != nil {
-                            dispatch_async(dispatch_get_main_queue(), {
-                                let avatarImage = UIImage(data: response.data!)
-                                UIView.transitionWithView(cell.thumbnailImageView,
-                                    duration: 0.5,
-                                    options: .TransitionCrossDissolve,
-                                    animations: { cell.thumbnailImageView.image = avatarImage },
-                                    completion: nil
-                                )
-                                
-                                cell.thumbnailImageView.layer.cornerRadius = 25.0
-                                cell.thumbnailImageView.clipsToBounds = true
-                                self.imageCache.removeImageWithIdentifier(photoUuid)
-                                self.imageCache.addImage(avatarImage!, withIdentifier: photoUuid)
-                            })
-                        }
-                        
-                }
-            } else {
+            hnkImageCache.fetch(key: photoUuid).onSuccess { avatarImage in
                 debugPrint("Cache Image used. \(photoUuid)")
-                UIView.transitionWithView(cell.thumbnailImageView,
-                                          duration: 0.5,
-                                          options: .TransitionCrossDissolve,
-                                          animations: { cell.thumbnailImageView.image = avatarImage },
-                                          completion: nil
-                )
                 cell.thumbnailImageView.layer.cornerRadius = 25.0
                 cell.thumbnailImageView.clipsToBounds = true
+                cell.thumbnailImageView.hnk_setImage(avatarImage, key: photoUuid)
+                }.onFailure { _ in
+                    debugPrint("failed")
+                    getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
+                    Alamofire
+                        .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "mid"])
+                        .responseData {
+                            response in
+                            debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                            if response.data != nil {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    let avatarImage = UIImage(data: response.data!)
+                                    UIView.transitionWithView(cell.thumbnailImageView,
+                                        duration: 0.5,
+                                        options: .TransitionCrossDissolve,
+                                        animations: { cell.thumbnailImageView.image = avatarImage },
+                                        completion: nil
+                                    )
+                                    
+                                    cell.thumbnailImageView.layer.cornerRadius = 25.0
+                                    cell.thumbnailImageView.clipsToBounds = true
+                                    self.hnkImageCache.set(value: avatarImage!, key: photoUuid)
+                                })
+                            }
+                            
+                    }
             }
         }
         
