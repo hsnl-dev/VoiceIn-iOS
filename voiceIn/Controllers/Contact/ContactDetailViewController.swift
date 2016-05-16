@@ -1,6 +1,7 @@
 import UIKit
 import Material
 import Alamofire
+import Haneke
 import SwiftOverlays
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -18,6 +19,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let spacing: CGFloat = 16
     let diameter: CGFloat = 56
     let height: CGFloat = 36
+    
+    // MARK - Image Cache
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,11 +132,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.userInformation["availableStartTime"] = availableStartTime
                     self.userInformation["availableEndTime"] = availableEndTime
                     SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
-                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                     self.tableView.reloadData()
                 } else {
                     SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
-                    self.createAlertView("抱歉", body: "網路發生錯誤...", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "抱歉", body: "網路發生錯誤...", buttonValue: "確認")
                 }
         }
         
@@ -140,19 +144,38 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func prepareUserAvatarImage() {
         let photoUuid = userInformation["profilePhotoId"]!
+        
+        
         if photoUuid != "" {
-            let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
-            Alamofire
-                .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
-                .responseData {
-                    response in
-                    // MARK: TODO error handling...
-                    if response.data != nil {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.userAvatarImage.image = UIImage(data: response.data!)
-                            self.userAvatarImage.layer.cornerRadius = 64.0
-                            self.userAvatarImage.clipsToBounds = true
-                        })
+            hnkImageCache.fetch(key: photoUuid!).onSuccess { avatarImage in
+                debugPrint("Cache Image used. \(photoUuid)")
+                self.userAvatarImage.layer.cornerRadius = 64.0
+                self.userAvatarImage.clipsToBounds = true
+                self.userAvatarImage.hnk_setImage(avatarImage, key: photoUuid!)
+                }.onFailure { _ in
+                    debugPrint("failed")
+                    let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
+                    Alamofire
+                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
+                        .responseData {
+                            response in
+                            debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                            if response.data != nil {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    let avatarImage = UIImage(data: response.data!)
+                                    UIView.transitionWithView(self.userAvatarImage,
+                                        duration: 0.5,
+                                        options: .TransitionCrossDissolve,
+                                        animations: { self.userAvatarImage.image = avatarImage },
+                                        completion: nil
+                                    )
+                                    
+                                    self.userAvatarImage.layer.cornerRadius = 64.0
+                                    self.userAvatarImage.clipsToBounds = true
+                                    self.hnkImageCache.set(value: avatarImage!, key: photoUuid!)
+                                })
+                            }
+                            
                     }
             }
         }
@@ -348,15 +371,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             debugPrint(UserPref.getUserPrefByKey("phoneNumber"))
             callService.call(UserPref.getUserPrefByKey("userUuid"), caller: UserPref.getUserPrefByKey("phoneNumber"), callee: userInformation["phoneNumber"]!, contactId: id)
         } else {
-            self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
             return
         }
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: Handle the menuView touch event.
@@ -435,12 +452,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn3.setImage(image, forState: .Normal)
         btn3.setImage(image, forState: .Highlighted)
         btn3.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
-        menuView.addSubview(btn3)
+        //menuView.addSubview(btn3)
         
         // MARK: Initialize the menu and setup the configuration options.
         menuView.menu.direction = .Up
         menuView.menu.baseViewSize = CGSizeMake(diameter, diameter)
-        menuView.menu.views = [btn1, btn2, btn3]
+        menuView.menu.views = [btn1, btn2]
         
         view.addSubview(menuView)
         menuView.translatesAutoresizingMaskIntoConstraints = false

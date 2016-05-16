@@ -2,6 +2,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Material
+import SwiftOverlays
 
 class vCardViewController: UIViewController {
 
@@ -21,6 +22,8 @@ class vCardViewController: UIViewController {
         view.addSubview(scrollView)
         prepareGenQrCodeCardView()
         
+        self.navigationController?.view.userInteractionEnabled = false
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
         /**
         GET: Get the user's information.
@@ -34,7 +37,7 @@ class vCardViewController: UIViewController {
                     let jsonResponse = JSON(JSON_RESPONSE)
                     self.prepareVcardView(jsonResponse)
                 case .Failure(let error):
-                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
+                    AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
@@ -90,12 +93,17 @@ class vCardViewController: UIViewController {
                     if response.data != nil {
                         avatarView.image = UIImage(data: response.data!)
                         self.imageCardView.addSubview(avatarView)
-                        avatarView.frame = CGRect(x: 5, y: 5, width: 100, height: 100)
+                        avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
                         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
                         avatarView.clipsToBounds = true;
+                        
+                        self.navigationController?.view.userInteractionEnabled = true
+                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
                     }
             }
             
+        } else {
+            SwiftOverlays.removeAllOverlaysFromView(self.view!)
         }
         
         
@@ -162,12 +170,6 @@ class vCardViewController: UIViewController {
             let activityController = UIActivityViewController(activityItems:[defaultText, imageToShare], applicationActivities: nil)
             self.presentViewController(activityController, animated: true,completion: nil)
         }
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func closeQRCodeList(segue: UIStoryboardSegue) {

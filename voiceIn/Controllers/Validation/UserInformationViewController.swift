@@ -45,7 +45,7 @@ class UserInformationViewController: FormViewController {
                     self.prepareInputForm(jsonResponse)
                 case .Failure(let error):
                     self.removeAllOverlays()
-                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
@@ -67,8 +67,8 @@ class UserInformationViewController: FormViewController {
                 $0.tag = "avatar"
                 $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
-                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
-                    { (image) -> Void in
+                    let cameraViewController = CameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
+                    { image, asset in
                         SelectImageRow.defaultCellUpdate = { cell, row in
                             cell.accessoryView?.layer.cornerRadius = 32
                             cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
@@ -271,7 +271,7 @@ class UserInformationViewController: FormViewController {
                     //MARK: error is nil, nothing happened! All is well :)
                 } else if error != nil {
                     print(error)
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     self.removeAllOverlays()
                 }
         }
@@ -294,7 +294,7 @@ class UserInformationViewController: FormViewController {
                                 print("上傳成功。")
                             }
                         case .Failure(let encodingError):
-                            self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                            AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                             self.removeAllOverlays()
                             print(encodingError)
                         }
@@ -312,7 +312,7 @@ class UserInformationViewController: FormViewController {
                     self.removeAllOverlays()
                     self.presentViewController(contactTableView, animated: true, completion: nil)
                 } else {
-                    self.createAlertView("抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     self.removeAllOverlays()
                 }
         }
@@ -325,7 +325,7 @@ class UserInformationViewController: FormViewController {
      **/
     private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
         if formValues["userName"] as? String == nil {
-            createAlertView("小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
             return false
         }
         
@@ -333,17 +333,11 @@ class UserInformationViewController: FormViewController {
         let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
         
         if (availableStartTime.isGreaterThanDate(availableEndTime)) {
-            createAlertView("小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
             return false
         }
         
         return true
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

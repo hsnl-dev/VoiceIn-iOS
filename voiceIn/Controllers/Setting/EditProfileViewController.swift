@@ -49,7 +49,7 @@ class EditProfileViewController: FormViewController {
                     self.refreshButton.hidden = false
                     self.refreshButton.alpha = 0.8
                     self.removeAllOverlays()
-                    self.createAlertView("您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
+                    AlertBox.createAlertView(self, title: "您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
         }
@@ -94,8 +94,8 @@ class EditProfileViewController: FormViewController {
                 $0.tag = "avatar"
                 $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
-                    let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
-                        { (image) -> Void in
+                    let cameraViewController = CameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
+                        { image, asset in
                             SelectImageRow.defaultCellUpdate = { cell, row in
                                 cell.accessoryView?.layer.cornerRadius = 32
                                 cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
@@ -247,7 +247,9 @@ class EditProfileViewController: FormViewController {
             "email": formValues["email"] as? String != nil ? formValues["email"] as? String : "",
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
-            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!
+            "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
+            "deviceOS": "ios",
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String!
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)
@@ -264,7 +266,7 @@ class EditProfileViewController: FormViewController {
                     //MARK: error is nil, nothing happened! All is well :)
                     debugPrint("Success!")
                     self.removeAllOverlays()
-                    self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                    AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                 }
         }
         
@@ -285,7 +287,7 @@ class EditProfileViewController: FormViewController {
                             upload.response { response in
                                 print("photo success")
                                 self.removeAllOverlays()
-                                self.createAlertView("恭喜!", body: "儲存成功", buttonValue: "確認")
+                                AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                             }
                         case .Failure(let encodingError):
                             print(encodingError)
@@ -301,7 +303,7 @@ class EditProfileViewController: FormViewController {
      **/
     private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
         if formValues["userName"] as? String == nil {
-            createAlertView("小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
             return false
         }
         
@@ -309,17 +311,11 @@ class EditProfileViewController: FormViewController {
         let availableEndTime: NSDate! = formValues["availableEndTime"] as? NSDate
         
         if (availableStartTime.isGreaterThanDate(availableEndTime)) {
-            createAlertView("小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
+            AlertBox.createAlertView(self ,title: "小提醒", body: "你所選定的時間區間不合理喔", buttonValue: "確認")
             return false
         }
         
         return true
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func refreshTheView(sender: UIButton!) {
