@@ -5,6 +5,7 @@ import Alamofire
 import SwiftyJSON
 import ALCameraViewController
 import SwiftOverlays
+import ReachabilitySwift
 
 class EditProfileViewController: FormViewController {
     let headers = Network.generateHeader(isTokenNeeded: true)
@@ -264,7 +265,14 @@ class EditProfileViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
-                    debugPrint("Success!")
+                    
+                    UserPref.setUserPref("userName", value: parameters["userName"])
+                    UserPref.setUserPref("profile", value: parameters["profile"])
+                    UserPref.setUserPref("location", value: parameters["location"])
+                    UserPref.setUserPref("jobTitle", value: parameters["jobTitle"])
+                    UserPref.setUserPref("email", value: parameters["email"])
+                    UserPref.setUserPref("company", value: parameters["company"])
+
                     self.removeAllOverlays()
                     AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                 }

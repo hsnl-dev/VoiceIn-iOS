@@ -5,6 +5,7 @@ import SwiftyJSON
 import SwiftOverlays
 import CoreData
 import Haneke
+import ReachabilitySwift
 
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     @IBOutlet var cardBarItem: UIBarButtonItem?
@@ -28,6 +29,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK - Image Cache
     let hnkImageCache = Shared.imageCache
+    var profileImage: UIImage? = nil
+    
+    var reachability: Reachability?
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -54,6 +58,23 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     override func viewDidAppear(animated: Bool) {
+        //declare this inside of viewWillAppear
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:",name: ReachabilityChangedNotification, object: reachability)
+        do{
+            try reachability?.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
+        
+        // MARK - Get the contact list.
         getContactList(getContactRoute)
         
         if isFromGroupListView == true {
@@ -67,6 +88,29 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
         }
     }
+    
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as! Reachability
+        dispatch_async(dispatch_get_main_queue()) {
+            if reachability.isReachable() {
+                self.getContactList(self.getContactRoute)
+            } else {
+                print("Network not reachable")
+                let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController
+                self.presentViewController(vcardViewController, animated: true, completion: nil)
+
+            }
+        }
+    }
+    
+    
+    //    deinit {
+    //        reachability!.stopNotifier()
+    //        NSNotificationCenter.defaultCenter().removeObserver(self,
+    //                                                            name: ReachabilityChangedNotification,
+    //                                                            object: reachability)
+    //    }
     
     // MARK: General preparation statements.
     private func prepareView() {
@@ -423,7 +467,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
-                    debugPrint(jsonResponse)
+                    debugPrint(jsonResponse.count)
                     //self.contactArray = []
                     
                     for index in 0 ..< jsonResponse.count {

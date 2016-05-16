@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
+import ReachabilitySwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,7 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         debugPrint(" == Launch == ")
-        
         IQKeyboardManager.sharedManager().enable = true        
         return true
     }
@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("DEVICE TOKEN = \(deviceToken)")
         let characterSet: NSCharacterSet = NSCharacterSet(charactersInString: "<>")
         UserPref.setUserPref("deviceKey", value: (deviceToken.description as NSString).stringByTrimmingCharactersInSet(characterSet).stringByReplacingOccurrencesOfString(" ", withString: "") as String)
-//        UserPref.setUserPref("deviceKey", value: "47de41283f6cdce4932b7e7c44ec601c102858463b87c0c1df44723583aca695")
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

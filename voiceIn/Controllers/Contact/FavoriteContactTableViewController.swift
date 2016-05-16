@@ -14,6 +14,7 @@ import SwiftSpinner
 import SwiftOverlays
 import CoreData
 import Haneke
+import ReachabilitySwift
 
 class FavoriteContactTableViewController: UITableViewController {
     
@@ -197,7 +198,7 @@ class FavoriteContactTableViewController: UITableViewController {
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
-                    debugPrint(jsonResponse)
+                    debugPrint(jsonResponse.count)
                     self.contactArray = []
                     
                     for index in 0 ..< jsonResponse.count {

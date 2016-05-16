@@ -44,9 +44,8 @@
 		3EC23CEF1C77258F00CA92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */; };
 		3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */; };
 		3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */; };
-		3EE4EC2D1C8DE30700805447 /* NSTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC2B1C8DE30700805447 /* NSTimeExtension.swift */; };
-		3EE4EC2E1C8DE30700805447 /* Reachibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC2C1C8DE30700805447 /* Reachibility.swift */; };
-		3EE4EC311C8DE38600805447 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC301C8DE38600805447 /* Network.swift */; };
+		3EDDFB2E1CEA021D0093FB9A /* NSDate+VoiceIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDDFB2D1CEA021D0093FB9A /* NSDate+VoiceIn.swift */; };
+		3EE4EC311C8DE38600805447 /* ApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC301C8DE38600805447 /* ApiFetcher.swift */; };
 		3EE4EC371C8DE47D00805447 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC361C8DE47D00805447 /* EditProfileViewController.swift */; };
 		3EF050661C77196600F7774E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050641C77196600F7774E /* Login.storyboard */; };
 		3EF050691C77197900F7774E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050671C77197900F7774E /* Main.storyboard */; };
@@ -97,9 +96,8 @@
 		3EC23CEE1C77258F00CA92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderNickNameCell.swift; sourceTree = "<group>"; };
-		3EE4EC2B1C8DE30700805447 /* NSTimeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimeExtension.swift; sourceTree = "<group>"; };
-		3EE4EC2C1C8DE30700805447 /* Reachibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachibility.swift; sourceTree = "<group>"; };
-		3EE4EC301C8DE38600805447 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		3EDDFB2D1CEA021D0093FB9A /* NSDate+VoiceIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+VoiceIn.swift"; sourceTree = "<group>"; };
+		3EE4EC301C8DE38600805447 /* ApiFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiFetcher.swift; sourceTree = "<group>"; };
 		3EE4EC361C8DE47D00805447 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		3EF050651C77196600F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		3EF050681C77197900F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -153,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				3EF27F031C9913BC00D62844 /* UIView+VoiceIn.swift */,
+				3EDDFB2D1CEA021D0093FB9A /* NSDate+VoiceIn.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -260,8 +259,6 @@
 		3EE4EC2A1C8DE30700805447 /* ThirdPartyHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				3EE4EC2B1C8DE30700805447 /* NSTimeExtension.swift */,
-				3EE4EC2C1C8DE30700805447 /* Reachibility.swift */,
 			);
 			path = ThirdPartyHelpers;
 			sourceTree = "<group>";
@@ -269,7 +266,7 @@
 		3EE4EC2F1C8DE38600805447 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				3EE4EC301C8DE38600805447 /* Network.swift */,
+				3EE4EC301C8DE38600805447 /* ApiFetcher.swift */,
 				3E773EBE1C9940AF003CD1B3 /* QRCodeGenerator.swift */,
 				3EA737661CA50DA60054C78C /* UserPref.swift */,
 				3E57EAE51CE45E21009F46B2 /* AlertBox.swift */,
@@ -477,7 +474,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EE4EC2D1C8DE30700805447 /* NSTimeExtension.swift in Sources */,
 				3E57EAE61CE45E21009F46B2 /* AlertBox.swift in Sources */,
 				3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */,
 				3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */,
@@ -501,18 +497,18 @@
 				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
 				3E3701EA1CBCF0A100B0F4CB /* HistoryTableViewController.swift in Sources */,
 				3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */,
-				3EE4EC311C8DE38600805447 /* Network.swift in Sources */,
+				3EE4EC311C8DE38600805447 /* ApiFetcher.swift in Sources */,
 				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
 				3EB2A6E11CBD3E9300C2D406 /* WalkThroughViewController.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
+				3EDDFB2E1CEA021D0093FB9A /* NSDate+VoiceIn.swift in Sources */,
 				3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */,
 				3E773EBF1C9940AF003CD1B3 /* QRCodeGenerator.swift in Sources */,
 				3E7A63F51CC67FD900C43961 /* NotificationTableViewController.swift in Sources */,
 				3E6FABA51CBA53640077B0C0 /* Group.swift in Sources */,
 				3E773EBB1C9934CD003CD1B3 /* QrCodeListCell.swift in Sources */,
-				3EE4EC2E1C8DE30700805447 /* Reachibility.swift in Sources */,
 				3EAD8E361CB40672008A09E3 /* FavoriteContactTableViewController.swift in Sources */,
 				3E773EBD1C99374C003CD1B3 /* QRCode.swift in Sources */,
 				3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */,

@@ -1159,7 +1159,7 @@
         <!--我的名片-->
         <scene sceneID="7pH-fW-lFQ">
             <objects>
-                <viewController id="NNy-iM-hOH" customClass="vCardViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vCardViewController" id="NNy-iM-hOH" customClass="vCardViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="我的名片" id="GHD-cf-e2M">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="kFS-YO-OM6">
                             <connections>
