@@ -143,7 +143,7 @@ class vCardViewController: UIViewController {
         let btn1: FlatButton = FlatButton()
         btn1.pulseColor = MaterialColor.cyan.lighten1
         btn1.pulseScale = false
-        btn1.setTitle("點我製作專屬 QRCode", forState: .Normal)
+        btn1.setTitle("", forState: .Normal)
         btn1.setTitleColor(MaterialColor.cyan.darken1, forState: .Normal)
         cardView.leftButtons = [btn1]
         
