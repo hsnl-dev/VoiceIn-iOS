@@ -34,7 +34,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var reachability: Reachability?
     
     override func viewDidLoad() {
-        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(ContactTableViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         super.viewDidLoad()
         
@@ -66,7 +66,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             return
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:",name: ReachabilityChangedNotification, object: reachability)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactTableViewController.reachabilityChanged(_:)),name: ReachabilityChangedNotification, object: reachability)
         do{
             try reachability?.startNotifier()
         }catch{
@@ -80,7 +80,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         if isFromGroupListView == true {
             // MARK - it is from the group list tab
             self.navigationItem.setRightBarButtonItems(nil, animated: true)
-            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "showEditActionSheet:")
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
             self.navigationItem.rightBarButtonItem = button
         } else {
             // MARK - TODO Not from the Group List tab ...
@@ -94,7 +94,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         let reachability = note.object as! Reachability
         dispatch_async(dispatch_get_main_queue()) {
             if reachability.isReachable() {
-                self.getContactList(self.getContactRoute)
+                debugPrint("Network Enable")
             } else {
                 print("Network not reachable")
                 let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController
@@ -105,12 +105,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     
-    //    deinit {
-    //        reachability!.stopNotifier()
-    //        NSNotificationCenter.defaultCenter().removeObserver(self,
-    //                                                            name: ReachabilityChangedNotification,
-    //                                                            object: reachability)
-    //    }
+    deinit {
+        reachability!.stopNotifier()
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: ReachabilityChangedNotification,
+                                                            object: reachability)
+    }
     
     // MARK: General preparation statements.
     private func prepareView() {
@@ -540,15 +540,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK - Pull down to refresh
     func refresh(sender: AnyObject) {
-        var reachability: Reachability
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            debugPrint("Unable to create Reachability")
-            return
-        }
         
-        if reachability.isReachable() != true {
+        if Networker.isReach() != true {
             debugPrint("Network is not connected!")
             AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
             self.refreshControl?.endRefreshing()

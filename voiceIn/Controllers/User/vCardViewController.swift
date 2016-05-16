@@ -17,20 +17,9 @@ class vCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var reachability: Reachability
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            debugPrint("Unable to create Reachability")
-            return
-        }
-        
-        if reachability.isReachable() != true {
-            isReachable = false
-        } else {
-            isReachable = true
-        }
+        UserPref.setUserPref("isFirstFetch", value: true)
+ 
+        isReachable = Networker.isReach()
         
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.backgroundColor = MaterialColor.grey.lighten3
@@ -276,20 +265,10 @@ class vCardViewController: UIViewController {
     
     func reConnect(sender: UIButton?) {
         debugPrint("reConnect.")
-        var reachability: Reachability
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            debugPrint("Unable to create Reachability")
-            return
-        }
-        
-        if reachability.isReachable() != true {
+            
+        if Networker.isReach() != true {
             AlertBox.createAlertView(self, title: "注意", body: "請開啟網路喔!", buttonValue: "確認")
         } else {
-            UserPref.setUserPref("isFirstFetch", value: true)
-            debugPrint(UserPref.getUserPrefByKey("isFirstFetch"))
-            
             let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
             self.presentViewController(rootController, animated: true, completion: nil)
         }

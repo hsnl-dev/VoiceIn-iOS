@@ -45,6 +45,7 @@
 		3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */; };
 		3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */; };
 		3EDDFB2E1CEA021D0093FB9A /* NSDate+VoiceIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDDFB2D1CEA021D0093FB9A /* NSDate+VoiceIn.swift */; };
+		3EDDFB301CEA2E2E0093FB9A /* Reachibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDDFB2F1CEA2E2E0093FB9A /* Reachibility.swift */; };
 		3EE4EC311C8DE38600805447 /* ApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC301C8DE38600805447 /* ApiFetcher.swift */; };
 		3EE4EC371C8DE47D00805447 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC361C8DE47D00805447 /* EditProfileViewController.swift */; };
 		3EF050661C77196600F7774E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF050641C77196600F7774E /* Login.storyboard */; };
@@ -97,6 +98,7 @@
 		3ED0D4741C8F0FAD0011679A /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		3ED0D47C1C8F27760011679A /* ProviderNickNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderNickNameCell.swift; sourceTree = "<group>"; };
 		3EDDFB2D1CEA021D0093FB9A /* NSDate+VoiceIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+VoiceIn.swift"; sourceTree = "<group>"; };
+		3EDDFB2F1CEA2E2E0093FB9A /* Reachibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachibility.swift; sourceTree = "<group>"; };
 		3EE4EC301C8DE38600805447 /* ApiFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiFetcher.swift; sourceTree = "<group>"; };
 		3EE4EC361C8DE47D00805447 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		3EF050651C77196600F7774E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				3E773EBE1C9940AF003CD1B3 /* QRCodeGenerator.swift */,
 				3EA737661CA50DA60054C78C /* UserPref.swift */,
 				3E57EAE51CE45E21009F46B2 /* AlertBox.swift */,
+				3EDDFB2F1CEA2E2E0093FB9A /* Reachibility.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */,
 				3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */,
 				3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */,
+				3EDDFB301CEA2E2E0093FB9A /* Reachibility.swift in Sources */,
 				3EE4EC371C8DE47D00805447 /* EditProfileViewController.swift in Sources */,
 				3EA737671CA50DA60054C78C /* UserPref.swift in Sources */,
 				3E98C0D91C8C3E12001BB458 /* vCardViewController.swift in Sources */,

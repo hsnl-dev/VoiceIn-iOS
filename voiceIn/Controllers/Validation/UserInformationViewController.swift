@@ -210,7 +210,7 @@ class UserInformationViewController: FormViewController {
         saveButton.pulseScale = false
         saveButton.setImage(image, forState: .Normal)
         saveButton.setImage(image, forState: .Highlighted)
-        saveButton.addTarget(self, action: "saveButtonClicked:", forControlEvents: .TouchUpInside)
+        saveButton.addTarget(self, action: #selector(UserInformationViewController.saveButtonClicked(_:)), forControlEvents: .TouchUpInside)
 
         view.addSubview(navigationBarView)
 

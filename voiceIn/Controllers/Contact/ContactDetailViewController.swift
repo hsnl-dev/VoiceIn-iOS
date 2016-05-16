@@ -322,7 +322,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     cell.switchButton.setOn(false, animated: true)
                 }
                 
-                cell.switchButton.addTarget(self, action: Selector("AvailableSwitchIsChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+                cell.switchButton.addTarget(self, action: #selector(ContactDetailViewController.AvailableSwitchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
                 return cell
             case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! ContactDetailTableViewCell
@@ -344,7 +344,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     cell.switchButton.setOn(false, animated: true)
                 }
                 
-                cell.switchButton.addTarget(self, action: Selector("switchIsChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+                cell.switchButton.addTarget(self, action: #selector(ContactDetailViewController.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
                 return cell
             default:
                 let cell = tableView.dequeueReusableCellWithIdentifier("ToggleCell", forIndexPath: indexPath)
@@ -416,7 +416,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn1.borderWidth = 1
         btn1.setImage(image, forState: .Normal)
         btn1.setImage(image, forState: .Highlighted)
-        btn1.addTarget(self, action: "handleMenu", forControlEvents: .TouchUpInside)
+        btn1.addTarget(self, action: #selector(ContactDetailViewController.handleMenu), forControlEvents: .TouchUpInside)
         menuView.addSubview(btn1)
         
         let isProviderEnable = self.userInformation["providerIsEnable"]!!
@@ -438,7 +438,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn2.borderWidth = 1
         btn2.setImage(image, forState: .Normal)
         btn2.setImage(image, forState: .Highlighted)
-        btn2.addTarget(self, action: "callButton:", forControlEvents: .TouchUpInside)
+        btn2.addTarget(self, action: #selector(ContactDetailViewController.callButton(_:)), forControlEvents: .TouchUpInside)
         menuView.addSubview(btn2)
         
         image = UIImage(named: "ic_favorite_white")?.imageWithRenderingMode(.AlwaysTemplate)
@@ -451,7 +451,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn3.borderWidth = 1
         btn3.setImage(image, forState: .Normal)
         btn3.setImage(image, forState: .Highlighted)
-        btn3.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
+        btn3.addTarget(self, action: #selector(ContactDetailViewController.handleButton(_:)), forControlEvents: .TouchUpInside)
         //menuView.addSubview(btn3)
         
         // MARK: Initialize the menu and setup the configuration options.
