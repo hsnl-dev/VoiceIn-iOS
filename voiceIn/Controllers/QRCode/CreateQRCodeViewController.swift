@@ -11,6 +11,7 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var companyTextField: UITextField!
+    var phoneNumberText: String?
     
     required init(coder aDecoder: NSCoder) {
         personPicker = ABPeoplePickerNavigationController()
@@ -29,48 +30,52 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     func peoplePickerNavigationController(
         peoplePicker: ABPeoplePickerNavigationController,
         didSelectPerson person: ABRecordRef){
-            
-            if peoplePicker != personPicker{
-                return
-            }
-            
-            let lastName = ABRecordCopyValue(person, kABPersonLastNameProperty)?
-                .takeRetainedValue() as! String? ?? ""
-            
-            let firstName = ABRecordCopyValue(person, kABPersonFirstNameProperty)?
-                .takeRetainedValue() as! String? ?? ""
-            
-            userNameTextField.text = lastName + firstName
-            
-            let _ = ABRecordCopyValue(person, kABPersonNicknameProperty)?
-                .takeRetainedValue() as! String? ?? ""
-            
-            let organization = ABRecordCopyValue(person, kABPersonOrganizationProperty)?
-                .takeRetainedValue() as! String? ?? ""
-            companyTextField.text = organization
-            
-            let phoneValuesProperty = ABRecordCopyValue(person, kABPersonPhoneProperty)
-            if phoneValuesProperty != nil {
-                let phoneValues: ABMutableMultiValueRef? = phoneValuesProperty.takeRetainedValue()
-                if phoneValues != nil {
-                    for i in 0 ..< ABMultiValueGetCount(phoneValues){
-                        let phoneLabel = ABMultiValueCopyLabelAtIndex(phoneValues, i).takeRetainedValue()
-                            as CFStringRef as CFString;
-                        if phoneLabel == kABPersonPhoneMobileLabel {
-                            
-                            let value = ABMultiValueCopyValueAtIndex(phoneValues, i)
-                            let phone = (value.takeRetainedValue() as! String).stringByReplacingOccurrencesOfString("-", withString: "")
-                            do {
-                                let formatedPhone = try PhoneNumber(rawNumber: phone, region: "TW")
-                                phoneNumberTextField.text = formatedPhone.toE164()
-                            }
-                            catch {
-                                print("Generic parser error")
-                            }
+        
+        if peoplePicker != personPicker{
+            return
+        }
+        
+        let lastName = ABRecordCopyValue(person, kABPersonLastNameProperty)?
+            .takeRetainedValue() as! String? ?? ""
+        
+        let firstName = ABRecordCopyValue(person, kABPersonFirstNameProperty)?
+            .takeRetainedValue() as! String? ?? ""
+        
+        userNameTextField.text = lastName + firstName
+        
+        let _ = ABRecordCopyValue(person, kABPersonNicknameProperty)?
+            .takeRetainedValue() as! String? ?? ""
+        
+        let organization = ABRecordCopyValue(person, kABPersonOrganizationProperty)?
+            .takeRetainedValue() as! String? ?? ""
+        companyTextField.text = organization
+        
+        let phoneValuesProperty = ABRecordCopyValue(person, kABPersonPhoneProperty)
+        if phoneValuesProperty != nil {
+            let phoneValues: ABMutableMultiValueRef? = phoneValuesProperty.takeRetainedValue()
+            if phoneValues != nil {
+                for i in 0 ..< ABMultiValueGetCount(phoneValues){
+                    let phoneLabel = ABMultiValueCopyLabelAtIndex(phoneValues, i).takeRetainedValue()
+                        as CFStringRef as CFString;
+                    if phoneLabel == kABPersonPhoneMobileLabel {
+                        
+                        let value = ABMultiValueCopyValueAtIndex(phoneValues, i)
+                        let phone = (value.takeRetainedValue() as! String).stringByReplacingOccurrencesOfString("-", withString: "")
+                        do {
+                            debugPrint(phone)
+                            let formatedPhone = try PhoneNumber(rawNumber: phone, region: "TW")
+                            phoneNumberTextField.text = formatedPhone.toNational()
+                            phoneNumberText = formatedPhone.toE164()
+                        }
+                        catch {
+                            print("Generic parser error")
+                            AlertBox.createAlertView(self, title: "注意", body: "請輸入正確台灣手機電話格式喔!", buttonValue: "確認")
+                            return
                         }
                     }
                 }
             }
+        }
     }
     
     func peoplePickerNavigationController(peoplePicker: ABPeoplePickerNavigationController, shouldContinueAfterSelectingPerson person: ABRecordRef) -> Bool {
@@ -89,9 +94,30 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     @IBAction func createCustomQrCode(sender: UIButton!) {
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let createCustomQrCodeRoute = API_END_POINT + "/accounts/" + userUuid! + "/customQrcodes"
+        
+        if userNameTextField.text! == "" || phoneNumberTextField.text! == "" {
+            AlertBox.createAlertView(self, title: "注意", body: "姓名和電話都要填寫喔", buttonValue: "確認")
+            return
+        }
+        
+        debugPrint("phoneNumberTextField \(phoneNumberTextField.text!) userNameTextField \(userNameTextField.text!)")
+        
+        // MARK - Manual input.
+        if phoneNumberText == nil && phoneNumberTextField.text != nil {
+            do {
+                let formatedPhone = try PhoneNumber(rawNumber: phoneNumberTextField.text!, region: "TW")
+                phoneNumberText = formatedPhone.toE164()
+            }
+            catch {
+                AlertBox.createAlertView(self, title: "注意", body: "請輸入正確台灣手機電話格式喔!", buttonValue: "確認")
+                print("Generic parser error")
+                return
+            }
+        }
+        
         let parameters = [
             "name": userNameTextField.text as! AnyObject,
-            "phoneNumber": phoneNumberTextField.text as! AnyObject,
+            "phoneNumber": phoneNumberText as! AnyObject,
             "company": companyTextField.text as! AnyObject
         ]
         
