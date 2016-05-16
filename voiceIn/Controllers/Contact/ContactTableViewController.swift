@@ -411,33 +411,54 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        let isFirstFetch = UserPref.getUserPrefByKey("isFirstFetch")
         self.view.userInteractionEnabled = false
+        debugPrint("is First Fetch? \(isFirstFetch)")
+        let parameters = isFirstFetch == "1" ? ["conditional": "false"] : ["conditional": "true"]
         
         Alamofire
-            .request(.GET, getInformationApiRoute, headers: headers)
+            .request(.GET, getInformationApiRoute, headers: headers, parameters: parameters, encoding: .URLEncodedInURL)
             .responseJSON {
                 response in
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
-                    self.contactArray = []
+                    //self.contactArray = []
                     
                     for index in 0 ..< jsonResponse.count {
                         var contactInformation: [String: String?] = [String: String?]()
                         var people: People!
                         var keyValuePair = Array(jsonResponse[index])
+                        var isReplaced = false
                         
                         for indexKeys in 0 ..< keyValuePair.count {
                             contactInformation[keyValuePair[indexKeys].0] = jsonResponse[index][keyValuePair[indexKeys].0].stringValue
                         }
                         
                         people = People(userInformation: contactInformation)
-                        self.contactArray.append(people)
+                        
+                        // MARK - Replace the updated contact
+                        self.contactArray = self.contactArray.map { (n) -> People in
+                            if n.data["id"]! == people.data["id"]! {
+                                debugPrint("isReplace: \(people)")
+                                isReplaced = true
+                                return people
+                            } else {
+                                return n
+                            }
+                        }
+                        
+                        if isReplaced == false {
+                            self.contactArray.append(people)
+                        }
                     }
                     
-                    self.contactArray = self.contactArray.reverse()
-                    self.tableView.reloadData()
+                    UserPref.setUserPref("isFirstFetch", value: false)
+                    
+                    if jsonResponse.count != 0 {
+                        self.tableView.reloadData()
+                    }
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")

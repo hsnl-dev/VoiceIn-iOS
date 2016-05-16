@@ -43,6 +43,7 @@ class HistoryTableViewController: UITableViewController {
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
+                    
                     debugPrint(jsonResponse)
                     self.historyArray = jsonResponse["record"]
                     self.tableView.reloadData()
