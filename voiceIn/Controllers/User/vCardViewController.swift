@@ -2,6 +2,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Material
+import SwiftOverlays
 
 class vCardViewController: UIViewController {
 
@@ -21,6 +22,8 @@ class vCardViewController: UIViewController {
         view.addSubview(scrollView)
         prepareGenQrCodeCardView()
         
+        self.navigationController?.view.userInteractionEnabled = false
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
         /**
         GET: Get the user's information.
@@ -90,12 +93,17 @@ class vCardViewController: UIViewController {
                     if response.data != nil {
                         avatarView.image = UIImage(data: response.data!)
                         self.imageCardView.addSubview(avatarView)
-                        avatarView.frame = CGRect(x: 5, y: 5, width: 100, height: 100)
+                        avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
                         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
                         avatarView.clipsToBounds = true;
+                        
+                        self.navigationController?.view.userInteractionEnabled = true
+                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
                     }
             }
             
+        } else {
+            SwiftOverlays.removeAllOverlaysFromView(self.view!)
         }
         
         

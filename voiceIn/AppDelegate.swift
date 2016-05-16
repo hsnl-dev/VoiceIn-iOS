@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController: UIViewController
         
         if token != nil && userUuid != nil {
+            UserPref.setUserPref("isFirstFetch", value: true)
             print("userUuid:" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
@@ -38,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.rootViewController = rootController
             window.makeKeyAndVisible()
         }
+        
+        debugPrint(" == Launch == ")
         
         IQKeyboardManager.sharedManager().enable = true        
         return true

@@ -1,6 +1,7 @@
 import UIKit
 import Material
 import Alamofire
+import Haneke
 import SwiftOverlays
 
 class ContactDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -18,6 +19,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let spacing: CGFloat = 16
     let diameter: CGFloat = 56
     let height: CGFloat = 36
+    
+    // MARK - Image Cache
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,20 +144,38 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func prepareUserAvatarImage() {
         let photoUuid = userInformation["profilePhotoId"]!
+        
+        
         if photoUuid != "" {
-            let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
-            Alamofire
-                .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
-                .responseData {
-                    response in
-                    debugPrint("The status code is \(response.response?.statusCode)")
-                    // MARK: TODO error handling...
-                    if response.data != nil {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.userAvatarImage.image = UIImage(data: response.data!)
-                            self.userAvatarImage.layer.cornerRadius = 64.0
-                            self.userAvatarImage.clipsToBounds = true
-                        })
+            hnkImageCache.fetch(key: photoUuid!).onSuccess { avatarImage in
+                debugPrint("Cache Image used. \(photoUuid)")
+                self.userAvatarImage.layer.cornerRadius = 64.0
+                self.userAvatarImage.clipsToBounds = true
+                self.userAvatarImage.hnk_setImage(avatarImage, key: photoUuid!)
+                }.onFailure { _ in
+                    debugPrint("failed")
+                    let getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid!
+                    Alamofire
+                        .request(.GET, getImageApiRoute, headers: self.headers, parameters: ["size": "mid"])
+                        .responseData {
+                            response in
+                            debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                            if response.data != nil {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    let avatarImage = UIImage(data: response.data!)
+                                    UIView.transitionWithView(self.userAvatarImage,
+                                        duration: 0.5,
+                                        options: .TransitionCrossDissolve,
+                                        animations: { self.userAvatarImage.image = avatarImage },
+                                        completion: nil
+                                    )
+                                    
+                                    self.userAvatarImage.layer.cornerRadius = 64.0
+                                    self.userAvatarImage.clipsToBounds = true
+                                    self.hnkImageCache.set(value: avatarImage!, key: photoUuid!)
+                                })
+                            }
+                            
                     }
             }
         }
@@ -430,12 +452,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn3.setImage(image, forState: .Normal)
         btn3.setImage(image, forState: .Highlighted)
         btn3.addTarget(self, action: "handleButton:", forControlEvents: .TouchUpInside)
-        menuView.addSubview(btn3)
+        //menuView.addSubview(btn3)
         
         // MARK: Initialize the menu and setup the configuration options.
         menuView.menu.direction = .Up
         menuView.menu.baseViewSize = CGSizeMake(diameter, diameter)
-        menuView.menu.views = [btn1, btn2, btn3]
+        menuView.menu.views = [btn1, btn2]
         
         view.addSubview(menuView)
         menuView.translatesAutoresizingMaskIntoConstraints = false

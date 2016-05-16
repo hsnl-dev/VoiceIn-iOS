@@ -2,10 +2,9 @@ import UIKit
 import Material
 import Alamofire
 import SwiftyJSON
-import SwiftSpinner
 import SwiftOverlays
 import CoreData
-//import SnapKit
+import Haneke
 
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     @IBOutlet var cardBarItem: UIBarButtonItem?
@@ -19,7 +18,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var contactArray: [People] = []
     var filterContactArray: [People] = [People]()
     var navigationTitle: String? = "聯絡簿"
-    let IconPaidText: String = "付費-對方無安裝 App"
     var getContactRoute: String! = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
     
     // MARK - For Group related
@@ -27,6 +25,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var isFromGroupListView: Bool = false
     var groupId: String = ""
     var groupNameTextField: UITextField! = nil
+    
+    // MARK - Image Cache
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -134,10 +135,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-                cell.type.text = "免費"
+                cell.type.text = CallTypeText.freeCallText
                 cell.type.textColor = MaterialColor.red.base
             } else {
-                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : IconPaidText
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -185,10 +186,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             }
             
             if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-                cell.type.text = "免費"
+                cell.type.text = CallTypeText.freeCallText
                 cell.type.textColor = MaterialColor.red.base
             } else {
-                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : IconPaidText
+                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
                 cell.type.textColor = MaterialColor.teal.darken4
             }
             
@@ -203,20 +204,36 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         cell.thumbnailImageView.clipsToBounds = true
         
         if photoUuid != "" {
-            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid            
-            Alamofire
-                .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "small"])
-                .responseData {
-                    response in
-                    debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
-                    if response.data != nil {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            cell.thumbnailImageView.image = UIImage(data: response.data!)
-                            cell.thumbnailImageView.layer.cornerRadius = 25.0
-                            cell.thumbnailImageView.clipsToBounds = true
-                        })
-                    }
-                    
+            hnkImageCache.fetch(key: photoUuid).onSuccess { avatarImage in
+                debugPrint("Cache Image used. \(photoUuid)")
+                cell.thumbnailImageView.layer.cornerRadius = 25.0
+                cell.thumbnailImageView.clipsToBounds = true
+                cell.thumbnailImageView.hnk_setImage(avatarImage, key: photoUuid)
+            }.onFailure { _ in
+                debugPrint("failed")
+                getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
+                Alamofire
+                    .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "mid"])
+                    .responseData {
+                        response in
+                        debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                        if response.data != nil {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                let avatarImage = UIImage(data: response.data!)
+                                UIView.transitionWithView(cell.thumbnailImageView,
+                                    duration: 0.5,
+                                    options: .TransitionCrossDissolve,
+                                    animations: { cell.thumbnailImageView.image = avatarImage },
+                                    completion: nil
+                                )
+                                
+                                cell.thumbnailImageView.layer.cornerRadius = 25.0
+                                cell.thumbnailImageView.clipsToBounds = true
+                                self.hnkImageCache.set(value: avatarImage!, key: photoUuid)
+                            })
+                        }
+                        
+                }
             }
         }
         
@@ -318,7 +335,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             (alert: UIAlertAction!) -> Void in
             self.showUpdateGroupNameModal()
         })
-        let editContact = UIAlertAction(title: "編輯通訊錄", style: .Default, handler: {
+        let editContact = UIAlertAction(title: "編輯此分類成員", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.editContactTapped()
         })
@@ -393,41 +410,61 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
-        //SwiftSpinner.show("讀取中...", animated: true)
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        let isFirstFetch = UserPref.getUserPrefByKey("isFirstFetch")
         self.view.userInteractionEnabled = false
+        debugPrint("is First Fetch? \(isFirstFetch)")
+        let parameters = isFirstFetch == "1" ? ["conditional": "false"] : ["conditional": "true"]
         
         Alamofire
-            .request(.GET, getInformationApiRoute, headers: headers)
+            .request(.GET, getInformationApiRoute, headers: headers, parameters: parameters, encoding: .URLEncodedInURL)
             .responseJSON {
                 response in
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
-                    self.contactArray = []
+                    //self.contactArray = []
                     
                     for index in 0 ..< jsonResponse.count {
                         var contactInformation: [String: String?] = [String: String?]()
                         var people: People!
                         var keyValuePair = Array(jsonResponse[index])
+                        var isReplaced = false
                         
                         for indexKeys in 0 ..< keyValuePair.count {
                             contactInformation[keyValuePair[indexKeys].0] = jsonResponse[index][keyValuePair[indexKeys].0].stringValue
                         }
                         
                         people = People(userInformation: contactInformation)
-                        self.contactArray.append(people)
+                        
+                        // MARK - Replace the updated contact
+                        self.contactArray = self.contactArray.map { (n) -> People in
+                            if n.data["id"]! == people.data["id"]! {
+                                debugPrint("isReplace: \(people)")
+                                isReplaced = true
+                                return people
+                            } else {
+                                return n
+                            }
+                        }
+                        
+                        // MARK - It's a new contact!
+                        if isReplaced == false {
+                            self.contactArray.insert(people, atIndex: 0)
+                        }
                     }
                     
-                    self.contactArray = self.contactArray.reverse()
-                    self.tableView.reloadData()
+                    UserPref.setUserPref("isFirstFetch", value: false)
+                    
+                    if jsonResponse.count != 0 {
+                        self.tableView.reloadData()
+                    }
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                //SwiftSpinner.hide()
                 SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
@@ -473,6 +510,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.refreshControl?.endRefreshing()
             self.view.userInteractionEnabled = true
         } else {
+            hnkImageCache.removeAll()
             getContactList(getContactRoute)
         }
     }

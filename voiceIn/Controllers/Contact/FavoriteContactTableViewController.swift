@@ -13,6 +13,7 @@ import SwiftyJSON
 import SwiftSpinner
 import SwiftOverlays
 import CoreData
+import Haneke
 
 class FavoriteContactTableViewController: UITableViewController {
     
@@ -22,6 +23,8 @@ class FavoriteContactTableViewController: UITableViewController {
     
     // MARK: Array of ContactList
     var contactArray: [People] = []
+    // MARK - Image Cache
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -90,10 +93,10 @@ class FavoriteContactTableViewController: UITableViewController {
         }
         
         if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-            cell.type.text = "免費"
+            cell.type.text = CallTypeText.freeCallText
             cell.type.textColor = MaterialColor.red.base
         } else {
-            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? "付費" : "付費-由無 App 客戶產生"
+            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
             cell.type.textColor = MaterialColor.teal.darken4
         }
         
@@ -110,19 +113,36 @@ class FavoriteContactTableViewController: UITableViewController {
         cell.thumbnailImageView.clipsToBounds = true
         
         if photoUuid != "" {
-            getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
-            Alamofire
-                .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "small"])
-                .responseData {
-                    response in
-                    if response.data != nil {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            cell.thumbnailImageView.image = UIImage(data: response.data!)
-                            cell.thumbnailImageView.layer.cornerRadius = 25.0
-                            cell.thumbnailImageView.clipsToBounds = true
-                        })
+            hnkImageCache.fetch(key: photoUuid).onSuccess { avatarImage in
+                debugPrint("Cache Image used. \(photoUuid)")
+                cell.thumbnailImageView.layer.cornerRadius = 25.0
+                cell.thumbnailImageView.clipsToBounds = true
+                cell.thumbnailImageView.hnk_setImage(avatarImage, key: photoUuid)
+                }.onFailure { _ in
+                    debugPrint("failed")
+                    getImageApiRoute = API_END_POINT + "/avatars/" + photoUuid
+                    Alamofire
+                        .request(.GET, getImageApiRoute!, headers: self.headers, parameters: ["size": "mid"])
+                        .responseData {
+                            response in
+                            debugPrint("The status code is \(response.response?.allHeaderFields) \n \(response.request?.allHTTPHeaderFields)")
+                            if response.data != nil {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    let avatarImage = UIImage(data: response.data!)
+                                    UIView.transitionWithView(cell.thumbnailImageView,
+                                        duration: 0.5,
+                                        options: .TransitionCrossDissolve,
+                                        animations: { cell.thumbnailImageView.image = avatarImage },
+                                        completion: nil
+                                    )
+                                    
+                                    cell.thumbnailImageView.layer.cornerRadius = 25.0
+                                    cell.thumbnailImageView.clipsToBounds = true
+                                    self.hnkImageCache.set(value: avatarImage!, key: photoUuid)
+                                })
+                            }
+                            
                     }
-                    
             }
         }
         

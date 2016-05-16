@@ -34,7 +34,7 @@ class NotificationTableViewController: UITableViewController {
     private func getNotificationList() {
         self.view.userInteractionEnabled = false
         let getNotificationRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/notifications"
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView, text: "讀取中...")
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
         
         Alamofire
             .request(.GET, getNotificationRoute, headers: headers)
@@ -51,7 +51,7 @@ class NotificationTableViewController: UITableViewController {
                     AlertBox.createAlertView(self, title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.tableView)
+                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 self.view.userInteractionEnabled = true
         }
     }
