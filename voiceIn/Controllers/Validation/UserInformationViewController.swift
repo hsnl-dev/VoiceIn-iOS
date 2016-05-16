@@ -210,7 +210,7 @@ class UserInformationViewController: FormViewController {
         saveButton.pulseScale = false
         saveButton.setImage(image, forState: .Normal)
         saveButton.setImage(image, forState: .Highlighted)
-        saveButton.addTarget(self, action: "saveButtonClicked:", forControlEvents: .TouchUpInside)
+        saveButton.addTarget(self, action: #selector(UserInformationViewController.saveButtonClicked(_:)), forControlEvents: .TouchUpInside)
 
         view.addSubview(navigationBarView)
 
@@ -269,6 +269,13 @@ class UserInformationViewController: FormViewController {
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
+                    UserPref.setUserPref("userName", value: parameters["userName"])
+                    UserPref.setUserPref("profile", value: parameters["profile"])
+                    UserPref.setUserPref("location", value: parameters["location"])
+                    UserPref.setUserPref("jobTitle", value: parameters["jobTitle"])
+                    UserPref.setUserPref("email", value: parameters["email"])
+                    UserPref.setUserPref("company", value: parameters["company"])
+
                 } else if error != nil {
                     print(error)
                     AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")

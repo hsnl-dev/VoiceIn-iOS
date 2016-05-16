@@ -3,6 +3,7 @@ import Alamofire
 import SwiftyJSON
 import Material
 import SwiftOverlays
+import ReachabilitySwift
 
 class vCardViewController: UIViewController {
 
@@ -12,41 +13,55 @@ class vCardViewController: UIViewController {
 
     var scrollView: UIScrollView!
     var qrCodeLink: String!
+    var isReachable = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserPref.setUserPref("isFirstFetch", value: true)
+ 
+        isReachable = Networker.isReach()
         
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.backgroundColor = MaterialColor.grey.lighten3
         scrollView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        view.addSubview(scrollView)
-        prepareGenQrCodeCardView()
         
-        self.navigationController?.view.userInteractionEnabled = false
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
-        let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
+        view.addSubview(scrollView)
+        
         /**
         GET: Get the user's information.
         **/
-        Alamofire
-            .request(.GET, getInformationApiRoute, headers: headers)
-            .responseJSON {
-                response in
-                switch response.result {
-                case .Success(let JSON_RESPONSE):
-                    let jsonResponse = JSON(JSON_RESPONSE)
-                    self.prepareVcardView(jsonResponse)
-                case .Failure(let error):
-                    AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
-                    debugPrint(error)
-                }
+        if isReachable == true {
+            SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
+            self.navigationController?.view.userInteractionEnabled = false
+            let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
+            Alamofire
+                .request(.GET, getInformationApiRoute, headers: headers)
+                .responseJSON {
+                    response in
+                    switch response.result {
+                    case .Success(let JSON_RESPONSE):
+                        let jsonResponse = JSON(JSON_RESPONSE)
+                        self.prepareVcardView(jsonResponse)
+                        self.prepareGenQrCodeCardView()
+                    case .Failure(let error):
+                        AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
+                        debugPrint(error)
+                    }
+            }
+        } else {
+            prepareOfflineView()
+            prepareOfflineCardView()
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.contentSize = UIScreen.mainScreen().bounds.size
-        scrollView.contentSize.height = imageCardView.height + cardView.height + 25
+        scrollView.contentSize.height = imageCardView.height + cardView.height + 40
     }
     
     private func prepareVcardView(jsonResponse: JSON) {
@@ -54,7 +69,6 @@ class vCardViewController: UIViewController {
         imageCardView.maxImageHeight = 150
         
         // Image.
-        let size: CGSize = CGSizeMake(MaterialDevice.width - CGFloat(40), 150)
         imageCardView.image = UIImage(named: "blurred-web-backgrounds.jpg")
         
         // Title label.
@@ -67,12 +81,17 @@ class vCardViewController: UIViewController {
         
         // Detail label.
         let detailLabel: UILabel = UILabel()
+        
+        
         detailLabel.text = "職稱: \(jsonResponse["jobTitle"].stringValue == "" ? "尚未填寫職位" : jsonResponse["jobTitle"].stringValue) \n連絡信箱: \(jsonResponse["email"].stringValue == "" ? "尚未填寫聯絡方式" : jsonResponse["email"].stringValue)\n\n關於: \n \(jsonResponse["profile"].stringValue.trim() == "" ? "尚未填寫介紹" : jsonResponse["profile"].stringValue.trim())\n\n來自於: \(jsonResponse["location"].stringValue == "" ? "未填寫地址" : jsonResponse["location"].stringValue)"
+        
+        
+        
         detailLabel.numberOfLines = 0
         imageCardView.detailView = detailLabel
         
         
-        if jsonResponse["profilePhotoId"].stringValue != "" {
+        if jsonResponse["profilePhotoId"].stringValue != "" && isReachable {
             // MARK: Retrieve the image
             let avatarView: UIImageView = UIImageView()
             let qrCodeView: UIImageView = UIImageView()
@@ -85,6 +104,8 @@ class vCardViewController: UIViewController {
                     
                     qrCodeView.frame = CGRect(x: self.imageCardView.frame.origin.x + self.imageCardView.width - 110 , y: 5, width: 100, height: 100)
                     qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
+                    
+                    UserPref.setUserPref("qrCodeUuid", value: jsonResponse["qrCodeUuid"].stringValue)
                     
                     self.imageCardView.addSubview(qrCodeView)
                     self.imageCardView.bringSubviewToFront(qrCodeView)
@@ -124,8 +145,91 @@ class vCardViewController: UIViewController {
         MaterialLayout.width(scrollView, child: imageCardView, width: scrollView.bounds.width - 10)
     }
     
-    func prepareGenQrCodeCardView() {
+    func prepareOfflineView() {
+        // Title label.
+        let titleLabel: UILabel = UILabel()
+        titleLabel.text = "離線中 ..."
+        titleLabel.textColor = MaterialColor.blue.darken1
+        titleLabel.font = RobotoFont.mediumWithSize(15)
+        cardView.titleLabel = titleLabel
         
+        // Detail label.
+        let detailLabel: UILabel = UILabel()
+        detailLabel.text = "請開啟網路，並點重新連線喔。"
+        detailLabel.numberOfLines = 0
+        cardView.detailView = detailLabel
+        
+        // Yes button.
+        let btn1: FlatButton = FlatButton()
+        btn1.pulseColor = MaterialColor.cyan.lighten1
+        btn1.pulseScale = false
+        btn1.setTitle("重新連線", forState: .Normal)
+        btn1.setTitleColor(MaterialColor.cyan.darken1, forState: .Normal)
+        btn1.addTarget(self, action: #selector(vCardViewController.reConnect(_:)), forControlEvents: .TouchUpInside)
+        cardView.leftButtons = [btn1]
+                
+        // To support orientation changes, use MaterialLayout.
+        scrollView.addSubview(cardView)
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        MaterialLayout.alignFromTop(scrollView, child: cardView, top: 20)
+        MaterialLayout.alignFromLeft(scrollView, child: cardView, left: 5)
+        MaterialLayout.width(scrollView, child: cardView, width: scrollView.bounds.width - 10)
+    }
+    
+    func prepareOfflineCardView() {
+        imageCardView.maxImageHeight = 150
+        let qrCodeUuid = UserPref.getUserPrefByKey("qrCodeUuid")
+        imageCardView.image = UIImage(named: "blurred-web-backgrounds.jpg")
+        
+        let detailLabel: UILabel = UILabel()
+        
+        detailLabel.text = "職稱: \(UserPref.getUserPrefByKey("jobTitle")) \n連絡信箱: \(UserPref.getUserPrefByKey("email"))\n\n關於: \n \(UserPref.getUserPrefByKey("profile"))\n\n來自於: \(UserPref.getUserPrefByKey("location"))"
+        detailLabel.numberOfLines = 0
+        imageCardView.detailView = detailLabel
+        
+        let btn1: FlatButton = FlatButton()
+        btn1.pulseColor = MaterialColor.cyan.lighten1
+        btn1.pulseScale = false
+        btn1.setTitle(UserPref.getUserPrefByKey("company"), forState: .Normal)
+        btn1.setTitleColor(MaterialColor.cyan.darken1, forState: .Normal)
+        
+        // Add buttons to left side.
+        imageCardView.leftButtons = [btn1]
+        
+        // To support orientation changes, use MaterialLayout.
+        scrollView.addSubview(imageCardView)
+        imageCardView.translatesAutoresizingMaskIntoConstraints = false
+        MaterialLayout.alignFromTop(scrollView, child: imageCardView, top: 180)
+        MaterialLayout.alignFromLeft(scrollView, child: imageCardView, left: 5)
+        MaterialLayout.width(scrollView, child: imageCardView, width: scrollView.bounds.width - 10)
+        
+        let avatarView: UIImageView = UIImageView()
+        let qrCodeView: UIImageView = UIImageView()
+        
+        qrCodeView.frame = CGRect(x: scrollView.bounds.width - 110, y: 185, width: 100, height: 100)
+        qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + qrCodeUuid)))
+        
+        self.scrollView.addSubview(qrCodeView)
+        self.qrCodeLink = QRCODE_ROUTE + qrCodeUuid
+        
+        avatarView.image = UIImage(named: "user")
+        self.scrollView.addSubview(avatarView)
+        
+        avatarView.frame = CGRect(x: 5, y: 185, width: 100, height: 100)
+        avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
+        avatarView.clipsToBounds = true;
+        
+        // Title label.
+        let titleLabel: UILabel = UILabel()
+        titleLabel.frame = CGRect(x: 20, y: 250, width: 100, height: 100)
+        titleLabel.text = UserPref.getUserPrefByKey("userName")
+        titleLabel.textColor = MaterialColor.white
+        titleLabel.font = RobotoFont.mediumWithSize(24)
+        self.scrollView.addSubview(titleLabel)
+
+    }
+    
+    func prepareGenQrCodeCardView() {
         // Title label.
         let titleLabel: UILabel = UILabel()
         titleLabel.text = "專屬特製 QRCode"
@@ -147,7 +251,7 @@ class vCardViewController: UIViewController {
         btn1.setTitleColor(MaterialColor.cyan.darken1, forState: .Normal)
         cardView.leftButtons = [btn1]
         
-        let gesture = UITapGestureRecognizer(target: self, action: "performSegue:")
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(vCardViewController.performSegue(_:)))
         cardView.addGestureRecognizer(gesture)
         
         // To support orientation changes, use MaterialLayout.
@@ -156,6 +260,18 @@ class vCardViewController: UIViewController {
         MaterialLayout.alignFromTop(scrollView, child: cardView, top: 10)
         MaterialLayout.alignFromLeft(scrollView, child: cardView, left: 5)
         MaterialLayout.width(scrollView, child: cardView, width: scrollView.bounds.width - 10)
+
+    }
+    
+    func reConnect(sender: UIButton?) {
+        debugPrint("reConnect.")
+            
+        if Networker.isReach() != true {
+            AlertBox.createAlertView(self, title: "注意", body: "請開啟網路喔!", buttonValue: "確認")
+        } else {
+            let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
+            self.presentViewController(rootController, animated: true, completion: nil)
+        }
 
     }
     

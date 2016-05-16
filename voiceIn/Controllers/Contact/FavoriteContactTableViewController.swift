@@ -14,6 +14,7 @@ import SwiftSpinner
 import SwiftOverlays
 import CoreData
 import Haneke
+import ReachabilitySwift
 
 class FavoriteContactTableViewController: UITableViewController {
     
@@ -27,7 +28,7 @@ class FavoriteContactTableViewController: UITableViewController {
     let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
-        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(FavoriteContactTableViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         super.viewDidLoad()
         prepareView()
     }
@@ -197,7 +198,7 @@ class FavoriteContactTableViewController: UITableViewController {
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
-                    debugPrint(jsonResponse)
+                    debugPrint(jsonResponse.count)
                     self.contactArray = []
                     
                     for index in 0 ..< jsonResponse.count {
@@ -227,15 +228,7 @@ class FavoriteContactTableViewController: UITableViewController {
     }
     
     func refresh(sender: AnyObject) {
-        var reachability: Reachability
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            debugPrint("Unable to create Reachability")
-            return
-        }
-        
-        if reachability.isReachable() != true {
+        if Networker.isReach() != true {
             debugPrint("Network is not connected!")
             AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
             self.refreshControl?.endRefreshing()
