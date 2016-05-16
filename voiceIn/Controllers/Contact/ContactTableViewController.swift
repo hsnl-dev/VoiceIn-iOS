@@ -449,8 +449,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                             }
                         }
                         
+                        // MARK - It's a new contact!
                         if isReplaced == false {
-                            self.contactArray.append(people)
+                            self.contactArray.insert(people, atIndex: 0)
                         }
                     }
                     
