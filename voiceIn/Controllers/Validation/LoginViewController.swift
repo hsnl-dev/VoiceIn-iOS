@@ -68,7 +68,12 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         print("Current Page \(pageNumber)")
     }
     
-    @IBAction func walkthroughCloseButtonPressed(segue:UIStoryboardSegue) {
+    @IBAction func unwindToLoginPage(segue: UIStoryboardSegue) {
+        
+    }
+    
+    @IBAction func walkthroughCloseButtonPressed(segue: UIStoryboardSegue) {
+        print("walkthroughCloseButtonPressed:")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -108,7 +113,7 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         print("Sending Validation Code..." + phoneNumberField.text!)
         
         if (phoneNumberField.text! == "") {
-            self.createAlertView("小提醒", body: "請輸入手機號碼喔!", buttonValue: "確認")
+            AlertBox.createAlertView(self, title: "小提醒", body: "請輸入手機號碼喔!", buttonValue: "確認")
             return
         }
         
@@ -136,6 +141,8 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
                         UserPref.setUserPref("phoneNumber", value: phoneNumber.toE164())
                     case .Failure(let error):
                         print("Request failed with error: \(error)")
+                        AlertBox.createAlertView(self, title: "小提醒", body: "請記得開啟網路喔!", buttonValue: "確認")
+                        self.enableButton()
                     }
             }
 
@@ -150,16 +157,5 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
             let destinationController = segue.destinationViewController as! ValidationCodeViewController
             destinationController.userUuid = self.json!["userUuid"].stringValue
         }
-    }
-    
-    @IBAction func unwindToLoginPage(segue:UIStoryboardSegue) {
-        //MARK: Exit the validation code input page and go back to phone input page.
-        //Do something here ...
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
 }

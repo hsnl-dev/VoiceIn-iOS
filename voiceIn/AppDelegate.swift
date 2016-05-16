@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController: UIViewController
         
         if token != nil && userUuid != nil {
+            UserPref.setUserPref("isFirstFetch", value: true)
             print("userUuid:" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
@@ -39,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
         
+        debugPrint(" == Launch == ")
+        
         IQKeyboardManager.sharedManager().enable = true        
         return true
     }
@@ -47,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("DEVICE TOKEN = \(deviceToken)")
         let characterSet: NSCharacterSet = NSCharacterSet(charactersInString: "<>")
         UserPref.setUserPref("deviceKey", value: (deviceToken.description as NSString).stringByTrimmingCharactersInSet(characterSet).stringByReplacingOccurrencesOfString(" ", withString: "") as String)
+//        UserPref.setUserPref("deviceKey", value: "47de41283f6cdce4932b7e7c44ec601c102858463b87c0c1df44723583aca695")
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

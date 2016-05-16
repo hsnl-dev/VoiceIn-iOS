@@ -32,16 +32,16 @@ class CallService {
                 SwiftOverlays.removeAllOverlaysFromView(self.view!.superview!)
                 
                 if error != nil {
-                    self.createAlertView("抱歉!", body: "無法撥打成功，請稍候再試。", buttonValue: "確認")
+                    AlertBox.createAlertView(self._self! ,title: "抱歉!", body: "無法撥打成功，請稍候再試。", buttonValue: "確認")
                     self.view!.userInteractionEnabled = true
                 } else {
                     debugPrint(response)
                     if (response?.statusCode)! == 403 {
-                        self.createAlertView("抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
+                        AlertBox.createAlertView(self._self! ,title: "抱歉!", body: "對方為忙碌狀態\n請查看對方可通話時段。", buttonValue: "確認")
                         self.view!.userInteractionEnabled = true
                         return
                     } else if (response?.statusCode)! == 402 {
-                        self.createAlertView("抱歉!", body: "您的點數或對方點數已經用盡，需要儲值。", buttonValue: "確認")
+                        AlertBox.createAlertView(self._self! ,title: "抱歉!", body: "您的點數或對方點數已經用盡，需要儲值。", buttonValue: "確認")
                         self.view!.userInteractionEnabled = true
                         return
                     }
@@ -51,11 +51,5 @@ class CallService {
         
         callConfirmAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
         _self!.presentViewController(callConfirmAlert, animated: true, completion: nil)
-    }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        _self!.presentViewController(alert, animated: true, completion: nil)
     }
 }

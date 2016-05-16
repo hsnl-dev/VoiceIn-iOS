@@ -11,6 +11,7 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var companyTextField: UITextField!
+    var phoneNumberText: String?
     
     required init(coder aDecoder: NSCoder) {
         personPicker = ABPeoplePickerNavigationController()
@@ -61,11 +62,15 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
                             let value = ABMultiValueCopyValueAtIndex(phoneValues, i)
                             let phone = (value.takeRetainedValue() as! String).stringByReplacingOccurrencesOfString("-", withString: "")
                             do {
+                                debugPrint(phone)
                                 let formatedPhone = try PhoneNumber(rawNumber: phone, region: "TW")
-                                phoneNumberTextField.text = formatedPhone.toE164()
+                                phoneNumberTextField.text = formatedPhone.toNational()
+                                phoneNumberText = formatedPhone.toE164()
                             }
                             catch {
                                 print("Generic parser error")
+                                AlertBox.createAlertView(self, title: "注意", body: "請輸入正確台灣手機電話格式喔!", buttonValue: "確認")
+                                return
                             }
                         }
                     }
@@ -89,9 +94,30 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     @IBAction func createCustomQrCode(sender: UIButton!) {
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let createCustomQrCodeRoute = API_END_POINT + "/accounts/" + userUuid! + "/customQrcodes"
+        
+        if userNameTextField.text! == "" || phoneNumberTextField.text! == "" {
+            AlertBox.createAlertView(self, title: "注意", body: "姓名和電話都要填寫喔", buttonValue: "確認")
+            return
+        }
+        
+        debugPrint("phoneNumberTextField \(phoneNumberTextField.text!) userNameTextField \(userNameTextField.text!)")
+        
+        // MARK - Manual input.
+        if phoneNumberText == nil && phoneNumberTextField.text != nil {
+            do {
+                let formatedPhone = try PhoneNumber(rawNumber: phoneNumberTextField.text!, region: "TW")
+                phoneNumberText = formatedPhone.toE164()
+            }
+            catch {
+                AlertBox.createAlertView(self, title: "注意", body: "請輸入正確台灣手機電話格式喔!", buttonValue: "確認")
+                print("Generic parser error")
+                return
+            }
+        }
+        
         let parameters = [
             "name": userNameTextField.text as! AnyObject,
-            "phoneNumber": phoneNumberTextField.text as! AnyObject,
+            "phoneNumber": phoneNumberText as! AnyObject,
             "company": companyTextField.text as! AnyObject
         ]
         
@@ -105,15 +131,8 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
                 } else {
                     //MARK: TODO Error handling
                     debugPrint(error)
-                    self.createAlertView("抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
+                    AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                 }
         }
     }
-    
-    private func createAlertView(title: String!, body: String!, buttonValue: String!) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: buttonValue, style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
 }
