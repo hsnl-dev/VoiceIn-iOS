@@ -94,7 +94,7 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     @IBAction func createCustomQrCode(sender: UIButton!) {
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let createCustomQrCodeRoute = API_END_POINT + "/accounts/" + userUuid! + "/customQrcodes"
-        
+                
         if userNameTextField.text! == "" || phoneNumberTextField.text! == "" {
             AlertBox.createAlertView(self, title: "注意", body: "姓名和電話都要填寫喔", buttonValue: "確認")
             return

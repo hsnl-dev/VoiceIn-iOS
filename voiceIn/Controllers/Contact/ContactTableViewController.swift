@@ -197,16 +197,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             var userInformation: [String: String?] = contactArray[indexPath.row].data
             let nickName = userInformation["nickName"]! as String?
+            let userName = userInformation["userName"]! as String?
             let providerIsEnable = userInformation["providerIsEnable"]!!
             let isThisContactLike = userInformation["isLike"]!!
             
             photoUuid = (userInformation["profilePhotoId"]! as String?)!
             
             if nickName == "" {
-                cell.nameLabel.text = userInformation["userName"]!
+                cell.nameLabel.text = userName
             } else {
                 cell.nameLabel.text = nickName
             }
+            
+            debugPrint(userInformation["userName"], nickName)
             
             // MARK - Set the images to indicate if the user is busy or not.
             if providerIsEnable == "false" {
@@ -467,7 +470,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
-                    debugPrint(jsonResponse.count)
+                    debugPrint(jsonResponse)
                     //self.contactArray = []
                     
                     for index in 0 ..< jsonResponse.count {
@@ -485,15 +488,22 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                         // MARK - Replace the updated contact
                         self.contactArray = self.contactArray.map { (n) -> People in
                             if n.data["id"]! == people.data["id"]! {
-                                debugPrint("isReplace: \(people)")
+                                debugPrint("isReplaced \(n.data["id"]) - \(n.data["userName"])")
                                 isReplaced = true
                                 return people
                             } else {
                                 return n
                             }
+                            }.filter({
+                                $0.data["userName"]! != ""
+                            })
+                        
+                        // MARK - ignore the deleted contact, the cell deleted so the id will not match.
+                        if people.data["userName"]! == "" {
+                            continue
                         }
                         
-                        // MARK - It's a new contact!
+                        // MARK - It's a new contact, insert to the top!
                         if isReplaced == false {
                             self.contactArray.insert(people, atIndex: 0)
                         }

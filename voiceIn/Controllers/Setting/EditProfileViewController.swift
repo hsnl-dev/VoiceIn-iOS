@@ -310,7 +310,9 @@ class EditProfileViewController: FormViewController {
      @return: true if valid, false if unvalid.
      **/
     private func isFormValuesValid(formValues: [String: Any?]!) -> Bool {
-        if formValues["userName"] as? String == nil {
+        let userName = formValues["userName"] as? String
+        
+        if  userName == nil || userName?.trim() == "" {
             AlertBox.createAlertView(self ,title: "小提醒", body: "請輸入您的大名喔", buttonValue: "確認")
             return false
         }

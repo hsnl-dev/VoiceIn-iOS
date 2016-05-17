@@ -1,6 +1,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SwiftOverlays
 
 class ProviderInformationViewController: UIViewController {
     var qrCodeUuid: String!
@@ -129,6 +130,7 @@ class ProviderInformationViewController: UIViewController {
     }
     
     @IBAction func addNewContact(sender: UIButton!) {
+        UserPref.setUserPref("isFirstFetch", value: true)
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let addNewContactApiRoute = API_END_POINT + "/accounts/" + userUuid + "/contacts/" + qrCodeUuid
         
@@ -140,6 +142,7 @@ class ProviderInformationViewController: UIViewController {
             "nickName": nickName as String
         ]
         debugPrint(parameters)
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "新增聯絡人中，請稍候...")
         /**
         POST: Add new contact.
         **/
@@ -165,6 +168,7 @@ class ProviderInformationViewController: UIViewController {
                         AlertBox.createAlertView(self, title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     }
                 }
+                SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
         }
     }
     
