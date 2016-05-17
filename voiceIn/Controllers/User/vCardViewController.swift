@@ -17,8 +17,6 @@ class vCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserPref.setUserPref("isFirstFetch", value: true)
- 
         isReachable = Networker.isReach()
         
         scrollView = UIScrollView(frame: view.bounds)
@@ -49,6 +47,7 @@ class vCardViewController: UIViewController {
                     }
             }
         } else {
+            UserPref.setUserPref("isFirstFetch", value: true)
             prepareOfflineView()
             prepareOfflineCardView()
         }
