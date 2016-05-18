@@ -58,6 +58,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.navigationController?.view.userInteractionEnabled = true
         //declare this inside of viewWillAppear
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
@@ -94,13 +95,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         let reachability = note.object as! Reachability
         dispatch_async(dispatch_get_main_queue()) {
             if reachability.isReachable() {
+                let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
                 debugPrint("Network Enable")
-                //self.dismissViewControllerAnimated(true, completion: nil)
+//                if isFirstLogin == nil || isFirstLogin == "false" {
+//                    self.dismissViewControllerAnimated(true, completion: nil)
+//                } else {
+//                    // MARK: First login.
+//                    UserPref.setUserPref("isFirstLogin", value: "false")
+//                }
+                
             } else {
                 print("Network not reachable")
                 let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController
                 self.presentViewController(vcardViewController, animated: true, completion: nil)
-
             }
         }
     }
@@ -108,9 +115,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     deinit {
         reachability!.stopNotifier()
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-                                                            name: ReachabilityChangedNotification,
-                                                            object: reachability)
+        NSNotificationCenter
+            .defaultCenter()
+            .removeObserver(self, name: ReachabilityChangedNotification, object: reachability)
     }
     
     // MARK: General preparation statements.

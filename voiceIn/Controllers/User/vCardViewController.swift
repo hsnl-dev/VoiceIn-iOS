@@ -30,9 +30,9 @@ class vCardViewController: UIViewController {
         /**
         GET: Get the user's information.
         **/
+        self.navigationController?.view.userInteractionEnabled = false
         if isReachable == true {
             SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
-            self.navigationController?.view.userInteractionEnabled = false
             let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
             Alamofire
                 .request(.GET, getInformationApiRoute, headers: headers)
@@ -169,10 +169,12 @@ class vCardViewController: UIViewController {
                             // MARK: TODO Error handling
                             if response.data != nil {
                                 avatarView.image = UIImage(data: response.data!)
+                                
                                 self.hnkImageCache.set(value: avatarView.image!, key: "profilePhoto")
-                                self.navigationController?.view.userInteractionEnabled = true
                                 SwiftOverlays.removeAllOverlaysFromView(self.view!)
                             }
+                            
+                            self.navigationController?.view.userInteractionEnabled = true
                         }
                 }
         } else {
@@ -223,6 +225,7 @@ class vCardViewController: UIViewController {
         let qrCodeUuid = UserPref.getUserPrefByKey("qrCodeUuid")
         
         if qrCodeUuid == nil {
+            self.navigationController?.view.userInteractionEnabled = true
             return
         }
         
@@ -265,7 +268,6 @@ class vCardViewController: UIViewController {
                 avatarView.image = avatarImage
                 self.scrollView.addSubview(avatarView)
             
-                self.navigationController?.view.userInteractionEnabled = true
                 SwiftOverlays.removeAllOverlaysFromView(self.view!)
             }.onFailure { _ in
                 debugPrint("Cache is not used.")
@@ -273,6 +275,7 @@ class vCardViewController: UIViewController {
                 self.scrollView.addSubview(avatarView)
             }
         
+        self.navigationController?.view.userInteractionEnabled = true
         avatarView.frame = CGRect(x: 10, y: 185, width: 100, height: 100)
         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
         avatarView.clipsToBounds = true;
