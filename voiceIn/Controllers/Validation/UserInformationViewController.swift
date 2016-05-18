@@ -5,6 +5,7 @@ import Alamofire
 import SwiftyJSON
 import ALCameraViewController
 import SwiftOverlays
+import Haneke
 
 class UserInformationViewController: FormViewController {
     // MARK: The API Information.
@@ -12,7 +13,8 @@ class UserInformationViewController: FormViewController {
 
     private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
-    
+    let hnkImageCache = Shared.imageCache
+
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNavigationBar()
@@ -52,7 +54,7 @@ class UserInformationViewController: FormViewController {
         
     }
     
-    func prepareInputForm(userInformation: JSON) {
+    func prepareInputForm(userInformation: SwiftyJSON.JSON) {
         form.removeAll()
         form +++
             Section(header: "", footer: "")
@@ -299,12 +301,14 @@ class UserInformationViewController: FormViewController {
                         case .Success(let upload, _, _):
                             upload.response { response in
                                 print("上傳成功。")
+                                self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
                             }
                         case .Failure(let encodingError):
                             AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                            self.removeAllOverlays()
                             print(encodingError)
                         }
+                        
+                        self.removeAllOverlays()
                 })
         }
         

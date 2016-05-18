@@ -6,6 +6,7 @@ import SwiftyJSON
 import ALCameraViewController
 import SwiftOverlays
 import ReachabilitySwift
+import Haneke
 
 class EditProfileViewController: FormViewController {
     let headers = Network.generateHeader(isTokenNeeded: true)
@@ -15,6 +16,7 @@ class EditProfileViewController: FormViewController {
     
     private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +80,7 @@ class EditProfileViewController: FormViewController {
         }
     }
     
-    func prepareInputForm(userInformation: JSON) {
+    func prepareInputForm(userInformation: SwiftyJSON.JSON) {
         debugPrint(userInformation)
         self.refreshButton.hidden = true
         
@@ -294,12 +296,15 @@ class EditProfileViewController: FormViewController {
                         case .Success(let upload, _, _):
                             upload.response { response in
                                 print("photo success")
-                                self.removeAllOverlays()
+                                self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
                                 AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                             }
                         case .Failure(let encodingError):
+                            AlertBox.createAlertView(self ,title: "抱歉!", body: "出現網路或伺服器錯誤", buttonValue: "確認")
                             print(encodingError)
                         }
+                        
+                        self.removeAllOverlays()
                 })
         }
     }
