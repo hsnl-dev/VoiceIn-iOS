@@ -96,7 +96,6 @@ class vCardViewController: UIViewController {
         MaterialLayout.alignFromTop(scrollView, child: cardView, top: 10)
         MaterialLayout.alignFromLeft(scrollView, child: cardView, left: 5)
         MaterialLayout.width(scrollView, child: cardView, width: scrollView.bounds.width - 10)
-        
     }
     
     private func prepareVcardView(jsonResponse: SwiftyJSON.JSON) {
@@ -141,29 +140,27 @@ class vCardViewController: UIViewController {
         MaterialLayout.alignFromLeft(scrollView, child: imageCardView, left: 5)
         MaterialLayout.width(scrollView, child: imageCardView, width: scrollView.bounds.width - 10)
         
+        let qrCodeView: UIImageView = UIImageView()
+        let avatarView: UIImageView = UIImageView()
+
+        qrCodeView.frame = CGRect(x: scrollView.bounds.width - 115 , y: 5, width: 100, height: 100)
+        qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
+        
+        UserPref.setUserPref("qrCodeUuid", value: jsonResponse["qrCodeUuid"].stringValue)
+        
+        self.imageCardView.addSubview(qrCodeView)
+        self.imageCardView.bringSubviewToFront(qrCodeView)
+        self.qrCodeLink = QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue
+        
         // MARK - isReachable means online.
         if jsonResponse["profilePhotoId"].stringValue != "" && isReachable {
             // MARK: Retrieve the image
-            let avatarView: UIImageView = UIImageView()
-            let qrCodeView: UIImageView = UIImageView()
             
             hnkImageCache.fetch(key: "profilePhoto")
                 .onSuccess { avatarImage in
                     debugPrint("Cache is used.")
                 
-                    qrCodeView.frame = CGRect(x: self.scrollView.bounds.width - 115, y: 5, width: 100, height: 100)
-                    qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
-                
-                    self.imageCardView.addSubview(qrCodeView)
-                    self.imageCardView.bringSubviewToFront(qrCodeView)
-                    self.qrCodeLink = QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue
-                
                     avatarView.image = avatarImage
-                    self.imageCardView.addSubview(avatarView)
-                    avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
-                    avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
-                    avatarView.clipsToBounds = true;
-                    
                     self.navigationController?.view.userInteractionEnabled = true
                     SwiftOverlays.removeAllOverlaysFromView(self.view!)
                 }.onFailure { _ in
@@ -174,23 +171,8 @@ class vCardViewController: UIViewController {
                         .responseData {
                             response in
                             // MARK: TODO Error handling
-                            
-                            qrCodeView.frame = CGRect(x: self.imageCardView.frame.origin.x + self.imageCardView.width - 110 , y: 5, width: 100, height: 100)
-                            qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
-                            
-                            UserPref.setUserPref("qrCodeUuid", value: jsonResponse["qrCodeUuid"].stringValue)
-                            
-                            self.imageCardView.addSubview(qrCodeView)
-                            self.imageCardView.bringSubviewToFront(qrCodeView)
-                            self.qrCodeLink = QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue
-                            
                             if response.data != nil {
                                 avatarView.image = UIImage(data: response.data!)
-                                self.imageCardView.addSubview(avatarView)
-                                avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
-                                avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
-                                avatarView.clipsToBounds = true;
-                                
                                 self.hnkImageCache.set(value: avatarView.image!, key: "profilePhoto")
                                 self.navigationController?.view.userInteractionEnabled = true
                                 SwiftOverlays.removeAllOverlaysFromView(self.view!)
@@ -198,8 +180,16 @@ class vCardViewController: UIViewController {
                         }
                 }
         } else {
+            avatarView.image = UIImage(named: "user")
             SwiftOverlays.removeAllOverlaysFromView(self.view!)
+            self.navigationController?.view.userInteractionEnabled = true
         }
+        
+        self.imageCardView.addSubview(avatarView)
+        avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
+        avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
+        avatarView.clipsToBounds = true;
+        
     }
     
     func prepareOfflineView() {
@@ -236,6 +226,11 @@ class vCardViewController: UIViewController {
     func prepareOfflineCardView() {
         imageCardView.maxImageHeight = 150
         let qrCodeUuid = UserPref.getUserPrefByKey("qrCodeUuid")
+        
+        if qrCodeUuid == nil {
+            return
+        }
+        
         imageCardView.image = UIImage(named: "blurred-web-backgrounds.jpg")
         
         let detailLabel: UILabel = UILabel()

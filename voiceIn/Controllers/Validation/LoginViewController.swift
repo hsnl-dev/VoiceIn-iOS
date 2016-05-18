@@ -4,6 +4,7 @@ import Alamofire
 import SwiftyJSON
 import PhoneNumberKit
 import BWWalkthrough
+import SwiftOverlays
 
 class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughViewControllerDelegate {
     
@@ -119,7 +120,7 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         
         self.sendValidationCodeButton.enabled = false
         self.sendValidationCodeButton.setTitle("10秒後可再發送", forState: .Disabled)
-        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "enableButton", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(LoginViewController.enableButton), userInfo: nil, repeats: false)
         
         let headers = Network.generateHeader(isTokenNeeded: false)
         var parameters: [String: String!] = [String: String!]()
@@ -130,6 +131,8 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
             parameters = [
                 "phoneNumber": phoneNumber.toE164()
             ]
+            
+            SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "發送中...")
             
             Alamofire.request(.POST, API_END_POINT + "/accounts/validations", parameters: parameters, encoding: .JSON, headers: headers)
                 .responseJSON {
@@ -144,6 +147,7 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
                         AlertBox.createAlertView(self, title: "小提醒", body: "請記得開啟網路喔!", buttonValue: "確認")
                         self.enableButton()
                     }
+                    SwiftOverlays.removeAllOverlaysFromView(self.view)
             }
 
         }

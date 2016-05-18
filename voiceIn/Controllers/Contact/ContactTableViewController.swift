@@ -95,7 +95,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         dispatch_async(dispatch_get_main_queue()) {
             if reachability.isReachable() {
                 debugPrint("Network Enable")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 print("Network not reachable")
                 let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController

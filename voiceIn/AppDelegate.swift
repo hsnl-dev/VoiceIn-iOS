@@ -25,10 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let token = UserPref.getUserPrefByKey("token")
+        
+        UserPref.setUserPref("isFirstFetch", value: true)
         let rootController: UIViewController
         
         if token != nil && userUuid != nil {
-            UserPref.setUserPref("isFirstFetch", value: true)
             print("userUuid:" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
