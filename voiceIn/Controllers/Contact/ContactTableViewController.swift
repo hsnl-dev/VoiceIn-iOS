@@ -95,17 +95,17 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         let reachability = note.object as! Reachability
         dispatch_async(dispatch_get_main_queue()) {
             if reachability.isReachable() {
-                let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
+                let isOfflinecardPreset = UserPref.getUserPrefByKey("isOfflineCardPresent")
                 debugPrint("Network Enable")
-//                if isFirstLogin == nil || isFirstLogin == "false" {
-//                    self.dismissViewControllerAnimated(true, completion: nil)
-//                } else {
-//                    // MARK: First login.
-//                    UserPref.setUserPref("isFirstLogin", value: "false")
-//                }
+                
+                if isOfflinecardPreset != nil && isOfflinecardPreset == "true" {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    UserPref.setUserPref("isOfflineCardPresent", value: "false")
+                }
                 
             } else {
                 print("Network not reachable")
+                UserPref.setUserPref("isOfflineCardPresent", value: "true")
                 let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController
                 self.presentViewController(vcardViewController, animated: true, completion: nil)
             }
