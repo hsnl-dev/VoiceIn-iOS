@@ -249,7 +249,7 @@ class UserInformationViewController: FormViewController {
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
             "deviceOS": "ios",
-            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String! == nil ? UserPref.getUserPrefByKey("deviceKey") as String! : "simulator"
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String! != nil ? UserPref.getUserPrefByKey("deviceKey") as String! : "simulator"
         ]
         
         let userUuid = UserPref.getUserPrefByKey("userUuid")
@@ -279,6 +279,9 @@ class UserInformationViewController: FormViewController {
                     UserPref.setUserPref("email", value: parameters["email"])
                     UserPref.setUserPref("company", value: parameters["company"])
                     UserPref.setUserPref("token", value: UserPref.getUserPrefByKey("tempToken"))
+                    
+                    // Mark - For network detection
+                    UserPref.setUserPref("isFirstLogin", value: "true")
                 } else if error != nil {
                     print(error)
                     AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
