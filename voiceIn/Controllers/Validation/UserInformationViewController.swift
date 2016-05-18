@@ -5,6 +5,7 @@ import Alamofire
 import SwiftyJSON
 import ALCameraViewController
 import SwiftOverlays
+import Haneke
 
 class UserInformationViewController: FormViewController {
     // MARK: The API Information.
@@ -12,7 +13,8 @@ class UserInformationViewController: FormViewController {
 
     private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
-    
+    let hnkImageCache = Shared.imageCache
+
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNavigationBar()
@@ -52,7 +54,7 @@ class UserInformationViewController: FormViewController {
         
     }
     
-    func prepareInputForm(userInformation: JSON) {
+    func prepareInputForm(userInformation: SwiftyJSON.JSON) {
         form.removeAll()
         form +++
             Section(header: "", footer: "")
@@ -225,16 +227,16 @@ class UserInformationViewController: FormViewController {
     }
     
     func saveButtonClicked(sender: UIButton!) {
-        let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
+        // MARK - Form is not valid
         let formValues = form.values()
+        if !isFormValuesValid(formValues) {
+            return
+        }
+        
+        let contactTableView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 1)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "HH:mm"
-        
-        if !isFormValuesValid(formValues) {
-            // MARK - Form is not valid
-            return
-        }
         
         let parameters = [
             "userName": formValues["userName"] as? String != nil ? formValues["userName"] as? String : "",
@@ -247,10 +249,12 @@ class UserInformationViewController: FormViewController {
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
             "deviceOS": "ios",
-            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String!
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String! == nil ? UserPref.getUserPrefByKey("deviceKey") as String! : "simulator"
         ]
         
         let userUuid = UserPref.getUserPrefByKey("userUuid")
+        
+        // MARK: API Route
         let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let generateQrcodeApiRoute = API_END_POINT + "/accounts/" + userUuid + "/qrcode"
@@ -260,9 +264,8 @@ class UserInformationViewController: FormViewController {
         let text = "儲存中..."
         self.showWaitOverlayWithText(text)
         
-        /**
-        PUT: Update the user's information.
-        **/
+        
+        // MARK: PUT: Update the user's information.
         Alamofire
             .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
             .validate()
@@ -283,9 +286,8 @@ class UserInformationViewController: FormViewController {
                 }
         }
         
-        /**
-        POST: Upload avatar image.
-        **/
+
+        // MARK: POST: Upload avatar image.
         if isUserSelectPhoto == true {
             Alamofire
                 .upload(.POST, uploadAvatarApiRoute, headers: headers,
@@ -299,30 +301,32 @@ class UserInformationViewController: FormViewController {
                         case .Success(let upload, _, _):
                             upload.response { response in
                                 print("上傳成功。")
+                                self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
                             }
                         case .Failure(let encodingError):
                             AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                            self.removeAllOverlays()
                             print(encodingError)
+                            return
                         }
+                        
+                        self.removeAllOverlays()
                 })
         }
         
-        /**
-        POST: Generate QRCode
-        **/
+        
+        // MARK - POST: Generate QRCode
         Alamofire
-            .request(.POST, generateQrcodeApiRoute, headers: headers).response {
+            .request(.POST, generateQrcodeApiRoute, headers: headers)
+            .response {
                 request, response, data, error in
                 if error == nil {
                     print("Generate QR Code Successfully!")
-                    self.removeAllOverlays()
                     self.presentViewController(contactTableView, animated: true, completion: nil)
                 } else {
                     AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                    self.removeAllOverlays()
                 }
-        }
+                self.removeAllOverlays()
+            }
     }
     
     /**

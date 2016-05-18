@@ -25,10 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let token = UserPref.getUserPrefByKey("token")
+        
+        UserPref.setUserPref("isFirstFetch", value: true)
         let rootController: UIViewController
         
         if token != nil && userUuid != nil {
-            UserPref.setUserPref("isFirstFetch", value: true)
             print("userUuid:" + userUuid! + ", token:" + token!)
             rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
         } else {
@@ -71,11 +72,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     func applicationWillTerminate(application: UIApplication) {

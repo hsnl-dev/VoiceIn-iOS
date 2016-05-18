@@ -88,19 +88,18 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
                 response in
                 switch response.result {
                 case .Success(let JSON_DATA):
-                    /**
-                    API Calling Successfully!
-                    **/
+                
+                    // MARK: API Calling Successfully!
                     let json = JSON(JSON_DATA)
                     let token = json["token"]
                     
                     if token != nil {
-                        
                         // MARK: User input the right code, save the token and show information view.
                         UserPref.setUserPref("token", value: json["token"].stringValue)
                         
                         let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
                         self.presentViewController(userInformationController, animated: true, completion: nil)
+                        
                     } else {
                          //MARK: User input the wrong code, pop out the alert window.
                         AlertBox.createAlertView(self, title: "抱歉", body: "您的認證碼輸入錯誤，請再確認一次", buttonValue: "確認")
