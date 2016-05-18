@@ -152,6 +152,7 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
 
         }
         catch {
+            AlertBox.createAlertView(self, title: "小提醒", body: "請輸入正確格式之手機號碼喔。", buttonValue: "確認")       
             print("Generic parser error")
         }
     }
