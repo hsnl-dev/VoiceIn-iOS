@@ -95,7 +95,7 @@ class ValidationCodeViewController: UIViewController, UITextFieldDelegate {
                     
                     if token != nil {
                         // MARK: User input the right code, save the token and show information view.
-                        UserPref.setUserPref("token", value: json["token"].stringValue)
+                        UserPref.setUserPref("tempToken", value: token.stringValue)
                         
                         let userInformationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("UserInformationStoryboard") as! UserInformationViewController
                         self.presentViewController(userInformationController, animated: true, completion: nil)

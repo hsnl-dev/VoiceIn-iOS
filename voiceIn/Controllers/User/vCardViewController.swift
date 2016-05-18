@@ -115,11 +115,8 @@ class vCardViewController: UIViewController {
         
         // Detail label.
         let detailLabel: UILabel = UILabel()
-        
-        
+    
         detailLabel.text = "職稱: \(jsonResponse["jobTitle"].stringValue == "" ? "尚未填寫職位" : jsonResponse["jobTitle"].stringValue) \n連絡信箱: \(jsonResponse["email"].stringValue == "" ? "尚未填寫聯絡方式" : jsonResponse["email"].stringValue)\n\n關於: \n \(jsonResponse["profile"].stringValue.trim() == "" ? "尚未填寫介紹" : jsonResponse["profile"].stringValue.trim())\n\n來自於: \(jsonResponse["location"].stringValue == "" ? "未填寫地址" : jsonResponse["location"].stringValue)"
-        
-        
         
         detailLabel.numberOfLines = 0
         imageCardView.detailView = detailLabel
@@ -155,7 +152,6 @@ class vCardViewController: UIViewController {
         // MARK - isReachable means online.
         if jsonResponse["profilePhotoId"].stringValue != "" && isReachable {
             // MARK: Retrieve the image
-            
             hnkImageCache.fetch(key: "profilePhoto")
                 .onSuccess { avatarImage in
                     debugPrint("Cache is used.")
@@ -189,7 +185,6 @@ class vCardViewController: UIViewController {
         avatarView.frame = CGRect(x: 10, y: 5, width: 100, height: 100)
         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
         avatarView.clipsToBounds = true;
-        
     }
     
     func prepareOfflineView() {

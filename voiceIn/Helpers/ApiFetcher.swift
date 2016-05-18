@@ -16,13 +16,12 @@ class Network {
     }
     
     class func generateHeader(isTokenNeeded isTokenNeeded: Bool) -> [String: String]? {
-        let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         var headers: [String: String]?
         
         if isTokenNeeded {
             headers = [
                 "apiKey": API_KEY,
-                "token": userDefaultData.stringForKey("token")!
+                "token": UserPref.getUserPrefByKey("token") == nil ? UserPref.getUserPrefByKey("tempToken") : UserPref.getUserPrefByKey("token")
             ]
         } else {
             headers = [
