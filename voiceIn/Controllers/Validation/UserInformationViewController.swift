@@ -278,10 +278,7 @@ class UserInformationViewController: FormViewController {
                     UserPref.setUserPref("jobTitle", value: parameters["jobTitle"])
                     UserPref.setUserPref("email", value: parameters["email"])
                     UserPref.setUserPref("company", value: parameters["company"])
-                    UserPref.setUserPref("token", value: UserPref.getUserPrefByKey("tempToken"))
-                    
-                    // Mark - For network detection
-                    UserPref.setUserPref("isFirstLogin", value: "true")
+                    UserPref.setUserPref("token", value: UserPref.getUserPrefByKey("tempToken"))                    
                 } else if error != nil {
                     print(error)
                     AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
