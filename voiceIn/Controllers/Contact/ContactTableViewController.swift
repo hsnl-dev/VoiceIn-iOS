@@ -137,12 +137,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             return filterContactArray.count
         } else {
             if contactArray.count == 0  && isFromGroupListView == false {
-                let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
-                noDataLabel.text = "目前沒有聯絡人"
-                noDataLabel.font.fontWithSize(24)
-                noDataLabel.textColor = MaterialColor.grey.darken2
-                noDataLabel.textAlignment = NSTextAlignment.Center
-                self.tableView.backgroundView = noDataLabel
+                self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
             } else {
                 self.tableView.backgroundView = nil
             }
