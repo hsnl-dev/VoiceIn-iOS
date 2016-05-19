@@ -52,6 +52,17 @@ class FavoriteContactTableViewController: UITableViewController {
     
     // MARK: - the number of row in a section
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if contactArray.count == 0 {
+            let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
+            noDataLabel.text = "點聯絡人右邊的愛心加入常用喔"
+            noDataLabel.font.fontWithSize(24)
+            noDataLabel.textColor = MaterialColor.grey.darken2
+            noDataLabel.textAlignment = NSTextAlignment.Center
+            self.tableView.backgroundView = noDataLabel
+        } else {
+            self.tableView.backgroundView = nil
+        }
+        
         return contactArray.count
     }
     

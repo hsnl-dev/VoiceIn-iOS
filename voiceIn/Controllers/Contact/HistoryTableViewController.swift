@@ -67,6 +67,17 @@ class HistoryTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if historyArray.count == 0 {
+            let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
+            noDataLabel.text = "目前沒有通話紀錄"
+            noDataLabel.font.fontWithSize(24)
+            noDataLabel.textColor = MaterialColor.grey.darken2
+            noDataLabel.textAlignment = NSTextAlignment.Center
+            self.tableView.backgroundView = noDataLabel
+        } else {
+            self.tableView.backgroundView = nil
+        }
+        
         return historyArray.count
     }
     
