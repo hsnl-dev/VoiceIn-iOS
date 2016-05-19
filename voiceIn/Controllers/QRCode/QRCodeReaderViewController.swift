@@ -1,14 +1,19 @@
 import UIKit
 import AVFoundation
 import SwiftyJSON
+import SwiftOverlays
 
-class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let imagePickerController = UIImagePickerController()
+    let waitedText = "請稍候..."
     
     @IBOutlet weak var messageLabel:UILabel!
     
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
+    @IBOutlet weak var selectFromGalaryButton: UIBarButtonItem!
     
     // MARK: Added to support different barcodes
     let supportedBarCodes = [AVMetadataObjectTypeQRCode, AVMetadataObjectTypeCode128Code, AVMetadataObjectTypeCode39Code, AVMetadataObjectTypeCode93Code, AVMetadataObjectTypeUPCECode, AVMetadataObjectTypePDF417Code, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeAztecCode]
@@ -86,7 +91,7 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
         // MARK: Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRectZero
-            messageLabel.text = "還沒有掃描到 QRCode"
+            messageLabel.text = "- 請掃描 VoiceIn QRCode -"
             return
         }
         
@@ -105,6 +110,7 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             if metadataObj.stringValue != nil {
                 messageLabel.text = metadataObj.stringValue
                 captureSession?.stopRunning()
+                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: waitedText)
                 self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
             }
         }
@@ -115,12 +121,55 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             // TODO: Send Data.
             if let providerInformationViewController = segue.destinationViewController as? ProviderInformationViewController {
                 let qrCodeArr = messageLabel.text?.componentsSeparatedByString("=")
+                
+                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 providerInformationViewController.qrCodeUuid = qrCodeArr![1]
             }
         }
     }
     
-    @IBAction func close(segue: UIStoryboardSegue) {
+    @IBAction func imagePickerButtonClicked(sender: UIBarButtonItem!) {
+        debugPrint("imagePickerButtonClicked: ")
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = false
+        imagePickerController.sourceType = .PhotoLibrary
+        
+        presentViewController(imagePickerController, animated: true, completion: nil)
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: waitedText)
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
+    
+            let ciImage: CIImage = CIImage(image: pickedImage)!
+            var qrCodeLink = ""
+            
+            let features = detector.featuresInImage(ciImage)
+            
+            for feature in features as! [CIQRCodeFeature] {
+                qrCodeLink += feature.messageString
+            }
+            
+            if qrCodeLink == "" {
+                AlertBox.createAlertView(self, title: "請再試試看", body: "請確認您所選擇的圖片含有 VoiceIn QRCode", buttonValue: "確認")
+            }else{
+                messageLabel.text = qrCodeLink
+            }
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func unwindToQrCodeReader(segue: UIStoryboardSegue) {
         
     }
     
