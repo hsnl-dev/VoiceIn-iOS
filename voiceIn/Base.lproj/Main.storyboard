@@ -479,7 +479,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="7xk-RU-aQ3"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -730,7 +730,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="iYq-PS-vPP" kind="unwind" unwindAction="close:" id="Zcf-zZ-Vkl"/>
+                                    <segue destination="iYq-PS-vPP" kind="unwind" unwindAction="unwindToQrCodeReader:" id="vea-Ao-qcY"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ODI-nM-qpf">
@@ -1126,7 +1126,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="還沒有掃描到 QRCode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFM-nR-f0Z">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- 請掃描 VoiceIn QRCode - " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFM-nR-f0Z">
                                 <rect key="frame" x="0.0" y="511" width="600" height="40"/>
                                 <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1145,10 +1145,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Lid-4c-TUc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="Fcm-st-Ira"/>
+                        <barButtonItem key="rightBarButtonItem" title="從圖片讀取" style="plain" id="Fcm-st-Ira">
+                            <connections>
+                                <action selector="imagePickerButtonClicked:" destination="9QW-br-tlc" id="ZpF-2g-4BF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="messageLabel" destination="AFM-nR-f0Z" id="DKa-8c-tbk"/>
+                        <outlet property="selectFromGalaryButton" destination="Fcm-st-Ira" id="3cT-cC-wJy"/>
                         <segue destination="c93-sp-AHU" kind="presentation" identifier="isQRCodeReadSeque" id="gJV-ta-CfO"/>
                     </connections>
                 </viewController>
@@ -1215,7 +1220,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="1ky-BH-fYc"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_done" translatesAutoresizingMaskIntoConstraints="NO" id="4qn-Sc-eNg">

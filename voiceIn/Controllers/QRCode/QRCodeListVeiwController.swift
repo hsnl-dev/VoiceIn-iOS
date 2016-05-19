@@ -104,7 +104,7 @@ class QRCodeListVeiwController: UITableViewController {
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/customQrcodes"
         
         self.tableView.reloadData()
-        self.showWaitOverlay()
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "讀取中...")
         self.view.userInteractionEnabled = false
         
         Alamofire
@@ -134,7 +134,7 @@ class QRCodeListVeiwController: UITableViewController {
                     AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                 }
                 
-                self.removeAllOverlays()
+                SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }

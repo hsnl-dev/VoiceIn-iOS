@@ -11,6 +11,7 @@ class CreateQRCodeViewController: UITableViewController, ABPeoplePickerNavigatio
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var companyTextField: UITextField!
+    
     var phoneNumberText: String?
     
     required init(coder aDecoder: NSCoder) {
