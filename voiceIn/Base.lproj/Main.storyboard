@@ -37,7 +37,7 @@
         <!--聯絡簿-->
         <scene sceneID="zss-Po-3Wl">
             <objects>
-                <tableViewController storyboardIdentifier="ContactViewController" id="1XP-mJ-wXu" customClass="ContactTableViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContactViewController" id="1XP-mJ-wXu" customClass="ContactInstructionViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="28" sectionFooterHeight="28" id="rUB-Wx-vki">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1166,7 +1166,7 @@
             <objects>
                 <viewController storyboardIdentifier="vCardViewController" id="NNy-iM-hOH" customClass="vCardViewController" customModule="VoiceIn" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="我的名片" id="GHD-cf-e2M">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="kFS-YO-OM6">
+                        <barButtonItem key="rightBarButtonItem" title="分享名片" id="kFS-YO-OM6">
                             <connections>
                                 <action selector="shareQRCodeButtonClicked:" destination="NNy-iM-hOH" id="sV6-uc-cXI"/>
                             </connections>

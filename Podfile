@@ -16,5 +16,6 @@ target 'voiceIn' do
     pod 'BWWalkthrough', '1.1.0'
 #    pod 'AlamofireImage', '~> 2.0'
     pod 'HanekeSwift', '0.10.1'
+    pod 'Instructions', '~> 0.4'
 end
 

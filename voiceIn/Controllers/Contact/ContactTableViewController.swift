@@ -6,6 +6,7 @@ import SwiftOverlays
 import CoreData
 import Haneke
 import ReachabilitySwift
+import Instructions
 
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     @IBOutlet var cardBarItem: UIBarButtonItem?
@@ -33,6 +34,14 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     var reachability: Reachability?
     
+    //MARK: - Public properties
+    var coachMarksController: CoachMarksController?
+    
+    let cardText = "這是屬於你的 VoiceIn 個人名片，您可以按分享，將您的名片透過 Line、email ... 等傳給給您的客戶或夥伴，他們即可新增您為聯絡人，不管有沒有安裝 VoiceIn。"
+    let addFriendText = "我們提供讓您用相機或從相片中掃瞄 VoiceIn QR Code 來新增聯絡人的功能。"
+    let startText = "歡迎來到 VoiceIn，我們將簡短引導您使用 VoiceIn，讓您更快速地上手!"
+    let nextButtonText = "了解!"
+    
     override func viewDidLoad() {
         self.refreshControl?.addTarget(self, action: #selector(ContactTableViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
@@ -54,12 +63,20 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         })()
         
         self.navigationItem.title = navigationTitle
+        
         prepareView()
+        
+        // MARK - Set up instruction
+        self.coachMarksController = CoachMarksController()
+        self.coachMarksController?.allowOverlayTap = true
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // MAKR - Enable the navigation bar
         self.navigationController?.view.userInteractionEnabled = true
-        //declare this inside of viewWillAppear
+        
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
         } catch {
@@ -86,10 +103,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         } else {
             // MARK - TODO Not from the Group List tab ...
             self.navigationItem.title = ""
-            
+        }
+        
+        
+        UserPref.setUserPref("isFirstLogin", value: "true")
+        let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
+
+        if (isFirstLogin == nil || isFirstLogin == "true") {
+            self.coachMarksController?.startOn(self)
+            UserPref.setUserPref("isFirstLogin", value: "false")
         }
     }
     
+    // MARK - Triggered when the network state changed.
     func reachabilityChanged(note: NSNotification) {
         
         let reachability = note.object as! Reachability
