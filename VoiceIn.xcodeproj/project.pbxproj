@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */; };
 		3E13C2D31C9874840060BC0B /* CallingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E13C2D21C9874840060BC0B /* CallingService.swift */; };
+		3E1A79BB1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1A79BA1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift */; };
 		3E3701EA1CBCF0A100B0F4CB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */; };
 		3E3701EC1CBCF1F200B0F4CB /* HistoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */; };
 		3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */; };
@@ -54,13 +55,13 @@
 		3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632991C75A9F300BBAB39 /* AppDelegate.swift */; };
 		3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632A01C75A9F300BBAB39 /* voiceIn.xcdatamodeld */; };
 		3EF632A71C75A9F300BBAB39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF632A51C75A9F300BBAB39 /* LaunchScreen.storyboard */; };
-		A15E801BB76EF526956E77D8 /* Pods_voiceIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */; };
+		B8BA801FB7DBD4644FB3ADEB /* Pods_voiceIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF8C58B92F8E84A51A85481 /* Pods_voiceIn.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3E13C2D21C9874840060BC0B /* CallingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingService.swift; sourceTree = "<group>"; };
+		3E1A79BA1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInstructionViewController.swift; sourceTree = "<group>"; };
 		3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableCell.swift; sourceTree = "<group>"; };
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
@@ -109,8 +110,9 @@
 		3EF632A11C75A9F300BBAB39 /* voiceIn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = voiceIn.xcdatamodel; sourceTree = "<group>"; };
 		3EF632A61C75A9F300BBAB39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EF632A81C75A9F300BBAB39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D13D4708872AE911803EDD8 /* Pods-voiceIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.debug.xcconfig"; sourceTree = "<group>"; };
-		CBBF54FA7E5ECB0B0AD8D6E5 /* Pods-voiceIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.release.xcconfig"; sourceTree = "<group>"; };
+		8CFABF6A19A2D673BA5480DD /* Pods-voiceIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.release.xcconfig"; sourceTree = "<group>"; };
+		AA1D5F72574DB582C87E563D /* Pods-voiceIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.debug.xcconfig"; sourceTree = "<group>"; };
+		DDF8C58B92F8E84A51A85481 /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A15E801BB76EF526956E77D8 /* Pods_voiceIn.framework in Frameworks */,
+				B8BA801FB7DBD4644FB3ADEB /* Pods_voiceIn.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				3EB2A6E01CBD3E9300C2D406 /* WalkThroughViewController.swift */,
+				3E1A79BA1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -291,8 +294,8 @@
 			children = (
 				3EF632981C75A9F300BBAB39 /* voiceIn */,
 				3EF632971C75A9F300BBAB39 /* Products */,
-				78CEB7041A0FCB74587E013E /* Pods */,
-				6C9B6DE98BB97AC04CE422B8 /* Frameworks */,
+				B8E97FD5B55DA23CB30350FF /* Pods */,
+				9F30115452150D28A3206B6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -327,19 +330,19 @@
 			path = voiceIn;
 			sourceTree = "<group>";
 		};
-		6C9B6DE98BB97AC04CE422B8 /* Frameworks */ = {
+		9F30115452150D28A3206B6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				11FC072ADA356A9A89EB2EAF /* Pods_voiceIn.framework */,
+				DDF8C58B92F8E84A51A85481 /* Pods_voiceIn.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		78CEB7041A0FCB74587E013E /* Pods */ = {
+		B8E97FD5B55DA23CB30350FF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9D13D4708872AE911803EDD8 /* Pods-voiceIn.debug.xcconfig */,
-				CBBF54FA7E5ECB0B0AD8D6E5 /* Pods-voiceIn.release.xcconfig */,
+				AA1D5F72574DB582C87E563D /* Pods-voiceIn.debug.xcconfig */,
+				8CFABF6A19A2D673BA5480DD /* Pods-voiceIn.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -351,12 +354,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EF632AB1C75A9F300BBAB39 /* Build configuration list for PBXNativeTarget "voiceIn" */;
 			buildPhases = (
-				F8A4974D8C6896E922949B68 /* Check Pods Manifest.lock */,
+				FE5DE0FB00CE04377DB981A3 /* Check Pods Manifest.lock */,
 				3EF632921C75A9F300BBAB39 /* Sources */,
 				3EF632931C75A9F300BBAB39 /* Frameworks */,
 				3EF632941C75A9F300BBAB39 /* Resources */,
-				900FDFAA77EE9BC848DD2FF7 /* Embed Pods Frameworks */,
-				A8E59EF46553B42CB8BB0E07 /* Copy Pods Resources */,
+				F9825C1B62629815E01D97E4 /* Embed Pods Frameworks */,
+				EDD875EAD2E5933ED1DED931 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -425,22 +428,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		900FDFAA77EE9BC848DD2FF7 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A8E59EF46553B42CB8BB0E07 /* Copy Pods Resources */ = {
+		EDD875EAD2E5933ED1DED931 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -455,7 +443,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F8A4974D8C6896E922949B68 /* Check Pods Manifest.lock */ = {
+		F9825C1B62629815E01D97E4 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE5DE0FB00CE04377DB981A3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -501,6 +504,7 @@
 				3E98C0D51C8C3E12001BB458 /* ProviderInformationViewController.swift in Sources */,
 				3E3701EA1CBCF0A100B0F4CB /* HistoryTableViewController.swift in Sources */,
 				3ED0D4751C8F0FAD0011679A /* SwitchCell.swift in Sources */,
+				3E1A79BB1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift in Sources */,
 				3EE4EC311C8DE38600805447 /* ApiFetcher.swift in Sources */,
 				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
@@ -635,7 +639,7 @@
 		};
 		3EF632AC1C75A9F300BBAB39 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D13D4708872AE911803EDD8 /* Pods-voiceIn.debug.xcconfig */;
+			baseConfigurationReference = AA1D5F72574DB582C87E563D /* Pods-voiceIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -652,7 +656,7 @@
 		};
 		3EF632AD1C75A9F300BBAB39 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CBBF54FA7E5ECB0B0AD8D6E5 /* Pods-voiceIn.release.xcconfig */;
+			baseConfigurationReference = 8CFABF6A19A2D673BA5480DD /* Pods-voiceIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
