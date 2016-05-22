@@ -111,7 +111,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
         
         // MARK - It is from the contact view, not group view
-        if (isFromGroupListView == false && isFirstLogin == nil || isFirstLogin == "true") {
+        if (isFromGroupListView == false && (isFirstLogin == nil || isFirstLogin == "true")) {
             self.coachMarksController?.startOn(self)
             UserPref.setUserPref("isFirstLogin", value: "false")
         }
