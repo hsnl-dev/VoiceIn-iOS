@@ -106,6 +106,7 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
     }
     
     func enableButton() {
+        SwiftOverlays.removeAllOverlaysFromView(self.view)
         self.sendValidationCodeButton.enabled = true
         self.sendValidationCodeButton.setTitle("發送認證碼", forState: .Normal)
     }

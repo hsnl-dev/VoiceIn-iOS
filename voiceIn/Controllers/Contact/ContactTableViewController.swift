@@ -40,6 +40,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     let cardText = "這是屬於你的 VoiceIn 個人名片，您可以按分享，將您的名片透過 Line、email ... 等傳給給您的客戶或夥伴，他們即可新增您為聯絡人，不管有沒有安裝 VoiceIn。"
     let addFriendText = "我們提供讓您用相機或從相片中掃瞄 VoiceIn QR Code 來新增聯絡人的功能。"
     let startText = "歡迎來到 VoiceIn，我們將簡短引導您使用 VoiceIn，讓您更快速地上手!"
+    let endText = "引導結束了，立即開始體驗吧!"
     let nextButtonText = "了解!"
     
     override func viewDidLoad() {
@@ -108,8 +109,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         UserPref.setUserPref("isFirstLogin", value: "true")
         let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
-
-        if (isFirstLogin == nil || isFirstLogin == "true") {
+        
+        // MARK - It is from the contact view, not group view
+        if (isFromGroupListView == false && isFirstLogin == nil || isFirstLogin == "true") {
             self.coachMarksController?.startOn(self)
             UserPref.setUserPref("isFirstLogin", value: "false")
         }

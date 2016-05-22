@@ -301,7 +301,23 @@ class UserInformationViewController: FormViewController {
                         case .Success(let upload, _, _):
                             upload.response { response in
                                 print("上傳成功。")
+                                
                                 self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
+                                // MARK - POST: Generate QRCode
+                                Alamofire
+                                    .request(.POST, generateQrcodeApiRoute, headers: self.headers)
+                                    .response {
+                                        request, response, data, error in
+                                        self.removeAllOverlays()
+                                        
+                                        if error == nil {
+                                            print("Generate QR Code Successfully!")
+                                            self.presentViewController(contactTableView, animated: true, completion: nil)
+                                        } else {
+                                            AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                                        }
+                                }
+
                             }
                         case .Failure(let encodingError):
                             AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
@@ -309,22 +325,22 @@ class UserInformationViewController: FormViewController {
                             return
                         }
                 })
-        }
-        
-        // MARK - POST: Generate QRCode
-        Alamofire
-            .request(.POST, generateQrcodeApiRoute, headers: headers)
-            .response {
-                request, response, data, error in
-                self.removeAllOverlays()
-                
-                if error == nil {
-                    print("Generate QR Code Successfully!")
-                    self.presentViewController(contactTableView, animated: true, completion: nil)
-                } else {
-                    AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+        } else {
+            // MARK - POST: Generate QRCode
+            Alamofire
+                .request(.POST, generateQrcodeApiRoute, headers: headers)
+                .response {
+                    request, response, data, error in
+                    self.removeAllOverlays()
+                    
+                    if error == nil {
+                        print("Generate QR Code Successfully!")
+                        self.presentViewController(contactTableView, animated: true, completion: nil)
+                    } else {
+                        AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
+                    }
                 }
-            }
+        }
     }
     
     /**

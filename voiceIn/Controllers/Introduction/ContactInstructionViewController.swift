@@ -5,18 +5,18 @@ internal class ContactInstructionViewController: ContactTableViewController, Coa
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.coachMarksController?.dataSource = self
     }
     
     //MARK: - Protocol Conformance | CoachMarksControllerDataSource
     func numberOfCoachMarksForCoachMarksController(coachMarksController: CoachMarksController) -> Int {
-        return 3
+        return 4
     }
     
     func coachMarksController(coachMarksController: CoachMarksController, coachMarksForIndex index: Int) -> CoachMark {
         switch(index) {
         case 0:
+            self.navigationController?.navigationBar.userInteractionEnabled = false
             return coachMarksController.coachMarkForView(self.navigationController?.navigationBar) { (frame: CGRect) -> UIBezierPath in
                 return UIBezierPath(rect: frame)
             }
@@ -26,6 +26,11 @@ internal class ContactInstructionViewController: ContactTableViewController, Coa
             }
         case 2:
             return coachMarksController.coachMarkForView(self.navigationItem.rightBarButtonItems?[1].valueForKey("view") as? UIView) { (frame: CGRect) -> UIBezierPath in
+                return UIBezierPath(rect: frame)
+            }
+        case 3:
+            self.navigationController?.navigationBar.userInteractionEnabled = true
+            return coachMarksController.coachMarkForView(self.navigationController?.navigationBar) { (frame: CGRect) -> UIBezierPath in
                 return UIBezierPath(rect: frame)
             }
         default:
@@ -47,6 +52,9 @@ internal class ContactInstructionViewController: ContactTableViewController, Coa
         case 2:
             coachViews.bodyView.hintLabel.text = self.cardText
             coachViews.bodyView.nextLabel.text = self.nextButtonText
+        case 3:
+            coachViews.bodyView.hintLabel.text = self.endText
+            coachViews.bodyView.nextLabel.text = "OK!"
         default: break
         }
         
