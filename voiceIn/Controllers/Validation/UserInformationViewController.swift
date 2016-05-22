@@ -261,9 +261,9 @@ class UserInformationViewController: FormViewController {
         
         print(dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!))
         print("PUT: " + updateInformationApiRoute)
-        let text = "儲存中..."
-        self.showWaitOverlayWithText(text)
         
+        let text = "儲存中..."
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: text)
         
         // MARK: PUT: Update the user's information.
         Alamofire
@@ -283,7 +283,6 @@ class UserInformationViewController: FormViewController {
                 } else if error != nil {
                     print(error)
                     AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                    self.removeAllOverlays()
                 }
         }
         
@@ -309,8 +308,6 @@ class UserInformationViewController: FormViewController {
                             print(encodingError)
                             return
                         }
-                        
-                        self.removeAllOverlays()
                 })
         }
         
@@ -319,13 +316,14 @@ class UserInformationViewController: FormViewController {
             .request(.POST, generateQrcodeApiRoute, headers: headers)
             .response {
                 request, response, data, error in
+                self.removeAllOverlays()
+                
                 if error == nil {
                     print("Generate QR Code Successfully!")
                     self.presentViewController(contactTableView, animated: true, completion: nil)
                 } else {
                     AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                 }
-                self.removeAllOverlays()
             }
     }
     
