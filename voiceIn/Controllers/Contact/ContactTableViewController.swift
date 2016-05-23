@@ -73,6 +73,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.navigationItem.leftBarButtonItem = nil
         } else {
             // MARK - TODO Not from the Group List tab ...
+            // MARK - Set up instruction
+            self.coachMarksController = CoachMarksController()
+            self.coachMarksController?.allowOverlayTap = true
             self.navigationItem.title = "VoiceIn"
         }
         
@@ -104,10 +107,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
         // MARK - It is from the contact view, not group view
         if (isFromGroupListView == false && (isFirstLogin == nil || isFirstLogin == "true")) {
-            // MARK - Set up instruction
-            self.coachMarksController = CoachMarksController()
-            self.coachMarksController?.allowOverlayTap = true
-            
             self.coachMarksController?.startOn(self)
             UserPref.setUserPref("isFirstLogin", value: "false")
         }
