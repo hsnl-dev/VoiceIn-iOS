@@ -52,12 +52,6 @@ class FavoriteContactTableViewController: UITableViewController {
     
     // MARK: - the number of row in a section
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if contactArray.count == 0 {
-            self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "點聯絡人右邊的愛心加入常用喔")
-        } else {
-            self.tableView.backgroundView = nil
-        }
-        
         return contactArray.count
     }
     
@@ -221,7 +215,13 @@ class FavoriteContactTableViewController: UITableViewController {
                     }
                     
                     self.contactArray = self.contactArray.reverse()
-                    self.tableView.reloadData()
+                    
+                    if self.contactArray.count > 0 {
+                        self.tableView.reloadData()
+                        self.tableView.backgroundView = nil
+                    } else {
+                        self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "點聯絡人右邊的愛心加入常用喔")
+                    }
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
