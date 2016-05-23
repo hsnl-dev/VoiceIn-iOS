@@ -79,6 +79,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.navigationItem.title = "VoiceIn"
         }
         
+        UserPref.updateTheDeviceKey()
         prepareView()
     }
     
