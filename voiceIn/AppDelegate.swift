@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
         
-        debugPrint(" == Launch == ")
+        debugPrint(" === Launch === ")
         IQKeyboardManager.sharedManager().enable = true        
         return true
     }
