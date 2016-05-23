@@ -65,16 +65,21 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         self.navigationItem.title = navigationTitle
         
-        prepareView()
+        if isFromGroupListView == true {
+            // MARK - it is from the group list tab
+            self.navigationItem.setRightBarButtonItems(nil, animated: true)
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
+            self.navigationItem.rightBarButtonItem = button
+            self.navigationItem.leftBarButtonItem = nil
+        } else {
+            // MARK - TODO Not from the Group List tab ...
+            self.navigationItem.title = "VoiceIn"
+        }
         
-        // MARK - Set up instruction
-        self.coachMarksController = CoachMarksController()
-        self.coachMarksController?.allowOverlayTap = true
+        prepareView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
         // MAKR - Enable the navigation bar
         self.navigationController?.view.userInteractionEnabled = true
         
@@ -96,19 +101,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         // MARK - Get the contact list.
         getContactList(getContactRoute)
         
-        if isFromGroupListView == true {
-            // MARK - it is from the group list tab
-            self.navigationItem.setRightBarButtonItems(nil, animated: true)
-            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
-            self.navigationItem.rightBarButtonItem = button
-        } else {
-            // MARK - TODO Not from the Group List tab ...
-            self.navigationItem.title = ""
-        }
-        
         let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
         // MARK - It is from the contact view, not group view
         if (isFromGroupListView == false && (isFirstLogin == nil || isFirstLogin == "true")) {
+            // MARK - Set up instruction
+            self.coachMarksController = CoachMarksController()
+            self.coachMarksController?.allowOverlayTap = true
+            
             self.coachMarksController?.startOn(self)
             UserPref.setUserPref("isFirstLogin", value: "false")
         }
@@ -606,7 +605,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
-                let destinationViewController = segue.destinationViewController as? ContactDetailViewController {
+                let destinationViewController = segue.destinationViewController as? ContactDetailViewController {                
                     destinationViewController.userInformation = contactArray[indexPath.row].data
                     destinationViewController.searchController = self.resultSearchController
             }
