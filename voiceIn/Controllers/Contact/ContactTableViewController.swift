@@ -38,8 +38,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     var coachMarksController: CoachMarksController?
     
     let cardText = "這是屬於你的 VoiceIn 個人名片，您可以按分享，將您的名片透過 Line、email ... 等傳給給您的客戶或夥伴，他們即可新增您為聯絡人，不管有沒有安裝 VoiceIn。"
-    let addFriendText = "我們提供讓您用相機或從相片中掃瞄 VoiceIn QR Code 來新增聯絡人的功能。"
+    let addFriendText = "我們提供讓您用相機或從手機相簿中的相片中掃瞄 VoiceIn QR Code 來新增聯絡人的功能。"
     let startText = "歡迎來到 VoiceIn，我們將簡短引導您使用 VoiceIn，讓您更快速地上手!"
+    let endText = "立即開始體驗，若您想再看一次引導，可以至個人設定開啟。"
     let nextButtonText = "了解!"
     
     override func viewDidLoad() {
@@ -64,16 +65,21 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         self.navigationItem.title = navigationTitle
         
-        prepareView()
+        if isFromGroupListView == true {
+            // MARK - it is from the group list tab
+            self.navigationItem.setRightBarButtonItems(nil, animated: true)
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
+            self.navigationItem.rightBarButtonItem = button
+            self.navigationItem.leftBarButtonItem = nil
+        } else {
+            // MARK - TODO Not from the Group List tab ...
+            self.navigationItem.title = "VoiceIn"
+        }
         
-        // MARK - Set up instruction
-        self.coachMarksController = CoachMarksController()
-        self.coachMarksController?.allowOverlayTap = true
+        prepareView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
         // MAKR - Enable the navigation bar
         self.navigationController?.view.userInteractionEnabled = true
         
@@ -95,21 +101,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         // MARK - Get the contact list.
         getContactList(getContactRoute)
         
-        if isFromGroupListView == true {
-            // MARK - it is from the group list tab
-            self.navigationItem.setRightBarButtonItems(nil, animated: true)
-            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
-            self.navigationItem.rightBarButtonItem = button
-        } else {
-            // MARK - TODO Not from the Group List tab ...
-            self.navigationItem.title = ""
-        }
-        
-        
-        UserPref.setUserPref("isFirstLogin", value: "true")
         let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
-
-        if (isFirstLogin == nil || isFirstLogin == "true") {
+        // MARK - It is from the contact view, not group view
+        if (isFromGroupListView == false && (isFirstLogin == nil || isFirstLogin == "true")) {
+            // MARK - Set up instruction
+            self.coachMarksController = CoachMarksController()
+            self.coachMarksController?.allowOverlayTap = true
+            
             self.coachMarksController?.startOn(self)
             UserPref.setUserPref("isFirstLogin", value: "false")
         }
@@ -162,12 +160,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         if self.resultSearchController.active {
             return filterContactArray.count
         } else {
-            if contactArray.count == 0  && isFromGroupListView == false {
-                self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
-            } else {
-                self.tableView.backgroundView = nil
-            }
-            
             return contactArray.count
         }
     }
@@ -554,6 +546,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     if jsonResponse.count != 0 {
                         self.tableView.reloadData()
                     }
+                    
+                    if self.isFromGroupListView == false && self.contactArray.count == 0 {
+                        self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
+                    } else {
+                        self.tableView.backgroundView = nil
+                    }
+                    
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
@@ -606,7 +605,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
-                let destinationViewController = segue.destinationViewController as? ContactDetailViewController {
+                let destinationViewController = segue.destinationViewController as? ContactDetailViewController {                
                     destinationViewController.userInformation = contactArray[indexPath.row].data
                     destinationViewController.searchController = self.resultSearchController
             }

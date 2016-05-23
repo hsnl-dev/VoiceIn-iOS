@@ -274,9 +274,11 @@ class EditProfileViewController: FormViewController {
                     UserPref.setUserPref("jobTitle", value: parameters["jobTitle"])
                     UserPref.setUserPref("email", value: parameters["email"])
                     UserPref.setUserPref("company", value: parameters["company"])
-
-                    self.removeAllOverlays()
-                    AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
+                    
+                    if self.isUserSelectPhoto == false {
+                        self.removeAllOverlays()
+                        AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
+                    }
                 }
         }
         
