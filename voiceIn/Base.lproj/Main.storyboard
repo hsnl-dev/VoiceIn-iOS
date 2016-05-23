@@ -379,11 +379,11 @@
             </objects>
             <point key="canvasLocation" x="2280" y="-1591"/>
         </scene>
-        <!--歷史紀錄-->
+        <!--通話紀錄-->
         <scene sceneID="SUN-4P-fTS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zCg-Sr-FLu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="歷史紀錄" image="ic_history_white" id="BuH-F6-2Wz"/>
+                    <tabBarItem key="tabBarItem" title="通話紀錄" image="ic_history_white" id="BuH-F6-2Wz"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="amg-nj-wIU">
