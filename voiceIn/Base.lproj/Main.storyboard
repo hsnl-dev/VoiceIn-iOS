@@ -868,7 +868,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sys-Bo-MHd" userLabel="TopUserImage">
                                 <rect key="frame" x="0.0" y="20" width="600" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blurred-web-backgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="Xrg-Mp-D9z">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blurred-web-backgrounds" translatesAutoresizingMaskIntoConstraints="NO" id="Xrg-Mp-D9z">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="170"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="170" id="B8S-JY-WJ0"/>
@@ -900,11 +900,11 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gq8-7p-q67">
-                                <rect key="frame" x="0.0" y="198" width="600" height="402"/>
+                                <rect key="frame" x="0.0" y="190" width="600" height="410"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="kXM-fO-afS"/>
-                                    <constraint firstAttribute="height" constant="402" id="tFv-HH-3fi"/>
+                                    <constraint firstAttribute="height" constant="410" id="tFv-HH-3fi"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="70" id="X2S-Ll-NNH" customClass="ContactDetailTableViewCell" customModule="VoiceIn" customModuleProvider="target">
@@ -1083,7 +1083,7 @@
                             <constraint firstItem="JKT-te-DaP" firstAttribute="top" secondItem="gq8-7p-q67" secondAttribute="bottom" id="Cku-JW-4ba"/>
                             <constraint firstItem="hBV-GZ-N3X" firstAttribute="centerX" secondItem="R5v-W6-53V" secondAttribute="centerX" id="FKw-vk-Kfa"/>
                             <constraint firstItem="hBV-GZ-N3X" firstAttribute="centerY" secondItem="R5v-W6-53V" secondAttribute="centerY" constant="40" id="KA2-6N-a1v"/>
-                            <constraint firstItem="gq8-7p-q67" firstAttribute="top" secondItem="sys-Bo-MHd" secondAttribute="bottom" constant="8" id="UqY-0C-vNd"/>
+                            <constraint firstItem="gq8-7p-q67" firstAttribute="top" secondItem="sys-Bo-MHd" secondAttribute="bottom" id="UqY-0C-vNd"/>
                             <constraint firstItem="sys-Bo-MHd" firstAttribute="leading" secondItem="R5v-W6-53V" secondAttribute="leadingMargin" constant="-20" id="dfA-uU-auK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sys-Bo-MHd" secondAttribute="trailing" constant="-20" id="esL-8d-naD"/>
                             <constraint firstItem="sys-Bo-MHd" firstAttribute="top" secondItem="WZc-Bu-9ka" secondAttribute="bottom" id="fAe-q5-pd4"/>

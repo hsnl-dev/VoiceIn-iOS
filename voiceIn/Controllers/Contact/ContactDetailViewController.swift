@@ -411,8 +411,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn1.depth = .None
         btn1.tintColor = MaterialColor.white
         btn1.pulseColor = MaterialColor.lightBlue.base
-        btn1.borderColor = MaterialColor.grey.lighten1
-        btn1.backgroundColor = MaterialColor.grey.lighten1
+        btn1.borderColor = MaterialColor.grey.darken2
+        btn1.backgroundColor = MaterialColor.grey.darken2
         btn1.borderWidth = 1
         btn1.setImage(image, forState: .Normal)
         btn1.setImage(image, forState: .Highlighted)
@@ -432,9 +432,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         btn2.depth = .None
         btn2.tintColor = MaterialColor.white
-        btn2.pulseColor = MaterialColor.lightBlue.base
-        btn2.borderColor = MaterialColor.grey.lighten1
-        btn2.backgroundColor = MaterialColor.grey.lighten1
+        btn2.pulseColor = MaterialColor.grey.base
+        btn2.borderColor = MaterialColor.grey.darken2
+        btn2.backgroundColor = MaterialColor.grey.darken2
         btn2.borderWidth = 1
         btn2.setImage(image, forState: .Normal)
         btn2.setImage(image, forState: .Highlighted)
@@ -445,7 +445,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let btn3: FabButton = FabButton()
         btn3.depth = .None
         btn3.tintColor = MaterialColor.white
-        btn3.pulseColor = MaterialColor.lightBlue.base
+        btn3.pulseColor = MaterialColor.grey.base
         btn3.borderColor = MaterialColor.grey.lighten1
         btn3.backgroundColor = MaterialColor.grey.lighten1
         btn3.borderWidth = 1
