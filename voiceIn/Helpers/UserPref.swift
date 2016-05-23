@@ -31,7 +31,7 @@ class UserPref {
         
         let parameters = [
             "deviceOS": "ios",
-            "deviceKey": deviceKey
+            "deviceKey": deviceKey != nil ? deviceKey : "simulators"
         ]
         
         Alamofire
