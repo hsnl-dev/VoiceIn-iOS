@@ -169,112 +169,65 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ContactTableCell
         var photoUuid = ""
         var getImageApiRoute: String?
+        var userInformation: [String: String?]
         
         if self.resultSearchController.active {
             // MARK: When searchbar is active, do this block!
             if indexPath.row > filterContactArray.count - 1 {
                 return cell
             }
-            
-            var userInformation: [String: String?] = filterContactArray[indexPath.row].data
-            let nickName = userInformation["nickName"]! as String?
-            let providerIsEnable = userInformation["providerIsEnable"]!!
-            let isThisContactLike = userInformation["isLike"]!!
-            
-            photoUuid = (userInformation["profilePhotoId"]! as String?)!
-            
-            if nickName == "" {
-                cell.nameLabel.text = userInformation["userName"]!
-            } else {
-                cell.nameLabel.text = nickName
-            }
-            
-            if providerIsEnable == "false" {
-                let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
-                cell.callButton.setImage(phoneImgage, forState: .Normal)
-                cell.callButton.backgroundColor = MaterialColor.black
-                cell.isProviderEnable = false
-            } else {
-                let phoneImgage: UIImage? = UIImage(named: "ic_call_white")
-                cell.callButton.setImage(phoneImgage, forState: .Normal)
-                cell.callButton.backgroundColor = MaterialColor.blue.accent3
-                cell.isProviderEnable = true
-            }
-            
-            if isThisContactLike == "true" {
-                cell.isLike = true
-                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
-            } else {
-                cell.isLike = false
-                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
-            }
-            
-            if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-                cell.type.text = CallTypeText.freeCallText
-                cell.type.textColor = MaterialColor.red.base
-            } else {
-                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
-                cell.type.textColor = MaterialColor.teal.darken4
-            }
-            
-            cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-            cell.id = userInformation["id"]!
-            cell.callee = userInformation["phoneNumber"]!
+            userInformation = filterContactArray[indexPath.row].data
         } else {
             // MARK: When searchbar is inactive, do this block!
             if indexPath.row > contactArray.count - 1 {
                 return cell
             }
-            
-            var userInformation: [String: String?] = contactArray[indexPath.row].data
-            let nickName = userInformation["nickName"]! as String?
-            let userName = userInformation["userName"]! as String?
-            let providerIsEnable = userInformation["providerIsEnable"]!!
-            let isThisContactLike = userInformation["isLike"]!!
-            
-            photoUuid = (userInformation["profilePhotoId"]! as String?)!
-            
-            if nickName == "" {
-                cell.nameLabel.text = userName
-            } else {
-                cell.nameLabel.text = nickName
-            }
-            
-            debugPrint(userInformation["userName"], nickName)
-            
-            // MARK - Set the images to indicate if the user is busy or not.
-            if providerIsEnable == "false" {
-                let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
-                cell.callButton.setImage(phoneImgage, forState: .Normal)
-                cell.callButton.backgroundColor = MaterialColor.black
-                cell.isProviderEnable = false
-            } else {
-                let phoneImgage: UIImage? = UIImage(named: "ic_call_white")
-                cell.callButton.setImage(phoneImgage, forState: .Normal)
-                cell.callButton.backgroundColor = MaterialColor.blue.accent3
-                cell.isProviderEnable = true
-            }
-            
-            if isThisContactLike == "true" {
-                cell.isLike = true
-                cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
-            } else {
-                cell.isLike = false
-                cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
-            }
-            
-            if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-                cell.type.text = CallTypeText.freeCallText
-                cell.type.textColor = MaterialColor.red.base
-            } else {
-                cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
-                cell.type.textColor = MaterialColor.teal.darken4
-            }
-            
-            cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
-            cell.id = userInformation["id"]!
-            cell.callee = userInformation["phoneNumber"]!
+            userInformation = contactArray[indexPath.row].data
         }
+        
+        let nickName = userInformation["nickName"]! as String?
+        let providerIsEnable = userInformation["providerIsEnable"]!!
+        let isThisContactLike = userInformation["isLike"]!!
+        
+        photoUuid = (userInformation["profilePhotoId"]! as String?)!
+        
+        if nickName == "" {
+            cell.nameLabel.text = userInformation["userName"]!
+        } else {
+            cell.nameLabel.text = nickName
+        }
+        
+        if providerIsEnable == "false" {
+            let phoneImgage: UIImage? = UIImage(named: "ic_phone_locked_white")
+            cell.callButton.setImage(phoneImgage, forState: .Normal)
+            cell.callButton.backgroundColor = MaterialColor.black
+            cell.isProviderEnable = false
+        } else {
+            let phoneImgage: UIImage? = UIImage(named: "ic_call_white")
+            cell.callButton.setImage(phoneImgage, forState: .Normal)
+            cell.callButton.backgroundColor = MaterialColor.blue.accent3
+            cell.isProviderEnable = true
+        }
+        
+        if isThisContactLike == "true" {
+            cell.isLike = true
+            cell.favoriteButton.backgroundColor = MaterialColor.red.darken1
+        } else {
+            cell.isLike = false
+            cell.favoriteButton.backgroundColor = MaterialColor.grey.lighten1
+        }
+        
+        if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
+            cell.type.text = CallTypeText.freeCallText
+            cell.type.textColor = MaterialColor.red.base
+        } else {
+            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
+            cell.type.textColor = MaterialColor.teal.darken4
+        }
+        
+        cell.companyLabel.text = userInformation["company"]! as String? != "" ? userInformation["company"]! as String? : "未設定單位"
+        cell.id = userInformation["id"]!
+        cell.callee = userInformation["phoneNumber"]!
         
         // MARK - Setting the user photo.
         cell.thumbnailImageView.image = UIImage(named: "user")

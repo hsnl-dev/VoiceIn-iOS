@@ -10,7 +10,6 @@ import UIKit
 import Material
 import Alamofire
 import SwiftyJSON
-import SwiftSpinner
 import SwiftOverlays
 import CoreData
 import Haneke
