@@ -17,5 +17,7 @@ target 'voiceIn' do
 #    pod 'AlamofireImage', '~> 2.0'
     pod 'HanekeSwift', '0.10.1'
     pod 'Instructions', '~> 0.4'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end
 
