@@ -2,7 +2,10 @@ PODS:
   - Alamofire (3.1.5)
   - ALCameraViewController (1.2.0)
   - BWWalkthrough (1.1.0)
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
   - Eureka (1.5.0)
+  - Fabric (1.6.7)
   - HanekeSwift (0.10.1)
   - Instructions (0.4.0)
   - IQKeyboardManagerSwift (4.0.2)
@@ -17,7 +20,9 @@ DEPENDENCIES:
   - Alamofire (~> 3.1.2)
   - ALCameraViewController (= 1.2.0)
   - BWWalkthrough (= 1.1.0)
+  - Crashlytics
   - Eureka (~> 1.5)
+  - Fabric
   - HanekeSwift (= 0.10.1)
   - Instructions (~> 0.4)
   - IQKeyboardManagerSwift
@@ -46,7 +51,9 @@ SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   ALCameraViewController: 03b480d0b41d3afc21fca48fc45345893ce2680a
   BWWalkthrough: 0c27ad2773a25c8f4fb9004bc7d6685deb35fecc
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   Instructions: 7283d009379714e8ff667153014cd62b6e4f4eb9
   IQKeyboardManagerSwift: 2f2c19c509f67c4c0df2826db54033d3e090ce65
