@@ -88,10 +88,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                if self.view.superview != nil {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view!)
-                }
-                
+                SwiftOverlays.removeAllOverlaysFromView(self.view!)
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
@@ -195,8 +192,8 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     }
             }
         }
+        
         cell.selectionStyle = .Gray;
-
         return cell
     }
     
@@ -239,18 +236,11 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     if response?.statusCode >= 400 {
                         debugPrint(error)
                         AlertBox.createAlertView(self, title: "抱歉", body: "網路出現錯誤，請稍候再嘗試!", buttonValue: "確認")
-                        
-                        if self.view.superview != nil {
-                            SwiftOverlays.removeAllOverlaysFromView(self.view!)
-                        }
+                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
                     } else {
                         debugPrint(response?.statusCode)
                         UIApplication.sharedApplication().statusBarHidden = false;
-                        
-                        if self.view.superview != nil {
-                            SwiftOverlays.removeAllOverlaysFromView(self.view!)
-                        }
-                        
+                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
@@ -273,17 +263,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     if response?.statusCode >= 400 {
                         debugPrint(error)
                         AlertBox.createAlertView(self, title: "抱歉", body: "網路出現錯誤，請稍候再嘗試!", buttonValue: "確認")
-                        
-                        if self.view.superview != nil {
-                            SwiftOverlays.removeAllOverlaysFromView(self.view!)
-                        }
+                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
                     } else {
                         UIApplication.sharedApplication().statusBarHidden = false;
-                        
-                        if self.view.superview != nil {
-                            SwiftOverlays.removeAllOverlaysFromView(self.view!)
-                        }
-                        
+                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
             }
