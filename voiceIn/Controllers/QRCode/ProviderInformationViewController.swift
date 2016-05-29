@@ -24,6 +24,7 @@ class ProviderInformationViewController: UIViewController {
         /**
         GET: Get the user's information.
         **/
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "讀取聯絡人中，請稍候...")
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -69,6 +70,8 @@ class ProviderInformationViewController: UIViewController {
                         return
                     }
                 }
+                
+                SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
         }
     }
     
