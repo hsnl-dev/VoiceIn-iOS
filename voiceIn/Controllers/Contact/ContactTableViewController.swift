@@ -511,7 +511,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                if self.view.superview != nil {
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                }
+                
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
@@ -556,6 +559,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: Trigger when user click the row of contact, show detail.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
                 let destinationViewController = segue.destinationViewController as? ContactDetailViewController {                
