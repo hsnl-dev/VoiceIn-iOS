@@ -57,7 +57,10 @@ class NotificationTableViewController: UITableViewController {
                     AlertBox.createAlertView(self, title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                if self.view.superview != nil {
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                }
+                
                 self.view.userInteractionEnabled = true
         }
     }

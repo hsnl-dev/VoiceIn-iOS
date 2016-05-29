@@ -33,6 +33,8 @@ class vCardViewController: UIViewController {
         self.navigationController?.view.userInteractionEnabled = false
         if isReachable == true {
             SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
+            self.prepareGenQrCodeCardView()
+            
             let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")!
             Alamofire
                 .request(.GET, getInformationApiRoute, headers: headers)
@@ -42,7 +44,6 @@ class vCardViewController: UIViewController {
                     case .Success(let JSON_RESPONSE):
                         let jsonResponse = JSON(JSON_RESPONSE)
                         self.prepareVcardView(jsonResponse)
-                        self.prepareGenQrCodeCardView()
                     case .Failure(let error):
                         AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
                         debugPrint(error)
