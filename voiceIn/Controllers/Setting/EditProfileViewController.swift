@@ -257,7 +257,7 @@ class EditProfileViewController: FormViewController {
         
         debugPrint("PUT: " + updateInformationApiRoute)
         let text = "儲存中..."
-        self.showWaitOverlayWithText(text)
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: text)
         /**
         PUT: Update the user's information.
         **/
@@ -276,7 +276,9 @@ class EditProfileViewController: FormViewController {
                     UserPref.setUserPref("company", value: parameters["company"])
                     
                     if self.isUserSelectPhoto == false {
-                        self.removeAllOverlays()
+                        if self.view.superview != nil {
+                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        }
                         AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                     }
                 }
@@ -299,14 +301,21 @@ class EditProfileViewController: FormViewController {
                             upload.response { response in
                                 print("photo success")
                                 self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
+                                
+                                if self.view.superview != nil {
+                                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                                }
+                                
                                 AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                             }
                         case .Failure(let encodingError):
+                            if self.view.superview != nil {
+                                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                            }
+                            
                             AlertBox.createAlertView(self ,title: "抱歉!", body: "出現網路或伺服器錯誤", buttonValue: "確認")
                             print(encodingError)
                         }
-                        
-                        self.removeAllOverlays()
                 })
         }
     }
