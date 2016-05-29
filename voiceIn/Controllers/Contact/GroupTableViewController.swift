@@ -108,7 +108,7 @@ class GroupTableViewController: UITableViewController {
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 debugPrint("Deleting a row...")
-                SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "刪除中...")
+                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
                 
                 let deleteApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + (tableView.cellForRowAtIndexPath(indexPath) as! GroupTableCell).id!
                 
@@ -125,7 +125,7 @@ class GroupTableViewController: UITableViewController {
                             debugPrint(error)
                         }
                     
-                        SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
+                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
             }))
             
