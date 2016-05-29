@@ -60,7 +60,10 @@ class GroupTableViewController: UITableViewController {
                     debugPrint(error)
                     AlertBox.createAlertView(self, title: "抱歉", body: "伺服器忙碌中，請稍候再嘗試。", buttonValue: "確認")
                 }
-                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                
+                if self.view.superview != nil {
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                }
         }
     }
 
@@ -124,8 +127,10 @@ class GroupTableViewController: UITableViewController {
                         } else {
                             debugPrint(error)
                         }
-                    
-                        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        
+                        if self.view.superview != nil {
+                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        }
                 }
             }))
             
