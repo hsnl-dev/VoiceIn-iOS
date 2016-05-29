@@ -30,17 +30,12 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getContactList()
         self.tableView.allowsMultipleSelectionDuringEditing = true
         self.tableView.setEditing(true, animated: true)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func viewDidAppear(animated: Bool) {
+        getContactList()
         UIApplication.sharedApplication().statusBarHidden = true;
     }
 
@@ -54,7 +49,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         
         let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
         
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view!, text: "讀取中...")
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
 
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -88,7 +83,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.view!)
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+                
                 self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
@@ -227,7 +225,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
             ]
             
             debugPrint(parameters)
-            SwiftOverlays.showCenteredWaitOverlayWithText(self.view!, text: "建立中，請稍候...")
+            SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "建立中，請稍候...")
             
             Alamofire
                 .request(.POST, createNewGroupRoute, headers: self.headers, parameters: parameters as? [String : AnyObject], encoding: .JSON)
@@ -236,12 +234,16 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     if response?.statusCode >= 400 {
                         debugPrint(error)
                         AlertBox.createAlertView(self, title: "抱歉", body: "網路出現錯誤，請稍候再嘗試!", buttonValue: "確認")
-                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
+                        if let superview = self.view.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
                     } else {
                         debugPrint(response?.statusCode)
                         UIApplication.sharedApplication().statusBarHidden = false;
                         SwiftOverlays.removeAllOverlaysFromView(self.view!)
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        if let superview = self.view.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
                     }
                     
                     self.isCreateClicked = false
@@ -254,7 +256,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
             ]
             
             debugPrint(parameters)
-            SwiftOverlays.showCenteredWaitOverlayWithText(self.view!, text: "更新中，請稍候...")
+            SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "更新中，請稍候...")
             Alamofire
                 .request(.PUT, updateGroupRoute, headers: self.headers, parameters: parameters, encoding: .JSON)
                 .response {
@@ -263,10 +265,16 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     if response?.statusCode >= 400 {
                         debugPrint(error)
                         AlertBox.createAlertView(self, title: "抱歉", body: "網路出現錯誤，請稍候再嘗試!", buttonValue: "確認")
-                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
+                        if let superview = self.view.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
                     } else {
                         UIApplication.sharedApplication().statusBarHidden = false;
-                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
+                        
+                        if let superview = self.view.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
+                        
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
             }

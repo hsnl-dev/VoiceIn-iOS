@@ -15,16 +15,18 @@ class ProviderInformationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // MARK: self-sizing cell setting.
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedRowHeight = 70;
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         let getInformationApiRoute = API_END_POINT + "/providers/" + qrCodeUuid
         debugPrint(getInformationApiRoute)
-        // MARK: self-sizing cell setting.
-        // MARK: self-sizing cell setting.
-        tableView.rowHeight = UITableViewAutomaticDimension;
-        tableView.estimatedRowHeight = 70;
-        /**
-        GET: Get the user's information.
-        **/
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "讀取聯絡人中，請稍候...")
+
+        // MARK - GET: Get the user's information.
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取聯絡人中，請稍候...")
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -71,7 +73,9 @@ class ProviderInformationViewController: UIViewController {
                     }
                 }
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
         }
     }
     
@@ -144,8 +148,9 @@ class ProviderInformationViewController: UIViewController {
             "availableEndTime": "23:59",
             "nickName": nickName as String
         ]
+        
         debugPrint(parameters)
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.tableView!, text: "新增聯絡人中，請稍候...")
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "新增聯絡人中，請稍候...")
         /**
         POST: Add new contact.
         **/
@@ -171,7 +176,10 @@ class ProviderInformationViewController: UIViewController {
                         AlertBox.createAlertView(self, title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                     }
                 }
-                SwiftOverlays.removeAllOverlaysFromView(self.tableView!)
+                
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
         }
     }
     
