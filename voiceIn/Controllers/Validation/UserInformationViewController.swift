@@ -310,7 +310,7 @@ class UserInformationViewController: FormViewController {
                                         request, response, data, error in
                                         self.removeAllOverlays()
                                         
-                                        if error == nil {
+                                        if response?.statusCode == 200 || response?.statusCode == 304 {
                                             print("Generate QR Code Successfully!")
                                             self.presentViewController(contactTableView, animated: true, completion: nil)
                                         } else {
