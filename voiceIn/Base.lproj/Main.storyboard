@@ -179,7 +179,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcO-i2-7Mg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcO-i2-7Mg">
                                 <rect key="frame" x="0.0" y="64" width="600" height="56"/>
                                 <color key="backgroundColor" white="0.88297413793103452" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -199,7 +199,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="dcO-i2-7Mg" firstAttribute="leading" secondItem="C8T-UA-2Cf" secondAttribute="leadingMargin" constant="-20" id="6Yp-HI-GAG"/>
-                            <constraint firstItem="dcO-i2-7Mg" firstAttribute="top" secondItem="pVw-da-Xtw" secondAttribute="bottom" id="dBZ-zE-fBh"/>
+                            <constraint firstItem="dcO-i2-7Mg" firstAttribute="top" secondItem="pVw-da-Xtw" secondAttribute="bottom" constant="44" id="dBZ-zE-fBh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dcO-i2-7Mg" secondAttribute="trailing" constant="-20" id="xCK-G9-YgU"/>
                         </constraints>
                     </view>
