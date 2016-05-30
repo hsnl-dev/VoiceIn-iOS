@@ -281,7 +281,7 @@ class UserInformationViewController: FormViewController {
             .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
             .validate()
             .response { request, response, data, error in
-                if error == nil && !self.isUserSelectPhoto {
+                if error == nil {
                     //MARK: error is nil, nothing happened! All is well :)
                     UserPref.setUserPref("userName", value: parameters["userName"])
                     UserPref.setUserPref("profile", value: parameters["profile"])
