@@ -24,9 +24,9 @@ class ProviderInformationViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         let getInformationApiRoute = API_END_POINT + "/providers/" + qrCodeUuid
         debugPrint(getInformationApiRoute)
-
+        
         // MARK - GET: Get the user's information.
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取聯絡人中，請稍候...")
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取聯絡人中，請稍候...")
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -68,12 +68,12 @@ class ProviderInformationViewController: UIViewController {
                         AlertBox.createAlertView(self, title: "抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
                         return
                     default:
-                        AlertBox.createAlertView(self, title: "抱歉!", body: "伺服器錯誤，請稍候再嘗試、或查無此人。", buttonValue: "確認")
+                        AlertBox.createAlertView(self, title: "抱歉!", body: "伺服器錯誤或查無此人。", buttonValue: "確認")
                         return
                     }
                 }
                 
-                if let superview = self.view.superview {
+                if let superview = self.view {
                     SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
         }
@@ -150,7 +150,7 @@ class ProviderInformationViewController: UIViewController {
         ]
         
         debugPrint(parameters)
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "新增聯絡人中，請稍候...")
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "新增聯絡人中，請稍候...")
         /**
         POST: Add new contact.
         **/
@@ -177,7 +177,7 @@ class ProviderInformationViewController: UIViewController {
                     }
                 }
                 
-                if let superview = self.view.superview {
+                if let superview = self.view {
                     SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
         }

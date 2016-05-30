@@ -122,6 +122,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 let isOfflinecardPreset = UserPref.getUserPrefByKey("isOfflineCardPresent")
                 debugPrint("Network Enable")
                 
+                // MARK - isOfflinecardPreset: Flag to record if the offline card is presented or not.
                 if isOfflinecardPreset != nil && isOfflinecardPreset == "true" {
                     self.dismissViewControllerAnimated(true, completion: nil)
                     UserPref.setUserPref("isOfflineCardPresent", value: "false")

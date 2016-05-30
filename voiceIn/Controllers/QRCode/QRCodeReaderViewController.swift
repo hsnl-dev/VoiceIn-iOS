@@ -6,7 +6,6 @@ import SwiftOverlays
 class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let imagePickerController = UIImagePickerController()
-    let waitedText = "請稍候..."
     
     @IBOutlet weak var messageLabel:UILabel!
     
@@ -108,10 +107,24 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                messageLabel.text = metadataObj.stringValue
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+                
+                let qrCodeArr = metadataObj.stringValue.componentsSeparatedByString("=")
+                
+                if qrCodeArr.count == 2 {
+                    messageLabel.text = qrCodeArr[1]
+                    if messageLabel.text == UserPref.getUserPrefByKey("qrCodeUuid") {
+                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "這是你自己的 QR Code 喔!")
+                    } else {
+                        self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
+                    }
+                } else {
+                    SwiftOverlays.showTextOverlay(self.view.superview!, text: "無效的 QR Code 喔!")
+                }
+
                 captureSession?.stopRunning()
-                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: waitedText)
-                self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
             }
         }
     }
@@ -120,10 +133,11 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
         if segue.identifier == "isQRCodeReadSeque" {
             // TODO: Send Data.
             if let providerInformationViewController = segue.destinationViewController as? ProviderInformationViewController {
-                let qrCodeArr = messageLabel.text?.componentsSeparatedByString("=")
+                providerInformationViewController.qrCodeUuid = messageLabel.text
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
-                providerInformationViewController.qrCodeUuid = qrCodeArr![1]
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
             }
         }
     }
@@ -140,12 +154,14 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
     // MARK: - UIImagePickerControllerDelegate Methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: waitedText)
-        
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
-    
             let ciImage: CIImage = CIImage(image: pickedImage)!
+            
+            if let superview = self.view.superview {
+                SwiftOverlays.removeAllOverlaysFromView(superview)
+            }
+            
             var qrCodeLink = ""
             
             let features = detector.featuresInImage(ciImage)
@@ -154,15 +170,25 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
                 qrCodeLink += feature.messageString
             }
             
+            dismissViewControllerAnimated(true, completion: nil)
+
             if qrCodeLink == "" {
-                AlertBox.createAlertView(self, title: "請再試試看", body: "請確認您所選擇的圖片含有 VoiceIn QRCode", buttonValue: "確認")
+                SwiftOverlays.showTextOverlay(self.view.superview!, text: "請選擇含有 VoiceIn QR Code 之圖片!")
             }else{
-                messageLabel.text = qrCodeLink
+                let qrCodeArr = qrCodeLink.componentsSeparatedByString("=")
+                debugPrint(qrCodeArr)
+                if qrCodeArr.count == 2 {
+                    messageLabel.text = qrCodeArr[1]
+                    if messageLabel.text == UserPref.getUserPrefByKey("qrCodeUuid") {
+                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "這是你自己的 QR Code 喔!")
+                    } else {
+                        self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
+                    }
+                } else {
+                    SwiftOverlays.showTextOverlay(self.view.superview!, text: "無效的 QR Code 喔!")
+                }
             }
         }
-        
-        dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

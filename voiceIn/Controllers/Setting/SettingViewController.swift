@@ -1,9 +1,11 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Haneke
 
 class SettingViewController: UITableViewController {
     @IBOutlet var credit: UILabel? = UILabel()
+    let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +45,14 @@ class SettingViewController: UITableViewController {
     }
     
     @IBAction func logout(sender: UIButton) {
+        UserPref.removeAll()
         UserPref()
             .setUserPref("isFirstLogin", value: "true")
             .setUserPref("isFirstFetch", value: true)
             .setUserPref("userUuid", value: nil)
             .setUserPref("token", value: nil)
+        hnkImageCache.removeAll()
+        
         let rootController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
         UIApplication.sharedApplication().keyWindow?.rootViewController = rootController
     }

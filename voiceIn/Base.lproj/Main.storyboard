@@ -199,7 +199,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="dcO-i2-7Mg" firstAttribute="leading" secondItem="C8T-UA-2Cf" secondAttribute="leadingMargin" constant="-20" id="6Yp-HI-GAG"/>
-                            <constraint firstItem="dcO-i2-7Mg" firstAttribute="top" secondItem="pVw-da-Xtw" secondAttribute="bottom" constant="44" id="dBZ-zE-fBh"/>
+                            <constraint firstItem="dcO-i2-7Mg" firstAttribute="top" secondItem="pVw-da-Xtw" secondAttribute="bottom" constant="44" id="jih-ks-GpL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dcO-i2-7Mg" secondAttribute="trailing" constant="-20" id="xCK-G9-YgU"/>
                         </constraints>
                     </view>

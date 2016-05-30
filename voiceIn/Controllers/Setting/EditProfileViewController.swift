@@ -252,7 +252,7 @@ class EditProfileViewController: FormViewController {
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
             "deviceOS": "ios",
-            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String!
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String! == nil ? "simulator" : UserPref.getUserPrefByKey("deviceKey") as String!
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)
