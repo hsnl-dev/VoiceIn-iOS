@@ -21,6 +21,10 @@ class UserInformationViewController: FormViewController {
         getUserInformation()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         navigationBarView.frame = CGRectMake(0, 0, view.bounds.width, MaterialDevice.landscape ? .iPad == MaterialDevice.type ? 64 : navigationBarView.intrinsicContentSize().height : 64)
@@ -32,7 +36,7 @@ class UserInformationViewController: FormViewController {
          GET: Get the user's information.
          **/
         let text = "讀取中..."
-        self.showWaitOverlayWithText(text)
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: text)
         
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")
         Alamofire
@@ -43,10 +47,17 @@ class UserInformationViewController: FormViewController {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     
-                    self.removeAllOverlays()
+                    if let superview = self.view {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
                     self.prepareInputForm(jsonResponse)
                 case .Failure(let error):
-                    self.removeAllOverlays()
+                    
+                    if let superview = self.view {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再點更新按鈕以更新。", buttonValue: "確認")
                     debugPrint(error)
                 }
@@ -263,7 +274,7 @@ class UserInformationViewController: FormViewController {
         print("PUT: " + updateInformationApiRoute)
         
         let text = "儲存中..."
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: text)
+        SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: text)
         
         // MARK: PUT: Update the user's information.
         Alamofire
@@ -308,7 +319,10 @@ class UserInformationViewController: FormViewController {
                                     .request(.POST, generateQrcodeApiRoute, headers: self.headers)
                                     .response {
                                         request, response, data, error in
-                                        self.removeAllOverlays()
+                                        
+                                        if let superview = self.view {
+                                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                                        }
                                         
                                         if response?.statusCode == 200 || response?.statusCode == 304 {
                                             print("Generate QR Code Successfully!")
@@ -320,6 +334,11 @@ class UserInformationViewController: FormViewController {
 
                             }
                         case .Failure(let encodingError):
+                            
+                            if let superview = self.view {
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
+                            }
+
                             AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                             print(encodingError)
                             return
@@ -331,7 +350,10 @@ class UserInformationViewController: FormViewController {
                 .request(.POST, generateQrcodeApiRoute, headers: headers)
                 .response {
                     request, response, data, error in
-                    self.removeAllOverlays()
+                    
+                    if let superview = self.view {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                     
                     if error == nil {
                         print("Generate QR Code Successfully!")

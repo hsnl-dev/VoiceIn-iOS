@@ -122,6 +122,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 let isOfflinecardPreset = UserPref.getUserPrefByKey("isOfflineCardPresent")
                 debugPrint("Network Enable")
                 
+                // MARK - isOfflinecardPreset: Flag to record if the offline card is presented or not.
                 if isOfflinecardPreset != nil && isOfflinecardPreset == "true" {
                     self.dismissViewControllerAnimated(true, completion: nil)
                     UserPref.setUserPref("isOfflineCardPresent", value: "false")
@@ -219,10 +220,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         }
         
         if userInformation["chargeType"]!! as String == ContactType.Free.rawValue {
-            cell.type.text = CallTypeText.freeCallText
+            cell.type.text = ContactTypeText.freeCallText
             cell.type.textColor = MaterialColor.red.base
         } else {
-            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? CallTypeText.paidCallText : CallTypeText.iconCallText
+            cell.type.text = userInformation["chargeType"]!! as String == ContactType.Paid.rawValue ? ContactTypeText.paidCallText : ContactTypeText.iconCallText
             cell.type.textColor = MaterialColor.teal.darken4
         }
         

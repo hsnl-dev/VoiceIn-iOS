@@ -11,6 +11,12 @@ class UserPref {
         userDefaultData.setValue(value, forKeyPath: key)
     }
     
+    class func removeAll() {
+        let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaultData.removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     func setUserPref(key: String, value: AnyObject?) -> UserPref {
         let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         userDefaultData.setValue(value, forKeyPath: key)

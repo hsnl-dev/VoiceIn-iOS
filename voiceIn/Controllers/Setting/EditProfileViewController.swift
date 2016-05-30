@@ -16,6 +16,7 @@ class EditProfileViewController: FormViewController {
     
     private var navigationBarView: NavigationBar = NavigationBar()
     private var isUserSelectPhoto: Bool! = false
+    private var isSaveClicked = false
     let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
@@ -227,6 +228,13 @@ class EditProfileViewController: FormViewController {
     }
     
     @IBAction func saveButtonClicked(sender: UIButton!) {
+        if isSaveClicked == true {
+            return
+        } else {
+            isSaveClicked = true
+        }
+        
+        
         let formValues = form.values()
         let userUuid = UserPref.getUserPrefByKey("userUuid")
         let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.6)
@@ -252,15 +260,14 @@ class EditProfileViewController: FormViewController {
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
             "deviceOS": "ios",
-            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String!
+            "deviceKey": UserPref.getUserPrefByKey("deviceKey") as String! == nil ? "simulator" : UserPref.getUserPrefByKey("deviceKey") as String!
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)
         let text = "儲存中..."
         SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: text)
-        /**
-        PUT: Update the user's information.
-        **/
+
+        // MARK: PUT: Update the user's information.
         Alamofire
             .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
             .validate()
@@ -279,6 +286,8 @@ class EditProfileViewController: FormViewController {
                         if self.view.superview != nil {
                             SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                         }
+                        
+                        self.isSaveClicked = false
                         AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                     }
                 }
@@ -306,6 +315,7 @@ class EditProfileViewController: FormViewController {
                                     SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                                 }
                                 
+                                self.isSaveClicked = false
                                 AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                             }
                         case .Failure(let encodingError):
@@ -313,6 +323,7 @@ class EditProfileViewController: FormViewController {
                                 SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                             }
                             
+                            self.isSaveClicked = false
                             AlertBox.createAlertView(self ,title: "抱歉!", body: "出現網路或伺服器錯誤", buttonValue: "確認")
                             print(encodingError)
                         }
