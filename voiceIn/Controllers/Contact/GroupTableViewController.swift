@@ -150,8 +150,7 @@ class GroupTableViewController: UITableViewController {
                 let mutipleSelectContactViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MutipleSelectContactView") as! GroupMutipleSelectTableViewController
             
                 mutipleSelectContactViewController.groupName = self.groupNameTextField.text
-                self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
-            
+                self.navigationController?.pushViewController(mutipleSelectContactViewController, animated: true)            
         }))
         self.presentViewController(groupNameBox, animated: true, completion: {
             debugPrint("completion block")
