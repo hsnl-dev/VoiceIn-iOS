@@ -38,7 +38,7 @@
 		3EA92A6D1CB515F70024C737 /* GroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */; };
 		3EAA592A1CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */; };
 		3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */; };
-		3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */; };
+		3EAD8E341CB3F761008A09E3 /* ContactRelatedParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E331CB3F761008A09E3 /* ContactRelatedParameter.swift */; };
 		3EAD8E361CB40672008A09E3 /* FavoriteContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */; };
 		3EB2A6DC1CBD3D0700C2D406 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EB2A6DB1CBD3D0700C2D406 /* Introduction.storyboard */; };
 		3EB2A6E11CBD3E9300C2D406 /* WalkThroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2A6E01CBD3E9300C2D406 /* WalkThroughViewController.swift */; };
@@ -92,7 +92,7 @@
 		3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewController.swift; sourceTree = "<group>"; };
 		3EAA59291CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectTableViewController.swift; sourceTree = "<group>"; };
 		3EAA592B1CB7A8100079A51D /* GroupMutipleSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMutipleSelectCell.swift; sourceTree = "<group>"; };
-		3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewParam.swift; sourceTree = "<group>"; };
+		3EAD8E331CB3F761008A09E3 /* ContactRelatedParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRelatedParameter.swift; sourceTree = "<group>"; };
 		3EAD8E351CB40672008A09E3 /* FavoriteContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteContactTableViewController.swift; sourceTree = "<group>"; };
 		3EB2A6DB1CBD3D0700C2D406 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		3EB2A6E01CBD3E9300C2D406 /* WalkThroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkThroughViewController.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		3E13C2D41C9874950060BC0B /* Configs */ = {
 			isa = PBXGroup;
 			children = (
-				3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */,
+				3EAD8E331CB3F761008A09E3 /* ContactRelatedParameter.swift */,
 				3E3BC4E51CFC7C180068F92D /* ApplicationVariable.swift */,
 			);
 			path = Configs;
@@ -505,7 +505,7 @@
 				3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */,
 				3EAA592A1CB7A7060079A51D /* GroupMutipleSelectTableViewController.swift in Sources */,
 				3E98C0BC1C8C3E01001BB458 /* ContactDetailTableViewCell.swift in Sources */,
-				3EAD8E341CB3F761008A09E3 /* ContactTableViewParam.swift in Sources */,
+				3EAD8E341CB3F761008A09E3 /* ContactRelatedParameter.swift in Sources */,
 				3E98C0D31C8C3E12001BB458 /* ContactDetailViewController.swift in Sources */,
 				3EDDFB301CEA2E2E0093FB9A /* Reachibility.swift in Sources */,
 				3EE4EC371C8DE47D00805447 /* EditProfileViewController.swift in Sources */,
