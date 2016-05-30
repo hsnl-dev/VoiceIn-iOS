@@ -36,7 +36,6 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         getContactList()
-        UIApplication.sharedApplication().statusBarHidden = true;
     }
 
     override func didReceiveMemoryWarning() {
@@ -195,7 +194,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         return cell
     }
     
-    @IBAction func createGroup(sender: UIButton!) {
+    @IBAction func createGroup(sender: UIBarButtonItem!) {
         let selectedPaths = self.tableView.indexPathsForSelectedRows
         
         if selectedPaths == nil {
@@ -239,14 +238,14 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                         }
                     } else {
                         debugPrint(response?.statusCode)
-                        UIApplication.sharedApplication().statusBarHidden = false;
-                        SwiftOverlays.removeAllOverlaysFromView(self.view!)
+                        
                         if let superview = self.view.superview {
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
                     }
                     
                     self.isCreateClicked = false
+                    self.navigationController?.popViewControllerAnimated(true)
             }
         } else {
             // MARK - It is from update action.
@@ -269,13 +268,11 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
                     } else {
-                        UIApplication.sharedApplication().statusBarHidden = false;
-                        
                         if let superview = self.view.superview {
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
                         
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.navigationController?.popViewControllerAnimated(true)
                     }
             }
         }

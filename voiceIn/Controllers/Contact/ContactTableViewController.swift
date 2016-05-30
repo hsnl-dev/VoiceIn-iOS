@@ -404,7 +404,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         debugPrint(selectedContactId)
         
         mutipleSelectContactViewController.seletedContactArray = selectedContactId
-        self.presentViewController(mutipleSelectContactViewController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(mutipleSelectContactViewController, animated: true)
     }
     
     func showUpdateGroupNameModal() {
