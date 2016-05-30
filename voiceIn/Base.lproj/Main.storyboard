@@ -1369,7 +1369,7 @@
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="logout:" destination="MCB-d4-IpU" eventType="touchUpInside" id="xh9-yG-Ydz"/>
+                                                        <action selector="logout:" destination="MCB-d4-IpU" eventType="touchUpInside" id="hFs-lK-jy3"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1425,8 +1425,8 @@
                                                     <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尚未啟用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6OM-MW-2Jz">
-                                                    <rect key="frame" x="524" y="11" width="68" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="讀取中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6OM-MW-2Jz">
+                                                    <rect key="frame" x="541" y="11" width="51" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="f3G-Hj-ovf"/>
                                                     </constraints>
@@ -1519,6 +1519,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="個人資訊" id="4rB-u8-Qzp"/>
+                    <connections>
+                        <outlet property="credit" destination="6OM-MW-2Jz" id="IyE-Rv-2ex"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V7Y-gh-ymI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

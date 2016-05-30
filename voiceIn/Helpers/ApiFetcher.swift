@@ -2,7 +2,7 @@ import Foundation
 import SystemConfiguration
 
 let API_SANDBOX_END_POINT = "https://voicein-web-service.us-west-2.elasticbeanstalk.com/api/v1/sandboxs"
-let isSandBox = false
+let isSandBox = true
 let API_END_POINT = isSandBox == true ? "https://voicein.herokuapp.com/api/v2" : "https://voicein-api.kits.tw/api/v2"
 let API_URI = isSandBox == true ? "https://voicein.herokuapp.com/api/" : "https://voicein-api.kits.tw/api/"
 let versionV1 = "v1"
