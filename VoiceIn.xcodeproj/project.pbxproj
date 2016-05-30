@@ -12,10 +12,10 @@
 		3E1A79BB1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1A79BA1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift */; };
 		3E3701EA1CBCF0A100B0F4CB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */; };
 		3E3701EC1CBCF1F200B0F4CB /* HistoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */; };
+		3E3BC4E61CFC7C180068F92D /* ApplicationVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3BC4E51CFC7C180068F92D /* ApplicationVariable.swift */; };
 		3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */; };
 		3E5767861C96B1900089FD6B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5767851C96B1900089FD6B /* SettingViewController.swift */; };
 		3E57EAE61CE45E21009F46B2 /* AlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E57EAE51CE45E21009F46B2 /* AlertBox.swift */; };
-		3E5959841CE8B3CE0060C967 /* TypeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5959831CE8B3CE0060C967 /* TypeText.swift */; };
 		3E6FABA51CBA53640077B0C0 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6FABA41CBA53640077B0C0 /* Group.swift */; };
 		3E773EB71C991861003CD1B3 /* QRCodeListVeiwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EB61C991861003CD1B3 /* QRCodeListVeiwController.swift */; };
 		3E773EB91C9928DC003CD1B3 /* CreateQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773EB81C9928DC003CD1B3 /* CreateQRCodeViewController.swift */; };
@@ -65,11 +65,11 @@
 		3E1A79BA1CF08F9B00B7D2D8 /* ContactInstructionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInstructionViewController.swift; sourceTree = "<group>"; };
 		3E3701E91CBCF0A100B0F4CB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		3E3701EB1CBCF1F200B0F4CB /* HistoryTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableCell.swift; sourceTree = "<group>"; };
+		3E3BC4E51CFC7C180068F92D /* ApplicationVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationVariable.swift; sourceTree = "<group>"; };
 		3E5466951C873E1E00F3A9A0 /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = ../bridge.h; sourceTree = "<group>"; };
 		3E5767831C96ACBA0089FD6B /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSettingCell.swift; sourceTree = "<group>"; };
 		3E5767851C96B1900089FD6B /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3E57EAE51CE45E21009F46B2 /* AlertBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBox.swift; sourceTree = "<group>"; };
-		3E5959831CE8B3CE0060C967 /* TypeText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeText.swift; sourceTree = "<group>"; };
 		3E6FABA41CBA53640077B0C0 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		3E773EB61C991861003CD1B3 /* QRCodeListVeiwController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeListVeiwController.swift; sourceTree = "<group>"; };
 		3E773EB81C9928DC003CD1B3 /* CreateQRCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQRCodeViewController.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				3EAD8E331CB3F761008A09E3 /* ContactTableViewParam.swift */,
-				3E5959831CE8B3CE0060C967 /* TypeText.swift */,
+				3E3BC4E51CFC7C180068F92D /* ApplicationVariable.swift */,
 			);
 			path = Configs;
 			sourceTree = "<group>";
@@ -500,7 +500,6 @@
 				3E3701EC1CBCF1F200B0F4CB /* HistoryTableCell.swift in Sources */,
 				3E773EB91C9928DC003CD1B3 /* CreateQRCodeViewController.swift in Sources */,
 				3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */,
-				3E5959841CE8B3CE0060C967 /* TypeText.swift in Sources */,
 				3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */,
 				3EF27F041C9913BC00D62844 /* UIView+VoiceIn.swift in Sources */,
 				3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */,
@@ -536,6 +535,7 @@
 				3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */,
 				3E5767841C96ACBA0089FD6B /* CustomSettingCell.swift in Sources */,
 				3E13C2D31C9874840060BC0B /* CallingService.swift in Sources */,
+				3E3BC4E61CFC7C180068F92D /* ApplicationVariable.swift in Sources */,
 				3EA92A6D1CB515F70024C737 /* GroupTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
