@@ -66,10 +66,8 @@ class ProviderInformationViewController: UIViewController {
                     switch statusCode {
                     case 404:
                         AlertBox.createAlertView(self, title: "抱歉!", body: "此為無效的 QRCode.", buttonValue: "確認")
-                        return
                     default:
                         AlertBox.createAlertView(self, title: "抱歉!", body: "伺服器錯誤或查無此人。", buttonValue: "確認")
-                        return
                     }
                 }
                 

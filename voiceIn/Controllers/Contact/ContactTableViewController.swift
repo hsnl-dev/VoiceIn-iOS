@@ -508,7 +508,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     UserPref.setUserPref("isFirstFetch", value: false)
                     
                     if self.isFromGroupListView == false && self.contactArray.count == 0 {
-                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "沒有聯絡人喔，分享名片或加好友吧!")
+                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "您目前沒有聯絡人喔\n分享名片或加好友吧")
                         self.tableView.separatorColor = MaterialColor.white
                     }
                     
@@ -566,8 +566,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: Trigger when user click the row of contact, show detail.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let superview = self.view.superview {
+            SwiftOverlays.removeAllOverlaysFromView(superview)
+        }
         
-        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
                 let destinationViewController = segue.destinationViewController as? ContactDetailViewController {                
