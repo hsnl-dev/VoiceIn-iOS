@@ -106,6 +106,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
         }
         
+        self.tableView.separatorColor = MaterialColor.grey.lighten2
         // MARK - Get the contact list.
         getContactList(getContactRoute)
         
@@ -506,14 +507,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     
                     UserPref.setUserPref("isFirstFetch", value: false)
                     
-                    if jsonResponse.count != 0 {
-                        self.tableView.reloadData()
-                    }
-                    
                     if self.isFromGroupListView == false && self.contactArray.count == 0 {
                         SwiftOverlays.showTextOverlay(self.view.superview!, text: "沒有聯絡人喔，分享名片或加好友吧!")
                         self.tableView.separatorColor = MaterialColor.white
                     }
+                    
+                    self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")

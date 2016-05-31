@@ -51,9 +51,11 @@ class GroupTableViewController: UITableViewController {
                     
                     if self.groupArray.count == 0 {
                         self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "請點右上角加號來新增群組!")
+                        self.tableView.separatorColor = MaterialColor.white
                     } else {
                         self.tableView.reloadData()
                         self.tableView.backgroundView = nil
+                        self.tableView.separatorColor = MaterialColor.grey.lighten2
                     }
                     
                 case .Failure(let error):

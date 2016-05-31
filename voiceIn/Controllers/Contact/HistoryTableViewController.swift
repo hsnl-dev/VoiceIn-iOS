@@ -48,8 +48,10 @@ class HistoryTableViewController: UITableViewController {
                     self.historyArray = jsonResponse["record"]
                     
                     if self.historyArray.count == 0 {
+                        self.tableView.separatorColor = MaterialColor.white
                         self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有通話紀錄")
                     } else {
+                        self.tableView.separatorColor = MaterialColor.grey.lighten2
                         self.tableView.reloadData()
                         self.tableView.backgroundView = nil
                     }

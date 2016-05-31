@@ -98,8 +98,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if contactArray.count == 0 {
+            self.tableView.separatorColor = MaterialColor.white
             self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
         } else {
+            self.tableView.separatorColor = MaterialColor.grey.lighten2
             self.tableView.backgroundView = nil
         }
         
