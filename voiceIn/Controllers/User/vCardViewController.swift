@@ -50,7 +50,6 @@ class vCardViewController: UIViewController {
                     }
             }
         } else {
-            UserPref.setUserPref("isFirstFetch", value: true)
             prepareOfflineView()
             prepareOfflineCardView()
         }

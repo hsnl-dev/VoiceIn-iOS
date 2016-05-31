@@ -77,6 +77,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.coachMarksController = CoachMarksController()
             self.coachMarksController?.allowOverlayTap = true
             self.navigationItem.title = "VoiceIn"
+            self.tableView.separatorColor = MaterialColor.grey.lighten2
         }
         
         UserPref.updateTheDeviceKey()
@@ -101,7 +102,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             print("could not start reachability notifier")
         }
         
+        if let superview = self.view.superview {
+            SwiftOverlays.removeAllOverlaysFromView(superview)
+        }
         
+        self.tableView.separatorColor = MaterialColor.grey.lighten2
         // MARK - Get the contact list.
         getContactList(getContactRoute)
         
@@ -125,12 +130,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 // MARK - isOfflinecardPreset: Flag to record if the offline card is presented or not.
                 if isOfflinecardPreset != nil && isOfflinecardPreset == "true" {
                     self.dismissViewControllerAnimated(true, completion: nil)
-                    UserPref.setUserPref("isOfflineCardPresent", value: "false")
+                    UserPref()
+                        .setUserPref("isOfflineCardPresent", value: "false")
+                        .syncAll()
                 }
                 
             } else {
                 print("Network not reachable")
-                UserPref.setUserPref("isOfflineCardPresent", value: "true")
+                
+                UserPref()
+                    .setUserPref("isOfflineCardPresent", value: "true")
+                    .setUserPref("isFirstFetch", value: true)
+                    .syncAll()
+                
                 let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController
                 self.presentViewController(vcardViewController, animated: true, completion: nil)
             }
@@ -326,8 +338,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 debugPrint("Deleting a row...")
-                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
-                
+                if let superview = self.view.superview {
+                    SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "刪除中...")
+                }
                 let deleteApiRoute = API_URI + latestVersion + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
@@ -341,7 +354,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                         debugPrint(error)
                     }
                     
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    if let superview = self.view.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                 }
             }))
             
@@ -443,7 +458,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         let isFirstFetch = UserPref.getUserPrefByKey("isFirstFetch")
         self.view.userInteractionEnabled = false
         debugPrint("is First Fetch? \(isFirstFetch)")
@@ -453,6 +471,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             .request(.GET, getInformationApiRoute, headers: headers, parameters: parameters, encoding: .URLEncodedInURL)
             .responseJSON {
                 response in
+                
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+                
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
@@ -497,23 +520,17 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     
                     UserPref.setUserPref("isFirstFetch", value: false)
                     
-                    if jsonResponse.count != 0 {
-                        self.tableView.reloadData()
-                    }
-                    
                     if self.isFromGroupListView == false && self.contactArray.count == 0 {
-                        self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
-                    } else {
-                        self.tableView.backgroundView = nil
+                        if let superview = self.view.superview {
+                            SwiftOverlays.showTextOverlay(superview, text: "您目前沒有聯絡人喔\n分享名片或加好友吧")
+                        }
+                        self.tableView.separatorColor = MaterialColor.white
                     }
                     
+                    self.tableView.reloadData()
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
-                }
-                
-                if self.view.superview != nil {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
                 
                 self.view.userInteractionEnabled = true
@@ -547,6 +564,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK - Pull down to refresh
     func refresh(sender: AnyObject) {
         
+        if let superview = self.view.superview {
+            SwiftOverlays.removeAllOverlaysFromView(superview)
+        }
+        
         if Networker.isReach() != true {
             debugPrint("Network is not connected!")
             AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
@@ -560,8 +581,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: Trigger when user click the row of contact, show detail.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let superview = self.view.superview {
+            SwiftOverlays.removeAllOverlaysFromView(superview)
+        }
         
-        SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
                 let destinationViewController = segue.destinationViewController as? ContactDetailViewController {                

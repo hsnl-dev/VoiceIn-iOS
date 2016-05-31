@@ -104,7 +104,11 @@ class QRCodeListVeiwController: UITableViewController {
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/customQrcodes"
         
         self.tableView.reloadData()
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         self.view.userInteractionEnabled = false
         
         Alamofire

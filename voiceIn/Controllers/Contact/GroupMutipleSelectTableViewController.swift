@@ -43,9 +43,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     private func getContactList() {
         
         let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
         
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
-
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
             .responseJSON {
@@ -98,8 +99,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if contactArray.count == 0 {
+            self.tableView.separatorColor = MaterialColor.white
             self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
         } else {
+            self.tableView.separatorColor = MaterialColor.grey.lighten2
             self.tableView.backgroundView = nil
         }
         
@@ -220,7 +223,9 @@ class GroupMutipleSelectTableViewController: UITableViewController {
             ]
             
             debugPrint(parameters)
-            SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "建立中，請稍候...")
+            if let superview = self.view.superview {
+                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "建立中，請稍候...")
+            }
             
             Alamofire
                 .request(.POST, createNewGroupRoute, headers: self.headers, parameters: parameters as? [String : AnyObject], encoding: .JSON)
@@ -251,7 +256,10 @@ class GroupMutipleSelectTableViewController: UITableViewController {
             ]
             
             debugPrint(parameters)
-            SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "更新中，請稍候...")
+            if let superview = self.view.superview {
+                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "更新中，請稍候...")
+            }
+            
             Alamofire
                 .request(.PUT, updateGroupRoute, headers: self.headers, parameters: parameters, encoding: .JSON)
                 .response {

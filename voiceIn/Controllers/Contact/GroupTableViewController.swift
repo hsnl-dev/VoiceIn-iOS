@@ -37,7 +37,9 @@ class GroupTableViewController: UITableViewController {
     
     // MARK: GET: Get the Group list.
     private func getGroupList() {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
         let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
         
         Alamofire
@@ -51,9 +53,11 @@ class GroupTableViewController: UITableViewController {
                     
                     if self.groupArray.count == 0 {
                         self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "請點右上角加號來新增群組!")
+                        self.tableView.separatorColor = MaterialColor.white
                     } else {
                         self.tableView.reloadData()
                         self.tableView.backgroundView = nil
+                        self.tableView.separatorColor = MaterialColor.grey.lighten2
                     }
                     
                 case .Failure(let error):
@@ -61,8 +65,8 @@ class GroupTableViewController: UITableViewController {
                     AlertBox.createAlertView(self, title: "抱歉", body: "伺服器忙碌中，請稍候再嘗試。", buttonValue: "確認")
                 }
                 
-                if self.view.superview != nil {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
         }
     }
@@ -111,7 +115,9 @@ class GroupTableViewController: UITableViewController {
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 debugPrint("Deleting a row...")
-                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
+                if let superview = self.view.superview {
+                    SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "刪除中...")
+                }
                 
                 let deleteApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + (tableView.cellForRowAtIndexPath(indexPath) as! GroupTableCell).id!
                 
@@ -128,8 +134,8 @@ class GroupTableViewController: UITableViewController {
                             debugPrint(error)
                         }
                         
-                        if self.view.superview != nil {
-                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        if let superview = self.view.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
                 }
             }))

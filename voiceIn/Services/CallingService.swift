@@ -24,12 +24,16 @@ class CallService {
                 "contactId": contactId
             ]
             
-            SwiftOverlays.showCenteredWaitOverlayWithText(self.view!.superview!, text: "為您撥號中，系統即將來電...")
+            if let superview = self.view!.superview {
+                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "為您撥號中，系統即將來電...")
+            }
             
             Alamofire.request(.POST, callApiRoute, encoding: .JSON, headers: self.headers, parameters: parameters).response {
                 request, response, data, error in
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.view!.superview!)
+                if let superview = self.view!.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
                 
                 if error != nil {
                     AlertBox.createAlertView(self._self! ,title: "抱歉!", body: "無法撥打成功，請稍候再試。", buttonValue: "確認")

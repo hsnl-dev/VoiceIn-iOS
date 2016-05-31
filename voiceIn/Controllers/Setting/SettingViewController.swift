@@ -12,6 +12,20 @@ class SettingViewController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+       refreshCredit(UIButton())
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "setTutorialOnSegue" {
+            UserPref()
+                    .setUserPref("isFirstLogin", value: "true")
+                    .setUserPref("isFirstFetch", value: true)
+        }
+    }
+    
+    @IBAction func refreshCredit(sender: UIButton) {
+        self.credit?.text = "讀取中"
+        
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")
         let headers = Network.generateHeader(isTokenNeeded: true)
         let parameters = [
@@ -26,21 +40,11 @@ class SettingViewController: UITableViewController {
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
                     self.credit?.text = jsonResponse["credit"].stringValue
-                
+                    
                 case .Failure(let error):
                     self.credit?.text = "讀取失敗"
                     debugPrint(error)
                 }
-        }
-
-        
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "setTutorialOnSegue" {
-            UserPref()
-                    .setUserPref("isFirstLogin", value: "true")
-                    .setUserPref("isFirstFetch", value: true)
         }
     }
     

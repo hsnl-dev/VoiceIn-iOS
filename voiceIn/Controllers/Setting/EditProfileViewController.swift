@@ -265,8 +265,11 @@ class EditProfileViewController: FormViewController {
         
         debugPrint("PUT: " + updateInformationApiRoute)
         let text = "儲存中..."
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: text)
-
+        
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: text)
+        }
+        
         // MARK: PUT: Update the user's information.
         Alamofire
             .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
@@ -283,8 +286,8 @@ class EditProfileViewController: FormViewController {
                     UserPref.setUserPref("company", value: parameters["company"])
                     
                     if self.isUserSelectPhoto == false {
-                        if self.view.superview != nil {
-                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                        if let superview = self.view.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
                         
                         self.isSaveClicked = false
@@ -311,16 +314,16 @@ class EditProfileViewController: FormViewController {
                                 print("photo success")
                                 self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
                                 
-                                if self.view.superview != nil {
-                                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                                if let superview = self.view.superview {
+                                    SwiftOverlays.removeAllOverlaysFromView(superview)
                                 }
                                 
                                 self.isSaveClicked = false
                                 AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                             }
                         case .Failure(let encodingError):
-                            if self.view.superview != nil {
-                                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                            if let superview = self.view.superview {
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
                             }
                             
                             self.isSaveClicked = false
