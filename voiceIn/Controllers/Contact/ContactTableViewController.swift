@@ -130,12 +130,19 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 // MARK - isOfflinecardPreset: Flag to record if the offline card is presented or not.
                 if isOfflinecardPreset != nil && isOfflinecardPreset == "true" {
                     self.dismissViewControllerAnimated(true, completion: nil)
-                    UserPref.setUserPref("isOfflineCardPresent", value: "false")
+                    UserPref()
+                        .setUserPref("isOfflineCardPresent", value: "false")
+                        .syncAll()
                 }
                 
             } else {
                 print("Network not reachable")
-                UserPref.setUserPref("isOfflineCardPresent", value: "true")
+                
+                UserPref()
+                    .setUserPref("isOfflineCardPresent", value: "true")
+                    .setUserPref("isFirstFetch", value: true)
+                    .syncAll()
+                
                 let vcardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("vCardViewController") as! vCardViewController
                 self.presentViewController(vcardViewController, animated: true, completion: nil)
             }

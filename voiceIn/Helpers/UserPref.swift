@@ -23,6 +23,12 @@ class UserPref {
         return self
     }
     
+    func syncAll() -> UserPref {
+        let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaultData.synchronize()
+        return self
+    }
+    
     class func getUserPrefByKey(key: String) -> String! {
         let userDefaultData: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         let value: String?? = userDefaultData.stringForKey(key)
