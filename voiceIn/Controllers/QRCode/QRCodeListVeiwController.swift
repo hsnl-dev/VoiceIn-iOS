@@ -69,7 +69,7 @@ class QRCodeListVeiwController: UITableViewController {
         
         // Delete the created customed QRCode.
         if editingStyle == .Delete {
-            let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此筆聯絡人?", preferredStyle: UIAlertControllerStyle.Alert)
+            let deleteAlert = UIAlertController(title: "注意!", message: "確定要刪除此筆 QR Code?", preferredStyle: UIAlertControllerStyle.Alert)
             deleteAlert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 print("deleting...")

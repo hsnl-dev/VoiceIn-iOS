@@ -464,7 +464,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         let isFirstFetch = UserPref.getUserPrefByKey("isFirstFetch")
         self.view.userInteractionEnabled = false
-        debugPrint("is First Fetch? \(isFirstFetch)")
+        debugPrint("is First Fetch? \(isFirstFetch) \(getInformationApiRoute)")
         let parameters = isFirstFetch == "1" ? ["conditional": "false"] : ["conditional": "true"]
         
         Alamofire
@@ -480,7 +480,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
-                    //self.contactArray = []
+                    
+                    if self.isFromGroupListView == true {
+                        self.contactArray = []
+                    }
                     
                     for index in 0 ..< jsonResponse.count {
                         var contactInformation: [String: String?] = [String: String?]()
@@ -520,10 +523,18 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     
                     UserPref.setUserPref("isFirstFetch", value: false)
                     
-                    if self.isFromGroupListView == false && self.contactArray.count == 0 {
-                        if let superview = self.view.superview {
-                            SwiftOverlays.showTextOverlay(superview, text: "您目前沒有聯絡人喔\n分享名片或加好友吧")
+                    if self.contactArray.count == 0 {
+                        
+                        if  self.isFromGroupListView == false {
+                            if let superview = self.view.superview {
+                                SwiftOverlays.showTextOverlay(superview, text: "您目前沒有聯絡人喔\n分享名片或加好友吧")
+                            }
+                        } else {
+                            if let superview = self.view.superview {
+                                SwiftOverlays.showTextOverlay(superview, text: " 本群組沒有聯絡人\n點編輯新增吧")
+                            }
                         }
+                        
                         self.tableView.separatorColor = MaterialColor.white
                     }
                     
