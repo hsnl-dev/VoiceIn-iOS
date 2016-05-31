@@ -1372,6 +1372,15 @@
                                                         <action selector="logout:" destination="MCB-d4-IpU" eventType="touchUpInside" id="hFs-lK-jy3"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OPY-5H-9N2">
+                                                    <rect key="frame" x="8" y="111" width="90" height="30"/>
+                                                    <state key="normal" title="重新取得點數">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="refreshCredit:" destination="MCB-d4-IpU" eventType="touchUpInside" id="QYe-Fu-guz"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="eBk-Hh-gXF" firstAttribute="centerX" secondItem="s3b-vb-HA7" secondAttribute="centerX" id="54K-5M-bPT"/>
@@ -1380,7 +1389,9 @@
                                                 <constraint firstItem="eBk-Hh-gXF" firstAttribute="centerY" secondItem="s3b-vb-HA7" secondAttribute="centerY" id="Pqr-Qh-Lqn"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="qHf-ro-9Wc" secondAttribute="trailing" constant="8" id="SgY-6H-Z5O"/>
                                                 <constraint firstItem="qHf-ro-9Wc" firstAttribute="bottom" secondItem="1xF-kK-zv0" secondAttribute="bottomMargin" id="ZQY-Qo-9Ek"/>
+                                                <constraint firstItem="OPY-5H-9N2" firstAttribute="leading" secondItem="1xF-kK-zv0" secondAttribute="leadingMargin" id="iJy-t6-Tdl"/>
                                                 <constraint firstItem="s3b-vb-HA7" firstAttribute="leading" secondItem="1xF-kK-zv0" secondAttribute="leadingMargin" constant="-8" id="nT2-CQ-enh"/>
+                                                <constraint firstItem="OPY-5H-9N2" firstAttribute="bottom" secondItem="1xF-kK-zv0" secondAttribute="bottomMargin" id="q7S-Ax-2Gz"/>
                                                 <constraint firstItem="s3b-vb-HA7" firstAttribute="top" secondItem="1xF-kK-zv0" secondAttribute="topMargin" constant="-8" id="ytf-x1-PVn"/>
                                             </constraints>
                                         </tableViewCellContentView>

@@ -116,12 +116,16 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
                 if qrCodeArr.count == 2 {
                     messageLabel.text = qrCodeArr[1]
                     if messageLabel.text == UserPref.getUserPrefByKey("qrCodeUuid") {
-                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "這是你自己的 QR Code 喔!")
+                        if let superview = self.view.superview {
+                            SwiftOverlays.showTextOverlay(superview, text: "這是你自己的 QR Code 喔!")
+                        }
                     } else {
                         self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
                     }
                 } else {
-                    SwiftOverlays.showTextOverlay(self.view.superview!, text: "無效的 QR Code 喔!")
+                    if let superview = self.view.superview {
+                        SwiftOverlays.showTextOverlay(superview, text: "無效的 QR Code 喔!")
+                    }
                 }
 
                 captureSession?.stopRunning()
@@ -173,19 +177,25 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             dismissViewControllerAnimated(true, completion: nil)
 
             if qrCodeLink == "" {
-                SwiftOverlays.showTextOverlay(self.view.superview!, text: "請選擇含有 VoiceIn QR Code 之圖片!")
+                if let superview = self.view.superview {
+                    SwiftOverlays.showTextOverlay(superview, text: "請選擇含有 VoiceIn QR Code 之圖片!")
+                }
             }else{
                 let qrCodeArr = qrCodeLink.componentsSeparatedByString("=")
                 debugPrint(qrCodeArr)
                 if qrCodeArr.count == 2 {
                     messageLabel.text = qrCodeArr[1]
                     if messageLabel.text == UserPref.getUserPrefByKey("qrCodeUuid") {
-                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "這是你自己的 QR Code 喔!")
+                        if let superview = self.view.superview {
+                            SwiftOverlays.showTextOverlay(superview, text: "這是你自己的 QR Code 喔!")
+                        }
                     } else {
                         self.performSegueWithIdentifier("isQRCodeReadSeque", sender: nil)
                     }
                 } else {
-                    SwiftOverlays.showTextOverlay(self.view.superview!, text: "無效的 QR Code 喔!")
+                    if let superview = self.view.superview {
+                        SwiftOverlays.showTextOverlay(superview, text: "無效的 QR Code 喔!")
+                    }
                 }
             }
         }

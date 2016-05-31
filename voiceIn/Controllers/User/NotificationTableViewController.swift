@@ -34,7 +34,9 @@ class NotificationTableViewController: UITableViewController {
     private func getNotificationList() {
         self.view.userInteractionEnabled = false
         let getNotificationRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/notifications"
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
         
         Alamofire
             .request(.GET, getNotificationRoute, headers: headers)
@@ -57,8 +59,8 @@ class NotificationTableViewController: UITableViewController {
                     AlertBox.createAlertView(self, title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                if self.view.superview != nil {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
                 
                 self.view.userInteractionEnabled = true
@@ -105,11 +107,5 @@ class NotificationTableViewController: UITableViewController {
         }
         
         return timeAgo
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! HistoryTableCell
-        let callService = CallService.init(view: self.view, _self: self)
-        callService.call(UserPref.getUserPrefByKey("userUuid"), caller: UserPref.getUserPrefByKey("phoneNumber"), callee: "", contactId: cell.contactId)
     }
 }

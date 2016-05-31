@@ -102,8 +102,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             print("could not start reachability notifier")
         }
         
-        if self.view.superview != nil {
-            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+        if let superview = self.view.superview {
+            SwiftOverlays.removeAllOverlaysFromView(superview)
         }
         
         self.tableView.separatorColor = MaterialColor.grey.lighten2
@@ -338,8 +338,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             
             deleteAlert.addAction(UIAlertAction(title: "確認", style: UIAlertActionStyle.Default, handler: {action in
                 debugPrint("Deleting a row...")
-                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "刪除中...")
-                
+                if let superview = self.view.superview {
+                    SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "刪除中...")
+                }
                 let deleteApiRoute = API_URI + latestVersion + "/accounts/" + (tableView.cellForRowAtIndexPath(indexPath) as! ContactTableCell).id! + "/contacts/"
                 
                 Alamofire.request(.DELETE, deleteApiRoute, encoding: .JSON, headers: self.headers).response {
@@ -353,7 +354,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                         debugPrint(error)
                     }
                     
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    if let superview = self.view.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                 }
             }))
             
@@ -455,7 +458,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         let isFirstFetch = UserPref.getUserPrefByKey("isFirstFetch")
         self.view.userInteractionEnabled = false
         debugPrint("is First Fetch? \(isFirstFetch)")
@@ -466,8 +472,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             .responseJSON {
                 response in
                 
-                if self.view.superview != nil {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
                 
                 switch response.result {
@@ -515,7 +521,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     UserPref.setUserPref("isFirstFetch", value: false)
                     
                     if self.isFromGroupListView == false && self.contactArray.count == 0 {
-                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "您目前沒有聯絡人喔\n分享名片或加好友吧")
+                        if let superview = self.view.superview {
+                            SwiftOverlays.showTextOverlay(superview, text: "您目前沒有聯絡人喔\n分享名片或加好友吧")
+                        }
                         self.tableView.separatorColor = MaterialColor.white
                     }
                     
@@ -556,8 +564,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK - Pull down to refresh
     func refresh(sender: AnyObject) {
         
-        if self.view.superview != nil {
-            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+        if let superview = self.view.superview {
+            SwiftOverlays.removeAllOverlaysFromView(superview)
         }
         
         if Networker.isReach() != true {

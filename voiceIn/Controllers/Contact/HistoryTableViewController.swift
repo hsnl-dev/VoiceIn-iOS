@@ -34,7 +34,10 @@ class HistoryTableViewController: UITableViewController {
     private func getHistoryList() {
         self.view.userInteractionEnabled = false
         let getHistoryRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/history"
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "讀取中...")
+        
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
         
         Alamofire
             .request(.GET, getHistoryRoute, headers: headers)
@@ -60,7 +63,10 @@ class HistoryTableViewController: UITableViewController {
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+                
                 self.view.userInteractionEnabled = true
         }
     }
