@@ -77,6 +77,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.coachMarksController = CoachMarksController()
             self.coachMarksController?.allowOverlayTap = true
             self.navigationItem.title = "VoiceIn"
+            self.tableView.separatorColor = MaterialColor.grey.lighten2
         }
         
         UserPref.updateTheDeviceKey()
@@ -101,6 +102,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             print("could not start reachability notifier")
         }
         
+        if self.view.superview != nil {
+            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+        }
         
         // MARK - Get the contact list.
         getContactList(getContactRoute)
@@ -453,6 +457,11 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             .request(.GET, getInformationApiRoute, headers: headers, parameters: parameters, encoding: .URLEncodedInURL)
             .responseJSON {
                 response in
+                
+                if self.view.superview != nil {
+                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                }
+                
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
@@ -502,18 +511,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     }
                     
                     if self.isFromGroupListView == false && self.contactArray.count == 0 {
-                        self.tableView.backgroundView = AlertBox.generateCenterLabel(self, text: "目前沒有聯絡人")
-                    } else {
-                        self.tableView.backgroundView = nil
+                        SwiftOverlays.showTextOverlay(self.view.superview!, text: "沒有聯絡人喔，分享名片或加好友吧!")
+                        self.tableView.separatorColor = MaterialColor.white
                     }
-                    
                 case .Failure(let error):
                     debugPrint(error)
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
-                }
-                
-                if self.view.superview != nil {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
                 }
                 
                 self.view.userInteractionEnabled = true
@@ -546,6 +549,10 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK - Pull down to refresh
     func refresh(sender: AnyObject) {
+        
+        if self.view.superview != nil {
+            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+        }
         
         if Networker.isReach() != true {
             debugPrint("Network is not connected!")
