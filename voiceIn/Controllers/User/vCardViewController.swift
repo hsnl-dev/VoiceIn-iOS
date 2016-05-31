@@ -140,9 +140,33 @@ class vCardViewController: UIViewController {
         let qrCodeView: UIImageView = UIImageView()
         let avatarView: UIImageView = UIImageView()
 
-        qrCodeView.frame = CGRect(x: scrollView.bounds.width - 115 , y: 5, width: 100, height: 100)
-        qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + jsonResponse["qrCodeUuid"].stringValue)))
+        qrCodeView.frame = CGRect(x: scrollView.bounds.width - 140 , y: 5, width: 125, height: 125)
         
+        let getQrCodeApiRoute = API_END_POINT + "/qrcodes/" + jsonResponse["qrCodeUuid"].stringValue + "/image"
+        
+        hnkImageCache.fetch(key: "qrCodeImage")
+            .onSuccess { qrCodeIamge in
+                debugPrint("Cache is used.")
+                
+                qrCodeView.image = qrCodeIamge
+                self.navigationController?.view.userInteractionEnabled = true
+                SwiftOverlays.removeAllOverlaysFromView(self.view!)
+            }.onFailure { _ in
+                debugPrint("Cache is not used.")
+                Alamofire
+                    .request(.GET, getQrCodeApiRoute, headers: self.headers)
+                    .responseData {
+                        response in
+                        if response.response?.statusCode == 200 && response.data != nil {
+                            qrCodeView.image = UIImage(data: response.data!)!
+                            self.hnkImageCache.set(value: UIImage(data: response.data!)!, key: "qrCodeImage")
+                        } else {
+                            debugPrint(response)
+                            AlertBox.createAlertView(self, title: "抱歉..", body: "可能為網路或伺服器錯誤，請等一下再試", buttonValue: "確認")
+                        }
+                }
+        }
+
         UserPref.setUserPref("qrCodeUuid", value: jsonResponse["qrCodeUuid"].stringValue)
         
         self.imageCardView.addSubview(qrCodeView)
@@ -256,8 +280,19 @@ class vCardViewController: UIViewController {
         let avatarView: UIImageView = UIImageView()
         let qrCodeView: UIImageView = UIImageView()
         
-        qrCodeView.frame = CGRect(x: scrollView.bounds.width - 110, y: 185, width: 100, height: 100)
+        qrCodeView.frame = CGRect(x: scrollView.bounds.width - 135, y: 185, width: 125, height: 125)
         qrCodeView.image = UIImage(CIImage: (QRCodeGenerator.generateQRCodeImage(qrCodeString: QRCODE_ROUTE + qrCodeUuid)))
+        
+        hnkImageCache.fetch(key: "qrCodeImage")
+            .onSuccess { qrCodeIamge in
+                debugPrint("Cache is used.")
+                qrCodeView.image = qrCodeIamge
+                SwiftOverlays.removeAllOverlaysFromView(self.view!)
+            }.onFailure { _ in
+                debugPrint("Cache is not used.")
+                qrCodeView.image = UIImage(named: "user")
+        }
+
         
         self.scrollView.addSubview(qrCodeView)
         self.qrCodeLink = QRCODE_ROUTE + qrCodeUuid
