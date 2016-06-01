@@ -196,7 +196,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     @IBAction func createGroup(sender: UIBarButtonItem!) {
         let selectedPaths = self.tableView.indexPathsForSelectedRows
         
-        if selectedPaths == nil {
+        if selectedPaths?.count == 0 {
             AlertBox.createAlertView(self ,title: "抱歉", body: "請至少選擇一個聯絡人!", buttonValue: "確認")
             return
         }
@@ -204,8 +204,8 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         var contactsId: [String] = []
         
         for selectedPath in selectedPaths! {
-            let selectedCell = self.tableView.cellForRowAtIndexPath(selectedPath) as! GroupMutipleSelectCell
-            contactsId.append(selectedCell.id)
+            let p: People = self.contactArray[selectedPath.row]
+            contactsId.append(p.data["id"]!!)
         }
         
         if self.isFromUpdateView == false {
