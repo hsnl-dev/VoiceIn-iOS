@@ -16,7 +16,7 @@ internal class ContactInstructionViewController: ContactTableViewController, Coa
     func coachMarksController(coachMarksController: CoachMarksController, coachMarksForIndex index: Int) -> CoachMark {
         switch(index) {
         case 0:
-            self.navigationController?.navigationBar.userInteractionEnabled = false
+            self.navigationController?.view.userInteractionEnabled = false
             return coachMarksController.coachMarkForView(self.navigationController?.navigationBar) { (frame: CGRect) -> UIBezierPath in
                 return UIBezierPath(rect: frame)
             }
@@ -29,7 +29,7 @@ internal class ContactInstructionViewController: ContactTableViewController, Coa
                 return UIBezierPath(rect: frame)
             }
         case 3:
-            self.navigationController?.navigationBar.userInteractionEnabled = true
+            self.navigationController?.view.userInteractionEnabled = true
             return coachMarksController.coachMarkForView(self.navigationController?.navigationBar) { (frame: CGRect) -> UIBezierPath in
                 return UIBezierPath(rect: frame)
             }
