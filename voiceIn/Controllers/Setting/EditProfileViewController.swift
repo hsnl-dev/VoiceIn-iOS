@@ -237,10 +237,15 @@ class EditProfileViewController: FormViewController {
         
         let formValues = form.values()
         let userUuid = UserPref.getUserPrefByKey("userUuid")
-        let avatarImageFile = UIImageJPEGRepresentation((formValues["avatar"] as? UIImage)!, 0.6)
         let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let dateFormatter = NSDateFormatter()
+        
+        var avatarImageFile = UIImageJPEGRepresentation(UIImage(named: "user")!, 0.6)
+        
+        if let avarFormValue = formValues["avatar"] {
+            avatarImageFile = UIImageJPEGRepresentation((avarFormValue as? UIImage)!, 0.6)
+        }
         
         dateFormatter.dateFormat = "HH:mm"
         
