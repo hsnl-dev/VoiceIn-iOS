@@ -108,6 +108,54 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
+    @IBAction func pingMessage(sender: UITabBarItem) {
+        let messageBox = UIAlertController(title: "傳傳", message: "您可以傳簡短的訊息給對方", preferredStyle: .Alert)
+        
+        messageBox.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            textField.placeholder = "請輸入您要說的話。"
+        })
+        
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        messageBox.addAction(UIAlertAction(title: "傳送", style: .Default, handler: { (action) -> Void in
+            let messageTextField = messageBox.textFields![0] as UITextField
+            let content: String! = messageTextField.text!
+            let contactId: String! = self.userInformation["id"]!
+            let sendMessageRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/ping/" + contactId
+            
+            debugPrint(sendMessageRoute)
+            
+            if content.trim() == "" {
+                AlertBox.createAlertView(self, title: "抱歉", body: "請輸入內容", buttonValue: "好")
+                
+            }
+            
+            if let superview = self.view.superview {
+                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "傳送中...")
+            }
+            
+            Alamofire
+                .request(.POST, sendMessageRoute, headers: self.headers, parameters: ["content": content], encoding: .JSON)
+                .response {
+                    request, response, data, error in
+                    
+                    if let superview = self.view.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
+                    if response?.statusCode == 200 {
+                        AlertBox.createAlertView(self, title: "成功!", body: "已經傳送給對方了。", buttonValue: "好")
+                    } else {
+                        AlertBox.createAlertView(self, title: "抱歉..", body: "傳送失敗，請再嘗試一次。", buttonValue: "好")
+                    }
+                }
+        }))
+        
+        messageBox.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil))
+        // 4. Present the alert.
+        self.presentViewController(messageBox, animated: true, completion: nil)
+
+    }
+    
     @IBAction func closeTimePickerView(sender: UIButton!) {
         timePickerView.hidden = true
     }
@@ -121,7 +169,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let availableStartTime: String = dateFormatter.stringFromDate(availableStartTimeDatePicker.date)
         let availableEndTime: String = dateFormatter.stringFromDate(availableEndTimeDatePicker.date)
         
-        SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "儲存中...")
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "儲存中...")
+        }
         
         Alamofire
             .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["availableStartTime": availableStartTime, "availableEndTime": availableEndTime], encoding: .URLEncodedInURL)
@@ -131,11 +181,17 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     debugPrint(response)
                     self.userInformation["availableStartTime"] = availableStartTime
                     self.userInformation["availableEndTime"] = availableEndTime
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    
+                    if let superview = self.view.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
                     AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
                     self.tableView.reloadData()
                 } else {
-                    SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                    if let superview = self.view.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                     AlertBox.createAlertView(self ,title: "抱歉", body: "網路發生錯誤...", buttonValue: "確認")
                 }
         }
@@ -201,7 +257,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 debugPrint(updateContactRoute)
                 
-                SwiftOverlays.showCenteredWaitOverlayWithText(self.view.superview!, text: "儲存暱稱中...")
+                if let superview = self.view.superview {
+                    SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "儲存暱稱中...")
+                }
                 
                 Alamofire
                     .request(.PUT, updateContactRoute, headers: self.headers, parameters: ["nickName": nickName], encoding: .URLEncodedInURL)
@@ -209,7 +267,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         request, response, data, error in
                         if error == nil {
                             debugPrint(response)
-                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                            
+                            if let superview = self.view.superview {
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
+                            }
+                            
                             if nickName == "" {
                                 cell.valueLabel?.text = "未設定"
                             } else {
@@ -217,7 +279,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             }
                         } else {
                             // MARK: TODO Error handling
-                            SwiftOverlays.removeAllOverlaysFromView(self.view.superview!)
+                            if let superview = self.view.superview {
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
+                            }
                         }
                 }
             }))

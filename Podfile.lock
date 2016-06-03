@@ -4,6 +4,8 @@ PODS:
   - BWWalkthrough (1.1.0)
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
+  - CWNotificationBanner (0.1.2):
+    - SwiftyTimer (~> 1.4)
   - Eureka (1.5.0)
   - Fabric (1.6.7)
   - HanekeSwift (0.10.1)
@@ -15,12 +17,14 @@ PODS:
   - ReachabilitySwift (2.3.3)
   - SwiftOverlays (1.0)
   - SwiftyJSON (2.3.2)
+  - SwiftyTimer (1.4.0)
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
   - ALCameraViewController (= 1.2.0)
   - BWWalkthrough (= 1.1.0)
   - Crashlytics
+  - CWNotificationBanner
   - Eureka (~> 1.5)
   - Fabric
   - HanekeSwift (= 0.10.1)
@@ -32,6 +36,7 @@ DEPENDENCIES:
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
   - SwiftOverlays (~> 1.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - SwiftyTimer
 
 EXTERNAL SOURCES:
   ReachabilitySwift:
@@ -52,6 +57,7 @@ SPEC CHECKSUMS:
   ALCameraViewController: 03b480d0b41d3afc21fca48fc45345893ce2680a
   BWWalkthrough: 0c27ad2773a25c8f4fb9004bc7d6685deb35fecc
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  CWNotificationBanner: 732eef6a4ede9a477ac273bd26e60e1b3c2d132d
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
@@ -63,5 +69,6 @@ SPEC CHECKSUMS:
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
 
 COCOAPODS: 0.39.0
