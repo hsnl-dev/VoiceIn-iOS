@@ -15,14 +15,6 @@ class SettingViewController: UITableViewController {
        refreshCredit(UIButton())
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "setTutorialOnSegue" {
-            UserPref()
-                    .setUserPref("isFirstLogin", value: "true")
-                    .setUserPref("isFirstFetch", value: true)
-        }
-    }
-    
     @IBAction func refreshCredit(sender: UIButton) {
         self.credit?.text = "讀取中"
         
@@ -59,6 +51,20 @@ class SettingViewController: UITableViewController {
         
         let rootController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
         UIApplication.sharedApplication().keyWindow?.rootViewController = rootController
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        if section == 2 && row == 1 {
+            debugPrint("2-1 cell clicked.")
+            UserPref()
+                .setUserPref("isFirstLogin", value: "true")
+                .setUserPref("isFirstFetch", value: true)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.switchToRootViewController()
+        }
     }
     
     @IBAction func closeTheEditProfileModal(segue: UIStoryboardSegue) {

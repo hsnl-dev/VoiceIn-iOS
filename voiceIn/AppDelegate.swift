@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
+import CWNotificationBanner
 import Fabric
 import Crashlytics
 
@@ -49,6 +50,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func switchToRootViewController() {
+        let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabViewController") as! UITabBarController
+        self.window?.rootViewController = rootController
+    }
+
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         print("DEVICE TOKEN = \(deviceToken)")
         let characterSet: NSCharacterSet = NSCharacterSet(charactersInString: "<>")
@@ -61,6 +67,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print(userInfo)
+        if application.applicationState == UIApplicationState.Active {
+            if let aps = userInfo["aps"] as? NSDictionary {
+                if let alert = aps["alert"] as? NSDictionary {
+                    if let message = alert["message"] as? NSString {
+                        let message = Message(text: message as String, displayDuration: 5)
+                        NotificationBanner.showMessage(message)
+                    }
+                } else if let alert = aps["alert"] as? NSString {
+                    let message = Message(text: alert as String, displayDuration: 5)
+                    NotificationBanner.showMessage(message)
+                }
+            }
+           
+        }
     }
     
     func applicationWillResignActive(application: UIApplication) {
