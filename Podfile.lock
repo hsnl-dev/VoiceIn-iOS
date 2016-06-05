@@ -24,7 +24,7 @@ DEPENDENCIES:
   - ALCameraViewController (= 1.2.0)
   - BWWalkthrough (= 1.1.0)
   - Crashlytics
-  - CWNotificationBanner
+  - CWNotificationBanner (= 0.1.2)
   - Eureka (~> 1.5)
   - Fabric
   - HanekeSwift (= 0.10.1)

@@ -71,11 +71,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let aps = userInfo["aps"] as? NSDictionary {
                 if let alert = aps["alert"] as? NSDictionary {
                     if let message = alert["message"] as? NSString {
-                        let message = Message(text: message as String, displayDuration: 5)
+                        let message = Message(text: message as String, displayDuration: 6)
                         NotificationBanner.showMessage(message)
                     }
                 } else if let alert = aps["alert"] as? NSString {
-                    let message = Message(text: alert as String, displayDuration: 5)
+                    let message = Message(text: alert as String, displayDuration: 6)
                     NotificationBanner.showMessage(message)
                 }
             }

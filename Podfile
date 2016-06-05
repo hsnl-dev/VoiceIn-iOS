@@ -20,6 +20,6 @@ target 'voiceIn' do
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'SwiftyTimer'
-    pod 'CWNotificationBanner'
+    pod 'CWNotificationBanner', '0.1.2'
 end
 

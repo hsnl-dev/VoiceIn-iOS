@@ -7,6 +7,7 @@ import CoreData
 import Haneke
 import ReachabilitySwift
 import Instructions
+import CWNotificationBanner
 
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     @IBOutlet var cardBarItem: UIBarButtonItem?

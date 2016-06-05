@@ -656,14 +656,14 @@
 			baseConfigurationReference = D12F77AEA662272E3E6C3C8E /* Pods-voiceIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
 				INFOPLIST_FILE = voiceIn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.edu.nthu.hsnl.voiceIn;
 				PRODUCT_NAME = VoiceIn;
-				PROVISIONING_PROFILE = "8d9e3b92-a6aa-44e7-80dd-906af5578cac";
+				PROVISIONING_PROFILE = "67b1a1fd-1809-465e-8622-978a322db4c2";
 				SWIFT_OBJC_BRIDGING_HEADER = bridge.h;
 			};
 			name = Debug;
@@ -673,14 +673,14 @@
 			baseConfigurationReference = 512EE9F2F84F7E3F125E3D7B /* Pods-voiceIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: LIAO YI-JU (A275F5FL9R)";
 				INFOPLIST_FILE = voiceIn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.edu.nthu.hsnl.voiceIn;
 				PRODUCT_NAME = VoiceIn;
-				PROVISIONING_PROFILE = "8d9e3b92-a6aa-44e7-80dd-906af5578cac";
+				PROVISIONING_PROFILE = "67b1a1fd-1809-465e-8622-978a322db4c2";
 				SWIFT_OBJC_BRIDGING_HEADER = bridge.h;
 			};
 			name = Release;
