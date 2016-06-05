@@ -45,7 +45,6 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         // Get view controllers and build the walkthrough
         let stb = UIStoryboard(name: "Introduction", bundle: nil)
         let walkthrough = stb.instantiateViewControllerWithIdentifier("walk") as! BWWalkthroughViewController
-        let page_zero = stb.instantiateViewControllerWithIdentifier("walk0")
         let page_one = stb.instantiateViewControllerWithIdentifier("walk1")
         let page_two = stb.instantiateViewControllerWithIdentifier("walk2")
         let page_three = stb.instantiateViewControllerWithIdentifier("walk3")
@@ -57,7 +56,6 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         walkthrough.addViewController(page_two)
         walkthrough.addViewController(page_three)
         walkthrough.addViewController(page_four)
-        walkthrough.addViewController(page_zero)
         
         self.presentViewController(walkthrough, animated: true, completion: nil)
     }
@@ -67,10 +65,6 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
     
     func walkthroughPageDidChange(pageNumber: Int) {
         print("Current Page \(pageNumber)")
-    }
-    
-    @IBAction func unwindToLoginPage(segue: UIStoryboardSegue) {
-        
     }
     
     @IBAction func walkthroughCloseButtonPressed(segue: UIStoryboardSegue) {

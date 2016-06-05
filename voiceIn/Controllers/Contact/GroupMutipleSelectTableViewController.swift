@@ -35,7 +35,12 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         // NOTE, MARK: - Put here to make swiftOverlays @ self.view.super work!
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         getContactList()
     }
     
@@ -43,9 +48,6 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     private func getContactList() {
         
         let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/contacts"
-        if let superview = self.view.superview {
-            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
-        }
         
         Alamofire
             .request(.GET, getInformationApiRoute, headers: headers)
@@ -83,7 +85,6 @@ class GroupMutipleSelectTableViewController: UITableViewController {
                     SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
                 
-                self.view.userInteractionEnabled = true
                 self.refreshControl?.endRefreshing()
         }
     }
