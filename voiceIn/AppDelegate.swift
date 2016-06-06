@@ -1,7 +1,6 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
-import CWNotificationBanner
 import Fabric
 import Crashlytics
 
