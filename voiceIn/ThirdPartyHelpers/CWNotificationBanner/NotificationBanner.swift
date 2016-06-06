@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyTimer
 
 public func ==(lhs: Message, rhs: Message) -> Bool {
     return lhs.text == rhs.text && lhs.date == rhs.date
@@ -155,7 +156,7 @@ public class NotificationBanner: UIToolbar {
             }
             return
         }
-        
+
         hideCurrentMessage(animated)
         pendingMessages = []
     }

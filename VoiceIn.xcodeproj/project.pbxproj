@@ -35,7 +35,6 @@
 		3E98C0DA1C8C3E12001BB458 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */; };
 		3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */; };
 		3E98C0DC1C8C3E12001BB458 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98C0CD1C8C3E12001BB458 /* People.swift */; };
-		3EA232DF1D05230E00FBE58E /* SwifTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA232DE1D05230E00FBE58E /* SwifTimer.swift */; };
 		3EA737671CA50DA60054C78C /* UserPref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA737661CA50DA60054C78C /* UserPref.swift */; };
 		3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */; };
 		3EA92A6D1CB515F70024C737 /* GroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */; };
@@ -58,7 +57,7 @@
 		3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632991C75A9F300BBAB39 /* AppDelegate.swift */; };
 		3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632A01C75A9F300BBAB39 /* voiceIn.xcdatamodeld */; };
 		3EF632A71C75A9F300BBAB39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF632A51C75A9F300BBAB39 /* LaunchScreen.storyboard */; };
-		D04433152C72392EFAB4BB14 /* Pods_voiceIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5579E7F997E11AF8E5C5ABE7 /* Pods_voiceIn.framework */; };
+		EAD86DBFF23C6F8253D4F217 /* Pods_voiceIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37C519221C879C67F35059B /* Pods_voiceIn.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,7 +90,6 @@
 		3E98C0CA1C8C3E12001BB458 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3E98C0CB1C8C3E12001BB458 /* ValidationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationCodeViewController.swift; sourceTree = "<group>"; };
 		3E98C0CD1C8C3E12001BB458 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
-		3EA232DE1D05230E00FBE58E /* SwifTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifTimer.swift; sourceTree = "<group>"; };
 		3EA737661CA50DA60054C78C /* UserPref.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPref.swift; sourceTree = "<group>"; };
 		3EA92A6A1CB5152C0024C737 /* GroupTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableCell.swift; sourceTree = "<group>"; };
 		3EA92A6C1CB515F70024C737 /* GroupTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewController.swift; sourceTree = "<group>"; };
@@ -116,9 +114,9 @@
 		3EF632A11C75A9F300BBAB39 /* voiceIn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = voiceIn.xcdatamodel; sourceTree = "<group>"; };
 		3EF632A61C75A9F300BBAB39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EF632A81C75A9F300BBAB39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5579E7F997E11AF8E5C5ABE7 /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFB2D601FF486716D0E91608 /* Pods-voiceIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.release.xcconfig"; sourceTree = "<group>"; };
-		F69D74E67043FDE579C99F32 /* Pods-voiceIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.debug.xcconfig"; sourceTree = "<group>"; };
+		9C51EFE460B6A808B44697CE /* Pods-voiceIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.debug.xcconfig"; sourceTree = "<group>"; };
+		ACE3FB3F075A84D1E9DCF2C1 /* Pods-voiceIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.release.xcconfig"; sourceTree = "<group>"; };
+		C37C519221C879C67F35059B /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,17 +124,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D04433152C72392EFAB4BB14 /* Pods_voiceIn.framework in Frameworks */,
+				EAD86DBFF23C6F8253D4F217 /* Pods_voiceIn.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FA8C80D807C2229142087E4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9C51EFE460B6A808B44697CE /* Pods-voiceIn.debug.xcconfig */,
+				ACE3FB3F075A84D1E9DCF2C1 /* Pods-voiceIn.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		3E0BD5311D04B2FE006AEFB5 /* ThirdPartyHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				3EA232DD1D0522F700FBE58E /* SwiftTimer */,
 				3E0BD5321D04B2FE006AEFB5 /* CWNotificationBanner */,
 			);
 			path = ThirdPartyHelpers;
@@ -276,14 +282,6 @@
 			name = Storyboards;
 			sourceTree = "<group>";
 		};
-		3EA232DD1D0522F700FBE58E /* SwiftTimer */ = {
-			isa = PBXGroup;
-			children = (
-				3EA232DE1D05230E00FBE58E /* SwifTimer.swift */,
-			);
-			name = SwiftTimer;
-			sourceTree = "<group>";
-		};
 		3EB2A6DD1CBD3E6600C2D406 /* Introduction */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,8 +317,8 @@
 			children = (
 				3EF632981C75A9F300BBAB39 /* voiceIn */,
 				3EF632971C75A9F300BBAB39 /* Products */,
-				EC36299C1B07F185E0A9EDB1 /* Pods */,
-				982AC2F3DE04ED942E47EF3E /* Frameworks */,
+				0FA8C80D807C2229142087E4 /* Pods */,
+				473802FD94F1B3889FF7E351 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -355,21 +353,12 @@
 			path = voiceIn;
 			sourceTree = "<group>";
 		};
-		982AC2F3DE04ED942E47EF3E /* Frameworks */ = {
+		473802FD94F1B3889FF7E351 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5579E7F997E11AF8E5C5ABE7 /* Pods_voiceIn.framework */,
+				C37C519221C879C67F35059B /* Pods_voiceIn.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EC36299C1B07F185E0A9EDB1 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F69D74E67043FDE579C99F32 /* Pods-voiceIn.debug.xcconfig */,
-				AFB2D601FF486716D0E91608 /* Pods-voiceIn.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,13 +368,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EF632AB1C75A9F300BBAB39 /* Build configuration list for PBXNativeTarget "voiceIn" */;
 			buildPhases = (
-				6A3E940DADE639322EF253C8 /* 📦 Check Pods Manifest.lock */,
+				9369F673959675090DB98948 /* 📦 Check Pods Manifest.lock */,
 				3EF632921C75A9F300BBAB39 /* Sources */,
 				3EF632931C75A9F300BBAB39 /* Frameworks */,
 				3EF632941C75A9F300BBAB39 /* Resources */,
 				3E6BBE791CF558A8006D3CE9 /* ShellScript */,
-				984564C3DAAF7C907A44F4DA /* 📦 Embed Pods Frameworks */,
-				A5465D144E7952D966524EBF /* 📦 Copy Pods Resources */,
+				09FC7F628EB720F83C3ABD57 /* 📦 Embed Pods Frameworks */,
+				41AEC25AD5DF994D641CC162 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -455,35 +444,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3E6BBE791CF558A8006D3CE9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" dbfd20da22aa03dc0a58087776c7f7ddb33a9a82 96999449c59a263ebee86c867b368a74d4c6ec0aa56437d31ff24272c35bc9dc";
-		};
-		6A3E940DADE639322EF253C8 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		984564C3DAAF7C907A44F4DA /* 📦 Embed Pods Frameworks */ = {
+		09FC7F628EB720F83C3ABD57 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -498,7 +459,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A5465D144E7952D966524EBF /* 📦 Copy Pods Resources */ = {
+		3E6BBE791CF558A8006D3CE9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" dbfd20da22aa03dc0a58087776c7f7ddb33a9a82 96999449c59a263ebee86c867b368a74d4c6ec0aa56437d31ff24272c35bc9dc";
+		};
+		41AEC25AD5DF994D641CC162 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -511,6 +485,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9369F673959675090DB98948 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -526,7 +515,6 @@
 				3E3701EC1CBCF1F200B0F4CB /* HistoryTableCell.swift in Sources */,
 				3E773EB91C9928DC003CD1B3 /* CreateQRCodeViewController.swift in Sources */,
 				3EA92A6B1CB5152C0024C737 /* GroupTableCell.swift in Sources */,
-				3EA232DF1D05230E00FBE58E /* SwifTimer.swift in Sources */,
 				3ED0D47D1C8F27760011679A /* ProviderNickNameCell.swift in Sources */,
 				3EF27F041C9913BC00D62844 /* UIView+VoiceIn.swift in Sources */,
 				3E98C0DB1C8C3E12001BB458 /* ValidationCodeViewController.swift in Sources */,
@@ -681,7 +669,7 @@
 		};
 		3EF632AC1C75A9F300BBAB39 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F69D74E67043FDE579C99F32 /* Pods-voiceIn.debug.xcconfig */;
+			baseConfigurationReference = 9C51EFE460B6A808B44697CE /* Pods-voiceIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";
@@ -699,7 +687,7 @@
 		};
 		3EF632AD1C75A9F300BBAB39 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AFB2D601FF486716D0E91608 /* Pods-voiceIn.release.xcconfig */;
+			baseConfigurationReference = ACE3FB3F075A84D1E9DCF2C1 /* Pods-voiceIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";

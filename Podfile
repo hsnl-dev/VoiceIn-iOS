@@ -17,5 +17,6 @@ target 'voiceIn' do
     pod 'Instructions', '~> 0.4'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'SwiftyTimer'
 end
 

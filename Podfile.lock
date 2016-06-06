@@ -15,6 +15,7 @@ PODS:
   - ReachabilitySwift (2.3.3)
   - SwiftOverlays (1.0)
   - SwiftyJSON (2.3.2)
+  - SwiftyTimer (1.4.0)
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift.git`)
   - SwiftOverlays (~> 1.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - SwiftyTimer
 
 EXTERNAL SOURCES:
   ReachabilitySwift:
@@ -63,7 +65,8 @@ SPEC CHECKSUMS:
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
 
-PODFILE CHECKSUM: b58428f9a5769db17b47e2a9fc7916f84ddf81d8
+PODFILE CHECKSUM: f6348005e3c3801144f5b2fa2b4292724f8a0bd2
 
 COCOAPODS: 1.0.0
