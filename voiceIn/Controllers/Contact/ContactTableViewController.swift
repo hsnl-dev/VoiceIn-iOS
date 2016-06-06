@@ -85,7 +85,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     override func viewDidAppear(animated: Bool) {
-        // MAKR - Enable the navigation bar
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
         } catch {
