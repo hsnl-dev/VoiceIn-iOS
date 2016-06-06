@@ -180,10 +180,10 @@ public class NotificationBanner: UIToolbar {
     private static let animateDuration: NSTimeInterval = 0.3
     private class var messageShownFrame: CGRect {
         let y = UIApplication.sharedApplication().statusBarHidden ? 0 : UIApplication.sharedApplication().statusBarFrame.height
-        return CGRect(x: 0, y: y, width: sharedToolbar.frame.width, height: sharedToolbar.frame.height)
+        return CGRect(x: 0, y: y, width: UIScreen.mainScreen().bounds.width, height: sharedToolbar.frame.height)
     }
     private class var messageHiddenFrame: CGRect {
-        return CGRect(x: 0, y: -sharedToolbar.frame.height, width: sharedToolbar.frame.width, height: sharedToolbar.frame.height)
+        return CGRect(x: 0, y: -sharedToolbar.frame.height, width: UIScreen.mainScreen().bounds.width, height: sharedToolbar.frame.height)
     }
     
     required public init?(coder aDecoder: NSCoder) {

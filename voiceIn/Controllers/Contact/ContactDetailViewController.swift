@@ -109,7 +109,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func pingMessage(sender: UITabBarItem) {
-        let messageBox = UIAlertController(title: "傳傳", message: "您可以傳簡短的訊息給對方", preferredStyle: .Alert)
+        let messageBox = UIAlertController(title: "傳傳", message: "您可以傳簡短的訊息給對方\n通知中心可以查看紀錄喔", preferredStyle: .Alert)
         
         messageBox.addTextFieldWithConfigurationHandler({ (textField) -> Void in
             textField.placeholder = "請輸入您要說的話。"
@@ -127,6 +127,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
             if content.trim() == "" {
                 AlertBox.createAlertView(self, title: "抱歉", body: "請輸入內容", buttonValue: "好")
                 
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+                
+                return
             }
             
             if let superview = self.view.superview {
