@@ -23,6 +23,10 @@ class HistoryTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         getHistoryList()
     }
     
@@ -32,12 +36,7 @@ class HistoryTableViewController: UITableViewController {
     
     // MARK: GET: Get the contact list.
     private func getHistoryList() {
-        self.view.userInteractionEnabled = false
         let getHistoryRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/history"
-        
-        if let superview = self.view.superview {
-            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
-        }
         
         Alamofire
             .request(.GET, getHistoryRoute, headers: headers)
@@ -66,8 +65,6 @@ class HistoryTableViewController: UITableViewController {
                 if let superview = self.view.superview {
                     SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
-                
-                self.view.userInteractionEnabled = true
         }
     }
     

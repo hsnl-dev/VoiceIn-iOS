@@ -86,8 +86,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     override func viewDidAppear(animated: Bool) {
         // MAKR - Enable the navigation bar
-        self.navigationController?.view.userInteractionEnabled = true
-        
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
         } catch {
@@ -102,12 +100,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             print("could not start reachability notifier")
         }
         
-        if let superview = self.view.superview {
-            SwiftOverlays.removeAllOverlaysFromView(superview)
-        }
-        
         self.tableView.separatorColor = MaterialColor.grey.lighten2
         // MARK - Get the contact list.
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         getContactList(getContactRoute)
         
         let isFirstLogin = UserPref.getUserPrefByKey("isFirstLogin")
@@ -458,12 +456,9 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: GET: Get the contact list.
     private func getContactList(getInformationApiRoute: String!) {
-        if let superview = self.view.superview {
-            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
-        }
         
         let isFirstFetch = UserPref.getUserPrefByKey("isFirstFetch")
-        self.view.userInteractionEnabled = false
+
         debugPrint("is First Fetch? \(isFirstFetch) \(getInformationApiRoute)")
         let parameters = isFirstFetch == "1" ? ["conditional": "false"] : ["conditional": "true"]
         
@@ -544,7 +539,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                     AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新", buttonValue: "確認")
                 }
                 
-                self.view.userInteractionEnabled = true
+
                 self.refreshControl?.endRefreshing()
         }
     }
@@ -583,9 +578,12 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             debugPrint("Network is not connected!")
             AlertBox.createAlertView(self ,title: "您似乎沒有連上網路", body: "請開啟網路，再下拉畫面以更新。", buttonValue: "確認")
             self.refreshControl?.endRefreshing()
-            self.view.userInteractionEnabled = true
         } else {
             hnkImageCache.removeAll()
+            if let superview = self.view.superview {
+                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+            }
+            
             getContactList(getContactRoute)
         }
     }

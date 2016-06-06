@@ -251,6 +251,7 @@ class EditProfileViewController: FormViewController {
         
         if !isFormValuesValid(formValues) {
             // Form is not valid
+            isSaveClicked = false
             return
         }
         
@@ -269,7 +270,7 @@ class EditProfileViewController: FormViewController {
         ]
         
         debugPrint("PUT: " + updateInformationApiRoute)
-        let text = "儲存中..."
+        let text = "儲存中\n成功將自動關閉此視窗"
         
         if let superview = self.view.superview {
             SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: text)
@@ -296,7 +297,7 @@ class EditProfileViewController: FormViewController {
                         }
                         
                         self.isSaveClicked = false
-                        AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 }
         }
@@ -324,7 +325,7 @@ class EditProfileViewController: FormViewController {
                                 }
                                 
                                 self.isSaveClicked = false
-                                AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
+                                self.dismissViewControllerAnimated(true, completion: nil)
                             }
                         case .Failure(let encodingError):
                             if let superview = self.view.superview {

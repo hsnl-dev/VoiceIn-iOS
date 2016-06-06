@@ -21,8 +21,12 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="a9g-Fz-NnW">
                                 <rect key="frame" x="281" y="30" width="39" height="37"/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NjH-Ii-Uu5" userLabel="Prev">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NjH-Ii-Uu5" userLabel="Prev">
                                 <rect key="frame" x="4" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="SpX-h3-iAX"/>
+                                    <constraint firstAttribute="height" constant="50" id="Thd-AW-uWO"/>
+                                </constraints>
                                 <state key="normal" image="leftarrow.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -57,12 +61,12 @@
                             <constraint firstAttribute="trailingMargin" secondItem="1bx-KZ-OkF" secondAttribute="trailing" constant="-15" id="0Jr-d3-sWe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XE9-bW-xf2" secondAttribute="trailing" constant="-6" id="8eO-U3-0SD"/>
                             <constraint firstItem="oEi-iJ-Qej" firstAttribute="top" secondItem="1bx-KZ-OkF" secondAttribute="bottom" constant="20" id="Ccl-GC-KXK"/>
-                            <constraint firstItem="oEi-iJ-Qej" firstAttribute="top" secondItem="NjH-Ii-Uu5" secondAttribute="bottom" constant="20" id="KeP-9W-KeS"/>
+                            <constraint firstItem="NjH-Ii-Uu5" firstAttribute="leading" secondItem="hDf-6D-5BO" secondAttribute="leadingMargin" constant="-16" id="LFC-FV-cVi"/>
                             <constraint firstAttribute="centerX" secondItem="XE9-bW-xf2" secondAttribute="centerX" id="PqX-Y5-bbx"/>
+                            <constraint firstItem="oEi-iJ-Qej" firstAttribute="top" secondItem="NjH-Ii-Uu5" secondAttribute="bottom" constant="20" id="Rfe-kZ-TIU"/>
                             <constraint firstItem="yS6-X8-nYx" firstAttribute="top" secondItem="a9g-Fz-NnW" secondAttribute="bottom" constant="-47" id="Vpv-ax-uAB"/>
                             <constraint firstItem="oEi-iJ-Qej" firstAttribute="top" secondItem="XE9-bW-xf2" secondAttribute="bottom" constant="20" id="YUN-t9-59B"/>
                             <constraint firstAttribute="centerX" secondItem="a9g-Fz-NnW" secondAttribute="centerX" id="blR-pj-otl"/>
-                            <constraint firstItem="NjH-Ii-Uu5" firstAttribute="leading" secondItem="hDf-6D-5BO" secondAttribute="leadingMargin" constant="-16" id="jDX-Wp-cga"/>
                             <constraint firstItem="a9g-Fz-NnW" firstAttribute="top" secondItem="yS6-X8-nYx" secondAttribute="bottom" constant="10" id="phK-aj-rSV"/>
                             <constraint firstItem="XE9-bW-xf2" firstAttribute="top" secondItem="yS6-X8-nYx" secondAttribute="bottom" id="tTf-4b-MFK"/>
                         </constraints>
@@ -84,54 +88,6 @@
                 <exit id="wqG-QS-9io" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="17" y="-853"/>
-        </scene>
-        <!--Walkthrough Page View Controller-->
-        <scene sceneID="bBa-WF-sdl">
-            <objects>
-                <viewController storyboardIdentifier="walk0" id="JLl-dB-BbT" customClass="BWWalkthroughPageViewController" customModule="BWWalkthrough" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ARl-M0-av0"/>
-                        <viewControllerLayoutGuide type="bottom" id="UPu-Wp-LxP"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Zuv-ng-L3z">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="ydO-14-hEF">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="別再等待!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sp-QS-sPX">
-                                <rect key="frame" x="257" y="202" width="86" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGl-Vo-rO9">
-                                <rect key="frame" x="225" y="281" width="150" height="38"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="點&quot;立即開始&quot;吧!">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.32980523950000001" green="0.74408280770000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="ydO-14-hEF" firstAttribute="centerX" secondItem="eGl-Vo-rO9" secondAttribute="centerX" id="4kx-iI-45D"/>
-                            <constraint firstItem="eGl-Vo-rO9" firstAttribute="centerX" secondItem="Zuv-ng-L3z" secondAttribute="centerX" id="ICT-hM-Xkz"/>
-                            <constraint firstItem="eGl-Vo-rO9" firstAttribute="centerY" secondItem="Zuv-ng-L3z" secondAttribute="centerY" id="bOq-6x-3Ia"/>
-                            <constraint firstAttribute="centerX" secondItem="5Sp-QS-sPX" secondAttribute="centerX" id="hq6-Ys-zZ5"/>
-                            <constraint firstItem="ydO-14-hEF" firstAttribute="centerY" secondItem="eGl-Vo-rO9" secondAttribute="centerY" id="idi-uh-JVh"/>
-                            <constraint firstItem="ydO-14-hEF" firstAttribute="bottom" secondItem="UPu-Wp-LxP" secondAttribute="top" id="mV2-0T-XOp"/>
-                            <constraint firstItem="ydO-14-hEF" firstAttribute="leading" secondItem="Zuv-ng-L3z" secondAttribute="leading" id="oqN-rM-U06"/>
-                            <constraint firstItem="5Sp-QS-sPX" firstAttribute="top" secondItem="ARl-M0-av0" secondAttribute="bottom" constant="182" id="qtQ-qf-mKm"/>
-                            <constraint firstItem="eGl-Vo-rO9" firstAttribute="leading" secondItem="ydO-14-hEF" secondAttribute="trailing" constant="-375" id="sHo-v2-KPH"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qGv-xT-j3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="767" y="-185"/>
         </scene>
         <!--Walk Through View Controller-->
         <scene sceneID="Hj9-nh-FMk">
@@ -211,21 +167,13 @@
                                     <constraint firstAttribute="height" constant="482" id="oZV-m4-aap"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0e-f8-kD2">
+                            <label opaque="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="讓您快速建立個人免付費服務專線 並且結合電子名片與 QR Code 讓您的客戶只要掃描 QR Code 即可免費撥打電話給您" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0e-f8-kD2">
                                 <rect key="frame" x="165" y="149" width="270" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="85" id="QSQ-4q-1ZB"/>
                                     <constraint firstAttribute="width" constant="270" id="otk-5t-rQE"/>
                                 </constraints>
-                                <string key="text">QRCode 名片結合高品質電話服務 快速建立個人免費服務專線
-使用內建 QR Code 掃瞄器 掃描即可於 app 內建立聯絡人</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名片不只是名片" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulF-2L-Sm3">
-                                <rect key="frame" x="238" y="103" width="140" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -239,6 +187,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="個人免付費服務專線" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulF-2L-Sm3">
+                                <rect key="frame" x="222" y="103" width="180" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.32980523950000001" green="0.74408280770000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -250,7 +204,7 @@
                             <constraint firstItem="LP2-LS-8HY" firstAttribute="top" secondItem="Nt6-R9-P0v" secondAttribute="bottom" constant="-124" id="iQ2-TT-Krj"/>
                             <constraint firstItem="ulF-2L-Sm3" firstAttribute="top" secondItem="gHg-RO-yVA" secondAttribute="bottom" constant="17" id="n3K-E0-F4H"/>
                             <constraint firstAttribute="centerX" secondItem="Nt6-R9-P0v" secondAttribute="centerX" constant="-12.5" id="ovg-Wg-SaM"/>
-                            <constraint firstAttribute="centerX" secondItem="ulF-2L-Sm3" secondAttribute="centerX" constant="-8" id="qU3-kz-C6z"/>
+                            <constraint firstAttribute="centerX" secondItem="ulF-2L-Sm3" secondAttribute="centerX" constant="-12" id="qU3-kz-C6z"/>
                         </constraints>
                     </view>
                     <userDefinedRuntimeAttributes>
@@ -283,7 +237,7 @@
                                     <constraint firstAttribute="width" constant="254" id="7n9-As-FeO"/>
                                     <constraint firstAttribute="height" constant="85" id="vn3-52-2Yu"/>
                                 </constraints>
-                                <string key="text">收到您 QR Code 名片的朋友
+                                <string key="text">收到您 QR Code 名片的客戶
 使用第三方 QR Code 掃瞄器 即可於手機主畫面建立通話捷徑
 不需要安裝 app</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -393,7 +347,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bg" width="486" height="685"/>
         <image name="category" width="2000" height="2000"/>
         <image name="custom-time" width="2000" height="2000"/>
         <image name="leftarrow.png" width="1200" height="674"/>

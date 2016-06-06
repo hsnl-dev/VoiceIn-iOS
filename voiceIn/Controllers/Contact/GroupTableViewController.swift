@@ -19,14 +19,13 @@ class GroupTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func viewDidAppear(animated: Bool) {
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
+        }
+        
         getGroupList()
     }
 
@@ -37,9 +36,7 @@ class GroupTableViewController: UITableViewController {
     
     // MARK: GET: Get the Group list.
     private func getGroupList() {
-        if let superview = self.view.superview {
-            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
-        }
+        
         let getInformationApiRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups"
         
         Alamofire
