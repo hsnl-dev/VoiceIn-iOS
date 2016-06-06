@@ -375,6 +375,7 @@
 				3E6BBE791CF558A8006D3CE9 /* ShellScript */,
 				09FC7F628EB720F83C3ABD57 /* 📦 Embed Pods Frameworks */,
 				41AEC25AD5DF994D641CC162 /* 📦 Copy Pods Resources */,
+				81D10D9116D69CE8AC8638A4 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -485,6 +486,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81D10D9116D69CE8AC8638A4 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9369F673959675090DB98948 /* 📦 Check Pods Manifest.lock */ = {

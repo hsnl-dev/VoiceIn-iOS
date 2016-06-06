@@ -40,6 +40,10 @@ class LoginViewController: UIViewController, TextFieldDelegate, BWWalkthroughVie
         }
     }
     
+    @IBAction func unwindToLoginPage(segue: UIStoryboardSegue) {
+        
+    }
+    
     func showWalkthrough() {
         debugPrint("showWalkThrough")
         // Get view controllers and build the walkthrough
