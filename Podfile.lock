@@ -4,8 +4,6 @@ PODS:
   - BWWalkthrough (1.1.0)
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
-  - CWNotificationBanner (0.1.2):
-    - SwiftyTimer (~> 1.4)
   - Eureka (1.5.0)
   - Fabric (1.6.7)
   - HanekeSwift (0.10.1)
@@ -17,14 +15,12 @@ PODS:
   - ReachabilitySwift (2.3.3)
   - SwiftOverlays (1.0)
   - SwiftyJSON (2.3.2)
-  - SwiftyTimer (1.4.0)
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.2)
   - ALCameraViewController (= 1.2.0)
   - BWWalkthrough (= 1.1.0)
   - Crashlytics
-  - CWNotificationBanner (= 0.1.2)
   - Eureka (~> 1.5)
   - Fabric
   - HanekeSwift (= 0.10.1)
@@ -33,21 +29,20 @@ DEPENDENCIES:
   - Material (= 1.39.17)
   - NSDate+TimeAgo (= 1.0.6)
   - PhoneNumberKit (~> 0.6)
-  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
+  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift.git`)
   - SwiftOverlays (~> 1.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
-  - SwiftyTimer
 
 EXTERNAL SOURCES:
   ReachabilitySwift:
-    :git: https://github.com/ashleymills/Reachability.swift
+    :git: https://github.com/ashleymills/Reachability.swift.git
   SwiftyJSON:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
   ReachabilitySwift:
-    :commit: fa90df50c04f5743fbdf643cbe8d10562d75673d
-    :git: https://github.com/ashleymills/Reachability.swift
+    :commit: cecd16a3ef8d77e916a66a5d7422c34a3e6d0e29
+    :git: https://github.com/ashleymills/Reachability.swift.git
   SwiftyJSON:
     :commit: 2a5b70f06001316d4fb54501edc70b4084705da0
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
@@ -57,7 +52,6 @@ SPEC CHECKSUMS:
   ALCameraViewController: 03b480d0b41d3afc21fca48fc45345893ce2680a
   BWWalkthrough: 0c27ad2773a25c8f4fb9004bc7d6685deb35fecc
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
-  CWNotificationBanner: 732eef6a4ede9a477ac273bd26e60e1b3c2d132d
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
@@ -69,6 +63,7 @@ SPEC CHECKSUMS:
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: b58428f9a5769db17b47e2a9fc7916f84ddf81d8
+
+COCOAPODS: 1.0.0
