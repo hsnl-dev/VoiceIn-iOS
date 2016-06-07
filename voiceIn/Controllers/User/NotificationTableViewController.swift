@@ -20,14 +20,12 @@ class NotificationTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 80
     }
     
     override func viewDidAppear(animated: Bool) {
         getNotificationList()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK: GET: Get the contact list.
@@ -86,12 +84,12 @@ class NotificationTableViewController: UITableViewController {
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
         
         cell.nameLabel.text = notificationArray[indexPath.row]["notificationContent"].stringValue
-        
         cell.statusLabel.text = generateNotificationText(time)
-        
         cell.contactId = notificationArray[indexPath.row]["contactId"].stringValue
-        
         cell.detailTimeLabel.text = dateFormatter.stringFromDate((NSDate(timeIntervalSince1970: NSTimeInterval(time!)!/1000)))
+        
+        cell.nameLabel.numberOfLines = 0
+        cell.nameLabel.sizeToFit()
         
         return cell
     }
