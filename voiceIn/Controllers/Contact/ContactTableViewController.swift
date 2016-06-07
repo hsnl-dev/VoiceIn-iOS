@@ -99,6 +99,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             print("could not start reachability notifier")
         }
         
+        self.navigationController?.view.userInteractionEnabled = true
         self.tableView.separatorColor = MaterialColor.grey.lighten2
         // MARK - Get the contact list.
         if let superview = self.view.superview {

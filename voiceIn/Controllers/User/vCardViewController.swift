@@ -30,7 +30,7 @@ class vCardViewController: UIViewController {
         /**
         GET: Get the user's information.
         **/
-        //self.navigationController?.view.userInteractionEnabled = false
+        self.navigationController?.view.userInteractionEnabled = false
         if isReachable == true {
             SwiftOverlays.showCenteredWaitOverlayWithText(self.view, text: "讀取名片中...")
             self.prepareGenQrCodeCardView()
@@ -56,7 +56,7 @@ class vCardViewController: UIViewController {
     }
     
     override func viewDidDisappear(animated: Bool) {
-        //self.navigationController?.view.userInteractionEnabled = true
+        self.navigationController?.view.userInteractionEnabled = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -149,7 +149,7 @@ class vCardViewController: UIViewController {
                 debugPrint("Cache is used.")
                 
                 qrCodeView.image = qrCodeIamge
-                //self.navigationController?.view.userInteractionEnabled = true
+                self.navigationController?.view.userInteractionEnabled = true
                 SwiftOverlays.removeAllOverlaysFromView(self.view!)
             }.onFailure { _ in
                 debugPrint("Cache is not used.")
@@ -181,7 +181,7 @@ class vCardViewController: UIViewController {
                     debugPrint("Cache is used.")
                 
                     avatarView.image = avatarImage
-                    //self.navigationController?.view.userInteractionEnabled = true
+                    self.navigationController?.view.userInteractionEnabled = true
                     SwiftOverlays.removeAllOverlaysFromView(self.view!)
                 }.onFailure { _ in
                     debugPrint("Cache is not used.")
@@ -198,13 +198,13 @@ class vCardViewController: UIViewController {
                                 SwiftOverlays.removeAllOverlaysFromView(self.view!)
                             }
                             
-                            //self.navigationController?.view.userInteractionEnabled = true
+                            self.navigationController?.view.userInteractionEnabled = true
                         }
                 }
         } else {
             avatarView.image = UIImage(named: "user")
             SwiftOverlays.removeAllOverlaysFromView(self.view!)
-            //self.navigationController?.view.userInteractionEnabled = true
+            self.navigationController?.view.userInteractionEnabled = true
         }
         
         self.imageCardView.addSubview(avatarView)
@@ -249,7 +249,7 @@ class vCardViewController: UIViewController {
         let qrCodeUuid = UserPref.getUserPrefByKey("qrCodeUuid")
         
         if qrCodeUuid == nil {
-            //self.navigationController?.view.userInteractionEnabled = true
+            self.navigationController?.view.userInteractionEnabled = true
             return
         }
         
@@ -310,7 +310,7 @@ class vCardViewController: UIViewController {
                 self.scrollView.addSubview(avatarView)
             }
         
-        //self.navigationController?.view.userInteractionEnabled = true
+        self.navigationController?.view.userInteractionEnabled = true
         avatarView.frame = CGRect(x: 10, y: 185, width: 100, height: 100)
         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2;
         avatarView.clipsToBounds = true;

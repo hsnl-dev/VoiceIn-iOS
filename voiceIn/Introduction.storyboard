@@ -349,7 +349,7 @@
     <resources>
         <image name="category" width="2000" height="2000"/>
         <image name="custom-time" width="2000" height="2000"/>
-        <image name="leftarrow.png" width="512" height="512"/>
+        <image name="leftarrow.png" width="24" height="24"/>
         <image name="noapp" width="2000" height="2000"/>
         <image name="rightarrow.png" width="50" height="50"/>
         <image name="vcard" width="2000" height="2000"/>
