@@ -30,6 +30,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 70;
         
+        if userInformation["chargeType"]! == ContactType.Icon.rawValue {
+            self.navigationItem.setRightBarButtonItems(nil, animated: true)
+        }
+        
         prepareView()
         prepareMenuView()
         prepareUserAvatarImage()

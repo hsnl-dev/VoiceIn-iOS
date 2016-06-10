@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2468F3A20219542A5DB330B5 /* Pods_voiceIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17180578C7634CC753D00194 /* Pods_voiceIn.framework */; };
 		3E0414DC1CA7C94E004CE69B /* UserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */; };
 		3E0BD5351D04B2FE006AEFB5 /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0BD5331D04B2FE006AEFB5 /* NotificationBanner.swift */; };
 		3E0BD5361D04B2FE006AEFB5 /* NotificationBanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BD5341D04B2FE006AEFB5 /* NotificationBanner.xib */; };
@@ -57,10 +58,12 @@
 		3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632991C75A9F300BBAB39 /* AppDelegate.swift */; };
 		3EF632A21C75A9F300BBAB39 /* voiceIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EF632A01C75A9F300BBAB39 /* voiceIn.xcdatamodeld */; };
 		3EF632A71C75A9F300BBAB39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EF632A51C75A9F300BBAB39 /* LaunchScreen.storyboard */; };
-		EAD86DBFF23C6F8253D4F217 /* Pods_voiceIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37C519221C879C67F35059B /* Pods_voiceIn.framework */; };
+		3EF89ECE1D0928CD0049DF45 /* ENMBadgedBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF89ECD1D0928CD0049DF45 /* ENMBadgedBarButtonItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17180578C7634CC753D00194 /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		221D37847EB2E6C4885BC627 /* Pods-voiceIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.debug.xcconfig"; sourceTree = "<group>"; };
 		3E0414DB1CA7C94E004CE69B /* UserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInformationViewController.swift; sourceTree = "<group>"; };
 		3E0BD5331D04B2FE006AEFB5 /* NotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
 		3E0BD5341D04B2FE006AEFB5 /* NotificationBanner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationBanner.xib; sourceTree = "<group>"; };
@@ -114,9 +117,8 @@
 		3EF632A11C75A9F300BBAB39 /* voiceIn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = voiceIn.xcdatamodel; sourceTree = "<group>"; };
 		3EF632A61C75A9F300BBAB39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EF632A81C75A9F300BBAB39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9C51EFE460B6A808B44697CE /* Pods-voiceIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.debug.xcconfig"; sourceTree = "<group>"; };
-		ACE3FB3F075A84D1E9DCF2C1 /* Pods-voiceIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.release.xcconfig"; sourceTree = "<group>"; };
-		C37C519221C879C67F35059B /* Pods_voiceIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voiceIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EF89ECD1D0928CD0049DF45 /* ENMBadgedBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ENMBadgedBarButtonItem.swift; path = voiceIn/ThirdPartyHelpers/ENMBadgedBarButtonItem/ENMBadgedBarButtonItem.swift; sourceTree = SOURCE_ROOT; };
+		B92B187EA76927709FF0DBCE /* Pods-voiceIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voiceIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,18 +126,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAD86DBFF23C6F8253D4F217 /* Pods_voiceIn.framework in Frameworks */,
+				2468F3A20219542A5DB330B5 /* Pods_voiceIn.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0FA8C80D807C2229142087E4 /* Pods */ = {
+		05AD98BD406AFF36C900EA7C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9C51EFE460B6A808B44697CE /* Pods-voiceIn.debug.xcconfig */,
-				ACE3FB3F075A84D1E9DCF2C1 /* Pods-voiceIn.release.xcconfig */,
+				17180578C7634CC753D00194 /* Pods_voiceIn.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2BAF46835FA52E7792451822 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				221D37847EB2E6C4885BC627 /* Pods-voiceIn.debug.xcconfig */,
+				B92B187EA76927709FF0DBCE /* Pods-voiceIn.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -143,6 +153,7 @@
 		3E0BD5311D04B2FE006AEFB5 /* ThirdPartyHelpers */ = {
 			isa = PBXGroup;
 			children = (
+				3EF89ECC1D0928AE0049DF45 /* ENMBadgedBarButtonItem */,
 				3E0BD5321D04B2FE006AEFB5 /* CWNotificationBanner */,
 			);
 			path = ThirdPartyHelpers;
@@ -317,8 +328,8 @@
 			children = (
 				3EF632981C75A9F300BBAB39 /* voiceIn */,
 				3EF632971C75A9F300BBAB39 /* Products */,
-				0FA8C80D807C2229142087E4 /* Pods */,
-				473802FD94F1B3889FF7E351 /* Frameworks */,
+				2BAF46835FA52E7792451822 /* Pods */,
+				05AD98BD406AFF36C900EA7C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -353,12 +364,13 @@
 			path = voiceIn;
 			sourceTree = "<group>";
 		};
-		473802FD94F1B3889FF7E351 /* Frameworks */ = {
+		3EF89ECC1D0928AE0049DF45 /* ENMBadgedBarButtonItem */ = {
 			isa = PBXGroup;
 			children = (
-				C37C519221C879C67F35059B /* Pods_voiceIn.framework */,
+				3EF89ECD1D0928CD0049DF45 /* ENMBadgedBarButtonItem.swift */,
 			);
-			name = Frameworks;
+			name = ENMBadgedBarButtonItem;
+			path = CWNotificationBanner/ENMBadgedBarButtonItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,14 +380,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EF632AB1C75A9F300BBAB39 /* Build configuration list for PBXNativeTarget "voiceIn" */;
 			buildPhases = (
-				9369F673959675090DB98948 /* 📦 Check Pods Manifest.lock */,
+				40CA9D60B583A898B8D3D84A /* [CP] Check Pods Manifest.lock */,
 				3EF632921C75A9F300BBAB39 /* Sources */,
 				3EF632931C75A9F300BBAB39 /* Frameworks */,
 				3EF632941C75A9F300BBAB39 /* Resources */,
 				3E6BBE791CF558A8006D3CE9 /* ShellScript */,
-				09FC7F628EB720F83C3ABD57 /* 📦 Embed Pods Frameworks */,
-				41AEC25AD5DF994D641CC162 /* 📦 Copy Pods Resources */,
-				81D10D9116D69CE8AC8638A4 /* Embed Pods Frameworks */,
+				AF1DAA68D65EE8298361EE3C /* [CP] Embed Pods Frameworks */,
+				0C9FF470F69434801D0DB0BF /* [CP] Copy Pods Resources */,
+				65E81F70981918ECC00CE34C /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -445,19 +457,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		09FC7F628EB720F83C3ABD57 /* 📦 Embed Pods Frameworks */ = {
+		0C9FF470F69434801D0DB0BF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3E6BBE791CF558A8006D3CE9 /* ShellScript */ = {
@@ -473,22 +485,22 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" dbfd20da22aa03dc0a58087776c7f7ddb33a9a82 96999449c59a263ebee86c867b368a74d4c6ec0aa56437d31ff24272c35bc9dc";
 		};
-		41AEC25AD5DF994D641CC162 /* 📦 Copy Pods Resources */ = {
+		40CA9D60B583A898B8D3D84A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		81D10D9116D69CE8AC8638A4 /* Embed Pods Frameworks */ = {
+		65E81F70981918ECC00CE34C /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -503,19 +515,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9369F673959675090DB98948 /* 📦 Check Pods Manifest.lock */ = {
+		AF1DAA68D65EE8298361EE3C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-voiceIn/Pods-voiceIn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -554,6 +566,7 @@
 				3EAA592C1CB7A8100079A51D /* GroupMutipleSelectCell.swift in Sources */,
 				3E98C0BD1C8C3E01001BB458 /* ContactTableCell.swift in Sources */,
 				3EB2A6E11CBD3E9300C2D406 /* WalkThroughViewController.swift in Sources */,
+				3EF89ECE1D0928CD0049DF45 /* ENMBadgedBarButtonItem.swift in Sources */,
 				3EF6329A1C75A9F300BBAB39 /* AppDelegate.swift in Sources */,
 				3E98C0D61C8C3E12001BB458 /* QRCodeReaderViewController.swift in Sources */,
 				3EDDFB2E1CEA021D0093FB9A /* NSDate+VoiceIn.swift in Sources */,
@@ -685,7 +698,7 @@
 		};
 		3EF632AC1C75A9F300BBAB39 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C51EFE460B6A808B44697CE /* Pods-voiceIn.debug.xcconfig */;
+			baseConfigurationReference = 221D37847EB2E6C4885BC627 /* Pods-voiceIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";
@@ -703,7 +716,7 @@
 		};
 		3EF632AD1C75A9F300BBAB39 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACE3FB3F075A84D1E9DCF2C1 /* Pods-voiceIn.release.xcconfig */;
+			baseConfigurationReference = B92B187EA76927709FF0DBCE /* Pods-voiceIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YI JU LIAO (Y73V382M7G)";

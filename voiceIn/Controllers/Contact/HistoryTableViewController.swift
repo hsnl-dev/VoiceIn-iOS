@@ -27,11 +27,13 @@ class HistoryTableViewController: UITableViewController {
             SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "讀取中...")
         }
         
+        if UserPref.getUserPrefByKey("historyCount") != nil && UserPref.getUserPrefByKey("historyCount") == "1" {
+            let tabItem = self.tabBarController?.tabBar.items![3]
+            tabItem!.badgeValue = nil
+            UserPref().setUserPref("historyCount", value: "0").syncAll()
+        }
+        
         getHistoryList()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK: GET: Get the contact list.

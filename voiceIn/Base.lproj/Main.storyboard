@@ -80,13 +80,13 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vvY-l7-aK9">
-                                            <rect key="frame" x="66" y="10" width="45" height="21"/>
+                                            <rect key="frame" x="66" y="10" width="420" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="company" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-aZ-C9H">
-                                            <rect key="frame" x="66" y="33" width="71" height="21"/>
+                                            <rect key="frame" x="66" y="33" width="420" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -110,10 +110,12 @@
                                         <constraint firstItem="CWS-2w-vvG" firstAttribute="leading" secondItem="GW2-eM-gRD" secondAttribute="trailing" constant="8" id="Agh-RC-JAC"/>
                                         <constraint firstItem="GW2-eM-gRD" firstAttribute="centerY" secondItem="p1q-w1-2FU" secondAttribute="centerY" id="GcC-So-Qev"/>
                                         <constraint firstItem="vvY-l7-aK9" firstAttribute="leading" secondItem="GW2-eM-gRD" secondAttribute="trailing" constant="8" id="KFi-wG-0Lw"/>
+                                        <constraint firstItem="lTg-cn-4md" firstAttribute="leading" secondItem="vvY-l7-aK9" secondAttribute="trailing" constant="8" id="Txs-ae-7RN"/>
                                         <constraint firstItem="ZMz-Jz-CEw" firstAttribute="centerY" secondItem="p1q-w1-2FU" secondAttribute="centerY" constant="-0.5" id="WWm-Io-v7B"/>
                                         <constraint firstItem="aZV-aZ-C9H" firstAttribute="leading" secondItem="GW2-eM-gRD" secondAttribute="trailing" constant="8" id="aMd-dY-XyF"/>
                                         <constraint firstItem="lTg-cn-4md" firstAttribute="centerY" secondItem="p1q-w1-2FU" secondAttribute="centerY" constant="-0.5" id="emW-tO-hCA"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="ZMz-Jz-CEw" secondAttribute="trailing" id="kWY-hh-mKo"/>
+                                        <constraint firstItem="lTg-cn-4md" firstAttribute="leading" secondItem="aZV-aZ-C9H" secondAttribute="trailing" constant="8" id="liL-Qk-39D"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -133,11 +135,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="聯絡簿" id="rCk-AD-PY7">
-                        <barButtonItem key="leftBarButtonItem" image="ic_inbox" id="6tr-c3-iHP">
-                            <connections>
-                                <segue destination="xSZ-hx-inN" kind="presentation" id="NPm-Vs-eVi"/>
-                            </connections>
-                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="ic_person_add" id="TwL-dh-vTm">
                                 <connections>
@@ -162,6 +159,9 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="xSZ-hx-inN" kind="presentation" identifier="showNotificationSegue" id="AQ2-H0-rZV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVC-1w-bTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1788,7 +1788,6 @@
         <image name="ic_face_white" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
         <image name="ic_history_white" width="24" height="24"/>
-        <image name="ic_inbox" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add" width="24" height="24"/>
         <image name="ic_phone_black" width="24" height="24"/>
