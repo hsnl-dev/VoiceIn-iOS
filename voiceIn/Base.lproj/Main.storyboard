@@ -135,11 +135,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="聯絡簿" id="rCk-AD-PY7">
-                        <barButtonItem key="leftBarButtonItem" image="ic_inbox" id="6tr-c3-iHP">
-                            <connections>
-                                <segue destination="xSZ-hx-inN" kind="presentation" id="NPm-Vs-eVi"/>
-                            </connections>
-                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="ic_person_add" id="TwL-dh-vTm">
                                 <connections>
@@ -164,6 +159,9 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="xSZ-hx-inN" kind="presentation" identifier="showNotificationSegue" id="AQ2-H0-rZV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVC-1w-bTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1790,7 +1788,6 @@
         <image name="ic_face_white" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
         <image name="ic_history_white" width="24" height="24"/>
-        <image name="ic_inbox" width="24" height="24"/>
         <image name="ic_people_white" width="24" height="24"/>
         <image name="ic_person_add" width="24" height="24"/>
         <image name="ic_phone_black" width="24" height="24"/>

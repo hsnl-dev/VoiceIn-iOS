@@ -66,20 +66,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print(userInfo)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
+        var notiMessage: String = ""
+        
         if application.applicationState == UIApplicationState.Active {
             if let aps = userInfo["aps"] as? NSDictionary {
                 if let alert = aps["alert"] as? NSDictionary {
-                    if let message = alert["message"] as? NSString {
-                        let message = Message(text: message as String, displayDuration: 6)
-                        NotificationBanner.showMessage(message)
+                    if let message = alert["message"] as? String {
+                        let theMessage = Message(text: message as String, displayDuration: 6)
+                        NotificationBanner.showMessage(theMessage)
+                        notiMessage = message
                     }
-                } else if let alert = aps["alert"] as? NSString {
+                } else if let alert = aps["alert"] as? String {
                     let message = Message(text: alert as String, displayDuration: 6)
                     NotificationBanner.showMessage(message)
+                    
+                    notiMessage = alert
                 }
             }
-           
+        } else {
+            if let aps = userInfo["aps"] as? NSDictionary {
+                if let alert = aps["alert"] as? NSDictionary {
+                    if let message = alert["message"] as? String {
+                        notiMessage = message
+                    }
+                } else if let alert = aps["alert"] as? String {
+                    notiMessage = alert
+                }
+            }
         }
+        
+        if notiMessage.containsString("請放心接聽") == true {
+            UserPref().setUserPref("historyCount", value: "1").syncAll()
+        } else {
+            UserPref().setUserPref("notificationCount", value: "1").syncAll()
+        }
+        
+        completionHandler(UIBackgroundFetchResult.NoData)
     }
     
     func applicationWillResignActive(application: UIApplication) {

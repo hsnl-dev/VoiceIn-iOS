@@ -20,6 +20,8 @@ class GroupMutipleSelectTableViewController: UITableViewController {
     let headers = Network.generateHeader(isTokenNeeded: true)
     var contactArray: [People] = []
     var seletedContactArray: [String] = []
+    var contactsId: [String] = []
+    
     var groupName: String!
     var groupId: String!
     var isCreateClicked = false
@@ -194,19 +196,26 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         return cell
     }
     
-    @IBAction func createGroup(sender: UIBarButtonItem!) {
-        let selectedPaths = self.tableView.indexPathsForSelectedRows
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! GroupMutipleSelectCell
         
-        if selectedPaths?.count == 0 {
+        if (contactsId.contains(cell.id) == false) {
+            contactsId.append(cell.id)
+            seletedContactArray.append(cell.id)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! GroupMutipleSelectCell
+        contactsId = contactsId.filter { $0 != cell.id }
+        seletedContactArray = seletedContactArray.filter { $0 != cell.id }
+    }
+    
+    
+    @IBAction func createGroup(sender: UIBarButtonItem!) {
+        if contactsId.count == 0 {
             AlertBox.createAlertView(self ,title: "抱歉", body: "請至少選擇一個聯絡人!", buttonValue: "確認")
             return
-        }
-        
-        var contactsId: [String] = []
-        
-        for selectedPath in selectedPaths! {
-            let p: People = self.contactArray[selectedPath.row]
-            contactsId.append(p.data["id"]!!)
         }
         
         if self.isFromUpdateView == false {
@@ -252,6 +261,7 @@ class GroupMutipleSelectTableViewController: UITableViewController {
         } else {
             // MARK - It is from update action.
             let updateGroupRoute = API_URI + latestVersion + "/accounts/" + UserPref.getUserPrefByKey("userUuid") + "/groups/" + groupId + "/contacts"
+            
             let parameters = [
                 "contacts": contactsId
             ]

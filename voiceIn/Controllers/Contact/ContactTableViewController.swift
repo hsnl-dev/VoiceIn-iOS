@@ -11,7 +11,8 @@ import Instructions
 class ContactTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating{
     @IBOutlet var cardBarItem: UIBarButtonItem?
     @IBOutlet var addPeopelItem: UIBarButtonItem?
-
+    var notificationItem: ENMBadgedBarButtonItem?
+    
     private var navigationBarView: NavigationBar = NavigationBar()
     let headers = Network.generateHeader(isTokenNeeded: true)
     var resultSearchController = UISearchController()
@@ -65,19 +66,37 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         
         self.navigationItem.title = navigationTitle
         
-        if isFromGroupListView == true {
-            // MARK - it is from the group list tab
-            self.navigationItem.setRightBarButtonItems(nil, animated: true)
-            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
-            self.navigationItem.rightBarButtonItem = button
-            self.navigationItem.leftBarButtonItem = nil
-        } else {
-            // MARK - TODO Not from the Group List tab ...
+        if isFromGroupListView == false {
+            // MARK - It is contact table  ...
             // MARK - Set up instruction
             self.coachMarksController = CoachMarksController()
             self.coachMarksController?.allowOverlayTap = true
             self.navigationItem.title = "VoiceIn"
             self.tableView.separatorColor = MaterialColor.grey.lighten2
+            
+            setUpNotificationButton()
+
+            NSTimer.every(1.seconds) {
+                if UserPref.getUserPrefByKey("historyCount") != nil && UserPref.getUserPrefByKey("historyCount") == "1" {
+                    let tabItem = self.tabBarController?.tabBar.items![3]
+                    tabItem!.badgeValue = "1"
+                } else {
+                    let tabItem = self.tabBarController?.tabBar.items![3]
+                    tabItem!.badgeValue = nil
+                }
+                
+                if UserPref.getUserPrefByKey("notificationCount") != nil && UserPref.getUserPrefByKey("notificationCount") == "1" {
+                    self.notificationItem?.badgeValue = "1"
+                } else {
+                    self.notificationItem?.removeBadge()
+                }
+            }
+        } else {
+            // MARK - it is from the group list tab
+            self.navigationItem.setRightBarButtonItems(nil, animated: true)
+            let button = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ContactTableViewController.showEditActionSheet(_:)))
+            self.navigationItem.rightBarButtonItem = button
+            self.navigationItem.leftBarButtonItem = nil
         }
         
         UserPref.updateTheDeviceKey()
@@ -85,6 +104,7 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
         } catch {
@@ -114,6 +134,31 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
             self.coachMarksController?.startOn(self)
             UserPref.setUserPref("isFirstLogin", value: "false")
         }
+    }
+    
+    func setUpNotificationButton() {
+        let image = UIImage(named: "ic_inbox")
+        let button = UIButton(type: .Custom)
+        if let knownImage = image {
+            button.frame = CGRectMake(0.0, 0.0, knownImage.size.width, knownImage.size.height)
+        } else {
+            button.frame = CGRectZero;
+        }
+        
+        button.setBackgroundImage(image, forState: UIControlState.Normal)
+        button.addTarget(self,
+                         action: #selector(notificationItemPressed(_:)),
+                         forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let newBarButton = ENMBadgedBarButtonItem(customView: button, value: "1")
+        notificationItem = newBarButton
+        navigationItem.leftBarButtonItem = notificationItem
+    }
+    
+    func notificationItemPressed(_sender: UIButton) {
+        UserPref().setUserPref("notificationCount", value: "0").syncAll()
+        notificationItem?.removeBadge()
+        self.performSegueWithIdentifier("showNotificationSegue", sender: nil)
     }
     
     // MARK - Triggered when the network state changed.
@@ -418,6 +463,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         debugPrint(selectedContactId)
         
         mutipleSelectContactViewController.seletedContactArray = selectedContactId
+        mutipleSelectContactViewController.contactsId = selectedContactId
+
         self.navigationController?.pushViewController(mutipleSelectContactViewController, animated: true)
     }
     
