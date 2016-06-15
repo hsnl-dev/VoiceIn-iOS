@@ -78,11 +78,13 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
 
             NSTimer.every(1.seconds) {
                 if UserPref.getUserPrefByKey("historyCount") != nil && UserPref.getUserPrefByKey("historyCount") == "1" {
-                    let tabItem = self.tabBarController?.tabBar.items![3]
-                    tabItem!.badgeValue = "1"
+                    if let tabItem = self.tabBarController?.tabBar.items![3] {
+                      tabItem.badgeValue = "1"
+                    }
                 } else {
-                    let tabItem = self.tabBarController?.tabBar.items![3]
-                    tabItem!.badgeValue = nil
+                    if let tabItem = self.tabBarController?.tabBar.items![3] {
+                        tabItem.badgeValue = nil
+                    }
                 }
                 
                 if UserPref.getUserPrefByKey("notificationCount") != nil && UserPref.getUserPrefByKey("notificationCount") == "1" {
