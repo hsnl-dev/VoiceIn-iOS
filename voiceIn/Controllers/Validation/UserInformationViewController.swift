@@ -47,6 +47,10 @@ class UserInformationViewController: FormViewController {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     
+                    if jsonResponse["credit"].stringValue == "-1" {
+                        UserPref().setUserPref("credit", value: "-1").syncAll()
+                    }
+                    
                     if let superview = self.view {
                         SwiftOverlays.removeAllOverlaysFromView(superview)
                     }
