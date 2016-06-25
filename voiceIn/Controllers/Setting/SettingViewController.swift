@@ -5,6 +5,8 @@ import Haneke
 
 class SettingViewController: UITableViewController {
     @IBOutlet var credit: UILabel? = UILabel()
+    @IBOutlet var pointLabel: UILabel? = UILabel()
+
     let hnkImageCache = Shared.imageCache
     
     override func viewDidLoad() {
@@ -31,7 +33,14 @@ class SettingViewController: UITableViewController {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
                     debugPrint(jsonResponse)
-                    self.credit?.text = jsonResponse["credit"].stringValue
+                    
+                    if jsonResponse["credit"].stringValue == "-1" {
+                        self.credit?.text = "0.0.1"
+                        self.pointLabel?.text = "版本號碼"
+                    } else {
+                        self.pointLabel?.text = "剩餘秒數"
+                        self.credit?.text = jsonResponse["credit"].stringValue
+                    }
                     
                 case .Failure(let error):
                     self.credit?.text = "讀取失敗"
