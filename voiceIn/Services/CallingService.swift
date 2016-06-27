@@ -25,14 +25,22 @@ class CallService {
             ]
             
             if let superview = self.view!.superview {
-                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "為您撥號中，系統即將來電...")
+                SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: "約10秒內，您將收到來電，請放心接聽\n接起後請等待另一方接通...")
             }
             
             Alamofire.request(.POST, callApiRoute, encoding: .JSON, headers: self.headers, parameters: parameters).response {
                 request, response, data, error in
                 
-                if let superview = self.view!.superview {
-                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                if error == nil && response?.statusCode == 200 {
+                    NSTimer.after(5.seconds) {
+                        if let superview = self.view!.superview {
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
+                    }
+                } else {
+                    if let superview = self.view!.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                 }
                 
                 if error != nil {

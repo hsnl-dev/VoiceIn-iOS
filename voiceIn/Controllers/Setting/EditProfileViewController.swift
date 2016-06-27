@@ -22,12 +22,6 @@ class EditProfileViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserInformation()
-        
-        // MARK: Update the wrong position.
-        //        var frame: CGRect = view.frame;
-        //        frame.origin.y = 60;
-        //        frame.origin.x = 0;
-        //        self.tableView?.frame = frame
     }
     
     func getUserInformation() {
@@ -99,18 +93,18 @@ class EditProfileViewController: FormViewController {
                 $0.value = UIImage(named: "add-user")
                 }.onCellSelection({ (cell, row) -> () in
                     let cameraViewController = CameraViewController(croppingEnabled: true, allowsLibraryAccess: true)
-                        { image, asset in
-                            SelectImageRow.defaultCellUpdate = { cell, row in
-                                cell.accessoryView?.layer.cornerRadius = 32
-                                cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
-                            }
-                            
-                            if image != nil {
-                                row.value = image
-                                row.updateCell()
-                            }
-                            
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                    { image, asset in
+                        SelectImageRow.defaultCellUpdate = { cell, row in
+                            cell.accessoryView?.layer.cornerRadius = 32
+                            cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
+                        }
+                        
+                        if image != nil {
+                            row.value = image
+                            row.updateCell()
+                        }
+                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
                     self.isUserSelectPhoto = true
@@ -194,6 +188,17 @@ class EditProfileViewController: FormViewController {
                     row.value = dateFormatter.dateFromString(userInformation["availableEndTime"].stringValue)
             }
             
+            +++ Section(header: "檢查是否為清華大學MVPN會員", footer: "開啟此選項後，撥號時會檢查撥號方與受話方是否為清大MVPN會員，若是則使用清大MVPN總機回撥，節省您的費用")
+            <<< SwitchRow() {
+                $0.tag = "enableMVPNChecker"
+                $0.title = "檢查清大 MVPN"
+                $0.value = false
+                }.cellSetup {
+                    cell, row in
+
+                    row.value = userInformation["enableMVPNChecker"].boolValue
+                    
+            }
             
             +++ Section("關於您")
             
@@ -215,7 +220,7 @@ class EditProfileViewController: FormViewController {
                     cell.accessoryView?.layer.cornerRadius = 32
                     cell.accessoryView?.frame = CGRectMake(0, 0, 64, 64)
                 }
-
+                
                 if response.data != nil && response.response?.statusCode == 200 {
                     self.removeAllOverlays()
                     self.form.rowByTag("avatar")?.baseValue = UIImage(data: response.data!)
@@ -255,13 +260,14 @@ class EditProfileViewController: FormViewController {
             return
         }
         
-        let parameters = [
-            "userName": formValues["userName"] as? String != nil ? formValues["userName"] as? String : "",
-            "profile": formValues["profile"] as? String != nil ? formValues["profile"] as? String : "",
-            "location": formValues["location"] as? String != nil ? formValues["location"] as? String : "",
-            "company": formValues["company"] as? String != nil ? formValues["company"] as? String : "",
-            "jobTitle": formValues["jobTitle"] as? String != nil ? formValues["jobTitle"] as? String : "",
-            "email": formValues["email"] as? String != nil ? formValues["email"] as? String : "",
+        let parameters: [String: AnyObject] = [
+            "enableMVPNChecker": (formValues["enableMVPNChecker"] as? Bool)!,
+            "userName": (formValues["userName"] as? String != nil ? formValues["userName"] as? String : "")!,
+            "profile": (formValues["profile"] as? String != nil ? formValues["profile"] as? String : "")!,
+            "location": (formValues["location"] as? String != nil ? formValues["location"] as? String : "")!,
+            "company": (formValues["company"] as? String != nil ? formValues["company"] as? String : "")!,
+            "jobTitle": (formValues["jobTitle"] as? String != nil ? formValues["jobTitle"] as? String : "")!,
+            "email": (formValues["email"] as? String != nil ? formValues["email"] as? String : "")!,
             "availableStartTime": dateFormatter.stringFromDate((formValues["availableStartTime"] as? NSDate)!),
             "availableEndTime": dateFormatter.stringFromDate((formValues["availableEndTime"] as? NSDate)!),
             "phoneNumber": UserPref.getUserPrefByKey("phoneNumber") as String!,
@@ -279,7 +285,6 @@ class EditProfileViewController: FormViewController {
         // MARK: PUT: Update the user's information.
         Alamofire
             .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
-            .validate()
             .response { request, response, data, error in
                 if error == nil && !self.isUserSelectPhoto {
                     //MARK: error is nil, nothing happened! All is well :)
@@ -295,47 +300,52 @@ class EditProfileViewController: FormViewController {
                         if let superview = self.view.superview {
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
-                        
-                        self.isSaveClicked = false
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
+                } else {
+                    if let superview = self.view.superview {
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    AlertBox.createAlertView(self, title: "失敗", body: "出現網路或伺服器錯誤", buttonValue: "確認")
                 }
+                debugPrint(error)
+                self.isSaveClicked = false
         }
         
         /**
-        POST: Upload avatar image.
-        **/
+         POST: Upload avatar image.
+         **/
         if isUserSelectPhoto == true {
             Alamofire
                 .upload(.POST, uploadAvatarApiRoute, headers: headers,
-                    multipartFormData:
+                        multipartFormData:
                     { multipartFormData in
                         multipartFormData.appendBodyPart(data: avatarImageFile!, name: "photo", mimeType: "image/jpeg")
                     },
-                    encodingCompletion: {
-                        encodingResult in
-                        switch encodingResult {
-                        case .Success(let upload, _, _):
-                            upload.response { response in
-                                print("photo success")
-                                self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
-                                
+                        encodingCompletion: {
+                            encodingResult in
+                            switch encodingResult {
+                            case .Success(let upload, _, _):
+                                upload.response { response in
+                                    print("photo success")
+                                    self.hnkImageCache.set(value: UIImage(data: avatarImageFile!)!, key: "profilePhoto")
+                                    
+                                    if let superview = self.view.superview {
+                                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                                    }
+                                    
+                                    self.isSaveClicked = false
+                                    self.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            case .Failure(let encodingError):
                                 if let superview = self.view.superview {
                                     SwiftOverlays.removeAllOverlaysFromView(superview)
                                 }
                                 
                                 self.isSaveClicked = false
-                                self.dismissViewControllerAnimated(true, completion: nil)
+                                AlertBox.createAlertView(self ,title: "抱歉!", body: "出現網路或伺服器錯誤", buttonValue: "確認")
+                                print(encodingError)
                             }
-                        case .Failure(let encodingError):
-                            if let superview = self.view.superview {
-                                SwiftOverlays.removeAllOverlaysFromView(superview)
-                            }
-                            
-                            self.isSaveClicked = false
-                            AlertBox.createAlertView(self ,title: "抱歉!", body: "出現網路或伺服器錯誤", buttonValue: "確認")
-                            print(encodingError)
-                        }
                 })
         }
     }
