@@ -1,6 +1,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SwiftOverlays
 import Haneke
 
 class SettingViewController: UITableViewController {
@@ -20,6 +21,12 @@ class SettingViewController: UITableViewController {
     @IBAction func refreshCredit(sender: UIButton) {
         self.credit?.text = "讀取中"
         
+        let text = "重新整理中..."
+        
+        if let superview = self.view.superview {
+            SwiftOverlays.showCenteredWaitOverlayWithText(superview, text: text)
+        }
+        
         let getInformationApiRoute = API_END_POINT + "/accounts/" + UserPref.getUserPrefByKey("userUuid")
         let headers = Network.generateHeader(isTokenNeeded: true)
         let parameters = [
@@ -29,6 +36,8 @@ class SettingViewController: UITableViewController {
             .request(.GET, getInformationApiRoute, headers: headers, parameters: parameters, encoding: .URLEncodedInURL)
             .responseJSON {
                 response in
+                sender.setTitle("重新整理", forState: .Normal)
+                
                 switch response.result {
                 case .Success(let JSON_RESPONSE):
                     let jsonResponse = JSON(JSON_RESPONSE)
@@ -45,6 +54,10 @@ class SettingViewController: UITableViewController {
                 case .Failure(let error):
                     self.credit?.text = "讀取失敗"
                     debugPrint(error)
+                }
+                
+                if let superview = self.view.superview {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
         }
     }

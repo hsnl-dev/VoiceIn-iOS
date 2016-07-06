@@ -348,25 +348,26 @@ class UserInformationViewController: FormViewController {
                             return
                         }
                 })
-        } else {
-            // MARK - POST: Generate QRCode
-            Alamofire
-                .request(.POST, generateQrcodeApiRoute, headers: headers)
-                .response {
-                    request, response, data, error in
-                    
-                    if let superview = self.view {
-                        SwiftOverlays.removeAllOverlaysFromView(superview)
-                    }
-                    
-                    if error == nil {
-                        print("Generate QR Code Successfully!")
-                        self.presentViewController(contactTableView, animated: true, completion: nil)
-                    } else {
-                        AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
-                    }
+        }
+        
+        // MARK - POST: Generate QRCode
+        Alamofire
+            .request(.POST, generateQrcodeApiRoute, headers: headers)
+            .response {
+                request, response, data, error in
+                
+                if let superview = self.view {
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+                
+                if error == nil {
+                    print("Generate QR Code Successfully!")
+                    self.presentViewController(contactTableView, animated: true, completion: nil)
+                } else {
+                    AlertBox.createAlertView(self ,title: "抱歉!", body: "網路或伺服器錯誤，請稍候再嘗試", buttonValue: "確認")
                 }
         }
+
     }
     
     /**
