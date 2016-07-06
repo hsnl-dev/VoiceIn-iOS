@@ -48,7 +48,6 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         self.refreshControl?.addTarget(self, action: #selector(ContactTableViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         super.viewDidLoad()
-        
         //MAKR - Init search view contrller
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)

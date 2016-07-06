@@ -3,6 +3,7 @@ import CoreData
 import IQKeyboardManagerSwift
 import Fabric
 import Crashlytics
+import Haneke
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,6 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let window = self.window {
             window.rootViewController = rootController
+            
+            let hnkImageCache = Shared.imageCache
+            hnkImageCache.removeAll()
+            
             window.makeKeyAndVisible()
         }
         

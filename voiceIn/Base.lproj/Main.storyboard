@@ -689,7 +689,6 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="QlZ-aA-ABC"/>
                                     <constraint firstAttribute="height" constant="30" id="cnD-iR-KS2"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="drX-25-uoa"/>
                                 </constraints>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="close">
@@ -1404,11 +1403,11 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="設定" id="eki-en-qBd">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" id="56j-GG-6p8" customClass="MaterialTableViewCell" customModule="Material">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" editingAccessoryType="detailDisclosureButton" id="56j-GG-6p8" customClass="MaterialTableViewCell" customModule="Material">
                                         <rect key="frame" x="0.0" y="300" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="56j-GG-6p8" id="bmT-aY-WQP">
-                                            <rect key="frame" x="0.0" y="0.0" width="553" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="個人資料設定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biE-wW-k6O">
@@ -1424,7 +1423,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="2V3-kn-mV4" kind="presentation" id="a4g-o3-ZwN"/>
+                                            <segue destination="2V3-kn-mV4" kind="presentation" modalTransitionStyle="crossDissolve" id="a4g-o3-ZwN"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1Sd-gS-0DG" customClass="MaterialTableViewCell" customModule="Material">

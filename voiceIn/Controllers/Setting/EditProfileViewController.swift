@@ -245,6 +245,7 @@ class EditProfileViewController: FormViewController {
         let updateInformationApiRoute = API_END_POINT + "/accounts/" + userUuid
         let uploadAvatarApiRoute = API_END_POINT + "/accounts/" + userUuid + "/avatar"
         let dateFormatter = NSDateFormatter()
+        var isUploadSuccess = false
         
         var avatarImageFile = UIImageJPEGRepresentation(UIImage(named: "user")!, 0.6)
         
@@ -286,7 +287,7 @@ class EditProfileViewController: FormViewController {
         Alamofire
             .request(.PUT, updateInformationApiRoute, parameters: parameters, encoding: .JSON, headers: headers)
             .response { request, response, data, error in
-                if error == nil && !self.isUserSelectPhoto {
+                if error == nil {
                     //MARK: error is nil, nothing happened! All is well :)
                     
                     UserPref.setUserPref("userName", value: parameters["userName"])
@@ -300,16 +301,25 @@ class EditProfileViewController: FormViewController {
                         if let superview = self.view.superview {
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
+                        
+                        isUploadSuccess = true
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 } else {
                     if let superview = self.view.superview {
                         SwiftOverlays.removeAllOverlaysFromView(superview)
                     }
+                    
+                    isUploadSuccess = false
                     AlertBox.createAlertView(self, title: "失敗", body: "出現網路或伺服器錯誤", buttonValue: "確認")
                 }
+                
                 debugPrint(error)
                 self.isSaveClicked = false
+        }
+        
+        if isUploadSuccess == true {
+            return
         }
         
         /**
