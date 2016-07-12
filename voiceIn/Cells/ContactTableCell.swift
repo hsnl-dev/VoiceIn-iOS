@@ -22,6 +22,7 @@ class ContactTableCell: MaterialTableViewCell{
     var id: String?
     var isProviderEnable: Bool!
     var isLike: Bool! = false
+    var peopleInfo: People? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
