@@ -196,7 +196,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     }
                     
                     AlertBox.createAlertView(self ,title: "恭喜!", body: "儲存成功", buttonValue: "確認")
-                    self.tableView.reloadData()
+                    let indexPathStart = NSIndexPath(forRow: 1, inSection: 1)
+                    let indexPathEnd = NSIndexPath(forRow: 2, inSection: 1)
+
+                    self.tableView.beginUpdates()
+                    self.tableView.reloadRowsAtIndexPaths([indexPathStart, indexPathEnd], withRowAnimation: .Automatic)
+                    self.tableView.endUpdates()
                 } else {
                     if let superview = self.view.superview {
                         SwiftOverlays.removeAllOverlaysFromView(superview)

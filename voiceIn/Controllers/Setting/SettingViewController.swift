@@ -63,12 +63,15 @@ class SettingViewController: UITableViewController {
     }
     
     @IBAction func logout(sender: UIButton) {
-        UserPref.removeAll()
+        let deviceKey = UserPref.getUserPrefByKey("deviceKey") as String!
+        
         UserPref()
             .setUserPref("isFirstLogin", value: "true")
             .setUserPref("isFirstFetch", value: true)
             .setUserPref("userUuid", value: nil)
             .setUserPref("token", value: nil)
+            .setUserPref("deviceKey", value: deviceKey)
+        
         hnkImageCache.removeAll()
         
         let rootController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
