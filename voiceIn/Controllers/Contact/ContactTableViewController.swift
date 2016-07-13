@@ -235,12 +235,14 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
                 return cell
             }
             userInformation = filterContactArray[indexPath.row].data
+            cell.peopleInfo = filterContactArray[indexPath.row]
         } else {
             // MARK: When searchbar is inactive, do this block!
             if indexPath.row > contactArray.count - 1 {
                 return cell
             }
             userInformation = contactArray[indexPath.row].data
+            cell.peopleInfo = contactArray[indexPath.row]
         }
         
         let nickName = userInformation["nickName"]! as String?
@@ -645,7 +647,8 @@ class ContactTableViewController: UITableViewController, NSFetchedResultsControl
         if segue.identifier == "DetailViewSegue" {
             if  let indexPath = tableView.indexPathForSelectedRow,
                 let destinationViewController = segue.destinationViewController as? ContactDetailViewController {                
-                    destinationViewController.userInformation = contactArray[indexPath.row].data
+                    let cellSelected = tableView.cellForRowAtIndexPath(indexPath) as? ContactTableCell
+                    destinationViewController.userInformation = (cellSelected?.peopleInfo!.data)!
                     destinationViewController.searchController = self.resultSearchController
             }
         }
